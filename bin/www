@@ -2,13 +2,12 @@ var app = require('../app');
 var debug = require('debug')('server');
 var http = require('http');
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = process.env.PORT || '3000';
 app.set('port', port);
 
 var server = http.createServer(app);
 
 server.listen(port);
-server.on('error', onError);
 server.on('listening', onListening);
 
 /* Using debug instead of console.log provides some convenient
@@ -18,6 +17,7 @@ server.on('listening', onListening);
 */
 
 function onListening() {
+  console.log("Listening on port", port)
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
