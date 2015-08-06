@@ -2,26 +2,26 @@
 
 ## General Workflow
 
-1. Fork Febe to your own Github
-1. Clone your fork to your local machine
-1. "git remote add upstream https://github.com/BracyBunch/Febe.git" to add main repo as upstream.
-1. git checkout -b FEATURE_BRANCH to create a feature branch (optional)
-1. Edit files, etc. Add and commit. Use proper commit style. (Found in contributing.md
+- Fork Febe to your own Github
+- Clone your fork to your local machine
+- "git remote add upstream https://github.com/BracyBunch/Febe.git" to add main repo as upstream.
+- git checkout -b FEATURE_BRANCH to create a feature branch (optional)
+- Edit files, etc. Add and commit. Use proper commit style. (Found in contributing.md
 
-- Prefix each commit like so: 
-- [feat] Add a new feature
-- [fix] Fix inconsistent tests [Fixes #0]
-- [refactor] Refactor landing page
-- [cleanup] Remove comments
-- [test] Add social feed tests
-- [doc] Update Readme
+1. Prefix each commit like so: 
+1. [feat] Add a new feature
+1. [fix] Fix inconsistent tests [Fixes #0]
+1. [refactor] Refactor landing page
+1. [cleanup] Remove comments
+1. [test] Add social feed tests
+1. [doc] Update Readme
 
-1. git pull --rebase upstream dev to update your local to the most recent official commit
-1. git push origin FEATURE_BRANCH or dev 
-1. make pull request to official dev branch through Github 
-- BracyBunch::Dev >> YourFork:: FEATURE_BRANCH or dev
+- git pull --rebase upstream dev to update your local to the most recent official commit
+- git push origin FEATURE_BRANCH or dev 
+- make pull request to official dev branch through Github 
+1. BracyBunch::Dev >> YourFork:: FEATURE_BRANCH or dev
 
-- Scrum master then pulls code into local and manually merges. Tests.
+1. Scrum master then pulls code into local and manually merges. Tests.
 
 1. After a merge, all devs must "git pull upstream dev".  I will attempt to send out reminders after merging.
 
