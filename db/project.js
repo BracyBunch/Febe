@@ -51,6 +51,7 @@ Project.add_member = function(project_id, member_id) {
 Project.with_extras = function(project_id, options) {
   return new Promise(function(resolve, reject) {
     var include = {};
+    if (options === undefined) options = true;
 
     if (options === true || options.members) include.members = {'model': User, 'rel': 'member_of', 'direction': 'in'};
     if (options === true || options.owner) include.owner = {'model': User, 'rel': 'owns', 'direction': 'in', 'many': false};
