@@ -4,18 +4,9 @@ var router = express.Router();
 
 // middleware usage
 router.use(function timeLog(req, res, next){
-  console.log('Time: ', Date.now());
+  console.log('Time: ', Date().toLocaleString());
   next();
 });
-
-// home route
-router.get('/', function(req, res){
-  res.send('Default page for: ', __dirname);
-});
-
-router.post('/____', function(req, res){
-  res.send('Page for route');
-})
 
 // route for EIN verification
 // Goodwill EIN: 530196517
@@ -38,6 +29,7 @@ var callback = function(error, response, body){
       res.send(body)
     }
   };
+
 // call to server to receive data
 request(options, callback);
 
