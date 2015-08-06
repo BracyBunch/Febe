@@ -12,8 +12,8 @@
 - [feat] Add a new feature
 - [fix] Fix inconsistent tests [Fixes #0]
 - [refactor] Refactor landing page
-- [cleanup] ...
-- [test] Add Instagram feed tests
+- [cleanup] Remove comments
+- [test] Add social feed tests
 - [doc] Update Readme
 
 6. git pull --rebase upstream dev to update your local to the most recent official commit
