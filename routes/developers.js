@@ -4,15 +4,16 @@ var router = express.Router();
 
 // middleware usage
 router.use(function timeLog(req, res, next){
-  console.log('Time: ', Date.now());
+  console.log('Time: ', Date().toLocaleString());
   next();
 });
 
 // home route
 
 router.get('/', function(req, res){
+  console.log("devs")
   // access DB to retrieve all developers
-  res.send(res);
+  res.send("devs");
 });
 
 router.post('/add', function(req, res){
