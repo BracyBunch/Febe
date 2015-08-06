@@ -5,8 +5,8 @@
 1. Fork Febe to your own Github
 2. Clone your fork to your local machine
 3. "git remote add upstream https://github.com/BracyBunch/Febe.git" to add main repo as upstream.
-4) git checkout -b FEATURE_BRANCH to create a feature branch (optional)
-5) Edit files, etc. Add and commit. Use proper commit style. (Found in contributing.md
+4. git checkout -b FEATURE_BRANCH to create a feature branch (optional)
+5. Edit files, etc. Add and commit. Use proper commit style. (Found in contributing.md
 
 Prefix each commit like so: 
 [feat] Add a new feature
@@ -16,14 +16,14 @@ Prefix each commit like so:
 [test] Add Instagram feed tests
 [doc] Update Readme
 
-6) git pull --rebase upstream dev to update your local to the most recent official commit
-7) git push origin FEATURE_BRANCH or dev 
-8) make pull request to official dev branch through Github 
+6. git pull --rebase upstream dev to update your local to the most recent official commit
+7. git push origin FEATURE_BRANCH or dev 
+8. make pull request to official dev branch through Github 
 BracyBunch::Dev >> YourFork:: FEATURE_BRANCH or dev
 
 Scrum master then pulls code into local and manually merges. Tests.
 
-9) After a merge, all devs must "git pull upstream dev".  I will attempt to send out reminders after merging.
+9. After a merge, all devs must "git pull upstream dev".  I will attempt to send out reminders after merging.
 
 ## Detailed Workflow
 
