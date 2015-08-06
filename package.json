@@ -28,6 +28,7 @@
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-watch": "^0.6.1",
     "node": "0.0.0",
+    "request": "^2.60.0",
     "serve-favicon": "^2.3.0"
   }
 }

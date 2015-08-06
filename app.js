@@ -3,7 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 
-// var ROUTE1 = require('./routes/bookDetail');
+var EIN = require('./routes/ein');
 // var ROUTE2 = require('./routes/bookInfo');
 // var ROUTE3 = require('./routes/productImg');
 
@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
-// app.use('/bookDetail', ROUTE1);
+app.use('/ein', EIN);
 // app.use('/bookInfo', ROUTE2);
 // app.use('/productImg', ROUTE3);
 
