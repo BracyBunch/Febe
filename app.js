@@ -1,15 +1,15 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var bodyParser = require('body-parser');
+var express   = require('express');
+var path      = require('path');
+var favicon   = require('serve-favicon');
+var bodyParser= require('body-parser');
 
-var devs = require('./routes/developers');
-var EIN = require('./routes/ein');
-var orgs = require('./routes/organizations');
-var projects = require('./routes/projects');
-var signup = require('./routes/signup');
-var login = require('./routes/login');
-var tags = require('./routes/tags');
+var devs      = require('./routes/developers');
+var EIN       = require('./routes/ein');
+var orgs      = require('./routes/organizations');
+var projects  = require('./routes/projects');
+var signup    = require('./routes/signup');
+var login     = require('./routes/login');
+var tags      = require('./routes/tags');
 
 // ***************** APP configure ******************
 var app = express();
