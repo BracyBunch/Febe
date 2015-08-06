@@ -39,8 +39,8 @@ describe('DB tests', function() {
     });
 
     it('shouldn\'t be able to create a User with an email already in use', function(done) {
-      models.User.create({'first_name': 'failed', 'last_name': 'test', 'email': 'invalid_test_dev@gmail.com'}).then(function() {
-        done('User was created.');
+      models.User.create({'first_name': 'failed', 'last_name': 'test', 'email': 'test_dev@gmail.com'}).then(function() {
+        done(new Error('User was created.'));
       }).catch(function() {
         done();
       });
