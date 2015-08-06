@@ -2,9 +2,9 @@
 var seraph = require('seraph');
 var db = seraph();
 
+var Project = require('./project');
 var User = require('./user');
 var Organization = require('./organization');
-var Project = require('./project');
 var Tag = require('./tag');
 
 module.exports = {
