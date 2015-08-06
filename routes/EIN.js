@@ -26,7 +26,8 @@ router.get('/:ein', function(req, res) {
     method: 'GET'
   };
 
-request(options, function(error, response, body){
+// custom callback
+var callback = function(error, response, body){
     if (!error && response.statusCode === 200){
       var body = JSON.parse(body);
       res.send(body.organization)
@@ -36,7 +37,11 @@ request(options, function(error, response, body){
       console.log("error", error)
       res.send(body)
     }
-  })
-})
+  };
+// call to server to receive data
+request(options, callback);
+
+});
+
 
 module.exports = router;
