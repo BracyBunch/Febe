@@ -1,4 +1,4 @@
-# Good In This World
+# GoodInThisWorld.com
 
 > A network for non-profits and software developers to come together and help solve technical issues/needs
 
@@ -31,11 +31,12 @@
 - "grunt": "^0.4.5"
 - "grunt-contrib-jshint": "^0.11.2"
 - "grunt-contrib-watch": "^0.6.1"
-- "node": "0.0.0"
 - "request": "^2.60.0"
 - "seraph": "^0.13.2"
 - "seraph-model": "^0.7.2"
 - "serve-favicon": "^2.3.0"
+- "chai": "^3.2.0"
+- "mocha": "^2.2.5"
 
 ## Development
 
