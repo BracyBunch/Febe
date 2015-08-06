@@ -9,34 +9,24 @@ router.use(function timeLog(req, res, next){
 });
 
 // home route
-
 router.get('/', function(req, res){
-  res.send('Default page for: ', __dirname);
+  // access DB to retrieve all organizations
+  res.send(res);
 });
 
-router.post('/____', function(req, res){
-  res.send('Page for route');
+router.post('/add', function(req, res){
+  // access DB to add a new organization
+  res.send();
 })
 
+router.delete('/remove', function(req, res){
+  // access DB to add a new organization
+  res.send();
+})
 
-// route for retrieving external feed data such as facebook, instagram, linkedin
-// used in dashboard
-router.get('/_insertFEEDroute', function(req, res) {
-  var options = {
-    host: 'socialMediaHost(fb, insta, linkedin)',
-    path: '/api/v2/json/etc/etc/etc' + req.query.etc.etc
-  };
-
-  http.get(options, function(book) {
-    var bodyChunks = [];
-    book.on('data', function(chunk) {
-      bodyChunks.push(chunk);
-    }).on('end', function() {
-      var body = Buffer.concat(bodyChunks);
-      res.send(body);
-    });
-  });
-
-});
+router.put('/update', function(req, res){
+  // access DB to add a new organization
+  res.send();
+})
 
 module.exports = router;
