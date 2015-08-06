@@ -1,12 +1,12 @@
-# Project Name
+# Good In This World
 
-> Pithy project description
+> A network for non-profits and software developers to come together and help solve technical issues/needs
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Ryan Jones
+  - __Scrum Master__: James Maveety
+  - __Development Team Members__: Colin McKeehan, Yoshi Varney
 
 ## Table of Contents
 
@@ -24,11 +24,18 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- "bluebird": "^2.9.34"
+- "body-parser": "^1.13.3"
+- "debug": "^2.2.0"
+- "express": "^4.13.3"
+- "grunt": "^0.4.5"
+- "grunt-contrib-jshint": "^0.11.2"
+- "grunt-contrib-watch": "^0.6.1"
+- "node": "0.0.0"
+- "request": "^2.60.0"
+- "seraph": "^0.13.2"
+- "seraph-model": "^0.7.2"
+- "serve-favicon": "^2.3.0"
 
 ## Development
 
@@ -37,14 +44,13 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
 bower install
 ```
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/BracyBunch/Febe/issues)
 
 
 ## Contributing
