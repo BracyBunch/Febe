@@ -7,17 +7,6 @@ var Organization = require('./organization');
 var Project = require('./project');
 var Tag = require('./tag');
 
-/*
-  get list of skill for project:
-    match (skills)<-[:skill]-(project:Project) where id(project)={id} return skills
-
-  get list of projects for skill:
-    match (projects:Project)-[:skill]-(tag:Tag) where id(tag)={id} return projects
-
-  autocomplete tag:
-    match (tags:Tag) where tags.name=~'{text}.*' return tags
- */
-
 module.exports = {
   'db': db,
   'User': User,
