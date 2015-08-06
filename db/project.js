@@ -17,6 +17,13 @@ Project.schema = {
   'published': {'type': Boolean, 'default': false}
 };
 Project.useTimestamps();
+
+/**
+ * Create and save a new Project
+ * @param  {Object} fields   Fields to create Project with
+ * @param  {Integer} owner_id Id of the User to own the Project
+ * @return {Promise.<Project>}          The newly created Project
+ */
 Project.create = function(fields, owner_id) {
   return new Promise(function(resolve, reject) {
     if (owner_id === undefined) {
@@ -36,6 +43,12 @@ Project.create = function(fields, owner_id) {
     });
   });
 };
+
+/**
+ * Adds a User as a member of Project
+ * @param {Integer} project_id Id of Project to add User to
+ * @param {Integer} member_id  Id of Member to add to Project
+ */
 Project.add_member = function(project_id, member_id) {
   return new Promise(function(resolve, reject) {
     db.relate(member_id, 'member_of', project_id, function(err, relationship) {
@@ -48,6 +61,13 @@ Project.add_member = function(project_id, member_id) {
     });
   });
 };
+
+/**
+ * Fetches one Project including specifed extras
+ * @param  {Integer} project_id Id of the Project
+ * @param  {Object|Boolean} [options=true]    Either an object with with the extras to include or true to include all extras
+ * @return {Promise.<Project>}            Project with all specified models included
+ */
 Project.with_extras = function(project_id, options) {
   return new Promise(function(resolve, reject) {
     var include = {};
@@ -68,6 +88,12 @@ Project.with_extras = function(project_id, options) {
     });
   });
 };
+
+/**
+ * Find all projects with relationships to all specified Tag ids
+ * @param  {Integer[]} skill_ids Array of Tag ids
+ * @return {Promise.<Project[]>}           Array of Projects matching filter
+ */
 Project.find_by_skill = function(skill_ids) {
   return new Promise(function(resolve, reject) {
     var query = [
