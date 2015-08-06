@@ -74,6 +74,12 @@ User.create = function(fields) {
     });
   });
 };
+
+/**
+ * Fetch a User including all Projects they are a member of
+ * @param  {Integer} user_id Id of User
+ * @return {Promise.<User>}
+ */
 User.with_projects = function(user_id) {
   return new Promise(function(resolve, reject) {
     var include = {
