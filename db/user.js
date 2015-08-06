@@ -56,20 +56,13 @@ User.check_if_exists = function(email) {
  */
 User.create = function(fields) {
   return new Promise(function(resolve, reject) {
-    User.check_if_exists(fields.email).then(function(exists) {
-      if (exists) {
-        reject('User already exists with given email.');
+    User.save(fields, function(err, user) {
+      if (err) {
+        reject(err);
         return;
       }
 
-      User.save(fields, function(err, user) {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        resolve(user);
-      });
+      resolve(user);
     });
   });
 };
