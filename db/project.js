@@ -63,5 +63,22 @@ Project.with_all_contributors = function(project_id) {
     });
   });
 };
+Project.find_by_skill = function(skill_ids) {
+  return new Promise(function(resolve, reject) {
+    var query = [
+      'MATCH (tags:Tag {kind:"skill"}) WHERE id(tags) IN {tags}',
+      'WITH COLLECT(tags) as t',
+      'MATCH (node:Project)-->(tags) WHERE ALL(tag IN t WHERE (node)-->(tag))'
+    ].join(' ');
+    Project.query(query, {'tags': skill_ids}, function(err, projects) {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve(projects);
+    });
+  });
+};
 
 module.exports = Project;
