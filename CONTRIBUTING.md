@@ -2,27 +2,20 @@
 
 ## General Workflow
 
-- Fork Febe to your own Github
-- Clone your fork to your local machine
-- "git remote add upstream https://github.com/BracyBunch/Febe.git" to add main repo as upstream.
-- git checkout -b FEATURE_BRANCH to create a feature branch (optional)
-- Edit files, etc. Add and commit. Use proper commit style. (Found in contributing.md
-
-1. Prefix each commit like so: 
-1. [feat] Add a new feature
-1. [fix] Fix inconsistent tests [Fixes #0]
-1. [refactor] Refactor landing page
-1. [cleanup] Remove comments
-1. [test] Add social feed tests
-1. [doc] Update Readme
-
-- git pull --rebase upstream dev to update your local to the most recent official commit
-- git push origin FEATURE_BRANCH or dev 
-- make pull request to official dev branch through Github 
-1. BracyBunch::Dev >> YourFork:: FEATURE_BRANCH or dev
-
+1. Fork Febe to your own Github
+1. Clone your fork to your local machine
+1. "git remote add upstream https://github.com/BracyBunch/Febe.git" to add main repo as upstream.
+  - [feat] Added a new feature
+  - [fix] Fixed inconsistent tests [Fixes #0]
+  - [refactor] ...
+  - [cleanup] ...
+  - [test] ...
+  - [doc] ...
+1. git pull --rebase upstream dev to update your local to the most recent official commit
+1. git push origin FEATURE_BRANCH or dev 
+1. make pull request to official dev branch through Github 
+BracyBunch::Dev >> YourFork:: FEATURE_BRANCH or dev
 1. Scrum master then pulls code into local and manually merges. Tests.
-
 1. After a merge, all devs must "git pull upstream dev".  I will attempt to send out reminders after merging.
 
 ## Detailed Workflow
@@ -35,7 +28,7 @@ Use github’s interface to make a fork of the repo, then add that repo as an up
 git remote add upstream https://github.com/BracyBunch/Febe.git
 ```
 
-### Cut a namespaced feature branch from master, if necessary
+### Cut a namespaced feature branch from master
 
 Your branch should follow this naming convention:
   - bug/...
@@ -54,13 +47,18 @@ git checkout -b `your-branch-name`
 
 ### Make commits to your feature branch. 
 
-Prefix each commit like so: 
-[feat] Add a new feature
-[fix] Fix inconsistent tests [Fixes #0]
-[refactor] Refactor landing page
-[cleanup] ...
-[test] Add Instagram feed tests
-[doc] Update Readme
+Prefix each commit like so
+  - [feat] Added a new feature
+  - [fix] Fixed inconsistent tests [Fixes #0]
+  - [refactor] ...
+  - [cleanup] ...
+  - [test] ...
+  - [doc] ...
+
+Make changes and commits on your branch, and make sure that you
+only make changes that are relevant to this branch. If you find
+yourself making unrelated changes, make a new branch for those
+changes.
 
 #### Commit Message Guidelines
 
