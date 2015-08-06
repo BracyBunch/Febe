@@ -115,6 +115,20 @@ describe('DB tests', function() {
     });
   });
 
+  xdescribe('Tag tests', function() {
+    before(function(done) {
+      done();
+    });
+
+    after(function(done) {
+      done();
+    });
+
+    it('be able to create an Tag', function(done) {
+    });
+
+  });
+
   xdescribe('Organization tests', function() {
     before(function(done) {
       done();
