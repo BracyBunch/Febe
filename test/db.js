@@ -59,4 +59,18 @@ describe('DB tests', function() {
 
   });
 
+  xdescribe('Organization tests', function() {
+    before(function(done) {
+      done();
+    });
+
+    after(function(done) {
+      done();
+    });
+
+    it('be able to create an Organization', function(done) {
+    });
+
+  });
+
 });
