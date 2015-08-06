@@ -3,6 +3,8 @@ var seraph = require('seraph');
 var model = require('seraph-model');
 var db = seraph();
 
+var Project = require('./project');
+
 /*
   [:member_of]-(:Project)
   [:follows]-(:Project)
