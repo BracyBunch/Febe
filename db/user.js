@@ -46,7 +46,13 @@ User.check_if_exists = function(email) {
 
 /**
  * Creates a new user
- * @param  {Object} fields [description]
+ * @param  {Object} fields Fields to set on User
+ * @param  {String} [fields.kind=dev] Type of User to create; dev or rep
+ * @param  {String} fields.first_name
+ * @param  {String} fields.last_name
+ * @param  {String} fields.email
+ * @param  {String} [fields.github_id]
+ * @param  {String} [fields.linkedin_id]
  * @return {Promise.<User>}
  */
 User.create = function(fields) {
