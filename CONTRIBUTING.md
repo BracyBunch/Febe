@@ -9,8 +9,8 @@
 5. Edit files, etc. Add and commit. Use proper commit style. (Found in contributing.md
 
 -Prefix each commit like so: 
--[feat] Add a new feature
--[fix] Fix inconsistent tests [Fixes #0]
+a. [feat] Add a new feature
+b. [fix] Fix inconsistent tests [Fixes #0]
 -[refactor] Refactor landing page
 -[cleanup] ...
 -[test] Add Instagram feed tests
