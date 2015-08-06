@@ -2,9 +2,9 @@
 
 ## General Workflow
 
-1) Fork Febe to your own Github
-2) Clone your fork to your local machine
-3) "git remote add upstream https://github.com/BracyBunch/Febe.git" to add main repo as upstream.
+1. Fork Febe to your own Github
+2. Clone your fork to your local machine
+3. "git remote add upstream https://github.com/BracyBunch/Febe.git" to add main repo as upstream.
 4) git checkout -b FEATURE_BRANCH to create a feature branch (optional)
 5) Edit files, etc. Add and commit. Use proper commit style. (Found in contributing.md
 
