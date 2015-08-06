@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  GoodInThisWorld.com
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > A network for non-profits and software developers to come together and help solve technical issues/needs
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > This is a great way for software developers to work with others they may have never worked with, gain additional experience, work with new technologies and use their skills for good by helping non-profits. GoodInThisWorld.com is also a great place for non-profits to get more people involved and receive help for their technical issues or additional products they would love to provide. 
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > There is no soley focused, easy to use network for software developers to come together as a team, view non-profits' issues/projects and make a difference to hundreds, thousands and even millions of individuals.  
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > GoodInThisWorld.com brings together all the tools needed for nonprofits to talk about their organization, post their problems/products and interact with software developers. For Software developers GoodInThisWorld.com makes it easy to sign up, browse organizations/projects and find others to work with. GoodInThisWorld.com was built by engineers for engineers, keeping simplicity and information flow as the focal point.
 
 ## Quote from You ##
   > A quote from a spokesperson in your company.
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > simply go to our site GoodInThisWorld.com and sign up as a software developer (dev) or a nonprofit.
 
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Start making a different at GoodInThisWorld.com
