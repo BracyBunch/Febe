@@ -5,6 +5,7 @@ var db = seraph();
 
 var Project = require('./project');
 
+
 /*
   [:member_of]-(:Project)
   [:follows]-(:Project)
@@ -24,6 +25,12 @@ User.schema = {
 };
 User.setUniqueKey('email');
 User.useTimestamps();
+
+/**
+ * Checks the database to see if a user with given email already exists
+ * @param  {String} email
+ * @return {Promise.<Boolean>}
+ */
 User.check_if_exists = function(email) {
   return new Promise(function(resolve, reject) {
     db.query('MATCH (user:User {email:{email}}) RETURN COUNT(user) > 0 AS exists', {'email': email}, function(err, row) {
@@ -36,6 +43,12 @@ User.check_if_exists = function(email) {
     });
   });
 };
+
+/**
+ * Creates a new user
+ * @param  {Object} fields [description]
+ * @return {Promise.<User>}
+ */
 User.create = function(fields) {
   return new Promise(function(resolve, reject) {
     User.check_if_exists(fields.email).then(function(exists) {
