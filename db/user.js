@@ -1,7 +1,6 @@
 var Promise = require('bluebird');
-var seraph = require('seraph');
+var db = require('./db');
 var model = require('seraph-model');
-var db = seraph();
 
 var Project = require('./project');
 
@@ -46,7 +45,13 @@ User.check_if_exists = function(email) {
 
 /**
  * Creates a new user
- * @param  {Object} fields [description]
+ * @param  {Object} fields Fields to set on User
+ * @param  {String} [fields.kind=dev] Type of User to create; dev or rep
+ * @param  {String} fields.first_name
+ * @param  {String} fields.last_name
+ * @param  {String} fields.email
+ * @param  {String} [fields.github_id]
+ * @param  {String} [fields.linkedin_id]
  * @return {Promise.<User>}
  */
 User.create = function(fields) {
@@ -68,6 +73,12 @@ User.create = function(fields) {
     });
   });
 };
+
+/**
+ * Fetch a User including all Projects they are a member of
+ * @param  {Integer} user_id Id of User
+ * @return {Promise.<User>}
+ */
 User.with_projects = function(user_id) {
   return new Promise(function(resolve, reject) {
     var include = {

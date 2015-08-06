@@ -1,10 +1,9 @@
 // var Promise = require('bluebird');
-var seraph = require('seraph');
-var db = seraph();
+var db = require('./db');
 
+var Project = require('./project');
 var User = require('./user');
 var Organization = require('./organization');
-var Project = require('./project');
 var Tag = require('./tag');
 
 module.exports = {

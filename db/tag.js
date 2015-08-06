@@ -1,7 +1,6 @@
 // var Promise = require('bluebird');
-var seraph = require('seraph');
+var db = require('./db');
 var model = require('seraph-model');
-var db = seraph();
 
 /*
   get list of skill for project:
