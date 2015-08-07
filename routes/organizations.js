@@ -3,10 +3,10 @@ var http = require('http');
 var router = express.Router();
 
 // middleware usage
-router.use(function timeLog(req, res, next){
-  console.log('Time: ', Date().toLocaleString());
-  next();
-});
+// router.use(function timeLog(req, res, next){
+//   console.log('Time: ', Date().toLocaleString());
+//   next();
+// });
 
 // home route
 router.get('/', function(req, res){

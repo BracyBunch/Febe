@@ -4,7 +4,6 @@ var router = express.Router();
 
 // middleware usage
 router.use(function timeLog(req, res, next){
-  console.log('Getting EIN information...')
   // console.log('Time: ', Date().toLocaleString());
   next();
 });

@@ -1,16 +1,16 @@
 var chai     = require('chai');
 var expect   = require('chai').expect;
 var chaiHttp = require('chai-http');
-var devs     = require('../routes/developers');
+var projects = require('../routes/projects');
 var app      = require('../app');
 
 chai.use(chaiHttp);
 
-describe('Developer Tests', function() {
+describe('Projects Tests', function() {
 
-    it('should return with status code 200 after POST to /devs/add', function(done) {
+    it('should return with status code 200 after POST to /projects/add', function(done) {
       chai.request(app)
-        .post('/devs/add')
+        .post('/projects/add')
         .send('test')
         .end(function(res){
           expect(res.req.method).to.equal('POST')
@@ -19,9 +19,9 @@ describe('Developer Tests', function() {
         })
     });
 
-    it('should return with status code 404 after GET to /devs/add', function(done) {
+    it('should return with status code 404 after GET to /projects/add', function(done) {
       chai.request(app)
-        .get('/devs/add')
+        .get('/projects/add')
         .end(function(res){
           expect(res.res.body.status).to.equal(404)
           done();
@@ -33,7 +33,7 @@ describe('Developer Tests', function() {
       //   return Math.floor(Math.random(100000) * 100000).toString();
       // };
       chai.request(app)
-        .delete('/devs/remove')
+        .delete('/projects/remove')
         .send({'Test': 'text'})
         .then(function(res){
           expect(res.req.method).to.equal('DELETE');
@@ -47,7 +47,7 @@ describe('Developer Tests', function() {
       //   return Math.floor(Math.random(100000) * 100000).toString();
       // };
       chai.request(app)
-        .put('/devs/update')
+        .put('/projects/update')
         .send({})
         .end(function(err, res){
           expect(res.req.method).to.equal('PUT');

@@ -1,5 +1,5 @@
-var Promise = require('bluebird');
-var expect = require('chai').expect;
+var Promise   = require('bluebird');
+var expect    = require('chai').expect;
 
 // process.env.GRAPHSTORY_URL = 'https://neo4j:neo4j@localhost:7473';
 
