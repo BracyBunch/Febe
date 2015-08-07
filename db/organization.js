@@ -8,7 +8,7 @@ var validator = require('validator');
  */
 var Organization = model(db, 'Organization');
 Organization.schema = {
-  'ein': {'type': String, 'required': false},
+  'ein': {'type': String, 'required': true},
   'verified': {'type': Boolean, 'default': false},
   'name': {'type': String, 'required': true},
   'description': {'type': String, 'required': true},
@@ -32,5 +32,22 @@ Organization.on('validate', function(organization, cb) {
     cb('Model is invalid');
   }
 });
+
+Organization.create = function(fields, owner) {
+  return new Promise(function(resolve, reject) {
+    if (owner === undefined && owner.id === undefined) {
+      reject('Owner not given.');
+      return;
+    }
+
+    Organization.save(fields, function(err, organization) {
+      if (err) return reject(err);
+
+      db.relate(owner, 'owns', organization, function(err, relationship) {
+        resolve(organization);
+      });
+    });
+  });
+};
 
 module.exports = Organization;

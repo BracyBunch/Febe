@@ -43,6 +43,12 @@ Project.create = function(fields, owner) {
   });
 };
 
+/**
+ * Checks if User member_id is already a member of Project project_id
+ * @param  {Integer} project_id Project id
+ * @param  {Integer} member_id  User id
+ * @return {Boolean}
+ */
 var already_member_of_project = function(project_id, member_id) {
   return new Promise(function(resolve, reject) {
     var query = [
@@ -54,9 +60,9 @@ var already_member_of_project = function(project_id, member_id) {
       if (err) return reject(err.message);
 
       if (row.exists) {
-        reject(new Error('User is already a member of the Project'));
+        resolve(true);
       } else {
-        resolve();
+        resolve(false);
       }
     });
   });
@@ -70,16 +76,23 @@ var already_member_of_project = function(project_id, member_id) {
 Project.add_member = function(project, member) {
   return new Promise(function(resolve, reject) {
     return already_member_of_project(project.id, member.id)
-    .then(function() {
+    .then(function(already_member) {
+      if (already_member) return reject(new Error('User is already a member of the Project'));
+
       db.relate(member, 'member_of', project, function(err, relationship) {
         if (err) return reject(err.message);
 
         resolve(relationship);
       });
-    }, reject);
+    });
   });
 };
 
+/**
+ * Adds an array of Users as members of Project
+ * @param {Integer|Project} project Project object or id to add Users to
+ * @param {Integer[]|Project[]} members Array of Users or ids to add to Project
+ */
 Project.add_members = function(project, members) {
   var calls = [];
 

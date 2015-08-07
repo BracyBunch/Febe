@@ -2,7 +2,12 @@ var Promise   = require('bluebird');
 var expect    = require('chai').expect;
 
 var models = require('../db');
-var ids_to_be_deleted = [];
+
+var clean_up = function(ids, cb) {
+  models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() DELETE n,r', {'ids': ids}, function() {
+    cb();
+  });
+};
 
 describe('DB tests', function() {
   before(function(done) {
@@ -10,18 +15,18 @@ describe('DB tests', function() {
   });
 
   after(function(done) {
-    models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() DELETE n,r', {'ids': ids_to_be_deleted}, function() {
-      done();
-    });
+   done();
   });
 
   describe('User tests', function() {
+    var ids_to_be_deleted = [];
+
     before(function(done) {
       done();
     });
 
     after(function(done) {
-      done();
+      clean_up(ids_to_be_deleted, done);
     });
 
     it('should be able to create a User', function(done) {
@@ -61,6 +66,7 @@ describe('DB tests', function() {
   });
 
   describe('Project tests', function() {
+    var ids_to_be_deleted = [];
     var users, project;
 
     before(function(done) {
@@ -80,7 +86,7 @@ describe('DB tests', function() {
     });
 
     after(function(done) {
-      done();
+      clean_up(ids_to_be_deleted, done);
     });
 
     it('shouldn\'t be able to create a Project without an owner', function(done) {
@@ -155,16 +161,44 @@ describe('DB tests', function() {
 
   });
 
-  xdescribe('Organization tests', function() {
+  describe('Organization tests', function() {
+    var ids_to_be_deleted = [];
+    var instances;
+
     before(function(done) {
-      done();
+      Promise.props({
+        'rep': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'rep', 'email': 'p_test_rep@gmail.com'})
+      }).then(function(n_instances) {
+        instances = n_instances;
+        for (var key in n_instances) {
+          ids_to_be_deleted.push(n_instances[key].id);
+        }
+        done();
+      });
     });
 
     after(function(done) {
-      done();
+      clean_up(ids_to_be_deleted, done);
     });
 
-    it('be able to create an Organization', function(done) {
+    it('shouldn\'t be able to create an Organization without an owner', function(done) {
+      models.Organization.create({'ein': '0', 'name': 'test_org', 'description': 'just a test', 'website_url': 'http://test.com', 'location': 'Testville'}).then(function() {
+        done(new Error('Organization was created'));
+      }).catch(function() {
+        done();
+      });
+    });
+
+    it('should be able to create an Organization', function(done) {
+      models.Organization.create({'ein': '0', 'name': 'test_org', 'description': 'just a test', 'website_url': 'http://test.com', 'location': 'Testville'}, instances.rep).then(function(t_org) {
+        ids_to_be_deleted.push(t_org.id);
+
+        expect(t_org).to.be.an('object');
+        expect(t_org.name).to.be.a('string');
+        expect(t_org.description).to.be.a('string');
+        expect(t_org.website_url).to.be.a('string');
+        done();
+      }, done);
     });
 
   });
