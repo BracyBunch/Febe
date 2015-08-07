@@ -80,10 +80,10 @@ User.with_projects = function(user_id) {
     var include = {
       'projects': {'model': Project, 'rel': 'member_of'}
     };
-    User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}, function(err, r) {
+    User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}, function(err, user) {
       if (err) return reject(err.message);
 
-      resolve(r[0]);
+      resolve(user[0]);
     });
   });
 };
