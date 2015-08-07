@@ -54,9 +54,9 @@ var already_member_of_project = function(project_id, member_id) {
       if (err) return reject(err.message);
 
       if (row.exists) {
-        reject(new Error('User is already a member of the Project'));
+        resolve(true);
       } else {
-        resolve();
+        resolve(false);
       }
     });
   });
@@ -70,13 +70,15 @@ var already_member_of_project = function(project_id, member_id) {
 Project.add_member = function(project, member) {
   return new Promise(function(resolve, reject) {
     return already_member_of_project(project.id, member.id)
-    .then(function() {
+    .then(function(already_member) {
+      if (already_member) return reject(new Error('User is already a member of the Project'));
+
       db.relate(member, 'member_of', project, function(err, relationship) {
         if (err) return reject(err.message);
 
         resolve(relationship);
       });
-    }, reject);
+    });
   });
 };
 
