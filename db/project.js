@@ -31,10 +31,7 @@ Project.create = function(fields, owner) {
     }
 
     Project.save(fields, function(err, project) {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err.message);
 
       db.relate(owner, 'owns', project, function(err, relationship) {
         resolve(project);
@@ -51,7 +48,7 @@ var already_member_of_project = function(project_id, member_id) {
       'RETURN COUNT(project)>0 AS exists'
     ].join(' ');
     db.query(query, {'project_id': project_id, 'member_id': member_id}, function(err, row) {
-      if (err) return reject(err);
+      if (err) return reject(err.message);
 
       if (row.exists) {
         reject(new Error('User is already a member of the Project'));
@@ -71,7 +68,7 @@ Project.add_member = function(project, member) {
   return new Promise(function(resolve, reject) {
     return already_member_of_project(project.id, member.id)
     .then(db.relate(member, 'member_of', project, function(err, relationship) {
-      if (err) return reject(err);
+      if (err) return reject(err.message);
 
       resolve(relationship);
     }), reject);
@@ -128,10 +125,7 @@ Project.find_by_skill = function(skill_ids) {
       'MATCH (node:Project)-->(tags) WHERE ALL(tag IN t WHERE (node)-->(tag))'
     ].join(' ');
     Project.query(query, {'tags': skill_ids}, function(err, projects) {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err.message);
 
       resolve(projects);
     });
