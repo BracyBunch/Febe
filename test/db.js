@@ -39,7 +39,7 @@ describe('DB tests', function() {
         expect(user.email).to.eql('test_dev@gmail.com');
         expect(user.kind).to.eql('dev');
         done();
-      });
+      }, done);
     });
 
     it('shouldn\'t be able to create a User with an email already in use', function(done) {
