@@ -1,22 +1,36 @@
+var user = require('../db/user')
 var express = require('express');
 var http = require('http');
 var router = express.Router();
 
-// middleware usage
-router.use(function timeLog(req, res, next){
-  console.log('Time: ', Date().toLocaleString());
-  next();
-});
-
 // home route
-
-router.get('/signup', function(req, res){
-  // sign up 
-  res.send();
+router.get('/', function(req, res){
+  // access DB to retrieve all users
+  res.send("Users");
 });
 
-router.post('/', function(req, res){
-  res.send();
+router.post('/add', function(req, res){
+  // generate random number to make unique email
+  if (req.body === 'test'){
+    return res.send("Test done...");
+  }
+  // create test user
+  user.create(req.body).then(function(user){
+    console.log("User added")
+  });
+  // access DB to add a new user
+  res.send('New User Added');
 })
+
+router.delete('/remove', function(req, res){
+  // access DB to remove a user
+  res.send('New User Added');
+})
+
+router.put('/update', function(req, res){
+  // access DB to update a user
+  res.send('New User Added');
+})
+
 
 module.exports = router;

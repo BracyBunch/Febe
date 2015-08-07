@@ -1,12 +1,7 @@
+var org = require('../db/organization')
 var express = require('express');
 var http = require('http');
 var router = express.Router();
-
-// middleware usage
-// router.use(function timeLog(req, res, next){
-//   console.log('Time: ', Date().toLocaleString());
-//   next();
-// });
 
 // home route
 router.get('/', function(req, res){
@@ -14,9 +9,22 @@ router.get('/', function(req, res){
   res.send(res);
 });
 
-router.post('/add', function(req, res){
+router.get('/add', function(req, res){
+  if (req.body.Test === 'test'){
+    return res.send("Test done...");
+  }
+  org.create({
+    'ein': 123456,
+    'verified': false,
+    'name': "Bob's Redmill",
+    'description': "Really fun place to hang out with the boys",
+    'website_url': 'www.imhere.com',
+    'location': "Scottsdale, AZ"
+  }, "TEST_OWNER").then(function(org){
+    console.log("Org added:", org)
+  })
   // access DB to add a new organization
-  res.send();
+  res.send(org);
 })
 
 router.delete('/remove', function(req, res){
