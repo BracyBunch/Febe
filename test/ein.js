@@ -8,16 +8,10 @@ var app = require('../app');
 chai.use(chaiHttp);
 
 describe('EIN tests', function() {
-    before(function(done) {
-      done();
-    });
-
-    after(function(done) {
-      done();
-    });
 
     it('should not return an error with a valid EIN', function(done) {
       chai.request(app)
+      // GOODWILL ein 
         .get('/ein/530196517')
         .end(function (err, res) {
            expect(err).to.be.null;
@@ -57,11 +51,17 @@ describe('EIN tests', function() {
       chai.request(app)
         .get('/ein/530196517')
         .end(function (err, res) {
+           expect(res.body).to.have.property('name')
            expect(res.body.name).to.be.a('string')
+           expect(res.body).to.have.property('address')
            expect(res.body.address).to.be.a('string')
+           expect(res.body).to.have.property('city')
            expect(res.body.city).to.be.a('string')
+           expect(res.body).to.have.property('state')
            expect(res.body.state).to.be.a('string')
         done();
       });
     });
+
+
 });
