@@ -1,19 +1,16 @@
 var Promise = require('bluebird');
 var expect = require('chai').expect;
 
-// process.env.GRAPHSTORY_URL = 'https://neo4j:neo4j@localhost:7473';
-
 var models = require('../db');
+var ids_to_be_deleted = [];
 
 describe('DB tests', function() {
   before(function(done) {
-    models.db.query('MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r', function() {
-      done();
-    });
+    done();
   });
 
   after(function(done) {
-    models.db.query('MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r', function() {
+    models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() DELETE n,r', {'ids': ids_to_be_deleted}, function() {
       done();
     });
   });
@@ -29,6 +26,7 @@ describe('DB tests', function() {
 
     it('should be able to create a User', function(done) {
       models.User.create({'first_name': 'test', 'last_name': 'dev', 'email': 'test_dev@gmail.com'}).then(function(user) {
+        ids_to_be_deleted.push(user.id);
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
         expect(user.last_name).to.eql('dev');
@@ -39,7 +37,8 @@ describe('DB tests', function() {
     });
 
     it('shouldn\'t be able to create a User with an email already in use', function(done) {
-      models.User.create({'first_name': 'failed', 'last_name': 'test', 'email': 'test_dev@gmail.com'}).then(function() {
+      models.User.create({'first_name': 'failed', 'last_name': 'test', 'email': 'test_dev@gmail.com'}).then(function(user) {
+        ids_to_be_deleted.push(user.id);
         done(new Error('User was created.'));
       }).catch(function() {
         done();
@@ -48,6 +47,7 @@ describe('DB tests', function() {
 
     it('should be able to create a User:rep', function(done) {
       models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'rep', 'email': 'test_rep@gmail.com'}).then(function(user) {
+        ids_to_be_deleted.push(user.id);
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
         expect(user.last_name).to.eql('rep');
@@ -71,6 +71,9 @@ describe('DB tests', function() {
         // 'tag1': models.Tag.create
       }).then(function(p_users) {
         users = p_users;
+        for (var key in users) {
+          ids_to_be_deleted.push(users[key].id);
+        }
         done();
       });
     });
@@ -80,7 +83,8 @@ describe('DB tests', function() {
     });
 
     it('shouldn\'t be able to create a Project without an owner', function(done) {
-      models.Project.create({'name': 'test_project', 'description': 'just a test'}).then(function() {
+      models.Project.create({'name': 'test_project', 'description': 'just a test'}).then(function(project) {
+        ids_to_be_deleted.push(project.id);
         done(new Error('Project was created'));
       }).catch(function() {
         done();
@@ -89,6 +93,8 @@ describe('DB tests', function() {
 
     it('should be able to create a Project', function(done) {
       models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, users.rep).then(function(t_project) {
+        ids_to_be_deleted.push(t_project.id);
+        console.log(ids_to_be_deleted);
         expect(t_project).to.be.an('object');
         expect(t_project.name).to.be.a('string');
         expect(t_project.description).to.be.a('string');
