@@ -1,9 +1,9 @@
-var chai = require('chai');
-var expect = require('chai').expect;
-var Promise = require('bluebird');
+var chai     = require('chai');
+var expect   = require('chai').expect;
+var Promise  = require('bluebird');
 var chaiHttp = require('chai-http');
-var ein = require('../routes/ein');
-var app = require('../app');
+var ein      = require('../routes/ein');
+var app      = require('../app');
 
 chai.use(chaiHttp);
 
