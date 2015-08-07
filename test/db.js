@@ -2,7 +2,12 @@ var Promise   = require('bluebird');
 var expect    = require('chai').expect;
 
 var models = require('../db');
-var ids_to_be_deleted = [];
+
+var clean_up = function(ids, cb) {
+  models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() DELETE n,r', {'ids': ids}, function() {
+    cb();
+  });
+};
 
 describe('DB tests', function() {
   before(function(done) {
@@ -10,18 +15,18 @@ describe('DB tests', function() {
   });
 
   after(function(done) {
-    models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() DELETE n,r', {'ids': ids_to_be_deleted}, function() {
-      done();
-    });
+   done();
   });
 
   describe('User tests', function() {
+    var ids_to_be_deleted = [];
+
     before(function(done) {
       done();
     });
 
     after(function(done) {
-      done();
+      clean_up(ids_to_be_deleted, done);
     });
 
     it('should be able to create a User', function(done) {
@@ -61,6 +66,7 @@ describe('DB tests', function() {
   });
 
   describe('Project tests', function() {
+    var ids_to_be_deleted = [];
     var users, project;
 
     before(function(done) {
@@ -80,7 +86,7 @@ describe('DB tests', function() {
     });
 
     after(function(done) {
-      done();
+      clean_up(ids_to_be_deleted, done);
     });
 
     it('shouldn\'t be able to create a Project without an owner', function(done) {
