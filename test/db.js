@@ -1,0 +1,146 @@
+var Promise = require('bluebird');
+var expect = require('chai').expect;
+
+// process.env.GRAPHSTORY_URL = 'https://neo4j:neo4j@localhost:7473';
+
+var models = require('../db');
+
+describe('DB tests', function() {
+  before(function(done) {
+    models.db.query('MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r', function() {
+      done();
+    });
+  });
+
+  after(function(done) {
+    models.db.query('MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r', function() {
+      done();
+    });
+  });
+
+  describe('User tests', function() {
+    before(function(done) {
+      done();
+    });
+
+    after(function(done) {
+      done();
+    });
+
+    it('should be able to create a User', function(done) {
+      models.User.create({'first_name': 'test', 'last_name': 'dev', 'email': 'test_dev@gmail.com'}).then(function(user) {
+        expect(user).to.be.an('object');
+        expect(user.first_name).to.eql('test');
+        expect(user.last_name).to.eql('dev');
+        expect(user.email).to.eql('test_dev@gmail.com');
+        expect(user.kind).to.eql('dev');
+        done();
+      });
+    });
+
+    it('shouldn\'t be able to create a User with an email already in use', function(done) {
+      models.User.create({'first_name': 'failed', 'last_name': 'test', 'email': 'test_dev@gmail.com'}).then(function() {
+        done(new Error('User was created.'));
+      }).catch(function() {
+        done();
+      });
+    });
+
+    it('should be able to create a User:rep', function(done) {
+      models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'rep', 'email': 'test_rep@gmail.com'}).then(function(user) {
+        expect(user).to.be.an('object');
+        expect(user.first_name).to.eql('test');
+        expect(user.last_name).to.eql('rep');
+        expect(user.email).to.eql('test_rep@gmail.com');
+        expect(user.kind).to.eql('rep');
+        done();
+      });
+    });
+
+  });
+
+  describe('Project tests', function() {
+    var users, project;
+
+    before(function(done) {
+      Promise.props({
+        'rep': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'rep', 'email': 'p_test_rep@gmail.com'}),
+        'dev1': models.User.create({'first_name': 'test1', 'last_name': 'dev', 'email': 'p_test_dev1@gmail.com'}),
+        'dev2': models.User.create({'first_name': 'test2', 'last_name': 'dev', 'email': 'p_test_dev2@gmail.com'}),
+        'dev3': models.User.create({'first_name': 'test3', 'last_name': 'dev', 'email': 'p_test_dev3@gmail.com'})
+        // 'tag1': models.Tag.create
+      }).then(function(p_users) {
+        users = p_users;
+        done();
+      });
+    });
+
+    after(function(done) {
+      done();
+    });
+
+    it('shouldn\'t be able to create a Project without an owner', function(done) {
+      models.Project.create({'name': 'test_project', 'description': 'just a test'}).then(function() {
+        done(new Error('Project was created'));
+      }).catch(function() {
+        done();
+      });
+    });
+
+    it('should be able to create a Project', function(done) {
+      models.Project.create({'name': 'test_project', 'description': 'just a test'}, users.rep.id).then(function(t_project) {
+        expect(t_project).to.be.an('object');
+        expect(t_project.name).to.be.a('string');
+        expect(t_project.description).to.be.a('string');
+        expect(t_project.published).to.eql(false);
+        project = t_project;
+        done();
+      });
+    });
+
+    it('should be able to add Users as members', function(done) {
+      Promise.all([
+        models.Project.add_member(project.id, users.dev1.id),
+        models.Project.add_member(project.id, users.dev3.id),
+        models.Project.add_member(project.id, users.dev2.id)
+      ]).then(function() {
+        models.Project.with_extras(project.id, {'members': true}).then(function(t_project) {
+          expect(t_project.members).to.be.an('array');
+          expect(t_project.members).to.have.length(3);
+          expect(t_project.members[0]).to.be.an('object');
+          expect(t_project.members[0].kind).to.eql('dev');
+          done();
+        });
+      });
+    });
+  });
+
+  xdescribe('Tag tests', function() {
+    before(function(done) {
+      done();
+    });
+
+    after(function(done) {
+      done();
+    });
+
+    it('be able to create an Tag', function(done) {
+    });
+
+  });
+
+  xdescribe('Organization tests', function() {
+    before(function(done) {
+      done();
+    });
+
+    after(function(done) {
+      done();
+    });
+
+    it('be able to create an Organization', function(done) {
+    });
+
+  });
+
+});
