@@ -43,6 +43,25 @@ Project.create = function(fields, owner) {
   });
 };
 
+var already_member_of_project = function(project_id, member_id) {
+  return new Promise(function(resolve, reject) {
+    var query = [
+      'MATCH (member:User) WHERE id(member)={member_id}',
+      'MATCH (project:Project) WHERE id(project)={project_id} AND (member)-->(project)',
+      'RETURN COUNT(project)>0 AS exists'
+    ].join(' ');
+    db.query(query, {'project_id': project_id, 'member_id': member_id}, function(err, row) {
+      if (err) return reject(err);
+
+      if (row.exists) {
+        reject(new Error('User is already a member of the Project'));
+      } else {
+        resolve();
+      }
+    });
+  });
+};
+
 /**
  * Adds a User as a member of Project
  * @param {Integer|Project} project Project object or id to add User to
@@ -50,15 +69,23 @@ Project.create = function(fields, owner) {
  */
 Project.add_member = function(project, member) {
   return new Promise(function(resolve, reject) {
-    db.relate(member, 'member_of', project, function(err, relationship) {
-      if (err) {
-        reject(err);
-        return;
-      }
+    return already_member_of_project(project.id, member.id)
+    .then(db.relate(member, 'member_of', project, function(err, relationship) {
+      if (err) return reject(err);
 
       resolve(relationship);
-    });
+    }), reject);
   });
+};
+
+Project.add_members = function(project, members) {
+  var calls = [];
+
+  members.forEach(function(member) {
+    calls.push(Project.add_member(project, member));
+  });
+
+  return Promise.all(calls);
 };
 
 /**
