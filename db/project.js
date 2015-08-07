@@ -80,6 +80,11 @@ Project.add_member = function(project, member) {
   });
 };
 
+/**
+ * Adds an array of Users as members of Project
+ * @param {Integer|Project} project Project object or id to add Users to
+ * @param {Integer[]|Project[]} members Array of Users or ids to add to Project
+ */
 Project.add_members = function(project, members) {
   var calls = [];
 
