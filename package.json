@@ -32,7 +32,8 @@
     "request": "^2.60.0",
     "seraph": "^0.13.2",
     "seraph-model": "^0.7.2",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+    "validator": "^4.0.2"
   },
   "devDependencies": {
     "chai": "^3.2.0",

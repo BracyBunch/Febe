@@ -1,6 +1,7 @@
 // var Promise = require('bluebird');
 var db = require('./db');
 var model = require('seraph-model');
+var validator = require('validator');
 
 /*
   [:cause]-(:Tag {kind: 'cause'})
@@ -15,5 +16,16 @@ Organization.schema = {
   'donation_url': {'type': String, 'default': null}
 };
 Organization.useTimestamps();
+
+Organization.on('validate', function(organization, cb) {
+  var valid = true;
+  valid = valid && validator.isURL(organization.website_url, {'protocol': ['http', 'https']});
+  valid = valid && validator.isURL(organization.donation_url, {'protocol': ['http', 'https']});
+  if (valid) {
+    cb();
+  } else{
+    cb('Model is invalid');
+  }
+});
 
 module.exports = Organization;
