@@ -20,13 +20,13 @@ Project.useTimestamps();
 /**
  * Create and save a new Project
  * @param  {Object} fields   Fields to create Project with
- * @param  {Integer} owner_id Id of the User to own the Project
+ * @param  {Integer|User} owner User object or id of the Project owner
  * @return {Promise.<Project>}          The newly created Project
  */
-Project.create = function(fields, owner_id) {
+Project.create = function(fields, owner) {
   return new Promise(function(resolve, reject) {
-    if (owner_id === undefined) {
-      reject('Owner id not given.');
+    if (owner === undefined && owner.id === undefined) {
+      reject('Owner not given.');
       return;
     }
 
@@ -36,7 +36,7 @@ Project.create = function(fields, owner_id) {
         return;
       }
 
-      db.relate(owner_id, 'owns', project.id, function(err, relationship) {
+      db.relate(owner, 'owns', project, function(err, relationship) {
         resolve(project);
       });
     });
@@ -45,12 +45,12 @@ Project.create = function(fields, owner_id) {
 
 /**
  * Adds a User as a member of Project
- * @param {Integer} project_id Id of Project to add User to
- * @param {Integer} member_id  Id of Member to add to Project
+ * @param {Integer|Project} project Project object or id to add User to
+ * @param {Integer|User} member  User or id to add to Project
  */
-Project.add_member = function(project_id, member_id) {
+Project.add_member = function(project, member) {
   return new Promise(function(resolve, reject) {
-    db.relate(member_id, 'member_of', project_id, function(err, relationship) {
+    db.relate(member, 'member_of', project, function(err, relationship) {
       if (err) {
         reject(err);
         return;
