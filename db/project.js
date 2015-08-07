@@ -102,10 +102,7 @@ Project.with_extras = function(project_id, options) {
 
 
     Project.query('MATCH (node:Project) WHERE id(node)={id}', {'id': project_id}, {'include': include}, function(err, project) {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err.message);
 
       resolve(project[0]);
     });
