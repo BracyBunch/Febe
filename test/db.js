@@ -27,6 +27,7 @@ describe('DB tests', function() {
     it('should be able to create a User', function(done) {
       models.User.create({'first_name': 'test', 'last_name': 'dev', 'email': 'test_dev@gmail.com'}).then(function(user) {
         ids_to_be_deleted.push(user.id);
+
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
         expect(user.last_name).to.eql('dev');
@@ -85,6 +86,7 @@ describe('DB tests', function() {
     it('shouldn\'t be able to create a Project without an owner', function(done) {
       models.Project.create({'name': 'test_project', 'description': 'just a test'}).then(function(project) {
         ids_to_be_deleted.push(project.id);
+
         done(new Error('Project was created'));
       }).catch(function() {
         done();
@@ -94,7 +96,7 @@ describe('DB tests', function() {
     it('should be able to create a Project', function(done) {
       models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, users.rep).then(function(t_project) {
         ids_to_be_deleted.push(t_project.id);
-        console.log(ids_to_be_deleted);
+
         expect(t_project).to.be.an('object');
         expect(t_project.name).to.be.a('string');
         expect(t_project.description).to.be.a('string');
@@ -120,7 +122,19 @@ describe('DB tests', function() {
       models.Project.add_member(project, users.dev1).then(function() {
         done(new Error('Added User as a member multiple times'));
       }).catch(function() {
-        done();
+        var query = [
+          'MATCH (u:User) WHERE id(u)={user_id}',
+          'MATCH (p:Project) WHERE id(p)={project_id}',
+          'MATCH r=(u)-[:member_of]->(p)',
+          'RETURN COUNT(r) AS num'
+        ].join(' ');
+        models.db.query(query, {'user_id': users.dev1.id, 'project_id': project.id}, function(err, row) {
+          if (row.num === 1) {
+            done();
+          } else {
+            done(new Error('Added User as a member multiple times'));
+          }
+        });
       });
     });
 
