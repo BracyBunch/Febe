@@ -12,8 +12,11 @@ var Tag = require('./tag');
 var Project = model(db, 'Project');
 Project.schema = {
   'name': {'type': String, 'required': true},
+  'complete_by': {'type': Date, 'required': true},
   'description': {'type': String, 'required': true},
-  'published': {'type': Boolean, 'default': false}
+  'links': {'type': Array, 'default': []},
+  'published': {'type': Boolean, 'default': false},
+  'active': {'type': Boolean, 'default': true}
 };
 Project.useTimestamps();
 

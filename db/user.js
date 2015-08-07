@@ -20,6 +20,8 @@ User.schema = {
   'first_name': {'type': String, 'required': true},
   'last_name': {'type': String, 'required': true},
   'email': {'type': String, 'required': true},
+  'password': {'type': String},
+  'links': {'type': Array, 'default': []},
   'github_id': {'type': String},
   'linkedin_id': {'type': String}
 };

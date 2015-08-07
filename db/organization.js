@@ -13,14 +13,19 @@ Organization.schema = {
   'name': {'type': String, 'required': true},
   'description': {'type': String, 'required': true},
   'website_url': {'type': String, 'required': true},
-  'donation_url': {'type': String, 'default': null}
+  'donation_url': {'type': String, 'default': null},
+  'logo_url': {'type': String, 'default': null},
+  'location': {'type': String, 'required': true}
 };
+Organization.setUniqueKey('ein');
 Organization.useTimestamps();
 
 Organization.on('validate', function(organization, cb) {
   var valid = true;
   valid = valid && validator.isURL(organization.website_url, {'protocol': ['http', 'https']});
-  valid = valid && validator.isURL(organization.donation_url, {'protocol': ['http', 'https']});
+  valid = valid && organization.donation_url === null || validator.isURL(organization.donation_url, {'protocol': ['http', 'https']});
+  valid = valid && organization.logo_url === null || validator.isURL(organization.logo_url, {'protocol': ['http', 'https']});
+
   if (valid) {
     cb();
   } else{
