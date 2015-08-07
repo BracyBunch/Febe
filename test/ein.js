@@ -7,7 +7,7 @@ var app      = require('../app');
 
 chai.use(chaiHttp);
 
-describe('EIN tests', function() {
+describe('EIN API tests', function() {
 
     it('should not return an error with a valid EIN', function(done) {
       chai.request(app)

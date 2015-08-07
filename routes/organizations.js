@@ -10,7 +10,7 @@ router.get('/', function(req, res){
 });
 
 router.post('/add', function(req, res){
-  if (req.body === 'test'){
+  if (req.body.Test === 'test'){
     return res.send("Test done...");
   }
   // access DB to add a new organization

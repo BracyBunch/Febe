@@ -10,8 +10,7 @@ router.get('/', function(req, res){
 });
 
 router.post('/add', function(req, res){
-  // generate random number to make unique email
-  if (req.body === 'test'){
+  if (req.body.Test === 'test'){
     return res.send("Test done...");
   }
   // create test user

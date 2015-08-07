@@ -6,12 +6,12 @@ var app      = require('../app');
 
 chai.use(chaiHttp);
 
-describe('Users Tests', function() {
+describe('User Route Tests', function() {
 
     it('should return with status code 200 after POST to /users/add', function(done) {
       chai.request(app)
         .post('/users/add')
-        .send('test')
+        .send({'Test': 'test'})
         .end(function(res){
           expect(res.req.method).to.equal('POST')
           expect(res).to.have.status(200)
