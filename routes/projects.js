@@ -1,12 +1,7 @@
+var projects = require('../db/project')
 var express = require('express');
 var http = require('http');
 var router = express.Router();
-
-// middleware usage
-// router.use(function timeLog(req, res, next){
-//   console.log('Time: ', Date().toLocaleString());
-//   next();
-// });
 
 // home route
 router.get('/', function(req, res){
@@ -15,6 +10,9 @@ router.get('/', function(req, res){
 });
 
 router.post('/add', function(req, res){
+  if (req.body === 'test'){
+    return res.send("Test done...");
+  }
   // access DB to add a new project
   res.send();
 })

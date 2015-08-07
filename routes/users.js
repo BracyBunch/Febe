@@ -3,9 +3,10 @@ var express = require('express');
 var http = require('http');
 var router = express.Router();
 
+// home route
 router.get('/', function(req, res){
-  // access DB to retrieve all developers
-  res.send("devs");
+  // access DB to retrieve all users
+  res.send("Users");
 });
 
 router.post('/add', function(req, res){
@@ -17,18 +18,18 @@ router.post('/add', function(req, res){
   user.create(req.body).then(function(user){
     console.log("User added")
   });
-  // access DB to add a new developer
-  res.send('New Dev Added');
+  // access DB to add a new user
+  res.send('New User Added');
 })
 
 router.delete('/remove', function(req, res){
-  // access DB to add a new developer
-  res.send('New Dev Added');
+  // access DB to remove a user
+  res.send('New User Added');
 })
 
 router.put('/update', function(req, res){
-  // access DB to add a new developer
-  res.send('New Dev Added');
+  // access DB to update a user
+  res.send('New User Added');
 })
 
 

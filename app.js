@@ -3,7 +3,7 @@ var path        = require('path');
 var favicon     = require('serve-favicon');
 var bodyParser  = require('body-parser');
 
-var devs        = require('./routes/developers');
+var users       = require('./routes/users');
 var EIN         = require('./routes/ein');
 var orgs        = require('./routes/organizations');
 var projects    = require('./routes/projects');
@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
-app.use('/devs', devs);
+app.use('/users', users);
 app.use('/ein', EIN);
 app.use('/orgs', orgs);
 app.use('/projects', projects);
