@@ -31,14 +31,30 @@ Project.create = function(fields, owner) {
     }
 
     Project.save(fields, function(err, project) {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err.message);
 
       db.relate(owner, 'owns', project, function(err, relationship) {
         resolve(project);
       });
+    });
+  });
+};
+
+var already_member_of_project = function(project_id, member_id) {
+  return new Promise(function(resolve, reject) {
+    var query = [
+      'MATCH (member:User) WHERE id(member)={member_id}',
+      'MATCH (project:Project) WHERE id(project)={project_id} AND (member)-->(project)',
+      'RETURN COUNT(project)>0 AS exists'
+    ].join(' ');
+    db.query(query, {'project_id': project_id, 'member_id': member_id}, function(err, row) {
+      if (err) return reject(err.message);
+
+      if (row.exists) {
+        reject(new Error('User is already a member of the Project'));
+      } else {
+        resolve();
+      }
     });
   });
 };
@@ -50,15 +66,23 @@ Project.create = function(fields, owner) {
  */
 Project.add_member = function(project, member) {
   return new Promise(function(resolve, reject) {
-    db.relate(member, 'member_of', project, function(err, relationship) {
-      if (err) {
-        reject(err);
-        return;
-      }
+    return already_member_of_project(project.id, member.id)
+    .then(db.relate(member, 'member_of', project, function(err, relationship) {
+      if (err) return reject(err.message);
 
       resolve(relationship);
-    });
+    }), reject);
   });
+};
+
+Project.add_members = function(project, members) {
+  var calls = [];
+
+  members.forEach(function(member) {
+    calls.push(Project.add_member(project, member));
+  });
+
+  return Promise.all(calls);
 };
 
 /**
@@ -78,10 +102,7 @@ Project.with_extras = function(project_id, options) {
 
 
     Project.query('MATCH (node:Project) WHERE id(node)={id}', {'id': project_id}, {'include': include}, function(err, project) {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err.message);
 
       resolve(project[0]);
     });
@@ -101,10 +122,7 @@ Project.find_by_skill = function(skill_ids) {
       'MATCH (node:Project)-->(tags) WHERE ALL(tag IN t WHERE (node)-->(tag))'
     ].join(' ');
     Project.query(query, {'tags': skill_ids}, function(err, projects) {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err.message);
 
       resolve(projects);
     });

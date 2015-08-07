@@ -99,11 +99,7 @@ describe('DB tests', function() {
     });
 
     it('should be able to add Users as members', function(done) {
-      Promise.all([
-        models.Project.add_member(project, users.dev1),
-        models.Project.add_member(project, users.dev3),
-        models.Project.add_member(project, users.dev2)
-      ]).then(function() {
+      models.Project.add_members(project, [users.dev1, users.dev2, users.dev3]).then(function() {
         models.Project.with_extras(project.id, {'members': true}).then(function(t_project) {
           expect(t_project.members).to.be.an('array');
           expect(t_project.members).to.have.length(3);
@@ -113,6 +109,16 @@ describe('DB tests', function() {
         });
       });
     });
+
+    it('shouldn\'t be able to add User as a member more than once', function(done) {
+      models.Project.add_member(project, users.dev1).then(function() {
+        done(new Error('Added User as a member multiple times'));
+      }).catch(function() {
+        done();
+      });
+    });
+
+
   });
 
   xdescribe('Tag tests', function() {

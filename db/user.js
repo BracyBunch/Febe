@@ -42,10 +42,7 @@ User.on('validate', function(user, cb) {
 User.check_if_exists = function(email) {
   return new Promise(function(resolve, reject) {
     db.query('MATCH (user:User {email:{email}}) RETURN COUNT(user) > 0 AS exists', {'email': email}, function(err, row) {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err.message);
 
       resolve(row.exists);
     });
@@ -66,10 +63,7 @@ User.check_if_exists = function(email) {
 User.create = function(fields) {
   return new Promise(function(resolve, reject) {
     User.save(fields, function(err, user) {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err.message);
 
       resolve(user);
     });
@@ -86,12 +80,10 @@ User.with_projects = function(user_id) {
     var include = {
       'projects': {'model': Project, 'rel': 'member_of'}
     };
-    User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}, function(e, r) {
-      if (e) {
-        reject(e);
-        return;
-      }
-      resolve(r[0]);
+    User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}, function(err, user) {
+      if (err) return reject(err.message);
+
+      resolve(user[0]);
     });
   });
 };
