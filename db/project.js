@@ -70,11 +70,13 @@ var already_member_of_project = function(project_id, member_id) {
 Project.add_member = function(project, member) {
   return new Promise(function(resolve, reject) {
     return already_member_of_project(project.id, member.id)
-    .then(db.relate(member, 'member_of', project, function(err, relationship) {
-      if (err) return reject(err.message);
+    .then(function() {
+      db.relate(member, 'member_of', project, function(err, relationship) {
+        if (err) return reject(err.message);
 
-      resolve(relationship);
-    }), reject);
+        resolve(relationship);
+      });
+    }, reject);
   });
 };
 
