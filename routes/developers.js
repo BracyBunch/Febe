@@ -3,12 +3,6 @@ var express = require('express');
 var http = require('http');
 var router = express.Router();
 
-// middleware usage
-router.use(function timeLog(req, res, next){
-  console.log('Time: ', Date().toLocaleString());
-  next();
-});
-
 // home route
  // * @param  {String} [fields.kind=dev] Type of User to create; dev or rep
  // * @param  {String} fields.first_name
@@ -22,7 +16,7 @@ router.get('/', function(req, res){
   res.send("devs");
 });
 
-router.get('/add', function(req, res){
+router.post('/add', function(req, res){
   // generate random number to make unique email
   var randomEmail = function(){
     return Math.floor(Math.random(100000) * 100000).toString();
@@ -34,7 +28,7 @@ router.get('/add', function(req, res){
     'last_name': 'Test_last',
     'email': randomEmail().concat('@test.com')
   }).then(function(user){
-    console.log("User created: ", user)
+    console.log("User created:", user)
   });
   // access DB to add a new developer
   res.send('New Dev Added');
