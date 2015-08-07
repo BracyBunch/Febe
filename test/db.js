@@ -81,7 +81,7 @@ describe('DB tests', function() {
 
     it('shouldn\'t be able to create a Project without an owner', function(done) {
       models.Project.create({'name': 'test_project', 'description': 'just a test'}).then(function() {
-        done('Project was created');
+        done(new Error('Project was created'));
       }).catch(function() {
         done();
       });
