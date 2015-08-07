@@ -88,7 +88,7 @@ describe('DB tests', function() {
     });
 
     it('should be able to create a Project', function(done) {
-      models.Project.create({'name': 'test_project', 'description': 'just a test'}, users.rep).then(function(t_project) {
+      models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, users.rep).then(function(t_project) {
         expect(t_project).to.be.an('object');
         expect(t_project.name).to.be.a('string');
         expect(t_project.description).to.be.a('string');
