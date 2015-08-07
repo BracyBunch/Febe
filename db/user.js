@@ -1,6 +1,7 @@
 var Promise = require('bluebird');
 var db = require('./db');
 var model = require('seraph-model');
+var validator = require('validator');
 
 var Project = require('./project');
 
@@ -24,6 +25,14 @@ User.schema = {
 };
 User.setUniqueKey('email');
 User.useTimestamps();
+
+User.on('validate', function(user, cb) {
+  if (validator.isEmail(user.email)) {
+    cb();
+  } else {
+    cb('Model is invalid');
+  }
+});
 
 /**
  * Checks the database to see if a user with given email already exists
@@ -56,20 +65,13 @@ User.check_if_exists = function(email) {
  */
 User.create = function(fields) {
   return new Promise(function(resolve, reject) {
-    User.check_if_exists(fields.email).then(function(exists) {
-      if (exists) {
-        reject('User already exists with given email.');
+    User.save(fields, function(err, user) {
+      if (err) {
+        reject(err);
         return;
       }
 
-      User.save(fields, function(err, user) {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        resolve(user);
-      });
+      resolve(user);
     });
   });
 };
