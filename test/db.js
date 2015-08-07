@@ -88,7 +88,7 @@ describe('DB tests', function() {
     });
 
     it('should be able to create a Project', function(done) {
-      models.Project.create({'name': 'test_project', 'description': 'just a test'}, users.rep.id).then(function(t_project) {
+      models.Project.create({'name': 'test_project', 'description': 'just a test'}, users.rep).then(function(t_project) {
         expect(t_project).to.be.an('object');
         expect(t_project.name).to.be.a('string');
         expect(t_project.description).to.be.a('string');
@@ -100,9 +100,9 @@ describe('DB tests', function() {
 
     it('should be able to add Users as members', function(done) {
       Promise.all([
-        models.Project.add_member(project.id, users.dev1.id),
-        models.Project.add_member(project.id, users.dev3.id),
-        models.Project.add_member(project.id, users.dev2.id)
+        models.Project.add_member(project, users.dev1),
+        models.Project.add_member(project, users.dev3),
+        models.Project.add_member(project, users.dev2)
       ]).then(function() {
         models.Project.with_extras(project.id, {'members': true}).then(function(t_project) {
           expect(t_project.members).to.be.an('array');
