@@ -1,8 +1,9 @@
 var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
-var User = require('../models/User');
-var Project = require('../models/Project');
+var User = require('../models/user');
+var Project = require('../models/project');
+var Tag = require('../models/tag');
 
 /**
  * Checks the database to see if a User with given email already exists
