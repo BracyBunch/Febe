@@ -1,9 +1,10 @@
+var _ = require('underscore');
 var db = require('../db');
 var User = require('../models/User');
 var Project = require('../models/Project');
 
 /**
- * Checks the database to see if a user with given email already exists
+ * Checks the database to see if a User with given email already exists
  * @param  {String} email
  * @return {Promise.<Boolean>}
  */
@@ -14,9 +15,9 @@ var check_if_exists = function(email) {
 };
 
 /**
- * Creates a new user
- * @param  {Object} fields Fields to set on User
- * @param  {String} [fields.kind=dev] Type of User to create; dev or rep
+ * Creates a new User
+ * @param  {Object} fields              Fields to set on User
+ * @param  {String} [fields.kind=dev]   Type of User to create; dev or rep
  * @param  {String} fields.first_name
  * @param  {String} fields.last_name
  * @param  {String} fields.email
@@ -29,8 +30,25 @@ var create = function(fields) {
 };
 
 /**
+ * Update a User
+ * @param  {Integer} [id]     Id of the User to update, can be omitted if there is an id key in fields
+ * @param  {Object} fields    Fields to update
+ * @return {Promise.<User>}
+ */
+var update = function(id, fields) {
+  if (typeof id === 'object') {
+    fields = id;
+    id = fields.id;
+  }
+
+  return User.read(id).then(function(user) {
+    return User.save(_.extend(user, fields));
+  });
+};
+
+/**
  * Fetch a User including all Projects they are a member of
- * @param  {Integer} user_id Id of User
+ * @param  {Integer} user_id  Id of User
  * @return {Promise.<User>}
  */
 var with_projects = function(user_id) {
@@ -44,5 +62,6 @@ var with_projects = function(user_id) {
 module.exports =  {
   'check_if_exists': check_if_exists,
   'create': create,
+  'update': update,
   'with_projects': with_projects
 };

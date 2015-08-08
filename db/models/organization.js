@@ -35,5 +35,6 @@ Organization.on('validate', function(organization, cb) {
 
 Organization.query = Promise.promisify(Organization.query, Organization);
 Organization.save = Promise.promisify(Organization.save, Organization);
+Organization.read = Promise.promisify(Organization.read, Organization);
 
 module.exports = Organization;

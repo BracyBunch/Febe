@@ -20,6 +20,7 @@ describe('DB tests', function() {
 
   describe('User tests', function() {
     var ids_to_be_deleted = [];
+    var dev;
 
     before(function(done) {
       done();
@@ -32,6 +33,7 @@ describe('DB tests', function() {
     it('should be able to create a User', function(done) {
       models.User.create({'first_name': 'test', 'last_name': 'dev', 'email': 'test_dev@gmail.com'}).then(function(user) {
         ids_to_be_deleted.push(user.id);
+        dev = user;
 
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
@@ -39,6 +41,44 @@ describe('DB tests', function() {
         expect(user.email).to.eql('test_dev@gmail.com');
         expect(user.kind).to.eql('dev');
         done();
+      }, done);
+    });
+
+    it('should be able to update a User', function(done) {
+      models.User.update(dev.id, {'last_name': 'updated'}).then(function(user) {
+        expect(user).to.be.an('object');
+        expect(user.first_name).to.eql('test');
+        expect(user.last_name).to.eql('updated');
+        expect(user.email).to.eql('test_dev@gmail.com');
+        expect(user.kind).to.eql('dev');
+
+        models.User.read(dev.id).then(function(n_user) {
+          expect(n_user).to.be.an('object');
+          expect(n_user.first_name).to.eql('test');
+          expect(n_user.last_name).to.eql('updated');
+          expect(n_user.email).to.eql('test_dev@gmail.com');
+          expect(n_user.kind).to.eql('dev');
+          done();
+        });
+      }, done);
+    });
+
+    it('should be able to update a User without an id parameter', function(done) {
+      models.User.update({'id': dev.id, 'last_name': 'updated again'}).then(function(user) {
+        expect(user).to.be.an('object');
+        expect(user.first_name).to.eql('test');
+        expect(user.last_name).to.eql('updated again');
+        expect(user.email).to.eql('test_dev@gmail.com');
+        expect(user.kind).to.eql('dev');
+
+        models.User.read(dev.id).then(function(n_user) {
+          expect(n_user).to.be.an('object');
+          expect(n_user.first_name).to.eql('test');
+          expect(n_user.last_name).to.eql('updated again');
+          expect(n_user.email).to.eql('test_dev@gmail.com');
+          expect(n_user.kind).to.eql('dev');
+          done();
+        });
       }, done);
     });
 
@@ -109,6 +149,42 @@ describe('DB tests', function() {
         expect(t_project.published).to.eql(false);
         project = t_project;
         done();
+      }, done);
+    });
+
+    it('should be able to update a Project', function(done) {
+      models.Project.update(project.id, {'published': 'true'}).then(function(t_project) {
+        expect(t_project).to.be.an('object');
+        expect(t_project.name).to.be.a('string');
+        expect(t_project.description).to.be.a('string');
+        expect(t_project.published).to.eql(true);
+
+        models.Project.read(project.id).then(function(t_project) {
+          expect(t_project).to.be.an('object');
+          expect(t_project.name).to.be.a('string');
+          expect(t_project.description).to.be.a('string');
+          expect(t_project.published).to.eql(true);
+          done();
+        });
+      }, done);
+    });
+
+    it('should be able to update a Project without an id parameter', function(done) {
+      models.Project.update({'id': project.id, 'description': 'updated'}).then(function(t_project) {
+        expect(t_project).to.be.an('object');
+        expect(t_project.name).to.be.a('string');
+        expect(t_project.description).to.be.a('string');
+        expect(t_project.published).to.eql(true);
+        expect(t_project.description).to.eql('updated');
+
+        models.Project.read(project.id).then(function(t_project) {
+          expect(t_project).to.be.an('object');
+          expect(t_project.name).to.be.a('string');
+          expect(t_project.description).to.be.a('string');
+          expect(t_project.published).to.eql(true);
+          expect(t_project.description).to.eql('updated');
+          done();
+        });
       }, done);
     });
 
@@ -192,15 +268,54 @@ describe('DB tests', function() {
     it('should be able to create an Organization', function(done) {
       models.Organization.create({'ein': '0', 'name': 'test_org', 'description': 'just a test', 'website_url': 'http://test.com', 'location': 'Testville'}, instances.rep).then(function(t_org) {
         ids_to_be_deleted.push(t_org.id);
+        instances.org = t_org;
 
         expect(t_org).to.be.an('object');
         expect(t_org.name).to.be.a('string');
         expect(t_org.description).to.be.a('string');
+        expect(t_org.description).to.eql('just a test');
         expect(t_org.website_url).to.be.a('string');
         done();
       }, done);
     });
 
-  });
+    it('should be able to update an Organization', function(done) {
+      models.Organization.update(instances.org.id, {'description': 'updated'}).then(function(t_org) {
+        expect(t_org).to.be.an('object');
+        expect(t_org.name).to.be.a('string');
+        expect(t_org.description).to.be.a('string');
+        expect(t_org.description).to.eql('updated');
+        expect(t_org.website_url).to.be.a('string');
 
+        models.Organization.read(instances.org.id).then(function(t_org) {
+          expect(t_org).to.be.an('object');
+          expect(t_org.name).to.be.a('string');
+          expect(t_org.description).to.be.a('string');
+          expect(t_org.description).to.eql('updated');
+          expect(t_org.website_url).to.be.a('string');
+          done();
+        });
+      }, done);
+    });
+
+    it('should be able to update a User without an id parameter', function(done) {
+      models.Organization.update({'id': instances.org.id, 'description': 'updated again'}).then(function(t_org) {
+        expect(t_org).to.be.an('object');
+        expect(t_org.name).to.be.a('string');
+        expect(t_org.description).to.be.a('string');
+        expect(t_org.description).to.eql('updated again');
+        expect(t_org.website_url).to.be.a('string');
+
+        models.Organization.read(instances.org.id).then(function(t_org) {
+          expect(t_org).to.be.an('object');
+          expect(t_org.name).to.be.a('string');
+          expect(t_org.description).to.be.a('string');
+          expect(t_org.description).to.eql('updated again');
+          expect(t_org.website_url).to.be.a('string');
+          done();
+        });
+      }, done);
+    });
+
+  });
 });
