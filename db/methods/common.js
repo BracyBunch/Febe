@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
 
@@ -58,7 +59,24 @@ var add_rels_generator = function(add_rel) {
   };
 };
 
+/**
+ * Generates a function that removes fields not listed in model.public_fields
+ * @param  {Object} model
+ * @return {Function}
+ */
+var clean_generator = function(model) {
+  /**
+   * Remove fields not listed in model.public_fields
+   * @param  {Object} instance Model instance
+   * @return {Object}          Cleaned model instance
+   */
+  return function(instance) {
+    return _.pick(instance, model.public_fields);
+  };
+};
+
 module.exports = {
   'add_rel_generator': add_rel_generator,
-  'add_rels_generator': add_rels_generator
+  'add_rels_generator': add_rels_generator,
+  'clean_generator': clean_generator
 };

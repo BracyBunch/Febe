@@ -20,6 +20,18 @@ Organization.schema = {
 Organization.setUniqueKey('ein');
 Organization.useTimestamps();
 
+Organization.public_fields = [
+  'id',
+  'ein',
+  'verified',
+  'name',
+  'description',
+  'website_url',
+  'donation_url',
+  'logo_url',
+  'location'
+];
+
 Organization.on('validate', function(organization, cb) {
   var valid = true;
   valid = valid && validator.isURL(organization.website_url, {'protocol': ['http', 'https']});
