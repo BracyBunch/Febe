@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
 var Project = require('../models/project');
@@ -34,7 +34,7 @@ var update = function(id, fields) {
   }
 
   return Project.read(id).then(function(project) {
-    return Project.save(_.extend(project, fields));
+    return Project.save(_.extend(project, fields, {'id': id}));
   });
 };
 
@@ -114,7 +114,7 @@ var with_extras = function(project_id, options) {
 var find_by_skill = function(skill_ids) {
   var query = [
     'MATCH (tags:Tag {kind:"skill"}) WHERE id(tags) IN {tags}',
-    'WITH COLLECT(tags) as t',
+    'WITH COLLECT(tags) AS t',
     'MATCH (node:Project)-->(tags) WHERE ALL(tag IN t WHERE (node)-->(tag))'
   ].join(' ');
 
