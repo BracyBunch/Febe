@@ -23,5 +23,6 @@ Tag.useTimestamps();
 
 Tag.query = Promise.promisify(Tag.query, Tag);
 Tag.save = Promise.promisify(Tag.save, Tag);
+Tag.read = Promise.promisify(Tag.read, Tag);
 
 module.exports = Tag;

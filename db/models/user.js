@@ -35,5 +35,6 @@ User.on('validate', function(user, cb) {
 
 User.query = Promise.promisify(User.query, User);
 User.save = Promise.promisify(User.save, User);
+User.read = Promise.promisify(User.read, User);
 
 module.exports = User;
