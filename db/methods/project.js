@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var Promise = require('bluebird');
 var db = require('../db');
 var Project = require('../models/project');
@@ -17,6 +18,23 @@ var create = function(fields, owner) {
     return db.relate(owner, 'owns', project).then(function() {
       return project;
     });
+  });
+};
+
+/**
+ * Update a Project
+ * @param  {Integer} [id]     Id of the Project to update, can be omitted if there is an id key in fields
+ * @param  {Object} fields    Fields to update
+ * @return {Promise.<Project>}
+ */
+var update = function(id, fields) {
+  if (typeof id === 'object') {
+    fields = id;
+    id = fields.id;
+  }
+
+  return Project.read(id).then(function(project) {
+    return Project.save(_.extend(project, fields));
   });
 };
 
@@ -105,6 +123,7 @@ var find_by_skill = function(skill_ids) {
 
 module.exports = {
   'create': create,
+  'update': update,
   'add_member': add_member,
   'add_members': add_members,
   'with_extras': with_extras,
