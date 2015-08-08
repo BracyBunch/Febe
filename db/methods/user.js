@@ -52,6 +52,13 @@ var update = function(id, fields) {
 };
 
 /**
+ * Removes fields that shouldn't be public
+ * @param {User}
+ * @return {User} User with private fields removed
+ */
+var clean = common.clean_generator(User);
+
+/**
  * Adds Tag as a strength of User
  * @param {Integer|User}  user   User or id
  * @param {Integer|Tag}   skill  Tag or id
@@ -104,6 +111,7 @@ module.exports =  {
   'check_if_exists': check_if_exists,
   'create': create,
   'update': update,
+  'clean': clean,
   'add_strength': add_strength,
   'add_strengths': add_strengths,
   'add_interest': add_interest,

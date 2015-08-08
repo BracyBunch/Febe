@@ -47,6 +47,14 @@ var update = function(id, fields) {
 };
 
 /**
+ * Removes fields that shouldn't be public
+ * @param {Project}
+ * @return {Project} Project with private fields removed
+ */
+var clean = common.clean_generator(Project);
+
+
+/**
  * Adds a User as a member of Project
  * @param {Integer|Project}  project   Project object or id to add User to
  * @param {Integer|User}     member    User or id to add to Project
@@ -98,6 +106,7 @@ var find_by_skill = function(skill_ids) {
 module.exports = {
   'create': create,
   'update': update,
+  'clean': clean,
   'add_member': add_member,
   'add_members': add_members,
   'with_extras': with_extras,

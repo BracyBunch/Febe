@@ -1,5 +1,8 @@
 var _ = require('lodash');
 var db = require('../db');
+
+var common = require('./common');
+
 var Tag = require('../models/tag');
 
 /**
@@ -28,7 +31,16 @@ var update = function(id, fields) {
   });
 };
 
+/**
+ * Removes fields that shouldn't be public
+ * @param {Tag}
+ * @return {Tag} Tag with private fields removed
+ */
+var clean = common.clean_generator(Tag);
+
+
 module.exports = {
   'create': create,
-  'update': update
+  'update': update,
+  'clean': clean
 };

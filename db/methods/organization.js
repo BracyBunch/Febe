@@ -1,6 +1,9 @@
 var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
+
+var common = require('./common');
+
 var Organization = require('../models/organization');
 
 /**
@@ -36,7 +39,16 @@ var update = function(id, fields) {
   });
 };
 
+/**
+ * Removes fields that shouldn't be public
+ * @param {Organization}
+ * @return {Organization} Organization with private fields removed
+ */
+var clean = common.clean_generator(Organization);
+
+
 module.exports = {
   'create': create,
-  'update': update
+  'update': update,
+  'clean': clean
 };
