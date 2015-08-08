@@ -298,7 +298,7 @@ describe('DB tests', function() {
       }, done);
     });
 
-    it('should be able to update a User without an id parameter', function(done) {
+    it('should be able to update an Organization without an id parameter', function(done) {
       models.Organization.update({'id': instances.org.id, 'description': 'updated again'}).then(function(t_org) {
         expect(t_org).to.be.an('object');
         expect(t_org.name).to.be.a('string');

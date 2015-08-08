@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var db = require('../db');
 var User = require('../models/User');
 var Project = require('../models/Project');
@@ -42,7 +42,7 @@ var update = function(id, fields) {
   }
 
   return User.read(id).then(function(user) {
-    return User.save(_.extend(user, fields));
+    return User.save(_.extend(user, fields, {'id': id}));
   });
 };
 

@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
 var Organization = require('../models/organization');
@@ -32,7 +32,7 @@ var update = function(id, fields) {
   }
 
   return Organization.read(id).then(function(organization) {
-    return Organization.save(_.extend(organization, fields));
+    return Organization.save(_.extend(organization, fields, {'id': id}));
   });
 };
 
