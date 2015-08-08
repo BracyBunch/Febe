@@ -1,4 +1,4 @@
-// var Promise = require('bluebird');
+var Promise = require('bluebird');
 var db = require('../db');
 var model = require('seraph-model');
 
@@ -20,5 +20,8 @@ Tag.schema = {
 };
 Tag.setUniqueKey('name');
 Tag.useTimestamps();
+
+Tag.query = Promise.promisify(Tag.query, Tag);
+Tag.save = Promise.promisify(Tag.save, Tag);
 
 module.exports = Tag;

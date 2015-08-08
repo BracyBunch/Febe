@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var db = require('../db');
 var model = require('seraph-model');
 
@@ -15,5 +16,8 @@ Project.schema = {
   'active': {'type': Boolean, 'default': true}
 };
 Project.useTimestamps();
+
+Project.query = Promise.promisify(Project.query, Project);
+Project.save = Promise.promisify(Project.save, Project);
 
 module.exports = Project;
