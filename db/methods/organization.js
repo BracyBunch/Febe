@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var Promise = require('bluebird');
 var db = require('../db');
 var Organization = require('../models/organization');
@@ -18,6 +19,24 @@ var create = function(fields, owner) {
   });
 };
 
+/**
+ * Update an Organization
+ * @param  {Integer} [id]     Id of the Organization to update, can be omitted if there is an id key in fields
+ * @param  {Object} fields    Fields to update
+ * @return {Promise.<Organization>}
+ */
+var update = function(id, fields) {
+  if (typeof id === 'object') {
+    fields = id;
+    id = fields.id;
+  }
+
+  return Organization.read(id).then(function(organization) {
+    return Organization.save(_.extend(organization, fields));
+  });
+};
+
 module.exports = {
-  'create': create
+  'create': create,
+  'update': update
 };
