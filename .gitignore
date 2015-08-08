@@ -19,3 +19,5 @@ dist/
 # Dependency directories
 node_modules/
 bower_components/
+
+main.js
