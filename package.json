@@ -29,6 +29,7 @@
     "seraph": "^0.13.2",
     "seraph-model": "^0.7.2",
     "serve-favicon": "^2.3.0",
+    "underscore": "^1.8.3",
     "validator": "^4.0.2"
   },
   "devDependencies": {

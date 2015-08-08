@@ -1,5 +1,5 @@
 // var Promise = require('bluebird');
-var db = require('./db');
+var db = require('../db');
 var model = require('seraph-model');
 
 /*
