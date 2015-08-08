@@ -22,8 +22,8 @@ var create = function(fields, owner) {
 
 /**
  * Checks if User member_id is already a member of Project project_id
- * @param  {Integer} project_id Project id
- * @param  {Integer} member_id  User id
+ * @param  {Integer} project_id  Project id
+ * @param  {Integer} member_id   User id
  * @return {Boolean}
  */
 var _already_member_of_project = function(project_id, member_id) {

@@ -15,8 +15,8 @@ var check_if_exists = function(email) {
 
 /**
  * Creates a new user
- * @param  {Object} fields Fields to set on User
- * @param  {String} [fields.kind=dev] Type of User to create; dev or rep
+ * @param  {Object} fields              Fields to set on User
+ * @param  {String} [fields.kind=dev]   Type of User to create; dev or rep
  * @param  {String} fields.first_name
  * @param  {String} fields.last_name
  * @param  {String} fields.email
@@ -30,7 +30,7 @@ var create = function(fields) {
 
 /**
  * Fetch a User including all Projects they are a member of
- * @param  {Integer} user_id Id of User
+ * @param  {Integer} user_id  Id of User
  * @return {Promise.<User>}
  */
 var with_projects = function(user_id) {
