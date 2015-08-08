@@ -367,7 +367,9 @@ describe('DB tests', function() {
       }).then(function() {
         Promise.props({
           'skill1': models.Tag.create({'kind': 'skill', 'name': 'test1'}),
-          'skill2': models.Tag.create({'kind': 'skill', 'name': 'test2'})
+          'skill2': models.Tag.create({'kind': 'skill', 'name': 'test2'}),
+          'cause1': models.Tag.create({'kind': 'cause', 'name': 'cause1'}),
+          'cause2': models.Tag.create({'kind': 'cause', 'name': 'cause2'})
         }).then(function(tags) {
           instances.tags = tags;
           for (var key in instances.tags) {
@@ -443,6 +445,39 @@ describe('DB tests', function() {
             done();
           } else {
             done(new Error('Added Tag as a strength multiple times'));
+          }
+        }, done);
+      });
+    });
+
+    it('should be able to add Tags to Users as interests', function(done) {
+      models.User.add_interests(instances.users.dev1, [instances.tags.cause1, instances.tags.cause2]).then(function() {
+        models.User.with_extras(instances.users.dev1.id, {'interests': true}).then(function(user) {
+          expect(user.interests).to.be.an('array');
+          expect(user.interests).to.have.length(2);
+          expect(user.interests[0]).to.be.an('object');
+          expect(user.interests[0].kind).to.eql('cause');
+          done();
+        }, done);
+      }, done);
+    });
+
+    it('shouldn\'t be able to add Tag as an interest more than once', function(done) {
+      models.User.add_interest(instances.users.dev1, instances.tags.cause1).then(function() {
+        done(new Error('Added Tag as an interest multiple times'));
+      }).catch(function() {
+        var query = [
+          'MATCH (u:User) WHERE id(u)={user_id}',
+          'MATCH (t:Tag) WHERE id(t)={tag_id}',
+          'MATCH r=(u)-[:interest]->(t)',
+          'RETURN COUNT(r) AS num'
+        ].join(' ');
+
+        models.db.query(query, {'user_id': instances.users.dev1.id, 'tag_id': instances.tags.cause1.id}).then(function(row) {
+          if (row.num === 1) {
+            done();
+          } else {
+            done(new Error('Added Tag as an interest multiple times'));
           }
         }, done);
       });
