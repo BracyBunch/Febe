@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
 var Project = require('../models/project');

@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var db = require('../db');
 var User = require('../models/User');
 var Project = require('../models/Project');
