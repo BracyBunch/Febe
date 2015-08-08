@@ -79,16 +79,22 @@ var add_strengths = function(user, skills) {
 };
 
 /**
- * Fetch a User including all Projects they are a member of
- * @param  {Integer} user_id  Id of User
- * @return {Promise.<User>}
+ * Fetches one User including specifed extras
+ * @param  {Integer}        user_id         Id of the User
+ * @param  {Object|Boolean} [options=true]  Either an object with with the extras to include or true to include all extras
+ * @return {Promise.<User>}                 Project with all specified models included
  */
-var with_projects = function(user_id) {
-  var include = {
-    'projects': {'model': Project, 'rel': 'member_of'}
-  };
+var with_extras = function(user_id, options) {
+  var include = {};
+  if (options === undefined) options = true;
 
-  return User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include});
+  if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'member_of'};
+  if (options === true || options.strengths) include.strengths = {'model': Tag, 'rel': 'strength'};
+
+
+  return User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}).then(function(user) {
+    return user[0];
+  });
 };
 
 module.exports =  {
@@ -97,5 +103,5 @@ module.exports =  {
   'update': update,
   'add_strength': add_strength,
   'add_strengths': add_strengths,
-  'with_projects': with_projects
+  'with_extras': with_extras
 };
