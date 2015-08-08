@@ -7,15 +7,20 @@ var Tag = require('../models/tag');
 
 /**
  * Create and save a new Project
- * @param  {Object}        fields   Fields to create Project with
- * @param  {Integer|User}  owner    User object or id of the Project owner
- * @return {Promise.<Project>}      The newly created Project
+ * @param  {Object}        fields               Fields to create Project with
+ * @param  {Integer|Organization}  organization Organization or id
+ * @param  {Integer|User}  owner                User or id of the Project owner
+ * @return {Promise.<Project>}                  The newly created Project
  */
-var create = function(fields, owner) {
+var create = function(fields, organization, owner) {
+  if (organization === undefined) return Promise.reject(new Error('Organization not given.'));
   if (owner === undefined) return Promise.reject(new Error('Owner not given.'));
 
   return Project.save(fields).then(function(project) {
-    return db.relate(owner, 'owns', project).then(function() {
+    return Promise.all([
+      db.relate(organization, 'runs', project),
+      db.relate(owner, 'owns', project)
+    ]).then(function() {
       return project;
     });
   });
@@ -39,30 +44,12 @@ var update = function(id, fields) {
 };
 
 /**
- * Checks if User member_id is already a member of Project project_id
- * @param  {Integer} project_id  Project id
- * @param  {Integer} member_id   User id
- * @return {Boolean}
- */
-var _already_member_of_project = function(project_id, member_id) {
-  var query = [
-    'MATCH (member:User) WHERE id(member)={member_id}',
-    'MATCH (project:Project) WHERE id(project)={project_id} AND (member)-->(project)',
-    'RETURN COUNT(project)>0 AS exists'
-  ].join(' ');
-
-  return db.query(query, {'project_id': project_id, 'member_id': member_id}).then(function(row) {
-    return row.exists;
-  });
-};
-
-/**
  * Adds a User as a member of Project
  * @param {Integer|Project}  project   Project object or id to add User to
  * @param {Integer|User}     member    User or id to add to Project
  */
 var add_member = function(project, member) {
-  return _already_member_of_project(project.id || project, member.id || member).then(function(already_member) {
+  return db.has_rel('User', member.id || member, 'member_of', 'Project', project.id || project).then(function(already_member) {
     if (already_member) throw new Error('User is already a member of the Project');
 
     return db.relate(member, 'member_of', project).then(function() {

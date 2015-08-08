@@ -1,7 +1,9 @@
 var _ = require('lodash');
+var Promise = require('bluebird');
 var db = require('../db');
-var User = require('../models/User');
-var Project = require('../models/Project');
+var User = require('../models/user');
+var Project = require('../models/project');
+var Tag = require('../models/tag');
 
 /**
  * Checks the database to see if a User with given email already exists
@@ -47,21 +49,59 @@ var update = function(id, fields) {
 };
 
 /**
- * Fetch a User including all Projects they are a member of
- * @param  {Integer} user_id  Id of User
- * @return {Promise.<User>}
+ * Adds Tag as a strength of User
+ * @param {Integer|User}  user   User or id
+ * @param {Integer|Tag}   skill  Tag or id
  */
-var with_projects = function(user_id) {
-  var include = {
-    'projects': {'model': Project, 'rel': 'member_of'}
-  };
+var add_strength = function(user, skill) {
+  return db.has_rel('User', user.id || user, 'strength', 'Tag', skill.id || skill).then(function(already_member) {
+    if (already_member) throw new Error('User already has skill as a strength');
 
-  return User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include});
+    return db.relate(user, 'strength', skill).then(function() {
+      return true;
+    });
+  });
+};
+
+/**
+ * Adds an array of Tags as strengths of User
+ * @param {Integer|User}     user    User or id
+ * @param {Integer[]|Tag[]}  skills  Array of Users or ids
+ */
+var add_strengths = function(user, skills) {
+  var calls = [];
+
+  skills.forEach(function(skill) {
+    calls.push(add_strength(user, skill));
+  });
+
+  return Promise.all(calls);
+};
+
+/**
+ * Fetches one User including specifed extras
+ * @param  {Integer}        user_id         Id of the User
+ * @param  {Object|Boolean} [options=true]  Either an object with with the extras to include or true to include all extras
+ * @return {Promise.<User>}                 Project with all specified models included
+ */
+var with_extras = function(user_id, options) {
+  var include = {};
+  if (options === undefined) options = true;
+
+  if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'member_of'};
+  if (options === true || options.strengths) include.strengths = {'model': Tag, 'rel': 'strength'};
+
+
+  return User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}).then(function(user) {
+    return user[0];
+  });
 };
 
 module.exports =  {
   'check_if_exists': check_if_exists,
   'create': create,
   'update': update,
-  'with_projects': with_projects
+  'add_strength': add_strength,
+  'add_strengths': add_strengths,
+  'with_extras': with_extras
 };
