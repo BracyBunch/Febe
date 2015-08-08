@@ -7,15 +7,20 @@ var Tag = require('../models/tag');
 
 /**
  * Create and save a new Project
- * @param  {Object}        fields   Fields to create Project with
- * @param  {Integer|User}  owner    User object or id of the Project owner
- * @return {Promise.<Project>}      The newly created Project
+ * @param  {Object}        fields               Fields to create Project with
+ * @param  {Integer|Organization}  organization Organization or id
+ * @param  {Integer|User}  owner                User or id of the Project owner
+ * @return {Promise.<Project>}                  The newly created Project
  */
-var create = function(fields, owner) {
+var create = function(fields, organization, owner) {
+  if (organization === undefined) return Promise.reject(new Error('Organization not given.'));
   if (owner === undefined) return Promise.reject(new Error('Owner not given.'));
 
   return Project.save(fields).then(function(project) {
-    return db.relate(owner, 'owns', project).then(function() {
+    return Promise.all([
+      db.relate(organization, 'runs', project),
+      db.relate(owner, 'owns', project)
+    ]).then(function() {
       return project;
     });
   });
