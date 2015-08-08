@@ -1,6 +1,9 @@
 var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
+
+var common = require('./common');
+
 var Project = require('../models/project');
 var User = require('../models/user');
 var Tag = require('../models/tag');
@@ -48,30 +51,14 @@ var update = function(id, fields) {
  * @param {Integer|Project}  project   Project object or id to add User to
  * @param {Integer|User}     member    User or id to add to Project
  */
-var add_member = function(project, member) {
-  return db.has_rel('User', member.id || member, 'member_of', 'Project', project.id || project).then(function(already_member) {
-    if (already_member) throw new Error('User is already a member of the Project');
-
-    return db.relate(member, 'member_of', project).then(function() {
-      return true;
-    });
-  });
-};
+var add_member = common.add_rel_generator('User', 'member_of', 'Project');
 
 /**
  * Adds an array of Users as members of Project
  * @param {Integer|Project}      project  Project or id to add Users to
  * @param {Integer[]|Project[]}  members  Array of Users or ids to add to Project
  */
-var add_members = function(project, members) {
-  var calls = [];
-
-  members.forEach(function(member) {
-    calls.push(add_member(project, member));
-  });
-
-  return Promise.all(calls);
-};
+var add_members = common.add_rels_generator(add_member);
 
 /**
  * Fetches one Project including specifed extras
