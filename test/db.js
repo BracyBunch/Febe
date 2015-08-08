@@ -20,7 +20,7 @@ describe('DB tests', function() {
 
   describe('User tests', function() {
     var ids_to_be_deleted = [];
-    var dev;
+    var instances = {};
 
     before(function(done) {
       done();
@@ -33,7 +33,7 @@ describe('DB tests', function() {
     it('should be able to create a User', function(done) {
       models.User.create({'first_name': 'test', 'last_name': 'dev', 'email': 'test_dev@gmail.com'}).then(function(user) {
         ids_to_be_deleted.push(user.id);
-        dev = user;
+        instances.dev = user;
 
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
@@ -45,14 +45,14 @@ describe('DB tests', function() {
     });
 
     it('should be able to update a User', function(done) {
-      models.User.update(dev.id, {'last_name': 'updated'}).then(function(user) {
+      models.User.update(instances.dev.id, {'last_name': 'updated'}).then(function(user) {
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
         expect(user.last_name).to.eql('updated');
         expect(user.email).to.eql('test_dev@gmail.com');
         expect(user.kind).to.eql('dev');
 
-        models.User.read(dev.id).then(function(n_user) {
+        models.User.read(instances.dev.id).then(function(n_user) {
           expect(n_user).to.be.an('object');
           expect(n_user.first_name).to.eql('test');
           expect(n_user.last_name).to.eql('updated');
@@ -64,14 +64,14 @@ describe('DB tests', function() {
     });
 
     it('should be able to update a User without an id parameter', function(done) {
-      models.User.update({'id': dev.id, 'last_name': 'updated again'}).then(function(user) {
+      models.User.update({'id': instances.dev.id, 'last_name': 'updated again'}).then(function(user) {
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
         expect(user.last_name).to.eql('updated again');
         expect(user.email).to.eql('test_dev@gmail.com');
         expect(user.kind).to.eql('dev');
 
-        models.User.read(dev.id).then(function(n_user) {
+        models.User.read(instances.dev.id).then(function(n_user) {
           expect(n_user).to.be.an('object');
           expect(n_user.first_name).to.eql('test');
           expect(n_user.last_name).to.eql('updated again');
@@ -94,6 +94,8 @@ describe('DB tests', function() {
     it('should be able to create a User:rep', function(done) {
       models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'rep', 'email': 'test_rep@gmail.com'}).then(function(user) {
         ids_to_be_deleted.push(user.id);
+        instances.rep = user;
+
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
         expect(user.last_name).to.eql('rep');
@@ -107,7 +109,7 @@ describe('DB tests', function() {
 
   describe('Project tests', function() {
     var ids_to_be_deleted = [];
-    var users, project;
+    var instances = {};
 
     before(function(done) {
       Promise.props({
@@ -117,9 +119,9 @@ describe('DB tests', function() {
         'dev3': models.User.create({'first_name': 'test3', 'last_name': 'dev', 'email': 'p_test_dev3@gmail.com'})
         // 'tag1': models.Tag.create
       }).then(function(p_users) {
-        users = p_users;
-        for (var key in users) {
-          ids_to_be_deleted.push(users[key].id);
+        instances.users = p_users;
+        for (var key in instances.users) {
+          ids_to_be_deleted.push(instances.users[key].id);
         }
         done();
       });
@@ -140,26 +142,26 @@ describe('DB tests', function() {
     });
 
     it('should be able to create a Project', function(done) {
-      models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, users.rep).then(function(t_project) {
+      models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, instances.users.rep).then(function(t_project) {
         ids_to_be_deleted.push(t_project.id);
+        instances.project = t_project;
 
         expect(t_project).to.be.an('object');
         expect(t_project.name).to.be.a('string');
         expect(t_project.description).to.be.a('string');
         expect(t_project.published).to.eql(false);
-        project = t_project;
         done();
       }, done);
     });
 
     it('should be able to update a Project', function(done) {
-      models.Project.update(project.id, {'published': 'true'}).then(function(t_project) {
+      models.Project.update(instances.project.id, {'published': 'true'}).then(function(t_project) {
         expect(t_project).to.be.an('object');
         expect(t_project.name).to.be.a('string');
         expect(t_project.description).to.be.a('string');
         expect(t_project.published).to.eql(true);
 
-        models.Project.read(project.id).then(function(t_project) {
+        models.Project.read(instances.project.id).then(function(t_project) {
           expect(t_project).to.be.an('object');
           expect(t_project.name).to.be.a('string');
           expect(t_project.description).to.be.a('string');
@@ -170,14 +172,14 @@ describe('DB tests', function() {
     });
 
     it('should be able to update a Project without an id parameter', function(done) {
-      models.Project.update({'id': project.id, 'description': 'updated'}).then(function(t_project) {
+      models.Project.update({'id': instances.project.id, 'description': 'updated'}).then(function(t_project) {
         expect(t_project).to.be.an('object');
         expect(t_project.name).to.be.a('string');
         expect(t_project.description).to.be.a('string');
         expect(t_project.published).to.eql(true);
         expect(t_project.description).to.eql('updated');
 
-        models.Project.read(project.id).then(function(t_project) {
+        models.Project.read(instances.project.id).then(function(t_project) {
           expect(t_project).to.be.an('object');
           expect(t_project.name).to.be.a('string');
           expect(t_project.description).to.be.a('string');
@@ -189,8 +191,8 @@ describe('DB tests', function() {
     });
 
     it('should be able to add Users as members', function(done) {
-      models.Project.add_members(project, [users.dev1, users.dev2, users.dev3]).then(function() {
-        models.Project.with_extras(project.id, {'members': true}).then(function(t_project) {
+      models.Project.add_members(instances.project, [instances.users.dev1, instances.users.dev2, instances.users.dev3]).then(function() {
+        models.Project.with_extras(instances.project.id, {'members': true}).then(function(t_project) {
           expect(t_project.members).to.be.an('array');
           expect(t_project.members).to.have.length(3);
           expect(t_project.members[0]).to.be.an('object');
@@ -201,7 +203,7 @@ describe('DB tests', function() {
     });
 
     it('shouldn\'t be able to add User as a member more than once', function(done) {
-      models.Project.add_member(project, users.dev1).then(function() {
+      models.Project.add_member(instances.project, instances.users.dev1).then(function() {
         done(new Error('Added User as a member multiple times'));
       }).catch(function() {
         var query = [
@@ -210,7 +212,8 @@ describe('DB tests', function() {
           'MATCH r=(u)-[:member_of]->(p)',
           'RETURN COUNT(r) AS num'
         ].join(' ');
-        models.db.query(query, {'user_id': users.dev1.id, 'project_id': project.id}, function(err, row) {
+
+        models.db.query(query, {'user_id': instances.users.dev1.id, 'project_id': instances.project.id}, function(err, row) {
           if (row.num === 1) {
             done();
           } else {
