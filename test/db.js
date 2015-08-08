@@ -268,15 +268,54 @@ describe('DB tests', function() {
     it('should be able to create an Organization', function(done) {
       models.Organization.create({'ein': '0', 'name': 'test_org', 'description': 'just a test', 'website_url': 'http://test.com', 'location': 'Testville'}, instances.rep).then(function(t_org) {
         ids_to_be_deleted.push(t_org.id);
+        instances.org = t_org;
 
         expect(t_org).to.be.an('object');
         expect(t_org.name).to.be.a('string');
         expect(t_org.description).to.be.a('string');
+        expect(t_org.description).to.eql('just a test');
         expect(t_org.website_url).to.be.a('string');
         done();
       }, done);
     });
 
-  });
+    it('should be able to update an Organization', function(done) {
+      models.Organization.update(instances.org.id, {'description': 'updated'}).then(function(t_org) {
+        expect(t_org).to.be.an('object');
+        expect(t_org.name).to.be.a('string');
+        expect(t_org.description).to.be.a('string');
+        expect(t_org.description).to.eql('updated');
+        expect(t_org.website_url).to.be.a('string');
 
+        models.Organization.read(instances.org.id).then(function(t_org) {
+          expect(t_org).to.be.an('object');
+          expect(t_org.name).to.be.a('string');
+          expect(t_org.description).to.be.a('string');
+          expect(t_org.description).to.eql('updated');
+          expect(t_org.website_url).to.be.a('string');
+          done();
+        });
+      }, done);
+    });
+
+    it('should be able to update a User without an id parameter', function(done) {
+      models.Organization.update({'id': instances.org.id, 'description': 'updated again'}).then(function(t_org) {
+        expect(t_org).to.be.an('object');
+        expect(t_org.name).to.be.a('string');
+        expect(t_org.description).to.be.a('string');
+        expect(t_org.description).to.eql('updated again');
+        expect(t_org.website_url).to.be.a('string');
+
+        models.Organization.read(instances.org.id).then(function(t_org) {
+          expect(t_org).to.be.an('object');
+          expect(t_org.name).to.be.a('string');
+          expect(t_org.description).to.be.a('string');
+          expect(t_org.description).to.eql('updated again');
+          expect(t_org.website_url).to.be.a('string');
+          done();
+        });
+      }, done);
+    });
+
+  });
 });
