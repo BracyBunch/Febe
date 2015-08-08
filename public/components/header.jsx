@@ -7,15 +7,13 @@ module.exports = React.createClass({
   render: function(){
     return <nav className="navbar navbar-default header">
       <div className= "container-fluid">
-        <Link to="/" className="navbar-brand">
-          Home
-        </Link>
+        <Link to="/" className="navbar-brand">About</Link>
+        <Link to="/" className="navbar-brand">Browse</Link>
+        <Link to="/" className="navbar-brand">Team</Link>
         <ul className="nav navbar-nav navbar-right">
-          <button className="btn btn-success">
-            Login
-          </button>
+          <button className="btn navbar-btn btn-success">Login</button>
         </ul>
       </div>
     </nav>
-  },
+  }
 })
