@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var Promise = require('bluebird');
 var db = require('../db');
 var User = require('../models/User');
 var Project = require('../models/Project');
@@ -47,6 +48,36 @@ var update = function(id, fields) {
 };
 
 /**
+ * Adds Tag as a strength of User
+ * @param {Integer|User}  user   User or id
+ * @param {Integer|Tag}   skill  Tag or id
+ */
+var add_strength = function(user, skill) {
+  return db.has_rel('User', user.id || user, 'strength', 'Tag', skill.id || skill).then(function(already_member) {
+    if (already_member) throw new Error('User already has skill as a strength');
+
+    return db.relate(user, 'strength', skill).then(function() {
+      return true;
+    });
+  });
+};
+
+/**
+ * Adds an array of Tags as strengths of User
+ * @param {Integer|User}     user    User or id
+ * @param {Integer[]|Tag[]}  skills  Array of Users or ids
+ */
+var add_strengths = function(user, skills) {
+  var calls = [];
+
+  skills.forEach(function(skill) {
+    calls.push(add_strength(user, skill));
+  });
+
+  return Promise.all(calls);
+};
+
+/**
  * Fetch a User including all Projects they are a member of
  * @param  {Integer} user_id  Id of User
  * @return {Promise.<User>}
@@ -63,5 +94,7 @@ module.exports =  {
   'check_if_exists': check_if_exists,
   'create': create,
   'update': update,
+  'add_strength': add_strength,
+  'add_strengths': add_strengths,
   'with_projects': with_projects
 };
