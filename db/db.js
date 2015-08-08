@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var seraph = require('seraph');
 var options = {};
 
@@ -11,4 +12,7 @@ if (process.env.GRAPHSTORY_URL) {
   };
 }
 
-module.exports = seraph(options);
+var db = seraph(options);
+db.query = Promise.promisify(db.query);
+
+module.exports = db;

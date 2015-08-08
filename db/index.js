@@ -1,17 +1,17 @@
-// var Promise = require('bluebird');
+var _ = require('underscore');
 var db = require('./db');
 
-var Project = require('./project');
-var User = require('./user');
-var Organization = require('./organization');
-var Tag = require('./tag');
+var Project = require('./models/project');
+var User = require('./models/user');
+var Organization = require('./models/organization');
+var Tag = require('./models/tag');
 
 module.exports = {
   'db': db,
-  'User': User,
-  'Organization': Organization,
-  'Project': Project,
-  'Tag': Tag,
+  'User': _.extend(User, require('./methods/User')),
+  'Organization': _.extend(Organization, require('./methods/organization')),
+  'Project': _.extend(Project, require('./methods/project')),
+  'Tag': _.extend(Tag, require('./methods/tag')),
 
   'test_dev': function() { return {'first_name': 'dev' + Math.floor(Math.random() * 100), 'last_name': 'gy!be', 'email': 'bojangles' + Math.floor(Math.random() * 100) + '@gmail.com'};},
   'test_rep': function() { return {'kind': 'rep', 'first_name': 'rep' + Math.floor(Math.random() * 100), 'last_name': 'aclu', 'email': '501c' + Math.floor(Math.random() * 100) + '@gmail.com'};},

@@ -1,4 +1,4 @@
-var org = require('../db/organization')
+var Organization = require('../db').Organization;
 var express = require('express');
 var http = require('http');
 var router = express.Router();
@@ -13,7 +13,8 @@ router.get('/add', function(req, res){
   if (req.body.Test === 'test'){
     return res.send("Test done...");
   }
-  org.create({
+  // access DB to add a new organization
+  Organization.create({
     'ein': 123456,
     'verified': false,
     'name': "Bob's Redmill",
@@ -22,19 +23,18 @@ router.get('/add', function(req, res){
     'location': "Scottsdale, AZ"
   }, "TEST_OWNER").then(function(org){
     console.log("Org added:", org)
-  })
-  // access DB to add a new organization
-  res.send(org);
-})
+    res.send(org);
+  });
+});
 
 router.delete('/remove', function(req, res){
   // access DB to add a new organization
   res.send();
-})
+});
 
 router.put('/update', function(req, res){
   // access DB to add a new organization
   res.send();
-})
+});
 
 module.exports = router;

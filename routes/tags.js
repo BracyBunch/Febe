@@ -1,4 +1,4 @@
-var tags = require('../db/tag')
+var Tag = require('../db').Tag;
 var express = require('express');
 var http = require('http');
 var router = express.Router();
@@ -15,17 +15,17 @@ router.post('/add', function(req, res){
   }
   // access DB to add a new tag
   res.send();
-})
+});
 
 router.delete('/remove', function(req, res){
   // access DB to remove a new tag
   res.send();
-})
+});
 
 router.put('/update', function(req, res){
   // access DB to update a new tag
   res.send();
-})
+});
 
 
 module.exports = router;

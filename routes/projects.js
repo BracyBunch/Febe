@@ -1,4 +1,4 @@
-var projects = require('../db/project')
+var Project = require('../db').Project;
 var express = require('express');
 var http = require('http');
 var router = express.Router();
@@ -15,17 +15,17 @@ router.post('/add', function(req, res){
   }
   // access DB to add a new project
   res.send();
-})
+});
 
 router.delete('/remove', function(req, res){
   // access DB to remove a new project
   res.send();
-})
+});
 
 router.put('/update', function(req, res){
   // access DB to update a new project
   res.send();
-})
+});
 
 
 module.exports = router;

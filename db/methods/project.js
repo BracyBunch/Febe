@@ -1,24 +1,8 @@
 var Promise = require('bluebird');
-var db = require('./db');
-var model = require('seraph-model');
-
-var User = require('./user');
-var Tag = require('./tag');
-
-/*
-  ?[:cause]-(:Tag {kind: 'cause'})
-  [:skill]-(:Tag {kind: 'skill'})
- */
-var Project = model(db, 'Project');
-Project.schema = {
-  'name': {'type': String, 'required': true},
-  'complete_by': {'type': Date, 'required': true},
-  'description': {'type': String, 'required': true},
-  'links': {'type': Array, 'default': []},
-  'published': {'type': Boolean, 'default': false},
-  'active': {'type': Boolean, 'default': true}
-};
-Project.useTimestamps();
+var db = require('../db');
+var Project = require('../models/project');
+var User = require('../models/user');
+var Tag = require('../models/tag');
 
 /**
  * Create and save a new Project
@@ -26,7 +10,7 @@ Project.useTimestamps();
  * @param  {Integer|User} owner User object or id of the Project owner
  * @return {Promise.<Project>}          The newly created Project
  */
-Project.create = function(fields, owner) {
+var create = function(fields, owner) {
   return new Promise(function(resolve, reject) {
     if (owner === undefined && owner.id === undefined) {
       reject('Owner not given.');
@@ -49,7 +33,7 @@ Project.create = function(fields, owner) {
  * @param  {Integer} member_id  User id
  * @return {Boolean}
  */
-var already_member_of_project = function(project_id, member_id) {
+var _already_member_of_project = function(project_id, member_id) {
   return new Promise(function(resolve, reject) {
     var query = [
       'MATCH (member:User) WHERE id(member)={member_id}',
@@ -73,9 +57,9 @@ var already_member_of_project = function(project_id, member_id) {
  * @param {Integer|Project} project Project object or id to add User to
  * @param {Integer|User} member  User or id to add to Project
  */
-Project.add_member = function(project, member) {
+var add_member = function(project, member) {
   return new Promise(function(resolve, reject) {
-    return already_member_of_project(project.id, member.id)
+    return _already_member_of_project(project.id, member.id)
     .then(function(already_member) {
       if (already_member) return reject(new Error('User is already a member of the Project'));
 
@@ -93,11 +77,11 @@ Project.add_member = function(project, member) {
  * @param {Integer|Project} project Project object or id to add Users to
  * @param {Integer[]|Project[]} members Array of Users or ids to add to Project
  */
-Project.add_members = function(project, members) {
+var add_members = function(project, members) {
   var calls = [];
 
   members.forEach(function(member) {
-    calls.push(Project.add_member(project, member));
+    calls.push(add_member(project, member));
   });
 
   return Promise.all(calls);
@@ -109,7 +93,7 @@ Project.add_members = function(project, members) {
  * @param  {Object|Boolean} [options=true]    Either an object with with the extras to include or true to include all extras
  * @return {Promise.<Project>}            Project with all specified models included
  */
-Project.with_extras = function(project_id, options) {
+var with_extras = function(project_id, options) {
   return new Promise(function(resolve, reject) {
     var include = {};
     if (options === undefined) options = true;
@@ -132,7 +116,7 @@ Project.with_extras = function(project_id, options) {
  * @param  {Integer[]} skill_ids Array of Tag ids
  * @return {Promise.<Project[]>}           Array of Projects matching filter
  */
-Project.find_by_skill = function(skill_ids) {
+var find_by_skill = function(skill_ids) {
   return new Promise(function(resolve, reject) {
     var query = [
       'MATCH (tags:Tag {kind:"skill"}) WHERE id(tags) IN {tags}',
@@ -147,4 +131,10 @@ Project.find_by_skill = function(skill_ids) {
   });
 };
 
-module.exports = Project;
+module.exports = {
+  'create': create,
+  'add_member': add_member,
+  'add_members': add_members,
+  'with_extras': with_extras,
+  'find_by_skill': find_by_skill
+};

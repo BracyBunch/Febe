@@ -1,4 +1,4 @@
-var user = require('../db/user')
+var User = require('../db').User;
 var express = require('express');
 var http = require('http');
 var router = express.Router();
@@ -15,7 +15,7 @@ router.post('/add', function(req, res){
     return res.send("Test done...");
   }
   // create test user
-  user.create(req.body).then(function(user){
+  User.create(req.body).then(function(user){
     console.log("User added")
   });
   // access DB to add a new user
