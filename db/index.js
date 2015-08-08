@@ -8,7 +8,7 @@ var Tag = require('./models/tag');
 
 module.exports = {
   'db': db,
-  'User': _.extend(User, require('./methods/User')),
+  'User': _.extend(User, require('./methods/user')),
   'Organization': _.extend(Organization, require('./methods/organization')),
   'Project': _.extend(Project, require('./methods/project')),
   'Tag': _.extend(Tag, require('./methods/tag')),
