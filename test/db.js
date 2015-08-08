@@ -123,7 +123,13 @@ describe('DB tests', function() {
         for (var key in instances.users) {
           ids_to_be_deleted.push(instances.users[key].id);
         }
-        done();
+
+        return models.Organization.create({'ein': '0', 'name': 'test_org', 'description': 'just a test', 'website_url': 'http://test.com', 'location': 'Testville'}, instances.users.rep).then(function(org) {
+          instances.org = org;
+          ids_to_be_deleted.push(instances.org.id);
+        }).then(function() {
+          done();
+        });
       });
     });
 
@@ -142,7 +148,7 @@ describe('DB tests', function() {
     });
 
     it('should be able to create a Project', function(done) {
-      models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, instances.users.rep).then(function(t_project) {
+      models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, instances.org, instances.users.rep).then(function(t_project) {
         ids_to_be_deleted.push(t_project.id);
         instances.project = t_project;
 
