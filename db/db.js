@@ -14,5 +14,6 @@ if (process.env.GRAPHSTORY_URL) {
 
 var db = seraph(options);
 db.query = Promise.promisify(db.query);
+db.relate = Promise.promisify(db.relate);
 
 module.exports = db;
