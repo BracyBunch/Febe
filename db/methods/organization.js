@@ -32,7 +32,7 @@ var update = function(id, fields) {
   }
 
   return Organization.read(id).then(function(organization) {
-    return Organization.save(_.extend(organization, fields));
+    return Organization.save(_.extend(organization, fields, {'id': id}));
   });
 };
 
