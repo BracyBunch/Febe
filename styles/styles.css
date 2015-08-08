@@ -6,7 +6,11 @@
 }
 
 .signupForm {
-  width: 50%;
+  text-align: center;
+}
+
+.formbox {
+	margin: 2px;
 }
 
 .landing-page{
