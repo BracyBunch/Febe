@@ -1,6 +1,9 @@
 var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
+
+var common = require('./common');
+
 var User = require('../models/user');
 var Project = require('../models/project');
 var Tag = require('../models/tag');
@@ -53,30 +56,14 @@ var update = function(id, fields) {
  * @param {Integer|User}  user   User or id
  * @param {Integer|Tag}   skill  Tag or id
  */
-var add_strength = function(user, skill) {
-  return db.has_rel('User', user.id || user, 'strength', 'Tag', skill.id || skill).then(function(already_member) {
-    if (already_member) throw new Error('User already has skill as a strength');
-
-    return db.relate(user, 'strength', skill).then(function() {
-      return true;
-    });
-  });
-};
+var add_strength = common.add_rel_generator('User', 'strength', 'Tag', true);
 
 /**
  * Adds an array of Tags as strengths of User
  * @param {Integer|User}     user    User or id
- * @param {Integer[]|Tag[]}  skills  Array of Users or ids
+ * @param {Integer[]|Tag[]}  skills  Array of Tags or ids
  */
-var add_strengths = function(user, skills) {
-  var calls = [];
-
-  skills.forEach(function(skill) {
-    calls.push(add_strength(user, skill));
-  });
-
-  return Promise.all(calls);
-};
+var add_strengths = common.add_rels_generator(add_strength);
 
 /**
  * Fetches one User including specifed extras
