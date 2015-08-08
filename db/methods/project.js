@@ -6,23 +6,16 @@ var Tag = require('../models/tag');
 
 /**
  * Create and save a new Project
- * @param  {Object} fields   Fields to create Project with
- * @param  {Integer|User} owner User object or id of the Project owner
- * @return {Promise.<Project>}          The newly created Project
+ * @param  {Object}        fields   Fields to create Project with
+ * @param  {Integer|User}  owner    User object or id of the Project owner
+ * @return {Promise.<Project>}      The newly created Project
  */
 var create = function(fields, owner) {
-  return new Promise(function(resolve, reject) {
-    if (owner === undefined && owner.id === undefined) {
-      reject('Owner not given.');
-      return;
-    }
+  if (owner === undefined) return Promise.reject(new Error('Owner not given.'));
 
-    Project.save(fields, function(err, project) {
-      if (err) return reject(err.message);
-
-      db.relate(owner, 'owns', project, function(err, relationship) {
-        resolve(project);
-      });
+  return Project.save(fields).then(function(project) {
+    return db.relate(owner, 'owns', project).then(function() {
+      return project;
     });
   });
 };
@@ -34,48 +27,36 @@ var create = function(fields, owner) {
  * @return {Boolean}
  */
 var _already_member_of_project = function(project_id, member_id) {
-  return new Promise(function(resolve, reject) {
-    var query = [
-      'MATCH (member:User) WHERE id(member)={member_id}',
-      'MATCH (project:Project) WHERE id(project)={project_id} AND (member)-->(project)',
-      'RETURN COUNT(project)>0 AS exists'
-    ].join(' ');
-    db.query(query, {'project_id': project_id, 'member_id': member_id}, function(err, row) {
-      if (err) return reject(err.message);
+  var query = [
+    'MATCH (member:User) WHERE id(member)={member_id}',
+    'MATCH (project:Project) WHERE id(project)={project_id} AND (member)-->(project)',
+    'RETURN COUNT(project)>0 AS exists'
+  ].join(' ');
 
-      if (row.exists) {
-        resolve(true);
-      } else {
-        resolve(false);
-      }
-    });
+  return db.query(query, {'project_id': project_id, 'member_id': member_id}).then(function(row) {
+    return row.exists;
   });
 };
 
 /**
  * Adds a User as a member of Project
- * @param {Integer|Project} project Project object or id to add User to
- * @param {Integer|User} member  User or id to add to Project
+ * @param {Integer|Project}  project   Project object or id to add User to
+ * @param {Integer|User}     member    User or id to add to Project
  */
 var add_member = function(project, member) {
-  return new Promise(function(resolve, reject) {
-    return _already_member_of_project(project.id, member.id)
-    .then(function(already_member) {
-      if (already_member) return reject(new Error('User is already a member of the Project'));
+  return _already_member_of_project(project.id || project, member.id || member).then(function(already_member) {
+    if (already_member) throw new Error('User is already a member of the Project');
 
-      db.relate(member, 'member_of', project, function(err, relationship) {
-        if (err) return reject(err.message);
-
-        resolve(relationship);
-      });
+    return db.relate(member, 'member_of', project).then(function() {
+      return true;
     });
   });
 };
 
 /**
  * Adds an array of Users as members of Project
- * @param {Integer|Project} project Project object or id to add Users to
- * @param {Integer[]|Project[]} members Array of Users or ids to add to Project
+ * @param {Integer|Project}      project  Project or id to add Users to
+ * @param {Integer[]|Project[]}  members  Array of Users or ids to add to Project
  */
 var add_members = function(project, members) {
   var calls = [];
@@ -89,46 +70,37 @@ var add_members = function(project, members) {
 
 /**
  * Fetches one Project including specifed extras
- * @param  {Integer} project_id Id of the Project
- * @param  {Object|Boolean} [options=true]    Either an object with with the extras to include or true to include all extras
- * @return {Promise.<Project>}            Project with all specified models included
+ * @param  {Integer}        project_id      Id of the Project
+ * @param  {Object|Boolean} [options=true]  Either an object with with the extras to include or true to include all extras
+ * @return {Promise.<Project>}              Project with all specified models included
  */
 var with_extras = function(project_id, options) {
-  return new Promise(function(resolve, reject) {
-    var include = {};
-    if (options === undefined) options = true;
+  var include = {};
+  if (options === undefined) options = true;
 
-    if (options === true || options.members) include.members = {'model': User, 'rel': 'member_of', 'direction': 'in'};
-    if (options === true || options.owner) include.owner = {'model': User, 'rel': 'owns', 'direction': 'in', 'many': false};
-    if (options === true || options.skills) include.skills = {'model': Tag, 'rel': 'skill', 'direction': 'out', 'many': true};
+  if (options === true || options.members) include.members = {'model': User, 'rel': 'member_of', 'direction': 'in'};
+  if (options === true || options.owner) include.owner = {'model': User, 'rel': 'owns', 'direction': 'in', 'many': false};
+  if (options === true || options.skills) include.skills = {'model': Tag, 'rel': 'skill', 'direction': 'out', 'many': true};
 
 
-    Project.query('MATCH (node:Project) WHERE id(node)={id}', {'id': project_id}, {'include': include}, function(err, project) {
-      if (err) return reject(err.message);
-
-      resolve(project[0]);
-    });
+  return Project.query('MATCH (node:Project) WHERE id(node)={id}', {'id': project_id}, {'include': include}).then(function(project) {
+    return project[0];
   });
 };
 
 /**
  * Find all projects with relationships to all specified Tag ids
- * @param  {Integer[]} skill_ids Array of Tag ids
- * @return {Promise.<Project[]>}           Array of Projects matching filter
+ * @param  {Integer[]}  skill_ids   Array of Tag ids
+ * @return {Promise.<Project[]>}    Array of Projects matching filter
  */
 var find_by_skill = function(skill_ids) {
-  return new Promise(function(resolve, reject) {
-    var query = [
-      'MATCH (tags:Tag {kind:"skill"}) WHERE id(tags) IN {tags}',
-      'WITH COLLECT(tags) as t',
-      'MATCH (node:Project)-->(tags) WHERE ALL(tag IN t WHERE (node)-->(tag))'
-    ].join(' ');
-    Project.query(query, {'tags': skill_ids}, function(err, projects) {
-      if (err) return reject(err.message);
+  var query = [
+    'MATCH (tags:Tag {kind:"skill"}) WHERE id(tags) IN {tags}',
+    'WITH COLLECT(tags) as t',
+    'MATCH (node:Project)-->(tags) WHERE ALL(tag IN t WHERE (node)-->(tag))'
+  ].join(' ');
 
-      resolve(projects);
-    });
-  });
+  return Project.query(query, {'tags': skill_ids});
 };
 
 module.exports = {
