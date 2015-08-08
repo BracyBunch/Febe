@@ -11,7 +11,9 @@ module.exports = React.createClass({
           Home
         </Link>
         <ul className="nav navbar-nav navbar-right">
-          Something
+          <button className="btn btn-success">
+            Login
+          </button>
         </ul>
       </div>
     </nav>

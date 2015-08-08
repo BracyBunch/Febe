@@ -1,39 +1,72 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
+var server = require('gulp-server-livereload');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var reactify = require('reactify');
+var notifier = require('node-notifier');
+var concat = require('gulp-concat');
 
-gulp.task('default', function(){
-  //this the bundler - using browserify
-  var bundler = watchify(browserify({
-    //first file to look to on how to bundle together, which tends to be app.js
-    entries: ['./public/app.jsx'],
-    //turn it to JS
-    transform: [reactify],
-    //files it needs to look at while building
-    extensions: ['.jsx'],
-    debug: true,
-    cache: {},
-    packageCache: {},
-    fullPaths: true
-  }))
 
-  //this is what is actually doing the building. Telling bundle to bundle
-  var build = function(file){
-    if(file) gutil.log('recompiling' + file);
-      return bundler
-        .bundle()
-        //says if there is an error during the bundle process, tell us
-        .on('error', gutil.log.bind(gutil, 'browserify Error'))
-        //put everything into one file called main.js
-        .pipe(source('main.js'))
-        //put main.js into the main directory
-        .pipe(gulp.dest('./'));
-    
-  };
-  build();
-  //whenver there is a change in the files it runs the build
-  bundler.on('update', build);
+var notify = function(error) {
+  var message = 'In: ';
+  var title = 'Error: ';
+
+  if(error.description) {
+    title += error.description;
+  } else if (error.message) {
+    title += error.message;
+  }
+
+  if(error.filename) {
+    var file = error.filename.split('/');
+    message += file[file.length-1];
+  }
+
+  if(error.lineNumber) {
+    message += '\nOn Line: ' + error.lineNumber;
+  }
+
+  notifier.notify({title: title, message: message});
+};
+
+var bundler = watchify(browserify({
+  entries: ['./public/app.jsx'],
+  transform: [reactify],
+  extensions: ['.jsx'],
+  debug: true,
+  cache: {},
+  packageCache: {},
+  fullPaths: true
+}));
+
+function bundle() {
+  return bundler
+    .bundle()
+    .on('error', notify)
+    .pipe(source('main.js'))
+    .pipe(gulp.dest('./'))
+}
+bundler.on('update', bundle)
+
+gulp.task('build', function() {
+  bundle()
 });
+
+gulp.task('serve', function(done) {
+  gulp.src('')
+    .pipe(server({
+      livereload: {
+        enable: true,
+        filter: function(filePath, cb) {
+          if(/main.js/.test(filePath)) {
+            cb(true)
+          } 
+        }
+      },
+      open: true
+    }));
+});
+
+gulp.task('default', ['build', 'serve']);
