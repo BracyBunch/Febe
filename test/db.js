@@ -60,7 +60,7 @@ describe('DB tests', function() {
         expect(user.email).to.eql('test_rep@gmail.com');
         expect(user.kind).to.eql('rep');
         done();
-      });
+      }, done);
     });
 
   });
@@ -109,7 +109,7 @@ describe('DB tests', function() {
         expect(t_project.published).to.eql(false);
         project = t_project;
         done();
-      });
+      }, done);
     });
 
     it('should be able to add Users as members', function(done) {
@@ -120,8 +120,8 @@ describe('DB tests', function() {
           expect(t_project.members[0]).to.be.an('object');
           expect(t_project.members[0].kind).to.eql('dev');
           done();
-        });
-      });
+        }, done);
+      }, done);
     });
 
     it('shouldn\'t be able to add User as a member more than once', function(done) {
