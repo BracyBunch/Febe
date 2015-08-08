@@ -20,6 +20,7 @@ describe('DB tests', function() {
 
   describe('User tests', function() {
     var ids_to_be_deleted = [];
+    var dev;
 
     before(function(done) {
       done();
@@ -32,6 +33,7 @@ describe('DB tests', function() {
     it('should be able to create a User', function(done) {
       models.User.create({'first_name': 'test', 'last_name': 'dev', 'email': 'test_dev@gmail.com'}).then(function(user) {
         ids_to_be_deleted.push(user.id);
+        dev = user;
 
         expect(user).to.be.an('object');
         expect(user.first_name).to.eql('test');
@@ -39,6 +41,44 @@ describe('DB tests', function() {
         expect(user.email).to.eql('test_dev@gmail.com');
         expect(user.kind).to.eql('dev');
         done();
+      }, done);
+    });
+
+    it('should be able to update a User', function(done) {
+      models.User.update(dev.id, {'last_name': 'updated'}).then(function(user) {
+        expect(user).to.be.an('object');
+        expect(user.first_name).to.eql('test');
+        expect(user.last_name).to.eql('updated');
+        expect(user.email).to.eql('test_dev@gmail.com');
+        expect(user.kind).to.eql('dev');
+
+        models.User.read(dev.id).then(function(n_user) {
+          expect(n_user).to.be.an('object');
+          expect(n_user.first_name).to.eql('test');
+          expect(n_user.last_name).to.eql('updated');
+          expect(n_user.email).to.eql('test_dev@gmail.com');
+          expect(n_user.kind).to.eql('dev');
+          done();
+        });
+      }, done);
+    });
+
+    it('should be able to update a User without an id parameter', function(done) {
+      models.User.update({'id': dev.id, 'last_name': 'updated again'}).then(function(user) {
+        expect(user).to.be.an('object');
+        expect(user.first_name).to.eql('test');
+        expect(user.last_name).to.eql('updated again');
+        expect(user.email).to.eql('test_dev@gmail.com');
+        expect(user.kind).to.eql('dev');
+
+        models.User.read(dev.id).then(function(n_user) {
+          expect(n_user).to.be.an('object');
+          expect(n_user.first_name).to.eql('test');
+          expect(n_user.last_name).to.eql('updated again');
+          expect(n_user.email).to.eql('test_dev@gmail.com');
+          expect(n_user.kind).to.eql('dev');
+          done();
+        });
       }, done);
     });
 
