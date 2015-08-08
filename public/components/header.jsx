@@ -12,7 +12,7 @@ module.exports = React.createClass({
         </Link>
         <ul className="nav navbar-nav navbar-right">
           <button className="btn btn-success">
-            Login
+            Logi
           </button>
         </ul>
       </div>
