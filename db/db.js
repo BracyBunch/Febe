@@ -13,6 +13,6 @@ if (process.env.GRAPHSTORY_URL) {
 }
 
 var db = seraph(options);
-db.pquery = Promise.promisify(db.query);
+db.query = Promise.promisify(db.query);
 
 module.exports = db;
