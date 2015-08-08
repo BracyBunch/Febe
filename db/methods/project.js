@@ -84,7 +84,12 @@ var with_extras = function(project_id, options) {
 
 
   return Project.query('MATCH (node:Project) WHERE id(node)={id}', {'id': project_id}, {'include': include}).then(function(project) {
-    return project[0];
+    project = project[0];
+
+    if (project.members) project.members = _.map(project.members, User.clean);
+    if (project.owner) project.owner = User.clean(project.owner);
+
+    return project;
   });
 };
 
