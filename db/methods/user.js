@@ -66,6 +66,21 @@ var add_strength = common.add_rel_generator('User', 'strength', 'Tag', true);
 var add_strengths = common.add_rels_generator(add_strength);
 
 /**
+ * Adds Tag as an interest of User
+ * @param {Integer|User}  user   User or id
+ * @param {Integer|Tag}   interest  Tag or id
+ */
+var add_interest = common.add_rel_generator('User', 'interest', 'Tag', true);
+
+/**
+ * Adds an array of Tags as interests of User
+ * @param {Integer|User}     user    User or id
+ * @param {Integer[]|Tag[]}  interest  Array of Tags or ids
+ */
+var add_interests = common.add_rels_generator(add_interest);
+
+
+/**
  * Fetches one User including specifed extras
  * @param  {Integer}        user_id         Id of the User
  * @param  {Object|Boolean} [options=true]  Either an object with with the extras to include or true to include all extras
@@ -77,6 +92,7 @@ var with_extras = function(user_id, options) {
 
   if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'member_of'};
   if (options === true || options.strengths) include.strengths = {'model': Tag, 'rel': 'strength'};
+  if (options === true || options.interests) include.interests = {'model': Tag, 'rel': 'interest'};
 
 
   return User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}).then(function(user) {
@@ -90,5 +106,7 @@ module.exports =  {
   'update': update,
   'add_strength': add_strength,
   'add_strengths': add_strengths,
+  'add_interest': add_interest,
+  'add_interests': add_interests,
   'with_extras': with_extras
 };
