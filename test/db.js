@@ -152,6 +152,42 @@ describe('DB tests', function() {
       }, done);
     });
 
+    it('should be able to update a Project', function(done) {
+      models.Project.update(project.id, {'published': 'true'}).then(function(t_project) {
+        expect(t_project).to.be.an('object');
+        expect(t_project.name).to.be.a('string');
+        expect(t_project.description).to.be.a('string');
+        expect(t_project.published).to.eql(true);
+
+        models.Project.read(project.id).then(function(t_project) {
+          expect(t_project).to.be.an('object');
+          expect(t_project.name).to.be.a('string');
+          expect(t_project.description).to.be.a('string');
+          expect(t_project.published).to.eql(true);
+          done();
+        });
+      }, done);
+    });
+
+    it('should be able to update a Project without an id parameter', function(done) {
+      models.Project.update({'id': project.id, 'description': 'updated'}).then(function(t_project) {
+        expect(t_project).to.be.an('object');
+        expect(t_project.name).to.be.a('string');
+        expect(t_project.description).to.be.a('string');
+        expect(t_project.published).to.eql(true);
+        expect(t_project.description).to.eql('updated');
+
+        models.Project.read(project.id).then(function(t_project) {
+          expect(t_project).to.be.an('object');
+          expect(t_project.name).to.be.a('string');
+          expect(t_project.description).to.be.a('string');
+          expect(t_project.published).to.eql(true);
+          expect(t_project.description).to.eql('updated');
+          done();
+        });
+      }, done);
+    });
+
     it('should be able to add Users as members', function(done) {
       models.Project.add_members(project, [users.dev1, users.dev2, users.dev3]).then(function() {
         models.Project.with_extras(project.id, {'members': true}).then(function(t_project) {
