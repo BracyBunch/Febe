@@ -213,13 +213,13 @@ describe('DB tests', function() {
           'RETURN COUNT(r) AS num'
         ].join(' ');
 
-        models.db.query(query, {'user_id': instances.users.dev1.id, 'project_id': instances.project.id}, function(err, row) {
+        models.db.query(query, {'user_id': instances.users.dev1.id, 'project_id': instances.project.id}).then(function(row) {
           if (row.num === 1) {
             done();
           } else {
             done(new Error('Added User as a member multiple times'));
           }
-        });
+        }, done);
       });
     });
 
