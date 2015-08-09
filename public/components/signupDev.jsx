@@ -12,12 +12,14 @@ module.exports = React.createClass({
 				    <label for="linkss">Additional Links (optional)</label> <br />
 			      <input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." className="form-control formbox" />
 			    </div>
-			    <button className="btn signupBtn">Add +</button> <br />
-			    <div className="checkbox-inline form-group">
-				    <input type="checkbox" value="contactedOK" className="checkbox-inline">Open to being contacted</input>
-				    <input type="checkbox" value="termsAgreed" className="checkbox-inline">I agree to the terms</input>
-				  </div> <br />
-			    <button type="submit" className="btn signupBtn">Sign Up</button>
+			    <div className="signupCentered">
+				    <button className="btn signupBtn">Add +</button> <br />
+				    <div className="form-group">
+					    <input type="checkbox" value="contactedOK" className="checkbox-inline"> Open to being contacted</input>
+					    <input type="checkbox" value="termsAgreed" className="checkbox-inline"> I agree to the terms</input>
+					  </div>
+				    <button type="submit" className="btn signupBtn text-center">Sign Up</button>
+				  </div>
 			</form> 
 		)
 	}
