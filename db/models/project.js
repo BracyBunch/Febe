@@ -17,6 +17,16 @@ Project.schema = {
 };
 Project.useTimestamps();
 
+Project.public_fields = [
+  'id',
+  'name',
+  'complete_by',
+  'description',
+  'links',
+  'published',
+  'active'
+];
+
 Project.query = Promise.promisify(Project.query, Project);
 Project.save = Promise.promisify(Project.save, Project);
 Project.read = Promise.promisify(Project.read, Project);

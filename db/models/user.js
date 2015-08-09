@@ -25,6 +25,14 @@ User.schema = {
 User.setUniqueKey('email');
 User.useTimestamps();
 
+User.public_fields = [
+  'id',
+  'kind',
+  'first_name',
+  'last_name',
+  'links'
+];
+
 User.on('validate', function(user, cb) {
   if (validator.isEmail(user.email)) {
     cb();
