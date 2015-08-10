@@ -6,7 +6,7 @@ var Link = Router.Link;
 module.exports = React.createClass({
 	render: function() {
     return (
-	    <div className="col-md-8 col-md-offset-2">
+	    <div className="col-md-6 col-md-offset-3">
 	      <form className="">
 
 	        <div className="signupCentered">
@@ -24,17 +24,19 @@ module.exports = React.createClass({
 				    </div>
 			      <h5>Or</h5>
 			    </div>
-
+  				
 		      <div className="form-group">
-			      <input type="text" value="" placeholder="First Name" className="" />
-			      <input type="text" value="" placeholder="Last Name" className="" />
+			      <input type="text" value="" placeholder="First Name" className="form-inline formbox" />
+			      <input type="text" value="" placeholder="Last Name" className="form-inline formbox" />
 			    </div>
 
-		      <input type="text" value="" placeholder="Email Address" className="form-control" />
+			    <div>
+			      <input type="text" value="" placeholder="Email Address" className="form-control" />
+			    </div>
 
 		      <div className="form-group">
-			      <input type="text" value="" placeholder="Password" className="" />
-			      <input type="text" value="" placeholder="Confirm Password" className="" />
+			      <input type="text" value="" placeholder="Password" className="form-inline formbox" />
+			      <input type="text" value="" placeholder="Confirm Password" className="form-inline <formbox></formbox>" />
 			    </div>
 
 		      <h5 className="signupCentered">Password must be more than 8 characters</h5>
