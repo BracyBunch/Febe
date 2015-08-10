@@ -9,7 +9,7 @@ module.exports = React.createClass({
 		return (
 			<div>
         <Header link='/' title='Home'/>
-	      <Oauth />
+	      <Oauth name="Organization" />
 	      <Org />
         <Footer />
 			</div>
