@@ -3,7 +3,7 @@ var React = require('react');
 module.exports = React.createClass({
 	render: function() {
 		return (
-	    <form className="col-md-8 col-md-offset-2">
+	    <form className="col-md-6 col-md-offset-3">
 		      <div className="form-group">
 				    <label for="techstrengths">Tech Strengths (optional)</label> <br />
 			      <input type="text" value="" id="techstrengths" placeholder="Angular.js, Node.js, Python, Databases, etc." className="form-control formbox" />

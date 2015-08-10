@@ -12,7 +12,7 @@ var Signup = require('./components/signupMain')
 module.exports = (
   <Router history={new HashHistory}>
     <Route path="/" component={Main}>
-    </Route>
       <Route path="/signup" component={Signup} />
+    </Route>
   </Router>
 );

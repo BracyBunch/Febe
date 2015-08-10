@@ -12,7 +12,7 @@
 }
 
 .signupLinks, .signupOAuth {
-	width: 60%;
+	width: 50%;
 }
 
 .formbox {
@@ -55,6 +55,7 @@
 
 .signupCentered {
 	text-align: center;
+}
 	
 .signup-buttons{
   top: 51%;
