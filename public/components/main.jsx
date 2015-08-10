@@ -1,6 +1,7 @@
 var React = require('react');
 var Header = require('./header');
 var Landing = require('./landing');
+var Footer = require('./footer');
 
 module.exports = React.createClass({
   render: function(){
@@ -8,6 +9,7 @@ module.exports = React.createClass({
       <div>
         <Header />
         {this.content()}
+        <Footer />
       </div>
     )
   },
