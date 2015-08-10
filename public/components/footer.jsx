@@ -5,8 +5,8 @@ var Link = Router.Link;
 module.exports = React.createClass({
   render: function(){
     return (
-      <div>
-        <nav className="footer">
+      <div className="footer footer-bottom">
+        <nav>
           <div className= "container-fluid">
             <div className="bracy">The Bracy Bunch 
               <span className="glyphicon glyphicon-copyright-mark">2015</span>

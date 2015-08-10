@@ -7,12 +7,15 @@ var Router = ReactRouter.Router;
 //object used to configure the router
 var Route = ReactRouter.Route;
 var Main = require('./components/main');
-var Signup = require('./components/signupMain')
+var Signupdev = require('./components/signupDevView');
+var Signuporg = require('./components/signupOrgView');
+
 
 module.exports = (
   <Router history={new HashHistory}>
     <Route path="/" component={Main}>
+      <Route path="/signupdev" component={Signupdev} />
+      <Route path="/signuporg" component={Signuporg} />
     </Route>
-      <Route path="/signup" component={Signup} />
   </Router>
 );

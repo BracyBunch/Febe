@@ -12,7 +12,7 @@
 }
 
 .signupLinks, .signupOAuth {
-	width: 60%;
+	width: 50%;
 }
 
 .formbox {
@@ -83,4 +83,10 @@
 
 .terms{
   float: right;
+}
+
+.footer-bottom{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

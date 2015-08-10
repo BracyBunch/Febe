@@ -1,7 +1,6 @@
 var React = require('react');
 var Oauth = require('./signupOAuth');
 var Dev = require('./signupDev');
-var Org = require('./signupOrg')
 var Header = require('./header');
 var Footer = require('./footer');
 
