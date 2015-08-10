@@ -3,6 +3,11 @@ var path        = require('path');
 var favicon     = require('serve-favicon');
 var bodyParser  = require('body-parser');
 
+var session     = require('express-session');
+var FileStore   = require('session-file-store')(session);
+var passport    = require('./middleware/auth');
+
+var auth        = require('./routes/auth');
 var users       = require('./routes/users');
 var EIN         = require('./routes/ein');
 var orgs        = require('./routes/organizations');
@@ -18,7 +23,17 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  'secret': 'starman',
+  'resave': false,
+  'saveUninitialized': false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
+
+app.use('/auth', auth.router);
 
 app.use('/users', users);
 app.use('/ein', EIN);

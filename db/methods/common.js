@@ -59,11 +59,6 @@ var add_rels_generator = function(add_rel) {
   };
 };
 
-<<<<<<< HEAD
-module.exports = {
-  'add_rel_generator': add_rel_generator,
-  'add_rels_generator': add_rels_generator
-=======
 /**
  * Generates a function that removes fields not listed in model.public_fields
  * @param  {Object} model
@@ -84,5 +79,4 @@ module.exports = {
   'add_rel_generator': add_rel_generator,
   'add_rels_generator': add_rels_generator,
   'clean_generator': clean_generator
->>>>>>> abb3b8cce58cfda7497aa67d763d5de5a6f15bec
 };
