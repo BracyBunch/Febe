@@ -1,15 +1,11 @@
 var React = require('react');
-var Header = require('./header');
-var Landing = require('./landing');
-var Footer = require('./footer');
+var LandingPage = require('./landingPage');
 
 module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <Header />
         {this.content()}
-        <Footer />
       </div>
     )
   },
@@ -17,7 +13,7 @@ module.exports = React.createClass({
     if(this.props.children){
       return this.props.children
     } else {
-      return <Landing />
+      return <LandingPage />
     }
   }
 });
