@@ -10,11 +10,11 @@ module.exports = React.createClass({
         <div className="site-name">Good In This World</div>
         <div className="iamdev">I Am A</div>
         <div className="row signup-buttons">
-          <div className="col-xs-6 col-sm-push-2">
+          <div className="col-xs-6 col-sm-push-1">
             <Link to="/signup"><button className="btn btn-primary">Engineer</button></Link>
             <div className="under-buttons">Work with others to<br/>solve problems</div>
           </div>
-          <div className="col-xs-6 col-sm-pull-2">
+          <div className="col-xs-6 col-sm-pull-1">
             <Link to="/signup"><button className="btn btn-primary">Nonprofit</button></Link> 
             <div className="under-buttons">Post technical projects<br/>you need help with</div>
           </div>

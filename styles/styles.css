@@ -35,19 +35,19 @@
   margin-right: auto;
   text-align: center;
   float: none;
+  position: relative;
   font-family: futura;
-  position: fixed;
   width: 100%;
 }
 
 .site-name{
-  top: 22%;
+  padding-top: 5%;
   font-size: 40px;
   color: #1CB3FF;
 }
 
 .iamdev{
-  top: 38%;
+  top: 10%;
   padding-top: 15px;
   padding-bottom: 15px;
   font-size: 30px;
@@ -55,9 +55,10 @@
 
 .signupCentered {
 	text-align: center;
-	
+}
+
 .signup-buttons{
-  top: 51%;
+  top: 15%;
 }
 
 .under-buttons{
@@ -67,11 +68,19 @@
 .slogan{
   padding-top: 15px;
   font-size: 20px;
-  bottom: 16%;
+  top: 30%;
 }
 
 .scroll-down{
-  position: fixed;
-  bottom: 2%;
+  top: 44%;
   width:100%;
+}
+
+/*footer*/
+.bracy{
+  font-size: 12px;
+}
+
+.terms{
+  float: right;
 }
