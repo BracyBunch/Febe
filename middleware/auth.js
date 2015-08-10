@@ -1,9 +1,16 @@
+var Promise = require('bluebird');
 var models = require('../db');
 var passport = require('passport');
+
+var bcrypt = require('bcrypt');
+var hash = Promise.promisify(bcrypt.hash, bcrypt);
+var compare = Promise.promisify(bcrypt.compare, bcrypt);
 
 var GithubStrategy = require('passport-github2').Strategy;
 var LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+
+var LocalStrategy = require('passport-local').Strategy;
 
 var keys = {};
 
@@ -96,5 +103,36 @@ passport.use(new LinkedinStrategy({
   'scope': ['r_emailaddress', 'r_basicprofile'],
   'passReqToCallback': true
 }, oauth_login_or_create_generator('linkedin')));
+
+passport.use(new LocalStrategy({
+  'usernameField': 'email',
+  'passReqToCallback': true
+}, function(req, email, password, done) {
+  models.User.where({'email': email}).then(function(user) {
+    if (!user.length) {
+      user = {
+        'kind': 'dev',
+        // 'name': req.body.first_name + ' ' + req.body.last_name,
+        'name': req.body.name,
+        'email': email,
+        'links': []
+      };
+
+      hash(password, 10).then(function(encrypted) {
+        user.password = encrypted;
+        return models.User.save(user);
+      }).then(function(user) {
+        done(null, user);
+      }, function(err) {
+        done(null, false, err);
+      });
+    } else {
+      user = user[0];
+      compare(password, user.password).then(function(matches) {
+        done(null, (matches) ? user : false, (matches) ? undefined : 'Wrong password');
+      });
+    }
+  });
+}));
 
 module.exports = passport;

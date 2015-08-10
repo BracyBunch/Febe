@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('../middleware/auth');
-// var models = require('../db');
-
 
 router.get('/logout', function(req, res) {
   req.logout();
+  req.session.destroy();
   res.send();
 });
 
@@ -31,6 +30,8 @@ var handle_login = function(req, res, next) {
 var signal_complete = function(req, res) {
   res.send();
 };
+
+router.post('/login', passport.authenticate('local'));
 
 router.get('/facebook/login', passport.authenticate('facebook', {'scope': ['email']}));
 router.get('/facebook/callback', set_provider('facebook'), handle_login, signal_complete);
