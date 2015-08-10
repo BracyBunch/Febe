@@ -7,7 +7,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 			<div>
-	      <Oauth />
+	      <Oauth name="Developer" />
 	      <Dev />
 			</div>
 		)
