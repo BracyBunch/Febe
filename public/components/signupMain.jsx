@@ -1,5 +1,5 @@
 var React = require('react');
-var Oauth = require('./<si></si>gnupOAuth');
+var Oauth = require('./signupOAuth');
 var Dev = require('./signupDev');
 
 module.exports = React.createClass({
