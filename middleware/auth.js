@@ -49,7 +49,7 @@ var oauth_login_or_create_generator = function(service) {
       if (!user.length) {
         user = {};
         user[service + '_id'] = profile.id;
-        user.kind = 'dev';
+        user.kind = req.session.user_kind || 'dev';
         user.name = profile.displayName;
         user.email = (profile.emails.length) ? profile.emails[0].value : null;
         user.links = [];
@@ -111,7 +111,7 @@ passport.use(new LocalStrategy({
   models.User.where({'email': email}).then(function(user) {
     if (!user.length) {
       user = {
-        'kind': 'dev',
+        'kind': req.session.user_kind || 'dev',
         // 'name': req.body.first_name + ' ' + req.body.last_name,
         'name': req.body.name,
         'email': email,
