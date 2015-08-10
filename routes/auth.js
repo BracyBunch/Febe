@@ -26,6 +26,8 @@ var handle_login = function(req, res, next) {
   passport.authenticate(res.locals.provider, function(err, user, info) {
     if (err === null && user !== false) {
       req.login(user, function() {
+        req.session.user_kind = undefined;
+        req.session.save();
         next();
       });
     } else if (info === 'LoginToAddOAuth') {
