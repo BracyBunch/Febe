@@ -1,3 +1,27 @@
+/* signup */
+
+.oauthPic, .signupBtn{
+	width: 180px;
+	height: 40px;
+	margin: 5px;
+}
+
+.center {
+  margin-left: auto ;
+  margin-right: auto ;
+}
+
+.signupLinks, .signupOAuth {
+	width: 60%;
+}
+
+.formbox {
+	margin: 2px;
+}
+
+.formhalf {
+	width: 50%;
+}
 
 /*Landing Page*/
 
@@ -29,6 +53,9 @@
   font-size: 30px;
 }
 
+.signupCentered {
+	text-align: center;
+	
 .signup-buttons{
   top: 51%;
 }
