@@ -14,8 +14,7 @@ var validator = require('validator');
 var User = model(db, 'User');
 User.schema = {
   'kind': {'type': String, 'default': 'dev', 'enum': ['dev', 'rep']},
-  'first_name': {'type': String, 'required': true},
-  'last_name': {'type': String, 'required': true},
+  'name': {'type': String, 'required': true},
   'email': {'type': String, 'required': true},
   'password': {'type': String},
   'links': {'type': Array, 'default': []},
