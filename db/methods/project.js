@@ -47,6 +47,14 @@ var update = function(id, fields) {
 };
 
 /**
+ * Removes fields that shouldn't be public
+ * @param {Project}
+ * @return {Project} Project with private fields removed
+ */
+var clean = common.clean_generator(Project);
+
+
+/**
  * Adds a User as a member of Project
  * @param {Integer|Project}  project   Project object or id to add User to
  * @param {Integer|User}     member    User or id to add to Project
@@ -76,7 +84,12 @@ var with_extras = function(project_id, options) {
 
 
   return Project.query('MATCH (node:Project) WHERE id(node)={id}', {'id': project_id}, {'include': include}).then(function(project) {
-    return project[0];
+    project = project[0];
+
+    if (project.members) project.members = _.map(project.members, User.clean);
+    if (project.owner) project.owner = User.clean(project.owner);
+
+    return project;
   });
 };
 
@@ -98,6 +111,7 @@ var find_by_skill = function(skill_ids) {
 module.exports = {
   'create': create,
   'update': update,
+  'clean': clean,
   'add_member': add_member,
   'add_members': add_members,
   'with_extras': with_extras,

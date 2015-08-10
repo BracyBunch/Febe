@@ -7,11 +7,12 @@ var Router = ReactRouter.Router;
 //object used to configure the router
 var Route = ReactRouter.Route;
 var Main = require('./components/main');
+var Signup = require('./components/signupMain')
 
 module.exports = (
   <Router history={new HashHistory}>
     <Route path="/" component={Main}>
-      <Route path="/signup" component={Main} />
     </Route>
+      <Route path="/signup" component={Signup} />
   </Router>
 );
