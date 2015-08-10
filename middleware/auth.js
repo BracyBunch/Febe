@@ -17,6 +17,12 @@ var keys = {};
 if (process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_ID) {
   keys.FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
   keys.FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
+
+  keys.GITHUB_APP_ID = process.env.GITHUB_APP_ID;
+  keys.GITHUB_APP_SECRET = process.env.GITHUB_APP_SECRET;
+
+  keys.LINKEDIN_APP_ID = process.env.LINKEDIN_APP_ID;
+  keys.LINKEDIN_APP_SECRET = process.env.LINKEDIN_APP_SECRET;
 } else {
   keys = require('../keys');
 }
