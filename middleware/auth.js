@@ -124,29 +124,11 @@ passport.use(new LocalStrategy({
   'passReqToCallback': true
 }, function(req, email, password, done) {
   models.User.where({'email': email}).then(function(user) {
-    if (!user.length) {
-      user = {
-        'kind': req.session.user_kind || 'dev',
-        // 'name': req.body.first_name + ' ' + req.body.last_name,
-        'name': req.body.name,
-        'email': email,
-        'links': []
-      };
-
-      hash(password, 10).then(function(encrypted) {
-        user.password = encrypted;
-        return models.User.save(user);
-      }).then(function(user) {
-        done(null, user);
-      }, function(err) {
-        done(null, false, err);
-      });
-    } else {
-      user = user[0];
-      compare(password, user.password).then(function(matches) {
-        done(null, (matches) ? user : false, (matches) ? undefined : 'Wrong password');
-      });
-    }
+    if (!user.length) return done(null, false, 'No user matching given email');
+    user = user[0];
+    compare(password, user.password).then(function(matches) {
+      done(null, (matches) ? user : false, (matches) ? undefined : 'Wrong password');
+    });
   });
 }));
 
