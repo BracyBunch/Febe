@@ -62,7 +62,7 @@ router.post('/signup', set_user_kind, function(req, res, next) {
       // 'name': req.body.first_name + ' ' + req.body.last_name,
       'name': req.body.name,
       'email': email,
-      'links': []
+      'links': (Array.isArray(req.body.links)) ? req.body.links : []
     };
 
     hash(password, 10).then(function(encrypted) {
