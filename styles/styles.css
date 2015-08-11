@@ -23,6 +23,35 @@
   margin: 2px;
 }
 
+.firstName, .password{
+  margin-right: 10px;
+}
+
+.names, .passwords{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: relative;
+  font-family: futura;
+  max-width: 400px;
+}
+
+.emailFill{
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: futura;
+}
+
+.techstrengths{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: relative;
+  font-family: futura;
+  max-width: 400px;
+}
+
 /*Landing Page*/
 
 .landing-page{
@@ -30,7 +59,8 @@
   height: 90%;
 }
 
-.site-name, .iamdev, .slogan, .scroll-down, .signup-buttons, .team-header, .stack, .featured{
+.site-name, .iamdev, .slogan, .scroll-down, .signup-buttons, 
+.team-header, .stack, .featured, .signupCentered{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -51,10 +81,6 @@
   padding-top: 15px;
   padding-bottom: 15px;
   font-size: 30px;
-}
-
-.signupCentered {
-	text-align: center;
 }
 
 .signup-buttons{
@@ -86,11 +112,15 @@
 }
 
 .footer-bottom{
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.terms-of-use{
+  padding-right: 10px;
 }
 
 /*team*/
