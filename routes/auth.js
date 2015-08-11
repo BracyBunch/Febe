@@ -10,7 +10,8 @@ router.get('/logout', function(req, res) {
 
 var set_user_kind = function(req, res, next) {
   if (req.body.user_kind) {
-    req.session.user_kind = (req.body.user_kind in ['dev', 'rep']) ? req.body.user_kind : 'dev';
+    req.session.user_kind = (['dev', 'rep'].indexOf(req.body.user_kind) > -1) ? req.body.user_kind : 'dev';
+    req.session.save();
   }
   next();
 };
