@@ -8,7 +8,7 @@ module.exports = React.createClass({
     return (
 	    <div>
         <div className="signupCentered">
-		      <h3>Developer Signup</h3>
+		      <h3>{this.props.name} Signup</h3>
 		      <div className="btn-group">
 			      <Link to="#">
 			      	<img className="oauthPic img-rounded" src="assets/img/linkedinAuth.png" />
