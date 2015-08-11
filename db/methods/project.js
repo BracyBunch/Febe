@@ -64,7 +64,7 @@ var add_member = common.add_rel_generator('User', 'member_of', 'Project');
 /**
  * Adds an array of Users as members of Project
  * @param {Integer|Project}      project  Project or id to add Users to
- * @param {Integer[]|Project[]}  members  Array of Users or ids to add to Project
+ * @param {Integer[]|User[]}  members  Array of Users or ids to add to Project
  */
 var add_members = common.add_rels_generator(add_member);
 
