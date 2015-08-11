@@ -3,6 +3,9 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 module.exports = React.createClass({
+	log: function() {
+    console.log(this.state)
+	},
 	render: function() {
 		return (
 			<form>
@@ -37,8 +40,8 @@ module.exports = React.createClass({
 	divId: 'addlLinks',
 	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Website, etc." class="form-control form-margin" />',
 
-	addlFieldCount: 0,
-	addlFieldLimit: 3,
+	addlFieldCount: 2,
+	addlFieldLimit: 4,
 	addLinks: function(divId, newLink) {
     if (this.addlFieldCount === this.addlFieldLimit) {
     	console.log("Maximum fields added");

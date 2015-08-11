@@ -11,16 +11,20 @@
   margin-right: auto ;
 }
 
-.signupLinks, .signupOAuth {
-	width: 50%;
+.loginModal {
+  width: 45%;
 }
 
-.form-box {
-  width: 49%;
+.signupLinks, .signupOAuth{
+	width: 50%;
 }
 
 .form-margin {
   margin: 2px;
+}
+
+.login-margin {
+  margin-top: 10px;
 }
 
 .firstName, .password{
