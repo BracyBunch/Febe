@@ -2,7 +2,7 @@ var React = require('react');
 var Router = require('react-router');
 //renderable component
 var Link = Router.Link;
-var Modal = require('./signInModal');
+var Modal = require('./modal');
 
 module.exports = React.createClass({
   render: function(){
@@ -14,7 +14,9 @@ module.exports = React.createClass({
             <Link to={this.props.link2} className="navbar-brand">{this.props.title2}</Link>
             <Link to={this.props.link3} className="navbar-brand">{this.props.title3}</Link>
             <ul className="nav navbar-nav navbar-right">
-              <button className="btn navbar-btn btn-success" id="login">Login</button>
+              <div id="login">
+              <Modal />
+              </div>
             </ul>
           </div>
         </nav>

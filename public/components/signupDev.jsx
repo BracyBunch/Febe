@@ -22,14 +22,14 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return (
-	    <form className="col-md-6 col-md-offset-3">
-	      <div className="form-group">
-			    <label htmlFor="techstrengths">Tech Strengths (optional)</label> <br />
-		      <input type="text"  id="techstrengths" placeholder="Angular.js, Node.js, Python, Databases, etc." className="form-control formBox form-margin" />
+	    <form>
+	      <div className="form-group techstrengths">
+			    <label htmlFor="techstrengths">Tech Strengths (optional)</label> 
+		      <input type="text" id="techstrengths" placeholder="Angular.js, Node.js, Python, Databases, etc." className="form-control" />
 		    </div>
-				<div className="form-group" id='addlLinks'>
-			    <label htmlFor="links">Additional Links (optional)</label> <br />
-		      <input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." className="form-control formBox form-margin" />
+				<div className="form-group techstrengths" id="addlLinks">
+			    <label htmlFor="links">Additional Links (optional)</label>
+		      <input type="text" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." className="form-control" />
 		    </div>
 		    <div className="signupCentered">
 			    <button className="btn signupBtn" onClick={this.addLinks.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
