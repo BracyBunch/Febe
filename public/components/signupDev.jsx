@@ -1,5 +1,7 @@
 var React = require('react');
 var Formsy = require('formsy-react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -37,11 +39,21 @@ module.exports = React.createClass({
 				    <input type="checkbox" value="" className="checkbox-inline"> Open to being contacted</input>
 				    <input type="checkbox" value="" className="checkbox-inline"> I agree to the terms</input>
 				  </div>
-			    <button type="submit" className="btn signupBtn text-center">Sign Up</button>
+          <Link to={this.authenticate()}>
+			      <button type="submit" className="btn signupBtn text-center">Sign Up</button>
+          </Link>
 			  </div>
 			</form> 
 		)
 	},
+  authenticate: function(){
+    var auth = true;
+    if(auth){
+      return "/dashboard";
+    } else{
+      return "/";
+    }
+  },
 	divId: 'addlLinks',
 	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." class="form-control formBox form-margin" />',
 

@@ -9,6 +9,9 @@ var Route = ReactRouter.Route;
 var Main = require('./components/main');
 var Signupdev = require('./components/signupDevView');
 var Signuporg = require('./components/signupOrgView');
+var Termsofuse = require('./components/termsOfUse');
+var Privacypolicy = require('./components/privacyPolicy');
+var Dashboard = require('./components/dashboard');
 
 
 module.exports = (
@@ -16,6 +19,9 @@ module.exports = (
     <Route path="/" component={Main}>
       <Route path="/signupdev" component={Signupdev} />
       <Route path="/signuporg" component={Signuporg} />
+      <Route path="/termsofuse" component={Termsofuse} />
+      <Route path="/privacypolicy" component={Privacypolicy} />
+      <Route path="/dashboard" component={Dashboard} />
     </Route>
   </Router>
 );
