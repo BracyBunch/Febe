@@ -30,7 +30,7 @@
   height: 90%;
 }
 
-.site-name, .iamdev, .slogan, .scroll-down, .signup-buttons{
+.site-name, .iamdev, .slogan, .scroll-down, .signup-buttons, .team-header, .stack, .featured{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -89,4 +89,63 @@
   position: absolute;
   bottom: 0;
   width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
+
+/*team*/
+
+.image-preview{
+  display: inline-block;
+  position: relative;
+}
+
+.team-header{
+  font-size: 40px;
+  padding-bottom: 20px;
+}
+
+.inset {
+  position: absolute;
+  bottom: 5px;
+  left: 0px;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+  opacity: .7;
+}
+
+img {
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+}
+
+/*stack*/
+
+.stack, .featured{
+  font-size: 40px;
+  padding-top: 45px;
+  padding-bottom: 20px;
+}
+
+.stack-images{
+  display: inline-block;
+}
+
+.thumbnail{
+  text-align: center;
+}
+
+.neo4j{
+  position: relative;
+  padding-top: 5%;
+}
+
+.help{
+  float: none;
+  display: inline;
+}
+
+/*featured projects*/
+
