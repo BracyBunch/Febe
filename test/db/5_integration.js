@@ -87,6 +87,16 @@ describe('Integration tests', function() {
     });
   });
 
+  it('shouldn\'t include private information in Project.with_extras', function(done) {
+    models.Project.with_extras(instances.project.id, true).then(function(project) {
+      expect(project.owner).to.have.all.keys(models.User.public_fields);
+      project.members.forEach(function(member) {
+        expect(member).to.have.all.keys(models.User.public_fields);
+      });
+      done();
+    }, done);
+  });
+
   it('should be able to add Tags to Users as strengths', function(done) {
     models.User.add_strengths(instances.users.dev1, [instances.tags.skill1, instances.tags.skill2]).then(function() {
       models.User.with_extras(instances.users.dev1.id, {'strengths': true}).then(function(user) {
