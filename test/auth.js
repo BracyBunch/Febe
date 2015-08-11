@@ -55,6 +55,22 @@ describe('Signup tests', function() {
     }, done);
   });
 
+  it('shouldn\'t be able to signup without accepting the tos', function(done) {
+    chai.request(app).post('/auth/signup').send({
+      'name': 'test2', 'email': 'test2@testy.com', 'password': 'charlixcx',
+      'links': ['other|htt/google.com']
+    }).then(function(res) {
+      expect(res.status).to.eql(401);
+
+      models.User.where({'email': 'test2@testy.com'}).then(function(user) {
+        if (user.length === 1) ids_to_be_deleted.push(user[0].id);
+
+        expect(user).to.have.length(0);
+        done();
+      }, done);
+    }, done);
+  });
+
   it('shouldn\'t be able to signup with invalid links', function(done) {
     chai.request(app).post('/auth/signup').send({
       'name': 'test2', 'email': 'test2@testy.com', 'password': 'charlixcx',
