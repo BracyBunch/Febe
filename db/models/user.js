@@ -14,13 +14,13 @@ var validator = require('validator');
 var User = model(db, 'User');
 User.schema = {
   'kind': {'type': String, 'default': 'dev', 'enum': ['dev', 'rep']},
-  'first_name': {'type': String, 'required': true},
-  'last_name': {'type': String, 'required': true},
+  'name': {'type': String, 'required': true},
   'email': {'type': String, 'required': true},
   'password': {'type': String},
   'links': {'type': Array, 'default': []},
   'github_id': {'type': String},
-  'linkedin_id': {'type': String}
+  'linkedin_id': {'type': String},
+  'facebook_id': {'type': String}
 };
 User.setUniqueKey('email');
 User.useTimestamps();
@@ -44,5 +44,7 @@ User.on('validate', function(user, cb) {
 User.query = Promise.promisify(User.query, User);
 User.save = Promise.promisify(User.save, User);
 User.read = Promise.promisify(User.read, User);
+User.where = Promise.promisify(User.where, User);
+
 
 module.exports = User;
