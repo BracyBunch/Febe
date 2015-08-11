@@ -52,7 +52,11 @@ router.post('/signup', set_user_kind, function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   var name = req.body.name;
-  if (!email || !password || !name) return res.status(401).send();
+  var can_message = (!!req.body.can_message);
+  var links = (Array.isArray(req.body.links)) ? req.body.links : [];
+  var tos_accepted = (!!req.body.tos_accepted);
+
+  if (!email || !password || !name || !tos_accepted) return res.status(401).send();
 
   models.User.check_if_exists(email).then(function(exists) {
     if (exists) return res.status(409).send();
@@ -60,9 +64,10 @@ router.post('/signup', set_user_kind, function(req, res, next) {
     var user = {
       'kind': req.session.user_kind || 'dev',
       // 'name': req.body.first_name + ' ' + req.body.last_name,
-      'name': req.body.name,
+      'name': name,
       'email': email,
-      'links': (Array.isArray(req.body.links)) ? req.body.links : []
+      'can_message': can_message,
+      'links': links
     };
 
     hash(password, 10).then(function(encrypted) {
