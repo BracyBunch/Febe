@@ -27,7 +27,7 @@ describe('Signup tests', function() {
   });
 
   it('should be able to signup as a dev with a password', function(done) {
-    chai.request(app).post('/auth/login').send({'name': 'test', 'email': 'test@testy.com', 'password': 'iconapop'}).then(function(res) {
+    chai.request(app).post('/auth/signup').send({'name': 'test', 'email': 'test@testy.com', 'password': 'iconapop'}).then(function(res) {
       expect(res.status).to.eql(200);
 
       models.User.where({'email': 'test@testy.com'}).then(function(user) {
@@ -42,14 +42,14 @@ describe('Signup tests', function() {
   });
 
   it('shouldn\'t be able to signup using an already used email', function(done) {
-    chai.request(app).post('/auth/login').send({'name': 'test2', 'email': 'test@testy.com', 'password': 'charlixcx'}).then(function(res) {
-      expect(res.status).to.eql(401);
+    chai.request(app).post('/auth/signup').send({'name': 'test2', 'email': 'test@testy.com', 'password': 'charlixcx'}).then(function(res) {
+      expect(res.status).to.eql(409);
       done();
     }, done);
   });
 
   it('should be able to signup as a rep with a password', function(done) {
-    chai.request.agent(app).post('/auth/login').send({'user_kind': 'rep', 'name': 'test rep', 'email': 'test@reppy.com', 'password': 'billyg'}).then(function(res) {
+    chai.request.agent(app).post('/auth/signup').send({'user_kind': 'rep', 'name': 'test rep', 'email': 'test@reppy.com', 'password': 'billyg'}).then(function(res) {
       expect(res.status).to.eql(200);
 
       models.User.where({'email': 'test@reppy.com'}).then(function(user) {
