@@ -36,8 +36,8 @@ module.exports = React.createClass({
 		    <div className="signupCentered">
 			    <button className="btn signupBtn" onClick={this.addLinks.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
 			    <div className="form-group">
-				    <input type="checkbox" value="contactedOK" className="checkbox-inline"> Open to being contacted</input>
-				    <input type="checkbox" value="termsAgreed" className="checkbox-inline"> I agree to the terms</input>
+				    <input type="checkbox" value="" className="checkbox-inline"> Open to being contacted</input>
+				    <input type="checkbox" value="" className="checkbox-inline"> I agree to the terms</input>
 				  </div>
           <Link to={this.authenticate()}>
 			      <button type="submit" className="btn signupBtn text-center">Sign Up</button>
@@ -55,10 +55,10 @@ module.exports = React.createClass({
     }
   },
 	divId: 'addlLinks',
-	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." class="form-control formBox formMargin" />',
+	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." class="form-control formBox form-margin" />',
 
-	addlFieldCount: 0,
-	addlFieldLimit: 3,
+	addlFieldCount: 2,
+	addlFieldLimit: 4,
 	addLinks: function(divId, newLink) {
     if (this.addlFieldCount === this.addlFieldLimit) {
     	console.log("Maximum fields added");
