@@ -3,25 +3,7 @@ var Formsy = require('formsy-react');
 var Router = require('react-router');
 var Link = Router.Link;
 
-module.exports = React.createClass({
-	getInitialState: function() {
-		return {
-			canSubmit: false
-		};
-	},	
-	submit: function() {
-		// do something
-	},
-	enableButton: function() {
-    this.setState({
-    	canSubmit: true
-    });
-	},
-	disableButton: function() {
-    this.setState({
-    	canSubmit: false
-    });
-	},
+module.exports = React.createClass({	
 	render: function() {
 		return (
 	    <form>
