@@ -17,6 +17,7 @@ User.schema = {
   'name': {'type': String, 'required': true},
   'email': {'type': String, 'required': true},
   'password': {'type': String},
+  'can_message': {'type': Boolean, 'default': false},
   'links': {'type': Array, 'default': []},
   'github_id': {'type': String},
   'linkedin_id': {'type': String},
@@ -28,13 +29,20 @@ User.useTimestamps();
 User.public_fields = [
   'id',
   'kind',
-  'first_name',
-  'last_name',
+  'name',
+  'can_message',
   'links'
 ];
 
 User.on('validate', function(user, cb) {
-  if (validator.isEmail(user.email)) {
+  var valid = true;
+  valid = valid && validator.isEmail(user.email);
+
+  user.links.forEach(function(link) {
+    valid = valid && validator.isURL(link.split('|', 2)[1], {'protocol': ['http', 'https']});
+  });
+
+  if (valid) {
     cb();
   } else {
     cb('Model is invalid');
