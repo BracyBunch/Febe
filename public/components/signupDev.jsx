@@ -1,6 +1,25 @@
 var React = require('react');
+var Formsy = require('formsy-react');
 
 module.exports = React.createClass({
+	getInitialState: function() {
+		return {
+			canSubmit: false
+		};
+	},	
+	submit: function() {
+		// do something
+	},
+	enableButton: function() {
+    this.setState({
+    	canSubmit: true
+    });
+	},
+	disableButton: function() {
+    this.setState({
+    	canSubmit: false
+    });
+	},
 	render: function() {
 		return (
 	    <form className="col-md-6 col-md-offset-3">
