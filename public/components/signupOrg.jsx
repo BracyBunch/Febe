@@ -1,4 +1,6 @@
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 module.exports = React.createClass({
 	render: function() {
@@ -17,10 +19,20 @@ module.exports = React.createClass({
 			    <div className="form-group">
 				    <input type="checkbox" value="termsAgreed" className="checkbox-inline"> I agree to the terms</input>
 				  </div>
-			    <button type="submit" className="btn signupBtn text-center">Sign Up</button>
+				  <Link to={this.authenticate()}>
+			    	<button type="submit" className="btn signupBtn text-center">Sign Up</button>
+			    </Link>
 			  </div>
 			</form> 
 		)
+	},
+	authenticate: function(){
+		var auth = true;
+		if(auth){
+			return "/dashboard";
+		} else{
+			return "/";
+		}
 	},
 	divId: 'addlLinks',
 	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Website, etc." class="form-control form-margin" />',
