@@ -1,4 +1,5 @@
 var Promise = require('bluebird');
+var _ = require('lodash');
 var models = require('../db');
 var passport = require('passport');
 
@@ -46,6 +47,14 @@ passport.deserializeUser(function(id, done) {
   }, done);
 });
 
+var create_service_link = function(service, profile) {
+  var link;
+  if (service === 'linkedin') link = service + '|' +profile._json.publicProfileUrl;
+  if (service === 'github') link = service + '|' + profile.profileUrl;
+  if (service === 'facebook') link = service + '|' + 'https://facebook.com/' + profile.id;
+  return link;
+};
+
 var oauth_login_or_create_generator = function(service) {
   return function(req, accessToken, refreshToken, profile, done) {
     var query = {'email': profile.emails[0].value};
@@ -58,10 +67,7 @@ var oauth_login_or_create_generator = function(service) {
         user.kind = req.session.user_kind || 'dev';
         user.name = profile.displayName;
         user.email = (profile.emails.length) ? profile.emails[0].value : null;
-        user.links = [];
-        if (service === 'linkedin') user.links.push(service + '|' +profile._json.publicProfileUrl);
-        if (service === 'github') user.links.push(service + '|' + profile.profileUrl);
-        if (service === 'facebook') user.links.push(service + '|' + 'https://facebook.com/' + profile.id);
+        user.links = [create_service_link(service, profile)];
 
         models.User.save(user).then(function(user) {
           done(null, user);
@@ -72,6 +78,9 @@ var oauth_login_or_create_generator = function(service) {
         if (user[service + '_id'] === undefined) {
           if (req.isAuthenticated()) {
             user[service + '_id'] = profile.id;
+            if (_.findIndex(user.links, function(link) {return _.startsWith(link, service);}) === -1) {
+              user.links.push(create_service_link(service, profile));
+            }
             models.User.update(user).then(function(user) {
               done(null, user);
             });
