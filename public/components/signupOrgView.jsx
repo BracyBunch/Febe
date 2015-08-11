@@ -1,5 +1,6 @@
 var React = require('react');
 var Oauth = require('./signupOAuth');
+var Main = require('./signupMain');
 var Org = require('./signupOrg');
 var Header = require('./header');
 var Footer = require('./footer');
@@ -9,7 +10,7 @@ module.exports = React.createClass({
 		return (
 			<div>
         <Header link='/' title='Home'/>
-	      <Oauth name="Nonprofit Representative" />
+	      <Oauth name="Nonprofit Representative Signup" />
 	      <Org />
         <Footer />
 			</div>
