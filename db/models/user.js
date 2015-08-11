@@ -35,7 +35,14 @@ User.public_fields = [
 ];
 
 User.on('validate', function(user, cb) {
-  if (validator.isEmail(user.email)) {
+  var valid = true;
+  valid = valid && validator.isEmail(user.email);
+
+  user.links.forEach(function(link) {
+    valid = valid && validator.isURL(link.split('|', 2)[1], {'protocol': ['http', 'https']});
+  });
+
+  if (valid) {
     cb();
   } else {
     cb('Model is invalid');
