@@ -5,15 +5,15 @@ module.exports = React.createClass({
 		return (
 	    <form className="col-md-6 col-md-offset-3">
 		      <div className="form-group">
-				    <label for="orgname">Organization Name</label> <br />
+				    <label htmlFor="orgname">Organization Name</label> <br />
 			      <input type="text" value="" id="orgname" placeholder="Humane Society (San Jose), Project Homeless Connect, etc." className="form-control" />
 			    </div>
 					<div className="form-group" id="addlLinks">
-				    <label for="links">Additional Links (optional)</label> <br />
+				    <label htmlFor="links">Additional Links (optional)</label> <br />
 			      <input type="text" value="" id="links" placeholder="LinkedIn, Website, etc." className="form-control form-margin" />
 			    </div>
 			    <div className="signupCentered">
-				    <button className="btn signupBtn" onClick={this.addLinks}>Add +</button> <br />
+				    <button className="btn signupBtn" onClick={this.addLinks.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
 				    <div className="form-group">
 					    <input type="checkbox" value="termsAgreed" className="checkbox-inline"> I agree to the terms</input>
 					  </div>
@@ -22,16 +22,18 @@ module.exports = React.createClass({
 			</form> 
 		)
 	},
+	divId: 'addlLinks',
+	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Website, etc." class="form-control form-margin" />',
 
 	addlFieldCount: 0,
 	addlFieldLimit: 3,
-	addLinks: function() {
+	addLinks: function(divId, newLink) {
     if (this.addlFieldCount === this.addlFieldLimit) {
-    	console.log("Maximum fields added")
+    	console.log("Maximum fields added");
     } else {
     	var newdiv = document.createElement('div');
-			newdiv.innerHTML = '<input type="text" value="" id="links" placeholder="LinkedIn, Website, etc." class="form-control form-margin" />'
-    	document.getElementById('addlLinks').appendChild(newdiv);
+			newdiv.innerHTML = this.newLinkHTML;
+    	document.getElementById(divId).appendChild(newdiv);
     	this.addlFieldCount++;
     }
 	}

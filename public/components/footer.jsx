@@ -11,7 +11,7 @@ module.exports = React.createClass({
             <div className="bracy">The Bracy Bunch 
               <span className="glyphicon glyphicon-copyright-mark">2015</span>
               <span className="terms">
-                <Link to="/" className="active">Terms of Use</Link>
+                <Link to="/" className="active">Terms of Use </Link>
                 <Link to="/" className="active">Privacy Policy</Link>
               </span>
             </div>
