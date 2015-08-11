@@ -15,10 +15,10 @@ describe('Integration tests', function() {
 
   before(function(done) {
     Promise.props({
-      'rep': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'rep', 'email': 'p_test_rep@gmail.com'}),
-      'dev1': models.User.create({'first_name': 'test1', 'last_name': 'dev', 'email': 'p_test_dev1@gmail.com'}),
-      'dev2': models.User.create({'first_name': 'test2', 'last_name': 'dev', 'email': 'p_test_dev2@gmail.com'}),
-      'dev3': models.User.create({'first_name': 'test3', 'last_name': 'dev', 'email': 'p_test_dev3@gmail.com'})
+      'rep': models.User.create({'kind': 'rep', 'name': 'test', 'email': 'p_test_rep@gmail.com'}),
+      'dev1': models.User.create({'name': 'test1', 'email': 'p_test_dev1@gmail.com'}),
+      'dev2': models.User.create({'name': 'test2', 'email': 'p_test_dev2@gmail.com'}),
+      'dev3': models.User.create({'name': 'test3', 'email': 'p_test_dev3@gmail.com'})
     }).then(function(users) {
       instances.users = users;
       for (var key in instances.users) {

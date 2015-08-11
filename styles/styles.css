@@ -15,12 +15,12 @@
 	width: 50%;
 }
 
-.formbox {
-	margin: 2px;
+.form-box {
+  width: 49%;
 }
 
-.formhalf {
-	width: 50%;
+.form-margin {
+  margin: 2px;
 }
 
 .firstName, .password{
