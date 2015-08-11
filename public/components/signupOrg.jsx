@@ -1,6 +1,9 @@
 var React = require('react');
 
 module.exports = React.createClass({
+	log: function() {
+    console.log(this.state)
+	},
 	render: function() {
 		return (
 	    <form className="col-md-6 col-md-offset-3">
@@ -17,7 +20,7 @@ module.exports = React.createClass({
 				    <div className="form-group">
 					    <input type="checkbox" value="termsAgreed" className="checkbox-inline"> I agree to the terms</input>
 					  </div>
-				    <button type="submit" className="btn signupBtn text-center">Sign Up</button>
+				    <button type="submit" className="btn signupBtn text-center" onClick={this.log}>Sign Up</button>
 				  </div>
 			</form> 
 		)
@@ -25,8 +28,8 @@ module.exports = React.createClass({
 	divId: 'addlLinks',
 	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Website, etc." class="form-control form-margin" />',
 
-	addlFieldCount: 0,
-	addlFieldLimit: 3,
+	addlFieldCount: 2,
+	addlFieldLimit: 4,
 	addLinks: function(divId, newLink) {
     if (this.addlFieldCount === this.addlFieldLimit) {
     	console.log("Maximum fields added");

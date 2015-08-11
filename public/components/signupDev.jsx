@@ -25,17 +25,17 @@ module.exports = React.createClass({
 	    <form className="col-md-6 col-md-offset-3">
 	      <div className="form-group">
 			    <label htmlFor="techstrengths">Tech Strengths (optional)</label> <br />
-		      <input type="text" value="" id="techstrengths" placeholder="Angular.js, Node.js, Python, Databases, etc." className="form-control formBox formMargin" />
+		      <input type="text"  id="techstrengths" placeholder="Angular.js, Node.js, Python, Databases, etc." className="form-control formBox form-margin" />
 		    </div>
 				<div className="form-group" id='addlLinks'>
-			    <label htmlFor="linkss">Additional Links (optional)</label> <br />
-		      <input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." className="form-control formBox formMargin" />
+			    <label htmlFor="links">Additional Links (optional)</label> <br />
+		      <input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." className="form-control formBox form-margin" />
 		    </div>
 		    <div className="signupCentered">
 			    <button className="btn signupBtn" onClick={this.addLinks.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
 			    <div className="form-group">
-				    <input type="checkbox" value="contactedOK" className="checkbox-inline"> Open to being contacted</input>
-				    <input type="checkbox" value="termsAgreed" className="checkbox-inline"> I agree to the terms</input>
+				    <input type="checkbox" value="" className="checkbox-inline"> Open to being contacted</input>
+				    <input type="checkbox" value="" className="checkbox-inline"> I agree to the terms</input>
 				  </div>
 			    <button type="submit" className="btn signupBtn text-center">Sign Up</button>
 			  </div>
@@ -43,10 +43,10 @@ module.exports = React.createClass({
 		)
 	},
 	divId: 'addlLinks',
-	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." class="form-control formBox formMargin" />',
+	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." class="form-control formBox form-margin" />',
 
-	addlFieldCount: 0,
-	addlFieldLimit: 3,
+	addlFieldCount: 2,
+	addlFieldLimit: 4,
 	addLinks: function(divId, newLink) {
     if (this.addlFieldCount === this.addlFieldLimit) {
     	console.log("Maximum fields added");

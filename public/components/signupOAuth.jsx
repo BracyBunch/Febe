@@ -10,7 +10,7 @@ module.exports = React.createClass({
 	      <form className="">
 
 	        <div className="signupCentered">
-			      <h3 className="">{this.props.name} Signup</h3>
+			      <h3>{this.props.name} Signup</h3>
 			      <div className="form-group">
 				      <Link to="#">
 				        <img className="oauthPic img-rounded" src="assets/img/linkedinAuth.png" />
@@ -26,17 +26,17 @@ module.exports = React.createClass({
 			    </div>
   				
 		      <div className="form-group signupCentered">
-			      <input type="text" value="" placeholder="First Name" className="form-inline form-box form-margin" />
-			      <input type="text" value="" placeholder="Last Name" className="form-inline form-box form-margin" />
+			      <input type="text" placeholder="First Name" className="form-inline form-box form-margin" />
+			      <input type="text" placeholder="Last Name" className="form-inline form-box form-margin" />
 			    </div>
 
 			    <div>
-			      <input type="text" value="" placeholder="Email Address" className="form-control" />
+			      <input type="text" placeholder="Email Address" className="form-control" />
 			    </div>
 
 		      <div className="form-group">
-			      <input type="text" value="" placeholder="Password" className="form-inline form-box form-margin" />
-			      <input type="text" value="" placeholder="Confirm Password" className="form-inline form-box form-margin" />
+			      <input type="text" placeholder="Password" className="form-inline form-box form-margin" />
+			      <input type="text" placeholder="Confirm Password" className="form-inline form-box form-margin" />
 			    </div>
 
 		      <h5 className="signupCentered">Password must be more than 8 characters</h5>
