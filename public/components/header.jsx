@@ -1,8 +1,8 @@
 var React = require('react');
 var Router = require('react-router');
+var Modal = require('./signinModal');
 //renderable component
 var Link = Router.Link;
-var Modal = require('./modal');
 
 module.exports = React.createClass({
   render: function(){
