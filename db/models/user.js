@@ -28,8 +28,7 @@ User.useTimestamps();
 User.public_fields = [
   'id',
   'kind',
-  'first_name',
-  'last_name',
+  'name',
   'links'
 ];
 
