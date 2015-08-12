@@ -11,6 +11,7 @@ module.exports = React.createClass({
 			<div className="fullscreen">
         <Header link='/' title='Home'/>
 	      <Oauth name="Nonprofit Representative Signup" />
+	      <Main />
 	      <Org />
         <Footer />
 			</div>
