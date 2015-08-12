@@ -1,20 +1,20 @@
-var express     = require('express');
-var path        = require('path');
-var favicon     = require('serve-favicon');
-var bodyParser  = require('body-parser');
+var express       = require('express');
+var path          = require('path');
+var favicon       = require('serve-favicon');
+var bodyParser    = require('body-parser');
 
-var session     = require('express-session');
-var FileStore   = require('session-file-store')(session);
-var passport    = require('./middleware/auth');
+var session       = require('express-session');
+var FileStore     = require('session-file-store')(session);
+var passport      = require('./middleware/auth');
 
-var auth        = require('./routes/auth');
-var users       = require('./routes/users');
-var EIN         = require('./routes/ein');
-var orgs        = require('./routes/organizations');
-var projects    = require('./routes/projects');
-var signup      = require('./routes/signup');
-var login       = require('./routes/login');
-var tags        = require('./routes/tags');
+var auth          = require('./routes/auth');
+var user          = require('./routes/user');
+var EIN           = require('./routes/ein');
+var organization  = require('./routes/organization');
+var project       = require('./routes/project');
+var signup        = require('./routes/signup');
+var login         = require('./routes/login');
+var tag           = require('./routes/tag');
 
 // ***************** APP configure ******************
 var app = express();
@@ -35,13 +35,13 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 app.use('/auth', auth.router);
 
-app.use('/users', users);
 app.use('/ein', EIN);
-app.use('/orgs', orgs);
-app.use('/projects', projects);
+app.use('/user', user);
+app.use('/organization', organization);
+app.use('/project', project);
 app.use('/signup', signup);
 app.use('/login', login);
-app.use('/tags', tags);
+app.use('/tag', tag);
 
 
 // catch 404
