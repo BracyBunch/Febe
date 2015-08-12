@@ -6,6 +6,7 @@ var common = require('./common');
 
 var Project = require('../models/project');
 var User = require('../models/user');
+var Organization = require('../models/organization');
 var Tag = require('../models/tag');
 
 /**
@@ -21,7 +22,7 @@ var create = function(fields, organization, owner) {
 
   return Project.save(fields).then(function(project) {
     return Promise.all([
-      db.relate(organization, 'runs', project),
+      db.relate(organization, 'owns', project),
       db.relate(owner, 'owns', project)
     ]).then(function() {
       return project;
@@ -78,16 +79,17 @@ var with_extras = function(project_id, options) {
   var include = {};
   if (options === undefined) options = true;
 
-  if (options === true || options.members) include.members = {'model': User, 'rel': 'member_of', 'direction': 'in'};
+  if (options === true || options.members) include.members = {'model': User, 'rel': 'member_of', 'direction': 'in', 'many': true};
   if (options === true || options.owner) include.owner = {'model': User, 'rel': 'owns', 'direction': 'in', 'many': false};
+  if (options === true || options.organization) include.organization = {'model': Organization, 'rel': 'owns', 'direction': 'in', 'many': false};
   if (options === true || options.skills) include.skills = {'model': Tag, 'rel': 'skill', 'direction': 'out', 'many': true};
-
 
   return Project.query('MATCH (node:Project) WHERE id(node)={id}', {'id': project_id}, {'include': include}).then(function(project) {
     project = project[0];
 
     if (project.members) project.members = _.map(project.members, User.clean);
     if (project.owner) project.owner = User.clean(project.owner);
+    if (project.organization) project.organization = Organization.clean(project.organization);
 
     return project;
   });
