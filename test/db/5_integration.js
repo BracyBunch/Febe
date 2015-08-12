@@ -87,6 +87,23 @@ describe('Integration tests', function() {
     });
   });
 
+  it('shouldn\'t include private information in Project.with_extras', function(done) {
+    models.Project.with_extras(instances.project.id, true).then(function(project) {
+      expect(project.owner).to.have.all.keys(models.User.public_fields);
+      expect(project.organization).to.contain.any.keys(models.Organization.public_fields);
+
+      for(var key in project.organization) {
+        expect(models.Organization.public_fields.indexOf(key)).to.be.gt(-1);
+      }
+
+      project.members.forEach(function(member) {
+        expect(member).to.have.all.keys(models.User.public_fields);
+      });
+
+      done();
+    }, done);
+  });
+
   it('should be able to add Tags to Users as strengths', function(done) {
     models.User.add_strengths(instances.users.dev1, [instances.tags.skill1, instances.tags.skill2]).then(function() {
       models.User.with_extras(instances.users.dev1.id, {'strengths': true}).then(function(user) {
@@ -148,6 +165,72 @@ describe('Integration tests', function() {
           done();
         } else {
           done(new Error('Added Tag as an interest multiple times'));
+        }
+      }, done);
+    });
+  });
+
+  it('should be able to add Tags to Organizations as causes', function(done) {
+    models.Organization.add_causes(instances.org, [instances.tags.cause1, instances.tags.cause2]).then(function() {
+      models.Organization.with_extras(instances.org, {'causes': true}).then(function(org) {
+        expect(org.causes).to.be.an('array');
+        expect(org.causes).to.have.length(2);
+        expect(org.causes[0]).to.be.an('object');
+        expect(org.causes[0].kind).to.eql('cause');
+        done();
+      }, done);
+    }, done);
+  });
+
+  it('shouldn\'t be able to add Tag as a cause more than once', function(done) {
+    models.Organization.add_cause(instances.org, instances.tags.cause1).then(function() {
+      done(new Error('Added Tag as a cause multiple times'));
+    }).catch(function() {
+      var query = [
+        'MATCH (o:Organization) WHERE id(o)={org_id}',
+        'MATCH (t:Tag) WHERE id(t)={tag_id}',
+        'MATCH r=(o)-[:cause]->(t)',
+        'RETURN COUNT(r) AS num'
+      ].join(' ');
+
+      models.db.query(query, {'org_id': instances.org.id, 'tag_id': instances.tags.cause1.id}).then(function(row) {
+        if (row.num === 1) {
+          done();
+        } else {
+          done(new Error('Added Tag as a cause multiple times'));
+        }
+      }, done);
+    });
+  });
+
+  it('should be able to add Tags to Projects as skills', function(done) {
+    models.Project.add_skills(instances.project, [instances.tags.skill1, instances.tags.skill2]).then(function() {
+      models.Project.with_extras(instances.project.id, {'skills': true}).then(function(project) {
+        expect(project.skills).to.be.an('array');
+        expect(project.skills).to.have.length(2);
+        expect(project.skills[0]).to.be.an('object');
+        expect(project.skills[0].kind).to.eql('skill');
+        done();
+      }, done);
+    }, done);
+  });
+
+  it('shouldn\'t be able to add Tag as a skill more than once', function(done) {
+    models.Project.add_skill(instances.project, instances.tags.skill1).then(function() {
+      done(new Error('Added Tag as a skill multiple times'));
+    }).catch(function() {
+      var query = [
+        'MATCH (p:Project) WHERE id(p)={project_id}',
+        'MATCH (t:Tag) WHERE id(t)={tag_id}',
+        'MATCH r=(p)-[:skill]->(t)',
+        'RETURN COUNT(r) AS num'
+      ].join(' ');
+
+      models.db.query(query, {'project_id': instances.project.id, 'tag_id': instances.tags.skill1.id}).then(function(row) {
+        if (row.num === 1) {
+          done();
+        } else {
+          done(new Error('Added Tag as a skill multiple times'));
         }
       }, done);
     });
