@@ -12,7 +12,6 @@ module.exports = React.createClass({
         <Header link='/' title='Home'/>
 	      <Oauth name="Nonprofit Representative Signup" />
 	      <Main type="rep"/>
-	      <Org />
         <Footer />
 			</div>
 		)
