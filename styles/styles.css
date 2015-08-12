@@ -189,6 +189,10 @@ img {
 /*featured projects*/
 
 /*profile*/
+.profile {
+  width: 80%;
+}
+
 .profileBox {
   display: inline-block;
   width: 30%;

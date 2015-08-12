@@ -12,6 +12,7 @@ module.exports = React.createClass({
         <div className="row signup-buttons">
           <div className="col-xs-6 col-sm-push-1">
             <Link to="/devprofile"><button className="btn btn-primary">Dev Profile Temp</button></Link>
+            <Link to="/orgprofile"><button className="btn btn-primary">Org Profile Temp</button></Link>
             <Link to="/signupdev"><button className="btn btn-primary">Engineer</button></Link>
             <div className="under-buttons">Work with others to<br/>solve problems</div>
           </div>

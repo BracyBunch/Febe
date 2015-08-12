@@ -13,6 +13,7 @@ var Termsofuse = require('./components/termsOfUse');
 var Privacypolicy = require('./components/privacyPolicy');
 var Dashboard = require('./components/dashboard');
 var DevProfile = require('./components/profile/dev-profile-view');
+var OrgProfile = require('./components/profile/org-profile-view');
 
 module.exports = (
   <Router history={new HashHistory}>
@@ -23,6 +24,7 @@ module.exports = (
       <Route path="/privacypolicy" component={Privacypolicy} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/devprofile" component={DevProfile} />
+      <Route path="/orgprofile" component={OrgProfile} />
     </Route>
   </Router>
 );
