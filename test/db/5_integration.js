@@ -106,7 +106,7 @@ describe('Integration tests', function() {
 
   it('should be able to add Tags to Users as strengths', function(done) {
     models.User.add_strengths(instances.users.dev1, [instances.tags.skill1, instances.tags.skill2]).then(function() {
-      models.User.with_extras(instances.users.dev1.id, {'strengths': true}).then(function(user) {
+      models.User.with_extras(instances.users.dev1, {'strengths': true}).then(function(user) {
         expect(user.strengths).to.be.an('array');
         expect(user.strengths).to.have.length(2);
         expect(user.strengths[0]).to.be.an('object');
@@ -139,7 +139,7 @@ describe('Integration tests', function() {
 
   it('should be able to add Tags to Users as interests', function(done) {
     models.User.add_interests(instances.users.dev1, [instances.tags.cause1, instances.tags.cause2]).then(function() {
-      models.User.with_extras(instances.users.dev1.id, {'interests': true}).then(function(user) {
+      models.User.with_extras(instances.users.dev1, {'interests': true}).then(function(user) {
         expect(user.interests).to.be.an('array');
         expect(user.interests).to.have.length(2);
         expect(user.interests[0]).to.be.an('object');

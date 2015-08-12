@@ -1,5 +1,4 @@
 var _ = require('lodash');
-var Promise = require('bluebird');
 var db = require('../db');
 
 var common = require('./common');
@@ -27,6 +26,7 @@ var check_if_exists = function(email) {
  * @param  {String} fields.last_name
  * @param  {String} fields.email
  * @param  {String} [fields.github_id]
+ * @param  {String} [fields.facebook_id]
  * @param  {String} [fields.linkedin_id]
  * @return {Promise.<User>}
  */
@@ -36,8 +36,8 @@ var create = function(fields) {
 
 /**
  * Update a User
- * @param  {Integer} [id]     Id of the User to update, can be omitted if there is an id key in fields
- * @param  {Object} fields    Fields to update
+ * @param  {Integer} [id]    Id of the User to update, can be omitted if there is an id key in fields
+ * @param  {Object}  fields  Fields to update
  * @return {Promise.<User>}
  */
 var update = function(id, fields) {
@@ -74,14 +74,14 @@ var add_strengths = common.add_rels_generator(add_strength);
 
 /**
  * Adds Tag as an interest of User
- * @param {Integer|User}  user   User or id
+ * @param {Integer|User}  user      User or id
  * @param {Integer|Tag}   interest  Tag or id
  */
 var add_interest = common.add_rel_generator('User', 'interest', 'Tag', true);
 
 /**
  * Adds an array of Tags as interests of User
- * @param {Integer|User}     user    User or id
+ * @param {Integer|User}     user      User or id
  * @param {Integer[]|Tag[]}  interest  Array of Tags or ids
  */
 var add_interests = common.add_rels_generator(add_interest);
@@ -89,11 +89,12 @@ var add_interests = common.add_rels_generator(add_interest);
 
 /**
  * Fetches one User including specifed extras
- * @param  {Integer}        user_id         Id of the User
+ * @param  {Integer|User}   user            User or id
  * @param  {Object|Boolean} [options=true]  Either an object with with the extras to include or true to include all extras
- * @return {Promise.<User>}                 Project with all specified models included
+ * @return {Promise.<User>}                 User with all specified models included
  */
-var with_extras = function(user_id, options) {
+var with_extras = function(user, options) {
+  var user_id = (user.id || user);
   var include = {};
   if (options === undefined) options = true;
 
