@@ -43,28 +43,39 @@ module.exports = React.createClass({
   check_popup_open_interval: undefined,
 
   handle_flow_end: function() {
-    window.clearInterval(check_popup_open_interval);
-    window.removeEventListener('storage');
+    window.clearInterval(this.check_popup_open_interval);
+    window.removeEventListener('storage', this.watch_localStorage);
     this.popup.close();
-    //handle response with react somehow here
-    console.log('oauth response: ', window.localStorage.getItem('oauth_status'));
+    var oauth_status = window.localStorage.getItem('oauth_status');
     window.localStorage.removeItem('oauth_status');
+    //handle response with react somehow here
+    console.log('oauth response: ', oauth_status);
+
+    if (oauth_status === 'success') {
+      
+    } else if (oauth_status === 'rejected') {
+
+    } else if (oauth_status === 'conflict') {
+      
+    }
   },
 
   check_popup_open: function() {
     if (this.popup.closed && window.localStorage.getItem('oauth_status') === 'in_progress') {
       window.clearInterval(this.check_popup_open_interval);
       window.localStorage.setItem('oauth_status', 'rejected');
-      return handle_flow_end();
+      this.handle_flow_end();
+    }
+  },
+
+  watch_localStorage: function(e) {
+    if (e.key === 'oauth_status') {
+      this.handle_flow_end();
     }
   },
 
   open_popup: function(provider) {
-    window.addEventListener('storage', function(e) {
-      if (e.key === 'oauth_status') {
-        handle_flow_end();
-      }
-    });
+    window.addEventListener('storage', this.watch_localStorage);
     window.localStorage.setItem('oauth_status', 'in_progress');
 
     var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;  
