@@ -64,7 +64,7 @@
 }
 
 .site-name, .iamdev, .slogan, .scroll-down, .signup-buttons, 
-.team-header, .stack, .featured, .signupCentered{
+.team-header, .stack, .featured, .signupCentered, .centered{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -76,7 +76,7 @@
 
 .carouselProjects {
   width: 100%;
-  height: 100%;
+  height: 80%;
 }
 
 .site-name{
@@ -188,3 +188,19 @@ img {
 
 /*featured projects*/
 
+/*profile*/
+.profile {
+  width: 80%;
+}
+
+.profileBox {
+  display: inline-block;
+  width: 30%;
+  height: 200px;
+  margin: 1em;
+}
+
+/*other*/
+.fullscreen {
+  height: 100%;
+}

@@ -5,7 +5,6 @@ var Oauth = require('./signupOAuth');
 var Link = Router.Link;
 
 module.exports = React.createClass({
-
   getInitialState: function() {
     return { showModal: false };
   },
