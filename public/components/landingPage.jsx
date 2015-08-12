@@ -10,14 +10,26 @@ var FeaturedProjects = require('./featuredProjects');
 module.exports = React.createClass({
   render: function(){
     return (
-      <div>
-        <Header link='/' title='About' link2="/" title2='Browse' link3='/' title3='Team'/>
-        <Landing />
-        <FeaturedProjects />
-        <Team />
-        <Stack />
-        <Help />
-        <Footer />
+      <div id="main">
+        <section>
+          <div className="fullscreen">
+            <Header link='/' title='About' link2="/" title2='Browse' link3='/' title3='Team'/>
+            <Landing />
+          </div>
+        </section>
+        <section>
+          <div className="fullscreen">
+            <FeaturedProjects />
+          </div>
+        </section>
+        <section>
+          <div className="fullscreen">
+            <Team />
+            <Stack />
+            <Help />
+            <Footer />
+          </div>
+        </section>
       </div>
     )
   },
