@@ -30,5 +30,6 @@ Project.public_fields = [
 Project.query = Promise.promisify(Project.query, Project);
 Project.save = Promise.promisify(Project.save, Project);
 Project.read = Promise.promisify(Project.read, Project);
+Project.where = Promise.promisify(Project.where, Project);
 
 module.exports = Project;
