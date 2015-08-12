@@ -6,6 +6,7 @@ var common = require('./common');
 
 var Project = require('../models/project');
 var User = require('../models/user');
+var Organization = require('../models/organization');
 var Tag = require('../models/tag');
 
 /**
@@ -21,7 +22,7 @@ var create = function(fields, organization, owner) {
 
   return Project.save(fields).then(function(project) {
     return Promise.all([
-      db.relate(organization, 'runs', project),
+      db.relate(organization, 'owns', project),
       db.relate(owner, 'owns', project)
     ]).then(function() {
       return project;
@@ -64,9 +65,24 @@ var add_member = common.add_rel_generator('User', 'member_of', 'Project');
 /**
  * Adds an array of Users as members of Project
  * @param {Integer|Project}      project  Project or id to add Users to
- * @param {Integer[]|Project[]}  members  Array of Users or ids to add to Project
+ * @param {Integer[]|User[]}  members  Array of Users or ids to add to Project
  */
 var add_members = common.add_rels_generator(add_member);
+
+/**
+ * Adds Tag as a skill of Project
+ * @param {Integer|Project}  project  Project or id
+ * @param {Integer|Tag}      skill    Tag or id
+ */
+var add_skill = common.add_rel_generator('Project', 'skill', 'Tag', true);
+
+/**
+ * Adds an array of Tags as skills of Project
+ * @param {Integer|Project}  Project  Project or id
+ * @param {Integer[]|Tag[]}  skills   Array of Tags or ids
+ */
+var add_skills = common.add_rels_generator(add_skill);
+
 
 /**
  * Fetches one Project including specifed extras
@@ -78,16 +94,17 @@ var with_extras = function(project_id, options) {
   var include = {};
   if (options === undefined) options = true;
 
-  if (options === true || options.members) include.members = {'model': User, 'rel': 'member_of', 'direction': 'in'};
+  if (options === true || options.members) include.members = {'model': User, 'rel': 'member_of', 'direction': 'in', 'many': true};
   if (options === true || options.owner) include.owner = {'model': User, 'rel': 'owns', 'direction': 'in', 'many': false};
+  if (options === true || options.organization) include.organization = {'model': Organization, 'rel': 'owns', 'direction': 'in', 'many': false};
   if (options === true || options.skills) include.skills = {'model': Tag, 'rel': 'skill', 'direction': 'out', 'many': true};
-
 
   return Project.query('MATCH (node:Project) WHERE id(node)={id}', {'id': project_id}, {'include': include}).then(function(project) {
     project = project[0];
 
     if (project.members) project.members = _.map(project.members, User.clean);
     if (project.owner) project.owner = User.clean(project.owner);
+    if (project.organization) project.organization = Organization.clean(project.organization);
 
     return project;
   });
@@ -114,6 +131,8 @@ module.exports = {
   'clean': clean,
   'add_member': add_member,
   'add_members': add_members,
+  'add_skill': add_skill,
+  'add_skills': add_skills,
   'with_extras': with_extras,
   'find_by_skill': find_by_skill
 };

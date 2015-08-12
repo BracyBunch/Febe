@@ -4,7 +4,6 @@ var models = require('../db');
 var passport = require('passport');
 
 var bcrypt = require('bcrypt');
-var hash = Promise.promisify(bcrypt.hash, bcrypt);
 var compare = Promise.promisify(bcrypt.compare, bcrypt);
 
 var GithubStrategy = require('passport-github2').Strategy;
@@ -42,16 +41,19 @@ passport.deserializeUser(function(id, done) {
       'id': user.id,
       'kind': user.kind,
       'email': user.email,
-      'name': user.name
+      'first_name': user.first_name,
+      'last_name': user.last_name
     });
   }, done);
 });
 
 var create_service_link = function(service, profile) {
   var link;
+
   if (service === 'linkedin') link = service + '|' +profile._json.publicProfileUrl;
   if (service === 'github') link = service + '|' + profile.profileUrl;
   if (service === 'facebook') link = service + '|' + 'https://facebook.com/' + profile.id;
+
   return link;
 };
 
@@ -65,7 +67,8 @@ var oauth_login_or_create_generator = function(service) {
         user = {};
         user[service + '_id'] = profile.id;
         user.kind = req.session.user_kind || 'dev';
-        user.name = profile.displayName;
+        user.first_name = (profile.name !== undefined) ? profile.name.givenName : profile.displayName.split(' ', 2)[0];
+        user.last_name = (profile.name !== undefined) ? profile.name.familyName : profile.displayName.split(' ', 2)[1];
         user.email = (profile.emails.length) ? profile.emails[0].value : null;
         user.links = [create_service_link(service, profile)];
 
@@ -96,19 +99,19 @@ var oauth_login_or_create_generator = function(service) {
 };
 
 passport.use(new FacebookStrategy({
-    'clientID': keys.FACEBOOK_APP_ID,
-    'clientSecret': keys.FACEBOOK_APP_SECRET,
-    'callbackURL': FACEBOOK_CALLBACK_URL,
-    'profileFields': ['id', 'displayName', 'emails', 'profileUrl'],
-    'passReqToCallback': true
-  }, oauth_login_or_create_generator('facebook')));
+  'clientID': keys.FACEBOOK_APP_ID,
+  'clientSecret': keys.FACEBOOK_APP_SECRET,
+  'callbackURL': FACEBOOK_CALLBACK_URL,
+  'profileFields': ['id', 'displayName', 'name', 'emails', 'profileUrl'],
+  'passReqToCallback': true
+}, oauth_login_or_create_generator('facebook')));
 
 passport.use(new GithubStrategy({
-    'clientID': keys.GITHUB_APP_ID,
-    'clientSecret': keys.GITHUB_APP_SECRET,
-    'callbackURL': GITHUB_CALLBACK_URL,
-    'passReqToCallback': true
-  }, oauth_login_or_create_generator('github')));
+  'clientID': keys.GITHUB_APP_ID,
+  'clientSecret': keys.GITHUB_APP_SECRET,
+  'callbackURL': GITHUB_CALLBACK_URL,
+  'passReqToCallback': true
+}, oauth_login_or_create_generator('github')));
 
 passport.use(new LinkedinStrategy({
   'clientID': keys.LINKEDIN_APP_ID,
