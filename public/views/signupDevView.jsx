@@ -11,7 +11,7 @@ module.exports = React.createClass({
 			<div className="fullscreen">
         <Header link='/' title='Home'/>
 	      <Oauth name="Developer Signup" />
-	      <Main type="dev"/>
+	      <Main type="dev" url="/auth/signup"/>
         <Footer />
 			</div>
 		)
