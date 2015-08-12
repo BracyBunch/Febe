@@ -30,5 +30,6 @@ Tag.public_fields = [
 Tag.query = Promise.promisify(Tag.query, Tag);
 Tag.save = Promise.promisify(Tag.save, Tag);
 Tag.read = Promise.promisify(Tag.read, Tag);
+Tag.where = Promise.promisify(Tag.where, Tag);
 
 module.exports = Tag;

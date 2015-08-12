@@ -56,7 +56,7 @@ describe('Integration tests', function() {
 
   it('should be able to add Users as members of a Project', function(done) {
     models.Project.add_members(instances.project, [instances.users.dev1, instances.users.dev2, instances.users.dev3]).then(function() {
-      models.Project.with_extras(instances.project.id, {'members': true}).then(function(t_project) {
+      models.Project.with_extras(instances.project, {'members': true}).then(function(t_project) {
         expect(t_project.members).to.be.an('array');
         expect(t_project.members).to.have.length(3);
         expect(t_project.members[0]).to.be.an('object');
@@ -88,7 +88,7 @@ describe('Integration tests', function() {
   });
 
   it('shouldn\'t include private information in Project.with_extras', function(done) {
-    models.Project.with_extras(instances.project.id, true).then(function(project) {
+    models.Project.with_extras(instances.project, true).then(function(project) {
       expect(project.owner).to.have.all.keys(models.User.public_fields);
       expect(project.organization).to.contain.any.keys(models.Organization.public_fields);
 
@@ -106,7 +106,7 @@ describe('Integration tests', function() {
 
   it('should be able to add Tags to Users as strengths', function(done) {
     models.User.add_strengths(instances.users.dev1, [instances.tags.skill1, instances.tags.skill2]).then(function() {
-      models.User.with_extras(instances.users.dev1.id, {'strengths': true}).then(function(user) {
+      models.User.with_extras(instances.users.dev1, {'strengths': true}).then(function(user) {
         expect(user.strengths).to.be.an('array');
         expect(user.strengths).to.have.length(2);
         expect(user.strengths[0]).to.be.an('object');
@@ -139,7 +139,7 @@ describe('Integration tests', function() {
 
   it('should be able to add Tags to Users as interests', function(done) {
     models.User.add_interests(instances.users.dev1, [instances.tags.cause1, instances.tags.cause2]).then(function() {
-      models.User.with_extras(instances.users.dev1.id, {'interests': true}).then(function(user) {
+      models.User.with_extras(instances.users.dev1, {'interests': true}).then(function(user) {
         expect(user.interests).to.be.an('array');
         expect(user.interests).to.have.length(2);
         expect(user.interests[0]).to.be.an('object');
@@ -205,7 +205,7 @@ describe('Integration tests', function() {
 
   it('should be able to add Tags to Projects as skills', function(done) {
     models.Project.add_skills(instances.project, [instances.tags.skill1, instances.tags.skill2]).then(function() {
-      models.Project.with_extras(instances.project.id, {'skills': true}).then(function(project) {
+      models.Project.with_extras(instances.project, {'skills': true}).then(function(project) {
         expect(project.skills).to.be.an('array');
         expect(project.skills).to.have.length(2);
         expect(project.skills[0]).to.be.an('object');
