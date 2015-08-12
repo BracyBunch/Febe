@@ -64,11 +64,12 @@ var add_causes = common.add_rels_generator(add_cause);
 
 /**
  * Fetches one Organization including specifed extras
- * @param  {Integer}        organization_id  Id of the Organization
- * @param  {Object|Boolean} [options=true]   Either an object with with the extras to include or true to include all extras
- * @return {Promise.<Organization>}          Organization with all specified models included
+ * @param  {Integer|Organization}  organization   Organization or id
+ * @param  {Object|Boolean}        [options=true] Either an object with with the extras to include or true to include all extras
+ * @return {Promise.<Organization>}               Organization with all specified models included
  */
-var with_extras = function(organization_id, options) {
+var with_extras = function(organization, options) {
+  var organization_id = (organization.id || organization);
   var include = {};
   if (options === undefined) options = true;
 

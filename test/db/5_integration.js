@@ -172,7 +172,7 @@ describe('Integration tests', function() {
 
   it('should be able to add Tags to Organizations as causes', function(done) {
     models.Organization.add_causes(instances.org, [instances.tags.cause1, instances.tags.cause2]).then(function() {
-      models.Organization.with_extras(instances.org.id, {'causes': true}).then(function(org) {
+      models.Organization.with_extras(instances.org, {'causes': true}).then(function(org) {
         expect(org.causes).to.be.an('array');
         expect(org.causes).to.have.length(2);
         expect(org.causes[0]).to.be.an('object');
