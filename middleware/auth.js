@@ -12,17 +12,19 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 var LocalStrategy = require('passport-local').Strategy;
 
-var keys = {};
+var keys;
 
-if (process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_ID) {
-  keys.FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
-  keys.FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
+if (process.env.NODE_ENV === 'production') {
+  keys = {
+    'FACEBOOK_APP_ID': process.env.FACEBOOK_APP_ID,
+    'FACEBOOK_APP_SECRET': process.env.FACEBOOK_APP_SECRET,
 
-  keys.GITHUB_APP_ID = process.env.GITHUB_APP_ID;
-  keys.GITHUB_APP_SECRET = process.env.GITHUB_APP_SECRET;
+    'GITHUB_APP_ID': process.env.GITHUB_APP_ID,
+    'GITHUB_APP_SECRET': process.env.GITHUB_APP_SECRET,
 
-  keys.LINKEDIN_APP_ID = process.env.LINKEDIN_APP_ID;
-  keys.LINKEDIN_APP_SECRET = process.env.LINKEDIN_APP_SECRET;
+    'LINKEDIN_APP_ID': process.env.LINKEDIN_APP_ID,
+    'LINKEDIN_APP_SECRET': process.env.LINKEDIN_APP_SECRET
+  };
 } else {
   keys = require('../keys');
 }
