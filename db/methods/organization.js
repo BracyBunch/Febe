@@ -73,7 +73,7 @@ var with_extras = function(organization_id, options) {
   if (options === undefined) options = true;
 
   if (options === true || options.owner) include.owner = {'model': User, 'rel': 'owns', 'direction': 'in', 'many': false};
-  if (options === true || options.causes) include.causes = {'model': Tag, 'rel': 'skill', 'direction': 'out', 'many': true};
+  if (options === true || options.causes) include.causes = {'model': Tag, 'rel': 'cause', 'direction': 'out', 'many': true};
 
 
   return Organization.query('MATCH (node:Organization) WHERE id(node)={id}', {'id': organization_id}, {'include': include}).then(function(organization) {
