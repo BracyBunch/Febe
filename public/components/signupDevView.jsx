@@ -8,7 +8,7 @@ var Footer = require('./footer');
 module.exports = React.createClass({
 	render: function() {
 		return (
-			<div>
+			<div className="fullscreen">
         <Header link='/' title='Home'/>
 	      <Oauth name="Developer Signup" />
 	      <Main />

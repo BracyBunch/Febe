@@ -76,7 +76,7 @@
 
 .carouselProjects {
   width: 100%;
-  height: 100%;
+  height: 80%;
 }
 
 .site-name{
@@ -188,3 +188,7 @@ img {
 
 /*featured projects*/
 
+/*other*/
+.fullscreen {
+  height: 100%;
+}
