@@ -1,12 +1,21 @@
 var Tag = require('../db').Tag;
 var express = require('express');
-var http = require('http');
 var router = express.Router();
 
 // home route
 router.get('/', function(req, res){
   // access DB to retrieve all tags
   res.send(res);
+});
+
+router.get('/search', function(req, res) {
+  var fragment = req.query.fragment;
+  var kind = req.query.kind || 'skill';
+  if (!fragment || fragment.length < 3) return res.status(400).send();
+
+  Tag.find_by_fragment(fragment, kind).then(function(tags) {
+    res.json(tags);
+  });
 });
 
 router.post('/add', function(req, res){

@@ -38,9 +38,21 @@ var update = function(id, fields) {
  */
 var clean = common.clean_generator(Tag);
 
+/**
+ * Finds Tags beginning with fragment
+ * @param  {String} fragment  String to search for
+ * @param  {String} kind      Either skill or cause
+ * @return {Tag[]}
+ */
+var find_by_fragment = function(fragment, kind) {
+  return Tag.where({'name': new RegExp(fragment + '.*', 'i'), 'kind': kind}).then(function(tags) {
+    return tags.map(clean);
+  });
+};
 
 module.exports = {
   'create': create,
   'update': update,
-  'clean': clean
+  'clean': clean,
+  'find_by_fragment': find_by_fragment
 };
