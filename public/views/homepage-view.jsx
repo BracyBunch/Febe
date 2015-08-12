@@ -1,11 +1,11 @@
 var React = require('react');
-var Header = require('./header');
-var Landing = require('./landing');
-var Footer = require('./footer');
-var Team = require('./team');
-var Stack = require('./stack');
-var Help = require('./help');
-var FeaturedProjects = require('./featuredProjects');
+var Header = require('../components/shared/header');
+var Landing = require('../components/homepage/landing');
+var Footer = require('../components/shared/footer');
+var Team = require('../components/homepage/team');
+var Stack = require('../components/homepage/stack');
+var Help = require('../components/homepage/help');
+var FeaturedProjects = require('../components/homepage/featuredProjects');
 
 module.exports = React.createClass({
   render: function(){

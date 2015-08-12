@@ -1,5 +1,5 @@
 var React = require('react');
-var LandingPage = require('./landingPage');
+var LandingPage = require('../views/homepage-view');
 
 module.exports = React.createClass({
   render: function(){
