@@ -64,17 +64,17 @@ module.exports = React.createClass({
 	},
 	handleSubmit: function(comment) {
 		console.log("we are in here", this.state);
-    // $.ajax({
-    //   url: this.props.url,
-    //   dataType: 'json',
-    //   type: 'POST',
-    //   data: comment,
-    //   success: function(data) {
-    //     this.setState({data: data});
-    //   }.bind(this),
-    //   error: function(xhr, status, err) {
-    //     console.error(this.props.url, status, err.toString());
-    //   }.bind(this)
-    // });
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: comment,
+      success: function(data) {
+      	console.log("Success")
+      },
+      error: function(xhr, status, err) {
+      	console.log("Error")
+      }
+    });
   }
 })
