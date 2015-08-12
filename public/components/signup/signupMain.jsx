@@ -68,7 +68,7 @@ module.exports = React.createClass({
       url: this.props.url,
       dataType: 'json',
       type: 'POST',
-      data: comment,
+      data: this.state,
       success: function(data) {
       	console.log("Success")
       },

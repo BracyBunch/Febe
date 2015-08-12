@@ -44,11 +44,12 @@ var handle_login = function(req, res, next) {
 
 var signal_complete = function(req, res) {
   if (!req.isAuthenticated) res.status(401);
-  res.send();
+  res.status(200).send(req.body);
 };
 
 router.post('/login', set_user_kind, passport.authenticate('local'), signal_complete);
 router.post('/signup', set_user_kind, function(req, res, next) {
+  console.log("Incoming info...: ", req.body)
   var email = req.body.email;
   var password = req.body.password;
   var first_name = req.body.first_name;
