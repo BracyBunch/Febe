@@ -27,80 +27,37 @@ describe('Signup tests', function() {
   });
 
   it('should be able to signup as a dev with a password', function(done) {
-    chai.request(app).post('/auth/signup').send({
-      'name': 'test', 'email': 'test@testy.com', 'password': 'iconapop',
-      'links': ['other|http://google.com'], 'tos_accepted': true
-    }).then(function(res) {
+    chai.request(app).post('/auth/signup').send({'first_name': 'test', 'last_name': 'user', 'email': 'test@testy.com', 'password': 'iconapop',}).then(function(res) {
       expect(res.status).to.eql(200);
 
       models.User.where({'email': 'test@testy.com'}).then(function(user) {
         if (user.length === 1) ids_to_be_deleted.push(user[0].id);
 
         expect(user).to.have.length(1);
-        expect(user[0].name).to.eql('test');
+        expect(user[0].first_name).to.eql('test');
         expect(user[0].kind).to.eql('dev');
-        expect(user[0].links).to.have.length(1);
         done();
       }, done);
     }, done);
   });
 
   it('shouldn\'t be able to signup using an already used email', function(done) {
-    chai.request(app).post('/auth/signup').send({
-      'name': 'test2', 'email': 'test@testy.com', 'password': 'charlixcx',
-      'links': ['other|http://google.com'], 'tos_accepted': true
-    }).then(function(res) {
+    chai.request(app).post('/auth/signup').send({'first_name': 'test2', 'last_name': 'user', 'email': 'test@testy.com', 'password': 'charlixcx'}).then(function(res) {
       expect(res.status).to.eql(409);
       done();
     }, done);
   });
 
-  it('shouldn\'t be able to signup without accepting the tos', function(done) {
-    chai.request(app).post('/auth/signup').send({
-      'name': 'test2', 'email': 'test2@testy.com', 'password': 'charlixcx',
-      'links': ['other|htt/google.com']
-    }).then(function(res) {
-      expect(res.status).to.eql(401);
-
-      models.User.where({'email': 'test2@testy.com'}).then(function(user) {
-        if (user.length === 1) ids_to_be_deleted.push(user[0].id);
-
-        expect(user).to.have.length(0);
-        done();
-      }, done);
-    }, done);
-  });
-
-  it('shouldn\'t be able to signup with invalid links', function(done) {
-    chai.request(app).post('/auth/signup').send({
-      'name': 'test2', 'email': 'test2@testy.com', 'password': 'charlixcx',
-      'links': ['other|htt/google.com'], 'tos_accepted': true
-    }).then(function(res) {
-      expect(res.status).to.eql(401);
-
-      models.User.where({'email': 'test2@testy.com'}).then(function(user) {
-        if (user.length === 1) ids_to_be_deleted.push(user[0].id);
-
-        expect(user).to.have.length(0);
-        done();
-      }, done);
-    }, done);
-  });
-
   it('should be able to signup as a rep with a password', function(done) {
-    chai.request.agent(app).post('/auth/signup').send({
-      'user_kind': 'rep', 'name': 'test rep', 'email': 'test@reppy.com', 'password': 'billyg',
-      'links': ['other|http://google.com'], 'tos_accepted': true
-    }).then(function(res) {
+    chai.request.agent(app).post('/auth/signup').send({'user_kind': 'rep', 'first_name': 'test rep', 'last_name': 'user', 'email': 'test@reppy.com', 'password': 'billyg'}).then(function(res) {
       expect(res.status).to.eql(200);
 
       models.User.where({'email': 'test@reppy.com'}).then(function(user) {
         if (user.length === 1) ids_to_be_deleted.push(user[0].id);
 
         expect(user).to.have.length(1);
-        expect(user[0].name).to.eql('test rep');
+        expect(user[0].first_name).to.eql('test rep');
         expect(user[0].kind).to.eql('rep');
-        expect(user[0].links).to.have.length(1);
         done();
       }, done);
     }, done);
