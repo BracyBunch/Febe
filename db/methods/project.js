@@ -70,6 +70,21 @@ var add_member = common.add_rel_generator('User', 'member_of', 'Project');
 var add_members = common.add_rels_generator(add_member);
 
 /**
+ * Adds Tag as a skill of Project
+ * @param {Integer|Project}  project  Project or id
+ * @param {Integer|Tag}      skill    Tag or id
+ */
+var add_skill = common.add_rel_generator('Project', 'skill', 'Tag', true);
+
+/**
+ * Adds an array of Tags as skills of Project
+ * @param {Integer|Project}  Project  Project or id
+ * @param {Integer[]|Tag[]}  skills   Array of Tags or ids
+ */
+var add_skills = common.add_rels_generator(add_skill);
+
+
+/**
  * Fetches one Project including specifed extras
  * @param  {Integer}        project_id      Id of the Project
  * @param  {Object|Boolean} [options=true]  Either an object with with the extras to include or true to include all extras
@@ -116,6 +131,8 @@ module.exports = {
   'clean': clean,
   'add_member': add_member,
   'add_members': add_members,
+  'add_skill': add_skill,
+  'add_skills': add_skills,
   'with_extras': with_extras,
   'find_by_skill': find_by_skill
 };
