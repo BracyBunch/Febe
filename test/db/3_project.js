@@ -16,10 +16,10 @@ describe('Project tests', function() {
 
   before(function(done) {
     Promise.props({
-      'rep': models.User.create({'kind': 'rep', 'name': 'test', 'email': 'p_test_rep@gmail.com'}),
-      'dev1': models.User.create({'name': 'test1', 'email': 'p_test_dev1@gmail.com'}),
-      'dev2': models.User.create({'name': 'test2', 'email': 'p_test_dev2@gmail.com'}),
-      'dev3': models.User.create({'name': 'test3', 'email': 'p_test_dev3@gmail.com'})
+      'rep': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep@gmail.com'}),
+      'dev1': models.User.create({'first_name': 'test1', 'last_name': 'user', 'email': 'p_test_dev1@gmail.com'}),
+      'dev2': models.User.create({'first_name': 'test2', 'last_name': 'user', 'email': 'p_test_dev2@gmail.com'}),
+      'dev3': models.User.create({'first_name': 'test3', 'last_name': 'user', 'email': 'p_test_dev3@gmail.com'})
       // 'tag1': models.Tag.create
     }).then(function(p_users) {
       instances.users = p_users;
@@ -51,24 +51,24 @@ describe('Project tests', function() {
   });
 
   it('should be able to create a Project', function(done) {
-    models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, instances.org, instances.users.rep).then(function(t_project) {
-      ids_to_be_deleted.push(t_project.id);
-      instances.project = t_project;
+    models.Project.create({'name': 'test_project', 'description': 'just a test', 'complete_by': new Date(2015, 6, 14)}, instances.org, instances.users.rep).then(function(project) {
+      ids_to_be_deleted.push(project.id);
+      instances.project = project;
 
-      expect(t_project).to.be.an('object');
-      expect(t_project.name).to.be.a('string');
-      expect(t_project.description).to.be.a('string');
-      expect(t_project.published).to.eql(false);
+      expect(project).to.be.an('object');
+      expect(project.name).to.be.a('string');
+      expect(project.description).to.be.a('string');
+      expect(project.published).to.eql(false);
       done();
     }, done);
   });
 
   it('should be able to update a Project', function(done) {
-    models.Project.update(instances.project.id, {'published': 'true'}).then(function(t_project) {
-      expect(t_project).to.be.an('object');
-      expect(t_project.name).to.be.a('string');
-      expect(t_project.description).to.be.a('string');
-      expect(t_project.published).to.eql(true);
+    models.Project.update(instances.project.id, {'published': 'true'}).then(function(project) {
+      expect(project).to.be.an('object');
+      expect(project.name).to.be.a('string');
+      expect(project.description).to.be.a('string');
+      expect(project.published).to.eql(true);
 
       models.Project.read(instances.project.id).then(function(t_project) {
         expect(t_project).to.be.an('object');
@@ -81,12 +81,12 @@ describe('Project tests', function() {
   });
 
   it('should be able to update a Project without an id parameter', function(done) {
-    models.Project.update({'id': instances.project.id, 'description': 'updated'}).then(function(t_project) {
-      expect(t_project).to.be.an('object');
-      expect(t_project.name).to.be.a('string');
-      expect(t_project.description).to.be.a('string');
-      expect(t_project.published).to.eql(true);
-      expect(t_project.description).to.eql('updated');
+    models.Project.update({'id': instances.project.id, 'description': 'updated'}).then(function(project) {
+      expect(project).to.be.an('object');
+      expect(project.name).to.be.a('string');
+      expect(project.description).to.be.a('string');
+      expect(project.published).to.eql(true);
+      expect(project.description).to.eql('updated');
 
       models.Project.read(instances.project.id).then(function(t_project) {
         expect(t_project).to.be.an('object');

@@ -14,7 +14,8 @@ var validator = require('validator');
 var User = model(db, 'User');
 User.schema = {
   'kind': {'type': String, 'default': 'dev', 'enum': ['dev', 'rep']},
-  'name': {'type': String, 'required': true},
+  'first_name': {'type': String, 'required': true},
+  'last_name': {'type': String},
   'email': {'type': String, 'required': true},
   'password': {'type': String},
   'can_message': {'type': Boolean, 'default': false},
@@ -29,7 +30,8 @@ User.useTimestamps();
 User.public_fields = [
   'id',
   'kind',
-  'name',
+  'first_name',
+  'last_name',
   'can_message',
   'links'
 ];

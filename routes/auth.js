@@ -51,23 +51,21 @@ router.post('/login', set_user_kind, passport.authenticate('local'), signal_comp
 router.post('/signup', set_user_kind, function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
-  var name = req.body.name;
+  var first_name = req.body.first_name;
+  var last_name = req.body.last_name;
   var can_message = (!!req.body.can_message);
-  var links = (Array.isArray(req.body.links)) ? req.body.links : [];
-  var tos_accepted = (!!req.body.tos_accepted);
 
-  if (!email || !password || !name || !tos_accepted) return res.status(401).send();
+  if (!email || !password || !first_name) return res.status(401).send();
 
   models.User.check_if_exists(email).then(function(exists) {
     if (exists) return res.status(409).send();
 
     var user = {
       'kind': req.session.user_kind || 'dev',
-      // 'name': req.body.first_name + ' ' + req.body.last_name,
-      'name': name,
+      'first_name': first_name,
+      'last_name': last_name,
       'email': email,
-      'can_message': can_message,
-      'links': links
+      'can_message': can_message
     };
 
     hash(password, 10).then(function(encrypted) {

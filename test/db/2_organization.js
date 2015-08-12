@@ -15,7 +15,7 @@ describe('Organization tests', function() {
 
   before(function(done) {
     Promise.props({
-      'rep': models.User.create({'kind': 'rep', 'name': 'test', 'email': 'p_test_rep@gmail.com'})
+      'rep': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep@gmail.com'})
     }).then(function(n_instances) {
       instances = n_instances;
       for (var key in n_instances) {
