@@ -170,4 +170,39 @@ describe('Integration tests', function() {
     });
   });
 
+  it('should be able to add Tags to Organizations as causes', function(done) {
+    models.Organization.add_causes(instances.org, [instances.tags.cause1, instances.tags.cause2]).then(function() {
+      models.Organization.with_extras(instances.org.id, {'causes': true}).then(function(org) {
+        expect(org.causes).to.be.an('array');
+        expect(org.causes).to.have.length(2);
+        expect(org.causes[0]).to.be.an('object');
+        expect(org.causes[0].kind).to.eql('cause');
+        done();
+      }, done);
+    }, done);
+  });
+
+  it('shouldn\'t be able to add Tag as a cause more than once', function(done) {
+    models.Organization.add_cause(instances.org, instances.tags.cause1).then(function() {
+      done(new Error('Added Tag as a cause multiple times'));
+    }).catch(function() {
+      var query = [
+        'MATCH (o:Organization) WHERE id(o)={org_id}',
+        'MATCH (t:Tag) WHERE id(t)={tag_id}',
+        'MATCH r=(o)-[:cause]->(t)',
+        'RETURN COUNT(r) AS num'
+      ].join(' ');
+
+      models.db.query(query, {'org_id': instances.org.id, 'tag_id': instances.tags.cause1.id}).then(function(row) {
+        if (row.num === 1) {
+          done();
+        } else {
+          done(new Error('Added Tag as a cause multiple times'));
+        }
+      }, done);
+    });
+  });
+
+  });
+
 });
