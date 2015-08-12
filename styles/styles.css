@@ -64,7 +64,7 @@
 }
 
 .site-name, .iamdev, .slogan, .scroll-down, .signup-buttons, 
-.team-header, .stack, .featured, .signupCentered{
+.team-header, .stack, .featured, .signupCentered .centered{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -187,6 +187,14 @@ img {
 }
 
 /*featured projects*/
+
+/*profile*/
+.box {
+  display: inline;
+  width: 500px;
+  height: 300px;
+  margin: 1em;
+}
 
 /*other*/
 .fullscreen {
