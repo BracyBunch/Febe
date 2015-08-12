@@ -41,12 +41,13 @@ Organization.on('validate', function(organization, cb) {
   if (valid) {
     cb();
   } else{
-    cb('Model is invalid');
+    cb('Organization is invalid');
   }
 });
 
 Organization.query = Promise.promisify(Organization.query, Organization);
 Organization.save = Promise.promisify(Organization.save, Organization);
 Organization.read = Promise.promisify(Organization.read, Organization);
+Organization.where = Promise.promisify(Organization.where, Organization);
 
 module.exports = Organization;

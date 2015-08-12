@@ -47,7 +47,7 @@ User.on('validate', function(user, cb) {
   if (valid) {
     cb();
   } else {
-    cb('Model is invalid');
+    cb('User is invalid');
   }
 });
 
@@ -55,6 +55,5 @@ User.query = Promise.promisify(User.query, User);
 User.save = Promise.promisify(User.save, User);
 User.read = Promise.promisify(User.read, User);
 User.where = Promise.promisify(User.where, User);
-
 
 module.exports = User;
