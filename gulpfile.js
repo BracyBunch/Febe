@@ -48,6 +48,7 @@ function bundle() {
       console.log(err.message);
       this.emit('end');
     })
+    .on('error', notify)
     .pipe(source('main.js'))
     .pipe(gulp.dest('./'))
 }

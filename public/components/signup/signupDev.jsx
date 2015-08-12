@@ -1,7 +1,4 @@
 var React = require('react');
-var Formsy = require('formsy-react');
-var Router = require('react-router');
-var Link = Router.Link;
 
 module.exports = React.createClass({	
 	render: function() {
