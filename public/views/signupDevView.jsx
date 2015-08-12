@@ -1,9 +1,9 @@
 var React = require('react');
-var Oauth = require('./signupOAuth');
-var Main = require('./signupMain');
-var Dev = require('./signupDev');
-var Header = require('./header');
-var Footer = require('./footer');
+var Oauth = require('../components/signup/signupOAuth');
+var Main = require('../components/signup/signupMain');
+var Dev = require('../components/signup/signupDev');
+var Header = require('../components/shared/header');
+var Footer = require('../components/shared/footer');
 
 module.exports = React.createClass({
 	render: function() {

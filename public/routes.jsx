@@ -7,13 +7,13 @@ var Router = ReactRouter.Router;
 //object used to configure the router
 var Route = ReactRouter.Route;
 var Main = require('./components/main');
-var Signupdev = require('./components/signupDevView');
-var Signuporg = require('./components/signupOrgView');
-var Termsofuse = require('./components/termsOfUse');
-var Privacypolicy = require('./components/privacyPolicy');
-var Dashboard = require('./components/dashboard');
-var DevProfile = require('./components/profile/dev-profile-view');
-var OrgProfile = require('./components/profile/org-profile-view');
+var Signupdev = require('./views/signupDevView');
+var Signuporg = require('./views/signupOrgView');
+var Termsofuse = require('./components/shared/termsOfUse');
+var Privacypolicy = require('./components/shared/privacyPolicy');
+var Dashboard = require('./views/dashboard-view');
+var DevProfile = require('./views/dev-profile-view');
+var OrgProfile = require('./views/org-profile-view');
 
 module.exports = (
   <Router history={new HashHistory}>

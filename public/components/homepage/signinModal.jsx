@@ -1,8 +1,6 @@
 var React = require('react');
 var Modal = require('react-bootstrap').Modal;
-var Router = require('react-router');
-var Oauth = require('./signupOAuth');
-var Link = Router.Link;
+var Oauth = require('../signup/signupOAuth');
 
 module.exports = React.createClass({
   getInitialState: function() {

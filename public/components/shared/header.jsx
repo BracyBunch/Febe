@@ -1,6 +1,6 @@
 var React = require('react');
 var Router = require('react-router');
-var Modal = require('./signinModal');
+var Modal = require('../homepage/signinModal');
 //renderable component
 var Link = Router.Link;
 
