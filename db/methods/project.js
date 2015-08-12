@@ -11,10 +11,10 @@ var Tag = require('../models/tag');
 
 /**
  * Create and save a new Project
- * @param  {Object}        fields               Fields to create Project with
- * @param  {Integer|Organization}  organization Organization or id
- * @param  {Integer|User}  owner                User or id of the Project owner
- * @return {Promise.<Project>}                  The newly created Project
+ * @param  {Object}                fields        Fields to create Project with
+ * @param  {Integer|Organization}  organization  Organization or id
+ * @param  {Integer|User}          owner         User or id of the Project owner
+ * @return {Promise.<Project>}                   The newly created Project
  */
 var create = function(fields, organization, owner) {
   if (organization === undefined) return Promise.reject(new Error('Organization not given.'));
@@ -54,7 +54,6 @@ var update = function(id, fields) {
  */
 var clean = common.clean_generator(Project);
 
-
 /**
  * Adds a User as a member of Project
  * @param {Integer|Project}  project   Project object or id to add User to
@@ -83,14 +82,14 @@ var add_skill = common.add_rel_generator('Project', 'skill', 'Tag', true);
  */
 var add_skills = common.add_rels_generator(add_skill);
 
-
 /**
  * Fetches one Project including specifed extras
- * @param  {Integer}        project_id      Id of the Project
- * @param  {Object|Boolean} [options=true]  Either an object with with the extras to include or true to include all extras
- * @return {Promise.<Project>}              Project with all specified models included
+ * @param  {Integer|Project}  project         Project or id
+ * @param  {Object|Boolean}   [options=true]  Either an object with with the extras to include or true to include all extras
+ * @return {Promise.<Project>}                Project with all specified models included
  */
-var with_extras = function(project_id, options) {
+var with_extras = function(project, options) {
+  var project_id = (project.id || project);
   var include = {};
   if (options === undefined) options = true;
 
