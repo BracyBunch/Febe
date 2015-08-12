@@ -6,7 +6,7 @@ var Link = Router.Link;
 module.exports = React.createClass({	
 	render: function() {
 		return (
-	    <form>
+	    <form onSubmit={this.props.change}>
 	      <div className="form-group techstrengths">
 			    <label htmlFor="techstrengths">Tech Strengths (optional)</label> 
 		      <input type="text" id="techstrengths" placeholder="Angular.js, Node.js, Python, Databases, etc." className="form-control" />
@@ -18,23 +18,17 @@ module.exports = React.createClass({
 		    <div className="signupCentered">
 			    <button className="btn signupBtn" onClick={this.addLinks.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
 			    <div className="form-group">
-				    <input type="checkbox" value="" className="checkbox-inline"> Open to being contacted</input>
-				    <input type="checkbox" value="" className="checkbox-inline"> I agree to the terms</input>
+				    <input type="checkbox" ref="contacted" onChange={this.props.message} className="checkbox-inline"> Open to being contacted</input>
+				    <input type="checkbox" ref="terms" onChange={this.props.terms} className="checkbox-inline"> I agree to the terms</input>
 				  </div>
-          <Link to={this.authenticate()}>
 			      <button type="submit" className="btn signupBtn text-center">Sign Up</button>
-          </Link>
 			  </div>
 			</form> 
 		)
 	},
   authenticate: function(){
     var auth = true;
-    if(auth){
-      return "/dashboard";
-    } else{
-      return "/";
-    }
+    return auth ? "/dashboard" : "/";
   },
 	divId: 'addlLinks',
 	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." class="form-control formBox form-margin" />',
