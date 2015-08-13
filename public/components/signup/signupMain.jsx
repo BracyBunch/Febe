@@ -49,16 +49,6 @@ module.exports = React.createClass({
 		       <Dev submitForm={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} message={this.canMessage} /> : 
 		       <Org submitForm={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} /> ;
 	},
-	// handleChange: function(event){
-	// 	this.setState({
-	// 		first_name: event.target.value,
-	//     last_name: this.refs.lastName.getDOMNode().value,
-	//     email: this.refs.emailAddress.getDOMNode().value,
-	//     password: this.refs.password.getDOMNode().value,
-	//     confirmedPassword: this.refs.confirmedPassword.getDOMNode().value,
-	//     user_kind: this.props.type
-	// 	})
-	// },
 	setTerms: function(){
 		this.setState({
 			terms: !this.state.terms
@@ -84,7 +74,7 @@ module.exports = React.createClass({
 			body: JSON.stringify(this.state)
 		})
 		.then(function(response) {
-			// I think this is necessary, because of a problem with Chrome Dev Tools
+			// This is necessary because of a problem with Chrome Dev Tools
 			// See https://code.google.com/p/chromium/issues/detail?id=457484
 			return response.json();
 		})
