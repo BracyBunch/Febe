@@ -9,6 +9,17 @@ router.get('/', function(req, res){
   res.send("Users");
 });
 
+router.get('/:id', function(req, res) {
+  var id = Number(req.params.id);
+  if (req.isAuthenticated() && req.user.id === id) return res.json(req.user);
+
+  User.read(id).then(function(user) {
+    res.json(User.clean(user));
+  }, function() {
+    res.status(400).send();
+  });
+});
+
 router.post('/add', function(req, res){
   if (req.body.Test === 'test'){
     return res.send("Test done...");
