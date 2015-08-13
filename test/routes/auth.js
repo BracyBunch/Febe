@@ -5,8 +5,8 @@ var expect = chai.expect;
 chai.use(chaiHttp);
 chai.request.addPromises(Promise);
 
-var app = require('../app');
-var models = require('../db');
+var app = require('../../app');
+var models = require('../../db');
 
 var clean_up = function(ids, cb) {
   models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() DELETE n,r', {'ids': ids}, function() {
