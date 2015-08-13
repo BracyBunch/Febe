@@ -73,7 +73,6 @@ module.exports = React.createClass({
 		{this.props.newID(newID)}
 	},
 	handleSubmit: function(comment) {
-		console.log("here's state", this.state)
 		var that = this;
 		fetch(this.props.url, {
 			method: 'post',
@@ -90,7 +89,6 @@ module.exports = React.createClass({
 		})
 		.then(function(data) {
 			// call method with id returned from db
-			console.log(data)
 			that.settingEmail(data.id)
 		})
 		.catch(function(error) {
