@@ -1,6 +1,5 @@
 var Reflux = require('reflux');
 
-// should we have an actions folder?
-module.exports = Reflux.createActions({
-
-});
+module.exports = Reflux.createActions([
+  'getProfile'
+]);
