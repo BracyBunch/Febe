@@ -5,9 +5,10 @@ var profileAPI = require('../utils/profile-api')
 module.exports = Reflux.createStore({
   listenables:[Actions],
   getProfile: function(ID){
+    console.log("this is the ID in get profile", ID)
     return profileAPI.get('/user/' + ID)
-      .then(function(json){
-        this.userData = json.data;
+      .then(function(data){
+        this.userData = data;
         this.triggerChange();
       }.bind(this));
   },

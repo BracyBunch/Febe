@@ -14,7 +14,7 @@ module.exports = React.createClass({
 	],
 	getInitialState: function(){
 		return {
-			userData: [],
+			userData: ['test'],
 			id: 'empty'
 		}
 	},
@@ -37,11 +37,10 @@ module.exports = React.createClass({
 		this.setState({
 			id: newID
 		})
-		console.log('This is the id', this.state.id)
 		this.setProfileStore()
 	},
 	checking:function(){
-		console.log(this.state.userData)
+		console.log("this is from signup", this.state.userData)
 	},
 	setProfileStore: function(){
 		Actions.getProfile(this.state.id)
