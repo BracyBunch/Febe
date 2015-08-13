@@ -37,19 +37,30 @@ var handle_login = function(req, res, next) {
         next();
       });
     } else if (info === 'LoginToAddOAuth') {
-      res.status(409).send();
+      res.status(409).send('<script>window.localStorage.setItem("oauth_status", "conflict")</script>');
+    } else {
+      res.status(401).send('<script>window.localStorage.setItem("oauth_status", "rejected")</script>');
     }
   })(req, res, next);
 };
 
 var signal_complete = function(req, res) {
   if (!req.isAuthenticated) res.status(401);
-  res.status(200).send(req.body);
+  res.send(req.body);
 };
 
-router.post('/login', set_user_kind, passport.authenticate('local'), signal_complete);
-router.post('/signup', set_user_kind, function(req, res, next) {
-  console.log("Incoming info...: ", req.body)
+var oauth_signal_complete = function(req, res) {
+  var signal = [
+    '<script>',
+    'window.localStorage.setItem("oauth_user_info", \'' + JSON.stringify(req.user) + '\');',
+    'window.localStorage.setItem("oauth_status", "success");',
+    '</script>'
+  ].join('');
+  res.set('Content-Type', 'text/html');
+  res.send(signal);
+};
+
+var create_local_user = function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   var first_name = req.body.first_name;
@@ -82,17 +93,19 @@ router.post('/signup', set_user_kind, function(req, res, next) {
       return res.status(401).send();
     });
   });
-}, signal_complete);
+};
+
+router.post('/login', set_user_kind, passport.authenticate('local'), signal_complete);
+router.post('/signup', set_user_kind, create_local_user, signal_complete);
 
 router.get('/facebook/login', set_user_kind, passport.authenticate('facebook', {'scope': ['email']}));
-router.get('/facebook/callback', set_user_kind, set_provider('facebook'), handle_login, signal_complete);
+router.get('/facebook/callback', set_user_kind, set_provider('facebook'), handle_login, oauth_signal_complete);
 
 router.get('/github/login', set_user_kind, passport.authenticate('github', {'scope': ['user:email']}));
-router.get('/github/callback', set_user_kind, set_provider('github'), handle_login, signal_complete);
+router.get('/github/callback', set_user_kind, set_provider('github'), handle_login, oauth_signal_complete);
 
 router.get('/linkedin/login', set_user_kind, passport.authenticate('linkedin', {'scope': ['r_emailaddress', 'r_basicprofile']}));
-router.get('/linkedin/callback', set_user_kind, set_provider('linkedin'), handle_login, signal_complete);
-
+router.get('/linkedin/callback', set_user_kind, set_provider('linkedin'), handle_login, oauth_signal_complete);
 
 module.exports = {
   'router': router

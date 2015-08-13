@@ -10,6 +10,11 @@ if (process.env.GRAPHSTORY_URL) {
     user: url.auth.split(':')[0],
     pass: url.auth.split(':')[1]
   };
+} else {
+  options = {
+    'user': 'neo4j',
+    'pass': 'febe'
+  };
 }
 
 var db = seraph(options);
