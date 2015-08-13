@@ -86,7 +86,8 @@ module.exports = React.createClass({
     var left = ((width / 2) - (900 / 2)) + dualScreenLeft;
     var top = ((height / 2) - ((550 + 55) / 2)) + dualScreenTop;
 
-    this.popup = window.open('/auth/'+ provider + '/login', '_blank', 'resizable=1,scrollbars=1,width=900,height=550,left=' + left + ',top=' + top);
+    var url = '/auth/' + provider + '/login' + ((this.props.type === 'rep') ? '?rep' : '');
+    this.popup = window.open(url, '_blank', 'resizable=1,scrollbars=1,width=900,height=550,left=' + left + ',top=' + top);
     this.check_popup_open_interval = window.setInterval(this.check_popup_open, 250);
     this.popup.focus();
   }
