@@ -124,6 +124,26 @@ var find_by_skill = function(skill_ids) {
   return Project.query(query, {'tags': skill_ids});
 };
 
+/**
+ * Check if a User is an owner/member of a Project
+ * @param  {Integer|Project}  project
+ * @param  {Integer|User}     user
+ * @return {Promise.<Boolean>}
+ */
+var user_has_access = function(project, user) {
+  var project_id = (project.id || project);
+  var user_id = (user.id || user);
+  var query = [
+    'MATCH (u:User) WHERE id(u)={user_id}',
+    'MATCH (p:Project) WHERE id(p)={project_id}',
+    'RETURN (u)-[:owns|:member_of]->(p) IS NOT NULL AS has_access'
+  ].join(' ');
+
+  return db.query(query, {'user_id': user_id, 'project_id': project_id}).then(function(row) {
+    return row.has_access;
+  });
+};
+
 module.exports = {
   'create': create,
   'update': update,
@@ -133,5 +153,6 @@ module.exports = {
   'add_skill': add_skill,
   'add_skills': add_skills,
   'with_extras': with_extras,
-  'find_by_skill': find_by_skill
+  'find_by_skill': find_by_skill,
+  'user_has_access': user_has_access
 };
