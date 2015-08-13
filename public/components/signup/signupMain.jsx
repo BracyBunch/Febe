@@ -40,7 +40,7 @@ module.exports = React.createClass({
 		)
 	},
 	handleView: function(){
-		return this.props.type === "dev" ? <Dev change={this.handleSubmit} terms={this.setTerms} message={this.canMessage}/> : <Org />;
+		return this.props.type === "dev" ? <Dev change={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} message={this.canMessage}/> : <Org />;
 	},
 	handleChange: function(){
 		this.setState({
@@ -62,8 +62,12 @@ module.exports = React.createClass({
 			can_message: !this.state.can_message
 		})
 	},
+	settingEmail: function(newID){
+		{this.props.newID(newID)}
+	},
 	handleSubmit: function(comment) {
-		console.log("we are in here", this.state);
+		var that = this;
+		console.log("we are in here", this.state.email);
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -71,10 +75,12 @@ module.exports = React.createClass({
       data: this.state,
       success: function(data) {
       	console.log("Success")
+      	that.settingEmail(data.id)
       },
       error: function(xhr, status, err) {
-      	console.log("Error")
+      	console.log("Error")	
       }
     });
+
   }
 })
