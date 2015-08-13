@@ -12,7 +12,9 @@ module.exports = React.createClass({
 			<div className="fullscreen">
         <Header link='/' title='Home'/>
         <div className="profile centered">
-		      <ProfHeader />
+		      <ProfHeader
+			      firstName={this.state.userData.first_name}
+		        lastName={this.state.userData.last_name} />
 		      <OrgProfBody />
 		      <Bio />
 		      <Projects />

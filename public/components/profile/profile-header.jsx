@@ -1,23 +1,46 @@
 var React = require('react');
 
 module.exports = React.createClass({
+	getDefaultProps: function() {
+    return {
+    	avatar: '/assets/img/avatar.png',
+    	title: 'Please enter a title/company',
+    	location: 'Please enter a location',
+    	links: 'Please enter your GitHub, LinkedIn, etc'
+    };
+	},
+	logg: function() {
+		console.log("test", this.state)
+	},
 	render: function() {
 		return (
-		  <div className="row">
-		    <div className="col-md-4">
-			    <img src=""/>
-			  </div>
-			  <div className="centered col-md-4">
-			    lol css
-			    <p>{this.props.something}First Name Last Name</p>
-			    <p>{this.props.something}Software Engineer at MakerSquare</p>
-			    <p>{this.props.something}San Francisco, CA</p>
-			    <a href="http://www.github.com">{this.props.something}Github</a> <br />
-			    <a href="http://www.linkedin.com">{this.props.something}LinkedIn</a> <br />
-	        <button className="btn btn-primary" type="submit">Contact</button>
-			  </div>
-			  <div className="col-md-4"> 
-	        <button className="btn btn-primary" type="submit">{this.props.something}Edit/Follow</button>
+			<div className="profile">
+			  <div className="row row-centered">
+
+			    <div className="col-md-3 ">
+				    <div className="">
+					    <img src={this.props.avatar} /> <br />
+				    </div>
+				  </div>
+
+				  <div className="col-md-4">
+				    <p>{this.props.firstName} {this.props.lastName}</p>
+				    <div>
+					    <p>{this.props.title}</p>
+					  </div>
+					  <div>
+					    <p>{this.props.location}</p>
+					  </div>
+					  <div>
+					    <p>{this.props.links}</p>
+				    </div>
+		        <button className="btn btn-primary" type="submit">Contact</button>
+				  </div>
+
+				  <div className="col-md-2"> 
+		        <button className="btn signupBtn" type="submit" onClick={this.props.edit}>Edit</button>
+				  </div>
+
 			  </div>
 		  </div>
 		)
