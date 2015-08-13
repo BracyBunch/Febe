@@ -12,7 +12,7 @@ module.exports = React.createClass({
   firstName: Joi.string().required().label('First Name'),
   lastName: Joi.string().required().label('Last Name'),
   email: Joi.string().email().label('Email'),
-  password: Joi.string().regex(/[a-zA-Z0-9]{1,30}/).label('password'),
+  password: Joi.string().regex(/[\s\S]{1,30}/).label('password'),
   confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Confirmed password must match')
 	},
 	getInitialState: function() {
