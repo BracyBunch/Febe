@@ -19,6 +19,9 @@ module.exports = React.createClass({
 			userData: []
 		}
 	},
+	componentWillMount: function(){
+		Actions.getProfile(window.localStorage.getItem('userId'));
+	},
 	render: function() {
 		return (
 			<div className="fullscreen">

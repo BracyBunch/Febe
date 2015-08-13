@@ -18,7 +18,6 @@ module.exports = React.createClass({
 			id: 'empty'
 		}
 	},
-	
 	render: function() {
 		return (
 			<div className="fullscreen">
@@ -37,6 +36,7 @@ module.exports = React.createClass({
 		this.setState({
 			id: newID
 		})
+		window.localStorage.setItem('userId', newID);
 		this.setProfileStore()
 	},
 	checking:function(){
