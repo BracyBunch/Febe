@@ -2,13 +2,22 @@ var React = require('react/addons');
 var Dev = require('./signupDev');
 var Org = require('./signupOrg');
 var Fetch = require('whatwg-fetch');
+var ValidationMixin = require('react-validation-mixin');
+var Joi = require('joi');
 
 module.exports = React.createClass({
 	// see http://facebook.github.io/react/docs/two-way-binding-helpers.html
-	mixins: [React.addons.LinkedStateMixin],
+	mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+  validatorTypes:  {
+  firstName: Joi.string().required().label('First Name'),
+  lastName: Joi.string().required().label('Last Name'),
+  email: Joi.string().email().label('Email'),
+  password: Joi.string().regex(/[a-zA-Z0-9]{8,30}/).label('Password'),
+  confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Password Confirmation')
+	},
 	getInitialState: function() {
 		return {
-			first_name: '',
+			first_name: null,
 	    last_name: '',
 	    email: '',
 	    password: '',
@@ -17,6 +26,22 @@ module.exports = React.createClass({
 	    user_kind: this.props.type,
 	    terms: false
 		}
+	},
+	renderHelpText: function(message) {
+	  return (
+	    <span className="help-block">{message}</span>
+	  );
+	},
+	getClasses: function(field) {
+	  return React.addons.classSet({
+	    'form-group': true,
+	    'has-error': !this.isValid(field)
+	  });
+	},
+	handleReset: function(event) {
+	  event.preventDefault();
+	  this.clearValidations();
+	  this.setState(this.getInitialState());
 	},
 	render: function() {
 		return (
@@ -28,13 +53,16 @@ module.exports = React.createClass({
 	  				<input type="text" ref="lastName" className="form-control lastName" valueLink={this.linkState('last_name')} placeholder="Last Name"/>
 		    	</div>
 		    </form>
-		    <div className="form-group">
-	      	<input type="email" ref="emailAddress" className="form-control emailFill" valueLink={this.linkState('email')} placeholder="Email Address"/>
+		    <div className={this.getClasses('email')}>
+	      	<input type="email" ref="emailAddress" className="form-control emailFill" valueLink={this.linkState('email')} onBlur={this.handleValidation('email')} placeholder="Email Address"/>
+	      	<div className='names'>
+	      	{this.getValidationMessages('email').map(this.renderHelpText)}
+	      	</div>
 	      </div>
 	      <form className="form-inline passwords">
-		    	<div className="form-group">
-	  				<input type="password" ref="password" className="form-control password" valueLink={this.linkState('password')} placeholder="Password"/>
-	  				<input type="password" ref="confirmedPassword" className="form-control" valueLink={this.linkState('confirmedPassword')} placeholder="Confirm Password"/>
+		    	<div className={this.getClasses('password')}>
+	  				<input type="password" ref="password" className="form-control password" onBlur={this.handleValidation('password')} valueLink={this.linkState('password')} placeholder="Password"/>
+	  				<input type="password" ref="confirmedPassword" className="form-control" onBlur={this.handleValidation('confirmedPassword')}  valueLink={this.linkState('confirmedPassword')} placeholder="Confirm Password"/>
 		    	</div>
 		    </form>
 	      <h5 className="signupCentered">Password must be more than 8 characters</h5>
@@ -49,16 +77,6 @@ module.exports = React.createClass({
 		       <Dev submitForm={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} message={this.canMessage} /> : 
 		       <Org submitForm={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} /> ;
 	},
-	// handleChange: function(event){
-	// 	this.setState({
-	// 		first_name: event.target.value,
-	//     last_name: this.refs.lastName.getDOMNode().value,
-	//     email: this.refs.emailAddress.getDOMNode().value,
-	//     password: this.refs.password.getDOMNode().value,
-	//     confirmedPassword: this.refs.confirmedPassword.getDOMNode().value,
-	//     user_kind: this.props.type
-	// 	})
-	// },
 	setTerms: function(){
 		this.setState({
 			terms: !this.state.terms
@@ -72,8 +90,18 @@ module.exports = React.createClass({
 	settingEmail: function(newID){
 		{this.props.newID(newID)}
 	},
+	validatePassword: function(){
+		if(this.state.password !== this.state.confirmedPassword){
+			console.log('true')
+			return true;
+		}
+		console.log('false')
+		return false;
+	},
 	handleSubmit: function(comment) {
-		var that = this;
+		if (!this.validatePassword){
+			console.log(this.state.password + 'does not match' + this.state.confirmedPassword)
+		}
 		fetch(this.props.url, {
 			method: 'post',
 		  headers: {
