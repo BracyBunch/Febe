@@ -9,7 +9,7 @@ router.get('/', function(req, res){
   res.send(res);
 });
 
-router.get('/add', function(req, res){
+router.post('/add', function(req, res){
   if (req.body.Test === 'test'){
     return res.send("Test done...");
   }
