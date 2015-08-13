@@ -71,6 +71,8 @@ var oauth_login_or_create_generator = function(service) {
 
     models.User.where(query, {'limit': 1, 'any': true}).then(function(user) {
       if (!user.length) {
+        if (!req.session.signup) return done(null, false, 'NoModalSignup');
+
         user = {};
         user[service + '_id'] = profile.id;
         user.kind = req.session.user_kind || 'dev';
