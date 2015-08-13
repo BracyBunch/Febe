@@ -45,8 +45,8 @@ var handle_login = function(req, res, next) {
 };
 
 var signal_complete = function(req, res) {
-  if (!req.isAuthenticated) res.status(401);
-  res.send(req.body);
+  if (!req.isAuthenticated) return res.status(401).send();
+  res.json(req.user);
 };
 
 var oauth_signal_complete = function(req, res) {
