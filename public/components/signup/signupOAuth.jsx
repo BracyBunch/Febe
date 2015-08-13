@@ -90,8 +90,5 @@ module.exports = React.createClass({
     this.popup = window.open('/auth/'+ provider + '/login', '_blank', 'resizable=1,scrollbars=1,width=900,height=550,left=' + left + ',top=' + top);
     this.check_popup_open_interval = window.setInterval(this.check_popup_open, 250);
     this.popup.focus();
-  },
-	test: function() {
-		console.log("test")
-	}
+  }
 });

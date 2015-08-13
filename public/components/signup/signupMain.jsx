@@ -1,6 +1,7 @@
 var React = require('react');
 var Dev = require('./signupDev');
 var Org = require('./signupOrg');
+var Fetch = require('whatwg-fetch');
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -67,20 +68,25 @@ module.exports = React.createClass({
 	},
 	handleSubmit: function(comment) {
 		var that = this;
-		console.log("we are in here", this.state.email);
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      type: 'POST',
-      data: this.state,
-      success: function(data) {
-      	console.log("Success")
-      	that.settingEmail(data.id)
-      },
-      error: function(xhr, status, err) {
-      	console.log("Error")	
-      }
-    });
-
+		fetch(this.props.url, {
+			method: 'post',
+		  headers: {
+		    'Accept': 'application/json',
+		    'Content-Type': 'application/json'
+		  },
+			body: JSON.stringify(this.state)
+		})
+		.then(function(response) {
+			// I think this is necessary, because of a problem with Chrome Dev Tools
+			// See https://code.google.com/p/chromium/issues/detail?id=457484
+			return response.json();
+		})
+		.then(function(data) {
+			// call method with id returned from db
+			that.settingEmail(data.id)
+		})
+		.catch(function(error) {
+			console.log('request failed: ', error)
+		})
   }
 })
