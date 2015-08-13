@@ -28,6 +28,7 @@ module.exports = React.createClass({
 		      <DevProfBody />
 		      <Bio />
 		      <Projects />
+	      	<button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
 		      <Footer />
 		    </div>
 	    </div>
@@ -35,5 +36,8 @@ module.exports = React.createClass({
 	},
 	onChange: function(event, userData){
 		this.setState({userData: userData})
-	}
+	},
+	checking:function(){
+		console.log("this is on dev page", this.state.userData)
+	},
 })
