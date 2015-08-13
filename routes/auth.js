@@ -52,7 +52,7 @@ var signal_complete = function(req, res) {
 var oauth_signal_complete = function(req, res) {
   var signal = [
     '<script>',
-    'window.localStorage.setItem("oauth_user_info", \'' + JSON.stringify(req.user) + '\');',
+    'window.localStorage.setItem("userId", ' + req.user.id + ');',
     'window.localStorage.setItem("oauth_status", "success");',
     '</script>'
   ].join('');
@@ -98,7 +98,7 @@ var create_local_user = function(req, res, next) {
 router.post('/login', set_user_kind, passport.authenticate('local'), signal_complete);
 router.post('/signup', set_user_kind, create_local_user, signal_complete);
 
-router.get('/facebook/login', set_user_kind, passport.authenticate('facebook', {'scope': ['email']}));
+router.get('/facebook/login', set_user_kind, passport.authenticate('facebook', {'scope': ['email'], 'display': 'popup'}));
 router.get('/facebook/callback', set_user_kind, set_provider('facebook'), handle_login, oauth_signal_complete);
 
 router.get('/github/login', set_user_kind, passport.authenticate('github', {'scope': ['user:email']}));
