@@ -12,12 +12,12 @@ module.exports = React.createClass({
   firstName: Joi.string().required().label('First Name'),
   lastName: Joi.string().required().label('Last Name'),
   email: Joi.string().email().label('Email'),
-  password: Joi.string().regex(/[a-zA-Z0-9]{8,30}/).label('Password'),
-  confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Password Confirmation')
+  password: Joi.string().regex(/[a-zA-Z0-9]{1,30}/).label('password'),
+  confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Confirmed password must match')
 	},
 	getInitialState: function() {
 		return {
-			first_name: null,
+			first_name: '',
 	    last_name: '',
 	    email: '',
 	    password: '',
@@ -63,6 +63,7 @@ module.exports = React.createClass({
 		    	<div className={this.getClasses('password')}>
 	  				<input type="password" ref="password" className="form-control password" onBlur={this.handleValidation('password')} valueLink={this.linkState('password')} placeholder="Password"/>
 	  				<input type="password" ref="confirmedPassword" className="form-control" onBlur={this.handleValidation('confirmedPassword')}  valueLink={this.linkState('confirmedPassword')} placeholder="Confirm Password"/>
+	  				{this.getValidationMessages('confirmedPassword').map(this.renderHelpText)}
 		    	</div>
 		    </form>
 	      <h5 className="signupCentered">Password must be more than 8 characters</h5>
@@ -90,7 +91,7 @@ module.exports = React.createClass({
 	settingEmail: function(newID){
 		{this.props.newID(newID)}
 	},
-	validatePassword: function(){
+	doPasswordsMatch: function(){
 		if(this.state.password !== this.state.confirmedPassword){
 			console.log('true')
 			return true;
@@ -99,9 +100,7 @@ module.exports = React.createClass({
 		return false;
 	},
 	handleSubmit: function(comment) {
-		if (!this.validatePassword){
-			console.log(this.state.password + 'does not match' + this.state.confirmedPassword)
-		}
+		this.doPasswordsMatch()
 		fetch(this.props.url, {
 			method: 'post',
 		  headers: {
