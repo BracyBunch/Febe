@@ -10,7 +10,7 @@ module.exports = React.createClass({
     return (
       <div className="fullscreen">
         <Header link='/' title='Home'/>
-        <Oauth type="rep" name="Nonprofit Representative Signup" />
+        <Oauth type="rep" signup="true" name="Nonprofit Representative Signup" />
         <Main type="rep" url="/auth/signup" newID={this.getID} />
         <Footer />
       </div>
