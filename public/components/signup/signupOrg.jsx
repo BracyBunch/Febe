@@ -6,7 +6,7 @@ var Methods = require('./sharedSignupMethods');
 module.exports = React.createClass({
 	render: function() {
 		return (
-			<form>
+			<form onSubmit={this.props.submitForm}>
 	      <div className="form-group techstrengths">
 			    <label htmlFor="orgname">Organization Name</label> 
 		      <input type="text" id="orgname" placeholder="Humane Society (San Jose), Project Homeless Connect, etc." className="form-control" />
@@ -18,10 +18,10 @@ module.exports = React.createClass({
 		    <div className="signupCentered">
 			    <button className="btn signupBtn" onClick={Methods.addFields.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
 			    <div className="form-group">
-				    <input type="checkbox" value="termsAgreed" className="checkbox-inline"> I agree to the terms</input>
+				    <input type="checkbox" value="termsAgreed" onChange={this.props.terms} className="checkbox-inline"> I agree to the terms</input>
 				  </div>
-				  <Link to={Methods.authenticate()}>
 			    	<button type="submit" className="btn signupBtn text-center">Sign Up</button>
+				  <Link to={Methods.authenticate()}>
 			    </Link>
 			  </div>
 			</form> 

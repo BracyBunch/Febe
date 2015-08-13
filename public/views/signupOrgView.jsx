@@ -11,9 +11,12 @@ module.exports = React.createClass({
 			<div className="fullscreen">
         <Header link='/' title='Home'/>
 	      <Oauth name="Nonprofit Representative Signup" />
-	      <Main type="rep"/>
+	      <Main type="rep" url="/auth/signup" newID={this.getID} />
         <Footer />
 			</div>
 		)
+	},
+	getID: function() {
+		// temp function
 	}
 })

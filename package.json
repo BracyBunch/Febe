@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node ./bin/www"
+    "dev-server": "gulp",
+    "server": "node ./bin/www",
+    "start": "npm run server & npm run dev-server"
   },
   "repository": {
     "type": "git",

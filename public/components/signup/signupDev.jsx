@@ -4,7 +4,7 @@ var Methods = require('./sharedSignupMethods');
 module.exports = React.createClass({	
 	render: function() {
 		return (
-	    <form onSubmit={this.props.change}>
+	    <form onSubmit={this.props.submitForm}>
 	      <div className="form-group techstrengths">
 			    <label htmlFor="techstrengths">Tech Strengths (optional)</label> 
 		      <input type="text" id="techstrengths" placeholder="Angular.js, Node.js, Python, Databases, etc." className="form-control" />
