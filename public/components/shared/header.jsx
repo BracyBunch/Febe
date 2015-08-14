@@ -1,10 +1,15 @@
 var React = require('react');
 var Router = require('react-router');
+var Navigation = require('react-router').Navigation;
 var SigninModal = require('../homepage/signinModal');
 //renderable component
 var Link = Router.Link;
 
 module.exports = React.createClass({
+  mixins: [Navigation],
+  routing: function(){
+    this.transitionTo('/') 
+  },
   render: function(){
     return (
       <div className="header">
@@ -15,8 +20,7 @@ module.exports = React.createClass({
             <Link to={this.props.link3} className="navbar-brand">{this.props.title3}</Link>
             <ul className="nav navbar-nav navbar-right">
               <div id="login">
-              <SigninModal />
-              {this.props.signinModal}
+                <SigninModal routing={this.routing}/>
               </div>
             </ul>
           </div>

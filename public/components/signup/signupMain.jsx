@@ -73,7 +73,6 @@ module.exports = React.createClass({
 	},
 	handleView: function(){
 		// render Dev or Org signup
-		// WHY IS NEWEMAIL BEING PASSED??
 		return this.props.type === "dev" ? 
 		       <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> : 
 		       <Org submitForm={this.handleSubmit} terms={this.setTerms} /> ;
