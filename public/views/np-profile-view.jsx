@@ -3,7 +3,7 @@ var Reflux = require('reflux');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
-var OrgProfileBody = require('../components/profile/org-profile-body');
+var NpProfileBody = require('../components/profile/np-profile-body');
 var Bio = require('../components/profile/profile-bio');
 var Projects = require('../components/profile/profile-projects');
 var ProfileStore = require('../stores/profile-store');
@@ -27,7 +27,7 @@ module.exports = React.createClass({
         <Header link='/dashboard' title='Home'/>
         <div className="profile centered">
 		      <ProfileHeader />
-		      <OrgProfileBody />
+		      <NpProfileBody />
 		      <Bio />
 		      <Projects />
 		      <button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>

@@ -13,7 +13,7 @@ var Termsofuse = require('./components/shared/termsOfUse');
 var Privacypolicy = require('./components/shared/privacyPolicy');
 var Dashboard = require('./views/dashboard-view');
 var DevProfile = require('./views/dev-profile-view');
-var OrgProfile = require('./views/org-profile-view');
+var NpProfile = require('./views/np-profile-view');
 
 module.exports = (
   <Router history={new HashHistory}>
@@ -24,7 +24,7 @@ module.exports = (
       <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
       <Route name="dashboard" path="/dashboard" component={Dashboard} />
       <Route name="devprofile" path="/devprofile" component={DevProfile} />
-      <Route name="orgprofile" path="/orgprofile" component={OrgProfile} />
+      <Route name="npprofile" path="/npprofile" component={NpProfile} />
     </Route>
   </Router>
 );
