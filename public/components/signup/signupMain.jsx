@@ -74,7 +74,6 @@ module.exports = React.createClass({
 	},
 	handleView: function(){
 		// render Dev or Org signup
-		// WHY IS NEWEMAIL BEING PASSED??
 		return this.props.type === "dev" ? 
 		       <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> : 
 		       <Org submitForm={this.handleSubmit} terms={this.setTerms} /> ;
@@ -102,6 +101,7 @@ module.exports = React.createClass({
 		return false;
 	},
 	handleSubmit: function(comment) {
+		var that = this;
 		this.doPasswordsMatch()
 		fetch(this.props.url, {
 			method: 'post',

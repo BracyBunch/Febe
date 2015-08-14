@@ -8,7 +8,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <Header link='/dashboard' title='Home' link2="/" title2='Browse'/>
+        <Header link='/' title='Browse'/>
         <div>Dashboard</div>
         <Link to="/devprofile"><button className="btn btn-primary">Dev Profile Temp</button></Link>
         <Link to="/orgprofile"><button className="btn btn-primary">Org Profile Temp</button></Link>
