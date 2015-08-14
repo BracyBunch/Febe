@@ -74,8 +74,9 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 		<div>
-      <Header link='/' title='Home' />
+      <Header link='/dashboard' title='Home' />
 			{this.profileEdit(this.state.swap)}
+			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
       <Footer />	
 		</div>
 		)

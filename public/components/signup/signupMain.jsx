@@ -2,12 +2,13 @@ var React = require('react/addons');
 var Dev = require('./signupDev');
 var Org = require('./signupOrg');
 var Fetch = require('whatwg-fetch');
+var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
 var Joi = require('joi');
 
 module.exports = React.createClass({
 	// see http://facebook.github.io/react/docs/two-way-binding-helpers.html
-	mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+	mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
   validatorTypes:  {
   firstName: Joi.string().required().label('First Name'),
   lastName: Joi.string().required().label('Last Name'),
@@ -75,8 +76,8 @@ module.exports = React.createClass({
 		// render Dev or Org signup
 		// WHY IS NEWEMAIL BEING PASSED??
 		return this.props.type === "dev" ? 
-		       <Dev submitForm={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} message={this.canMessage} /> : 
-		       <Org submitForm={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} /> ;
+		       <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> : 
+		       <Org submitForm={this.handleSubmit} terms={this.setTerms} /> ;
 	},
 	setTerms: function(){
 		this.setState({
@@ -88,8 +89,9 @@ module.exports = React.createClass({
 			can_message: !this.state.can_message
 		})
 	},
-	settingEmail: function(newID){
+	settingID: function(newID){
 		{this.props.newID(newID)}
+		this.transitionTo(this.props.type==="dev"?'devprofile':'orgprofile')
 	},
 	doPasswordsMatch: function(){
 		if(this.state.password !== this.state.confirmedPassword){
@@ -116,7 +118,7 @@ module.exports = React.createClass({
 		})
 		.then(function(data) {
 			// call method with id returned from db
-			that.settingEmail(data.id)
+			that.settingID(data.id)
 		})
 		.catch(function(error) {
 			console.log('request failed: ', error)

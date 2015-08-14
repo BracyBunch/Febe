@@ -18,13 +18,13 @@ var OrgProfile = require('./views/org-profile-view');
 module.exports = (
   <Router history={new HashHistory}>
     <Route path="/" component={Main}>
-      <Route path="/signupdev" component={Signupdev} />
-      <Route path="/signuporg" component={Signuporg} />
-      <Route path="/termsofuse" component={Termsofuse} />
-      <Route path="/privacypolicy" component={Privacypolicy} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/devprofile" component={DevProfile} />
-      <Route path="/orgprofile" component={OrgProfile} />
+      <Route name="signupdev" path="/signupdev" component={Signupdev} />
+      <Route name="signuporg" path="/signuporg" component={Signuporg} />
+      <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />
+      <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
+      <Route name="dashboard" path="/dashboard" component={Dashboard} />
+      <Route name="devprofile" path="/devprofile" component={DevProfile} />
+      <Route name="orgprofile" path="/orgprofile" component={OrgProfile} />
     </Route>
   </Router>
 );
