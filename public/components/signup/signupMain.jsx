@@ -110,7 +110,7 @@ module.exports = React.createClass({
 			body: JSON.stringify(this.state)
 		})
 		.then(function(response) {
-			// I think this is necessary, because of a problem with Chrome Dev Tools
+			// This is necessary because of a problem with Chrome Dev Tools
 			// See https://code.google.com/p/chromium/issues/detail?id=457484
 			return response.json();
 		})
