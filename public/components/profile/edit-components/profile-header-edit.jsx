@@ -1,5 +1,5 @@
 var React = require('react/addons');
-var Methods = require('../sharedProfileMethods')
+var ProfileMethods = require('../../../sharedMethods')
 
 module.exports = React.createClass({
 	mixins: [React.addons.LinkedStateMixin],
@@ -7,8 +7,9 @@ module.exports = React.createClass({
 		return {
 	    title: '',
 	    location: ''
-	  }
+	  };
 	},
+
 	getDefaultProps: function() {
     return {
     	avatar: '/assets/img/avatar.png',
@@ -17,22 +18,26 @@ module.exports = React.createClass({
     	links: 'Please enter your GitHub, LinkedIn, etc'
     };
 	},
+
 	divId: 'addlLinks',
 	newLinkHTML: '<input type="text" value="" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." class="form-control" />',
 	addlFieldCount: 1,
 	addlFieldLimit: 4,
+
 	updateTitle: function(event) {
     this.setState({
       title: event.target.value
     });
     this.props.updateTitle(this.state.title);
 	},
+
 	updateLocation: function(event) {
     this.setState({
     	location: event.target.value
     });
     this.props.updateLocation(this.state.location);
 	},
+
 	render: function() {
 		return (
 			<div className="profile">
@@ -62,12 +67,12 @@ module.exports = React.createClass({
 					      placeholder="Your location" 
 					      onChange={this.updateLocation} />
 					  </div>
-					  
+
 					  <div>
 							<div className="form-group techstrengths" id="addlLinks">
 					      <input type="text" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." className="form-control" />
 					    </div>
-						    <button className="btn signupBtn" onClick={Methods.addFields.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
+						    <button className="btn signupBtn" onClick={ProfileMethods.addFields.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
 				    </div>
 				  </div>
 
@@ -78,4 +83,4 @@ module.exports = React.createClass({
 		  </div>
 		)
 	}
-})
+});

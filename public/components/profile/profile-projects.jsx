@@ -10,6 +10,7 @@ module.exports = React.createClass({
 			    <img src="" />
 			    <img src="" />
 	      </div>
+	      
 	      <div>
 	        <h3>Completed Projects</h3>
 	        {this.getCompletedProjects()}

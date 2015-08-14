@@ -4,11 +4,13 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       bio: ''
-    }
+    };
   },
+
   updateState: function(event) {
     this.props.updateBio(event.target.value);
   },
+  
 	render: function() {
 	  return (
   		<div>

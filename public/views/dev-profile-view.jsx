@@ -13,7 +13,7 @@ var ProfileHeaderEdit = require('../components/profile/edit-components/profile-h
 var DevProfileBodyEdit = require('../components/profile/edit-components/dev-profile-body-edit');
 var BioEdit = require('../components/profile/edit-components/profile-bio-edit');
 
-var ProfileMethods = require('../components/profile/sharedProfileMethods');
+var ProfileMethods = require('../sharedMethods');
 
 module.exports = React.createClass({
 	mixins:[
@@ -26,29 +26,33 @@ module.exports = React.createClass({
 			bio: '',
 			userData: [],
 			swap: true
-		}
+		};
 	},
+
 	componentWillMount: function(){
 		Actions.getProfile(window.localStorage.getItem('userId'));
 	},
+
 	onChange: function(event, userData){
-		this.setState({userData: userData})
+		this.setState({userData: userData});
 	},
-	checking:function(){
-		console.log("title: ", this.state.title)
-		console.log("location: ", this.state.location)
-		console.log("bio: ", this.state.bio)
-		// console.log("this is on dev page", this.state.userData)
-	},
+
 	edit: function() {
     this.setState({
     	swap: !this.state.swap
-    })
+    });
 	},
+
 	save: function() {
     this.edit();
-    // ProfileMethods.updateProfile(url, 'put', data);
+    var updateData = {
+      title: this.state.title,
+      location: this.state.location,
+      bio: this.state.bio
+    };
+    ProfileMethods.fetch('/auth/user', 'put', updateData);
 	},
+
 	profileEdit: function(edit) {
 		return edit ? 
       <div>
@@ -75,21 +79,25 @@ module.exports = React.createClass({
         <BioEdit updateBio={this.updateBio} />
       </div>
 	},
+
 	updateTitle: function(title) {
 		this.setState({
       title: title
 		});
 	},
+
 	updateLocation: function(location) {
     this.setState({
     	location: location
     });
 	},
+
 	updateBio: function(bio) {
 		this.setState({
 			bio: bio
 		});
 	},
+
 	render: function() {
 		return (
 		<div>
