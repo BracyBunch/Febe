@@ -9,6 +9,10 @@ var Projects = require('../components/profile/profile-projects');
 var ProfileStore = require('../stores/profile-store');
 var Actions = require('../actions');
 
+var ProfHeaderEdit = require('../components/profile/edit-components/profile-header-edit');
+var DevProfBodyEdit = require('../components/profile/edit-components/dev-profile-body-edit');
+var BioEdit = require('../components/profile/edit-components/profile-bio-edit');
+
 
 module.exports = React.createClass({
 	mixins:[
@@ -16,26 +20,12 @@ module.exports = React.createClass({
 	],
 	getInitialState: function(){
 		return {
-			userData: []
+			userData: [],
+			swap: true
 		}
 	},
 	componentWillMount: function(){
 		Actions.getProfile(window.localStorage.getItem('userId'));
-	},
-	render: function() {
-		return (
-			<div className="fullscreen">
-        <Header link='/' title='Home'/>
-        <div className="">
-		      <ProfHeader />
-		      <DevProfBody />
-		      <Bio />
-		      <Projects />
-	      	<button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
-		      <Footer />
-		    </div>
-	    </div>
-		)
 	},
 	onChange: function(event, userData){
 		this.setState({userData: userData})
@@ -43,4 +33,51 @@ module.exports = React.createClass({
 	checking:function(){
 		console.log("this is on dev page", this.state.userData)
 	},
+	edit: function() {
+		console.log("editting")
+    this.setState({
+    	swap: !this.state.swap
+    })
+	},
+	save: function() {
+		console.log("saving")
+    this.edit();
+    // fetch post request w/ new data
+	},
+	profileEdit: function(edit) {
+		return edit ? 
+      <div>
+        <ProfHeader 
+            edit={this.edit}
+		        props={this.state.userData}
+		        firstName={this.state.userData.first_name}
+		        lastName={this.state.userData.last_name}
+		        avatar={this.state.userData.avatar}
+		        title={this.state.userData.title} />
+        <DevProfBody />
+        <Bio />
+        <Projects />
+      </div> 
+      :
+      <div>
+        <ProfHeaderEdit 
+            edit={this.save}
+		        props={this.state.userData}
+		        firstName={this.state.userData.first_name}
+		        lastName={this.state.userData.last_name}
+		        avatar={this.state.userData.avatar}
+		        title={this.state.userData.title} />
+        <DevProfBodyEdit />
+        <BioEdit />
+      </div>
+	},
+	render: function() {
+		return (
+		<div>
+      <Header link='/' title='Home' />
+			{this.profileEdit(this.state.swap)}
+      <Footer />	
+		</div>
+		)
+	}
 })

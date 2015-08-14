@@ -21,7 +21,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 			<div className="fullscreen">
-        <Header link='/' title='Home'/>
+        <Header link='/' title='Home' />
 	      <Oauth name="Developer Signup" />
 	      <Main type="dev" url="/auth/signup" newID={this.getID} />
 	      <button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
