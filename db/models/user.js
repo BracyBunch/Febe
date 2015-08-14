@@ -19,6 +19,9 @@ User.schema = {
   'email': {'type': String, 'required': true},
   'password': {'type': String},
   'can_message': {'type': Boolean, 'default': false},
+  'title': {'type': String},
+  'bio': {'type': String},
+  'location': {'type': String},
   'links': {'type': Array, 'default': []},
   'github_id': {'type': String},
   'linkedin_id': {'type': String},
@@ -33,6 +36,9 @@ User.public_fields = [
   'first_name',
   'last_name',
   'can_message',
+  'title',
+  'bio',
+  'location',
   'links'
 ];
 
