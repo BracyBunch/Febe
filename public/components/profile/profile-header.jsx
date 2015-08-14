@@ -9,9 +9,7 @@ module.exports = React.createClass({
     	links: 'Please enter your GitHub, LinkedIn, etc'
     };
 	},
-	logg: function() {
-		console.log("test", this.state)
-	},
+	
 	render: function() {
 		return (
 			<div className="profile">

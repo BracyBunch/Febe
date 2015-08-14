@@ -103,6 +103,7 @@ module.exports = React.createClass({
 	},
 	handleSubmit: function(comment) {
 		this.doPasswordsMatch()
+		var that = this;
 		fetch(this.props.url, {
 			method: 'post',
 		  headers: {
