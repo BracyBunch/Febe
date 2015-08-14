@@ -1,5 +1,8 @@
+var Fetch = require('whatwg-fetch');
+
 module.exports = {
   addFields: function(divId, newLink, count, max) {
+  	console.log("adding")
   	count = count || 1;
   	max = max || 4;
 	  if (count === max) {
@@ -12,7 +15,9 @@ module.exports = {
 	  }
 	},
 
-	updateProfile: function(url, type, data) {
+	fetch: function(url, type, data) {
+		var that = this;
+		console.log('were in here')
 		fetch(url, {
 			method: type,
 		  headers: {
@@ -27,8 +32,9 @@ module.exports = {
 			return response.json();
 		})
 		.then(function(data) {
+// THIS NEEDS EDITTING
 			// call method with id returned from db
-			console.log(data)
+			that.settingEmail(data.id)
 		})
 		.catch(function(error) {
 			console.log('request failed: ', error)

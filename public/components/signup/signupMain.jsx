@@ -64,7 +64,6 @@ module.exports = React.createClass({
 		    	<div className={this.getClasses('password')}>
 	  				<input type="password" ref="password" className="form-control password" onBlur={this.handleValidation('password')} valueLink={this.linkState('password')} placeholder="Password"/>
 	  				<input type="password" ref="confirmedPassword" className="form-control" onBlur={this.handleValidation('confirmedPassword')}  valueLink={this.linkState('confirmedPassword')} placeholder="Confirm Password"/>
-	  				{this.getValidationMessages('confirmedPassword').map(this.renderHelpText)}
 		    	</div>
 		    </form>
 	      <h5 className="signupCentered">Password must be more than 8 characters</h5>
@@ -92,17 +91,15 @@ module.exports = React.createClass({
 		{this.props.newID(newID)}
 		this.transitionTo(this.props.type==="dev"?'devprofile':'orgprofile')
 	},
-	doPasswordsMatch: function(){
-		if(this.state.password !== this.state.confirmedPassword){
-			console.log('true')
+	passwordVerification: function(){
+		if(this.state.password === this.state.confirmedPassword && this.state.password.length >= 8){
 			return true;
 		}
-		console.log('false')
 		return false;
 	},
 	handleSubmit: function(comment) {
+		if( this.passwordVerification() ){
 		var that = this;
-		this.doPasswordsMatch()
 		fetch(this.props.url, {
 			method: 'post',
 		  headers: {
@@ -123,5 +120,8 @@ module.exports = React.createClass({
 		.catch(function(error) {
 			console.log('request failed: ', error)
 		})
+		} else {
+			alert('Please verify that your passwords match and contain 8 or more characters');
+		}
   }
 })
