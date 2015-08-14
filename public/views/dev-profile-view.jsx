@@ -25,7 +25,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 			<div className="fullscreen">
-        <Header link='/' title='Home'/>
+        <Header link='/dashboard' title='Home'/>
         <div className="">
 		      <ProfHeader />
 		      <DevProfBody />

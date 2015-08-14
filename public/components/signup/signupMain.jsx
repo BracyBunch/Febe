@@ -2,10 +2,11 @@ var React = require('react/addons');
 var Dev = require('./signupDev');
 var Org = require('./signupOrg');
 var Fetch = require('whatwg-fetch');
+var Navigation = require('react-router').Navigation;
 
 module.exports = React.createClass({
 	// see http://facebook.github.io/react/docs/two-way-binding-helpers.html
-	mixins: [React.addons.LinkedStateMixin],
+	mixins: [React.addons.LinkedStateMixin, Navigation],
 	getInitialState: function() {
 		return {
 			first_name: '',
@@ -46,19 +47,9 @@ module.exports = React.createClass({
 		// render Dev or Org signup
 		// WHY IS NEWEMAIL BEING PASSED??
 		return this.props.type === "dev" ? 
-		       <Dev submitForm={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} message={this.canMessage} /> : 
-		       <Org submitForm={this.handleSubmit} newEmail={this.settingEmail} terms={this.setTerms} /> ;
+		       <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> : 
+		       <Org submitForm={this.handleSubmit} terms={this.setTerms} /> ;
 	},
-	// handleChange: function(event){
-	// 	this.setState({
-	// 		first_name: event.target.value,
-	//     last_name: this.refs.lastName.getDOMNode().value,
-	//     email: this.refs.emailAddress.getDOMNode().value,
-	//     password: this.refs.password.getDOMNode().value,
-	//     confirmedPassword: this.refs.confirmedPassword.getDOMNode().value,
-	//     user_kind: this.props.type
-	// 	})
-	// },
 	setTerms: function(){
 		this.setState({
 			terms: !this.state.terms
@@ -69,8 +60,9 @@ module.exports = React.createClass({
 			can_message: !this.state.can_message
 		})
 	},
-	settingEmail: function(newID){
+	settingID: function(newID){
 		{this.props.newID(newID)}
+		this.transitionTo(this.props.type==="dev"?'devprofile':'orgprofile')
 	},
 	handleSubmit: function(comment) {
 		var that = this;
@@ -89,7 +81,7 @@ module.exports = React.createClass({
 		})
 		.then(function(data) {
 			// call method with id returned from db
-			that.settingEmail(data.id)
+			that.settingID(data.id)
 		})
 		.catch(function(error) {
 			console.log('request failed: ', error)
