@@ -1,12 +1,34 @@
 var Project = require('../db').Project;
 var express = require('express');
-var http = require('http');
 var router = express.Router();
 
 // home route
 router.get('/', function(req, res){
   // access DB to retrieve all projects
   res.send(res);
+});
+
+var validate_id = function(req, res, next) {
+  var project_id = Number(req.params.project_id);
+  if (Number.isNaN(project_id)) return res.status(400).send();
+  req.params.project_id = project_id;
+  next();
+};
+
+router.get('/:project_id', validate_id, function(req, res) {
+  Project.with_extras(req.params.project_id, true).then(function(project) {
+    if (!project.published) {
+      if (!req.isAuthenticated()) return res.status(403).send();
+      Project.user_has_access(project, req.user).then(function(has_access) {
+        if (!has_access) return res.status(403).send();
+        res.json(project);
+      }, function() {
+        return res.status(500).send();
+      });
+    } else {
+      res.json(project);
+    }
+  });
 });
 
 router.post('/add', function(req, res){
@@ -27,5 +49,21 @@ router.put('/update', function(req, res){
   res.send();
 });
 
+router.put('/:project_id/add_member/:user_id', validate_id, function(req, res) {
+  var project_id = Number(req.params.project_id);
+  var user_id = Number(req.params.user_id);
+  if (Number.isNaN(user_id)) return res.status(400).send();
+
+  if (!req.isAuthenticated) return res.status(403).send();
+
+  Project.with_extras(project_id, {'owner': true}).then(function(project) {
+    if (project.owner.id !== req.user.id) throw new Error('User doesn\'t have permission to add members');
+    return Project.add_member(project_id, user_id).then(function() {
+      res.status(201).send();
+    });
+  }, function(err) {
+    res.status(400).send(err);
+  });
+});
 
 module.exports = router;

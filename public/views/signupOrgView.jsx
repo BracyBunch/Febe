@@ -22,7 +22,7 @@ module.exports = React.createClass({
 		return (
 			<div className="fullscreen">
         <Header link='/' title='Home'/>
-	      <Oauth name="Nonprofit Representative Signup" />
+	      <Oauth type="rep" signup="true" name="Nonprofit Representative Signup" />
 	      <Main type="rep" url="/auth/signup" newID={this.getID} />
 	      <button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
         <Footer />
@@ -45,4 +45,5 @@ module.exports = React.createClass({
 	setProfileStore: function(){
 		Actions.getProfile(this.state.id)
 	}
-})
+});
+

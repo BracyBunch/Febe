@@ -16,6 +16,7 @@ module.exports = React.createClass({
             <ul className="nav navbar-nav navbar-right">
               <div id="login">
               <Modal />
+              {this.props.signinModal}
               </div>
             </ul>
           </div>

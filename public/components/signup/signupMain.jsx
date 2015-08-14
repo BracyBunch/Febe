@@ -3,10 +3,19 @@ var Dev = require('./signupDev');
 var Org = require('./signupOrg');
 var Fetch = require('whatwg-fetch');
 var Navigation = require('react-router').Navigation;
+var ValidationMixin = require('./../../../assets/lib/react-validation-mixin');
+var Joi = require('./../../../assets/lib/joi');
 
 module.exports = React.createClass({
 	// see http://facebook.github.io/react/docs/two-way-binding-helpers.html
-	mixins: [React.addons.LinkedStateMixin, Navigation],
+	mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
+  validatorTypes:  {
+  firstName: Joi.string().required().label('First Name'),
+  lastName: Joi.string().required().label('Last Name'),
+  email: Joi.string().email().label('Email'),
+  password: Joi.string().regex(/^[\s\S]{8,30}$/).label('password'),
+  confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Confirmed password must match')
+	},
 	getInitialState: function() {
 		return {
 			first_name: '',
@@ -19,6 +28,22 @@ module.exports = React.createClass({
 	    terms: false
 		}
 	},
+	renderHelpText: function(message) {
+	  return (
+	    <span className="help-block">{message}</span>
+	  );
+	},
+	getClasses: function(field) {
+	  return React.addons.classSet({
+	    'form-group': true,
+	    'has-error': !this.isValid(field)
+	  });
+	},
+	handleReset: function(event) {
+	  event.preventDefault();
+	  this.clearValidations();
+	  this.setState(this.getInitialState());
+	},
 	render: function() {
 		return (
 			<div>
@@ -29,13 +54,17 @@ module.exports = React.createClass({
 	  				<input type="text" ref="lastName" className="form-control lastName" valueLink={this.linkState('last_name')} placeholder="Last Name"/>
 		    	</div>
 		    </form>
-		    <div className="form-group">
-	      	<input type="email" ref="emailAddress" className="form-control emailFill" valueLink={this.linkState('email')} placeholder="Email Address"/>
+		    <div className={this.getClasses('email')}>
+	      	<input type="email" ref="emailAddress" className="form-control emailFill" valueLink={this.linkState('email')} onBlur={this.handleValidation('email')} placeholder="Email Address"/>
+	      	<div className='names'>
+	      	{this.getValidationMessages('email').map(this.renderHelpText)}
+	      	</div>
 	      </div>
 	      <form className="form-inline passwords">
-		    	<div className="form-group">
-	  				<input type="password" ref="password" className="form-control password" valueLink={this.linkState('password')} placeholder="Password"/>
-	  				<input type="password" ref="confirmedPassword" className="form-control" valueLink={this.linkState('confirmedPassword')} placeholder="Confirm Password"/>
+		    	<div className={this.getClasses('password')}>
+	  				<input type="password" ref="password" className="form-control password" onBlur={this.handleValidation('password')} valueLink={this.linkState('password')} placeholder="Password"/>
+	  				<input type="password" ref="confirmedPassword" className="form-control" onBlur={this.handleValidation('confirmedPassword')}  valueLink={this.linkState('confirmedPassword')} placeholder="Confirm Password"/>
+	  				{this.getValidationMessages('confirmedPassword').map(this.renderHelpText)}
 		    	</div>
 		    </form>
 	      <h5 className="signupCentered">Password must be more than 8 characters</h5>
@@ -64,8 +93,16 @@ module.exports = React.createClass({
 		{this.props.newID(newID)}
 		this.transitionTo(this.props.type==="dev"?'devprofile':'orgprofile')
 	},
+	doPasswordsMatch: function(){
+		if(this.state.password !== this.state.confirmedPassword){
+			console.log('true')
+			return true;
+		}
+		console.log('false')
+		return false;
+	},
 	handleSubmit: function(comment) {
-		var that = this;
+		this.doPasswordsMatch()
 		fetch(this.props.url, {
 			method: 'post',
 		  headers: {
@@ -75,7 +112,7 @@ module.exports = React.createClass({
 			body: JSON.stringify(this.state)
 		})
 		.then(function(response) {
-			// I think this is necessary, because of a problem with Chrome Dev Tools
+			// This is necessary because of a problem with Chrome Dev Tools
 			// See https://code.google.com/p/chromium/issues/detail?id=457484
 			return response.json();
 		})

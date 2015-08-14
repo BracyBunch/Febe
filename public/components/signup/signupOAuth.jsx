@@ -11,32 +11,32 @@ module.exports = React.createClass({
     var liTooltip = <Tooltip>LinkedIn</Tooltip>;
     var ghTooltip = <Tooltip>GitHub</Tooltip>;
     var fbTooltip = <Tooltip>Facebook</Tooltip>;
-    
+
     return (
-	    <div>
+      <div>
         <div className="signupCentered">
-		      <h3>{this.props.name}</h3>
-		      <div className="btn-group">
-			      <Link to="#">
+          <h3>{this.props.name}</h3>
+          <div className="btn-group">
+            <Link to="#">
               <OverlayTrigger placement="top" overlay={liTooltip}>
-				      	<img className="oauthPic img-rounded" src="assets/img/linkedinAuth.png" onClick={this.open_popup.bind(this, 'linkedin')} />
+                <img className="oauthPic img-rounded" src="assets/img/linkedinAuth.png" onClick={this.open_popup.bind(this, 'linkedin')} />
               </OverlayTrigger>
-			      </Link>
-			      <Link to="#">
+            </Link>
+            <Link to="#">
               <OverlayTrigger placement="top" overlay={ghTooltip}>
-				        <img className="oauthPic img-rounded" src="assets/img/githubAuth.png" onClick={this.open_popup.bind(this, 'github')} />
+                <img className="oauthPic img-rounded" src="assets/img/githubAuth.png" onClick={this.open_popup.bind(this, 'github')} />
               </OverlayTrigger>
-			      </Link>
-			      <Link to="#">
+            </Link>
+            <Link to="#">
               <OverlayTrigger placement="top" overlay={fbTooltip}>
-				        <img className="oauthPic img-rounded" src="assets/img/facebookAuth.png" onClick={this.open_popup.bind(this, 'facebook')}  />
+                <img className="oauthPic img-rounded" src="assets/img/facebookAuth.png" onClick={this.open_popup.bind(this, 'facebook')}  />
               </OverlayTrigger>
-			      </Link>
-			    </div>
-		      <h5>Or</h5>
-		    </div>
-    	</div>
-	  )
+            </Link>
+          </div>
+          <h5>Or</h5>
+        </div>
+      </div>
+    );
 	},
 
 	popup: undefined,
@@ -48,15 +48,16 @@ module.exports = React.createClass({
     this.popup.close();
     var oauth_status = window.localStorage.getItem('oauth_status');
     window.localStorage.removeItem('oauth_status');
-    //handle response with react somehow here
-    console.log('oauth response: ', oauth_status);
 
     if (oauth_status === 'success') {
-      
+      // Logged in
     } else if (oauth_status === 'rejected') {
-
+      // User either denied the authorization or closed the popup
     } else if (oauth_status === 'conflict') {
-      
+      // There is already a user with the email recieved from the provider
+      // User should login to add new connection
+    } else if (oauth_status === 'denied') {
+      // User tried to signup from login modal
     }
   },
 
@@ -78,16 +79,20 @@ module.exports = React.createClass({
     window.addEventListener('storage', this.watch_localStorage);
     window.localStorage.setItem('oauth_status', 'in_progress');
 
-    var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;  
-    var dualScreenTop = window.screenTop !== undefined ? window.screenTop : screen.top;  
-              
-    var width = screen.width;  
-    var height = screen.height;  
-              
-    var left = ((width / 2) - (900 / 2)) + dualScreenLeft;  
-    var top = ((height / 2) - ((550 + 55) / 2)) + dualScreenTop; 
+    var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;
+    var dualScreenTop = window.screenTop !== undefined ? window.screenTop : screen.top;
 
-    this.popup = window.open('/auth/'+ provider + '/login', '_blank', 'resizable=1,scrollbars=1,width=900,height=550,left=' + left + ',top=' + top);
+    var width = screen.width;
+    var height = screen.height;
+
+    var left = ((width / 2) - (900 / 2)) + dualScreenLeft;
+    var top = ((height / 2) - ((550 + 55) / 2)) + dualScreenTop;
+
+    var url = '/auth/' + provider + '/login?';
+    if (this.props.signup) url += 'signup';
+    if (this.props.type === 'rep') url += '&rep';
+
+    this.popup = window.open(url, '_blank', 'resizable=1,scrollbars=1,width=900,height=550,left=' + left + ',top=' + top);
     this.check_popup_open_interval = window.setInterval(this.check_popup_open, 250);
     this.popup.focus();
   }
