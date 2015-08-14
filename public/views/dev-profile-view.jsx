@@ -85,7 +85,6 @@ module.exports = React.createClass({
 	profileEdit: function(edit) {
 		return edit ? 
       <div>
-        <button onClick={this.checking}>CLICK ME</button>
         <ProfileHeader 
             edit={this.edit}
 		        firstName={this.state.userData.first_name}
