@@ -12,8 +12,6 @@ var user          = require('./routes/user');
 var EIN           = require('./routes/ein');
 var organization  = require('./routes/organization');
 var project       = require('./routes/project');
-var signup        = require('./routes/signup');
-var login         = require('./routes/login');
 var tag           = require('./routes/tag');
 
 // ***************** APP configure ******************
@@ -39,8 +37,6 @@ app.use('/ein', EIN);
 app.use('/user', user);
 app.use('/organization', organization);
 app.use('/project', project);
-app.use('/signup', signup);
-app.use('/login', login);
 app.use('/tag', tag);
 
 

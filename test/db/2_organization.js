@@ -91,7 +91,9 @@ describe('Organization tests', function() {
 
   it('shouldn\'t include private information in Organization.with_extras', function(done) {
     models.Organization.with_extras(instances.org, true).then(function(org) {
-      expect(org.owner).to.have.all.keys(models.User.public_fields);
+      for(var key in org.owner) {
+        expect(models.User.public_fields.indexOf(key)).to.be.gt(-1);
+      }
       done();
     }, done);
   });
