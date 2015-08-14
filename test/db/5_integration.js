@@ -89,15 +89,19 @@ describe('Integration tests', function() {
 
   it('shouldn\'t include private information in Project.with_extras', function(done) {
     models.Project.with_extras(instances.project, true).then(function(project) {
-      expect(project.owner).to.have.all.keys(models.User.public_fields);
-      expect(project.organization).to.contain.any.keys(models.Organization.public_fields);
+      var key;
+      for(key in project.owner) {
+        expect(models.User.public_fields.indexOf(key)).to.be.gt(-1);
+      }
 
-      for(var key in project.organization) {
+      for(key in project.organization) {
         expect(models.Organization.public_fields.indexOf(key)).to.be.gt(-1);
       }
 
       project.members.forEach(function(member) {
-        expect(member).to.have.all.keys(models.User.public_fields);
+        for(key in member) {
+          expect(models.User.public_fields.indexOf(key)).to.be.gt(-1);
+        }
       });
 
       done();
