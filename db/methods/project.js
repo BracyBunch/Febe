@@ -109,19 +109,33 @@ var with_extras = function(project, options) {
   });
 };
 
-/**
- * Find all projects with relationships to all specified Tag ids
- * @param  {Integer[]}  skill_ids   Array of Tag ids
- * @return {Promise.<Project[]>}    Array of Projects matching filter
+ /**
+ * Find Projects with relationships to all specified Tags
+ * @param  {Integer[]}  tag_ids         Array of Tag ids
+ * @param  {Boolean}    only_published  Only find Projects that are published
+ * @return {Promise.<Project[]>}
  */
-var find_by_skill = function(skill_ids) {
+var find_by_tags = function(tag_ids, only_published) {
+  only_published = (only_published === undefined) ? true : false;
   var query = [
-    'MATCH (tags:Tag {kind:"skill"}) WHERE id(tags) IN {tags}',
+    'MATCH (tags:Tag) WHERE id(tags) IN {tags}',
     'WITH COLLECT(tags) AS t',
-    'MATCH (node:Project)-->(tags) WHERE ALL(tag IN t WHERE (node)-->(tag))'
+    'MATCH (project:Project)-->(tags) WHERE ALL(tag IN t WHERE (project)-[:skill]->(tag) OR (project)<-[:owns]-(:Organization)-[:cause]->(tag))',
+    (only_published) ? 'AND project.published=true' : '',
+    'RETURN DISTINCT project'
   ].join(' ');
 
-  return Project.query(query, {'tags': skill_ids});
+  return db.query(query, {'tags': tag_ids}).then(function(projects) {
+    if (!projects.length) return [];
+
+    var calls = [];
+
+    projects.forEach(function(project) {
+      calls.push(with_extras(project, true));
+    });
+
+    return Promise.all(calls);
+  });
 };
 
 /**
@@ -153,6 +167,6 @@ module.exports = {
   'add_skill': add_skill,
   'add_skills': add_skills,
   'with_extras': with_extras,
-  'find_by_skill': find_by_skill,
+  'find_by_tags': find_by_tags,
   'user_has_access': user_has_access
 };
