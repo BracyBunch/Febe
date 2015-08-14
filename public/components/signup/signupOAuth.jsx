@@ -56,6 +56,8 @@ module.exports = React.createClass({
     } else if (oauth_status === 'conflict') {
       // There is already a user with the email recieved from the provider
       // User should login to add new connection
+    } else if (oauth_status === 'denied') {
+      // User tried to signup from login modal
     }
   },
 
@@ -86,7 +88,11 @@ module.exports = React.createClass({
     var left = ((width / 2) - (900 / 2)) + dualScreenLeft;
     var top = ((height / 2) - ((550 + 55) / 2)) + dualScreenTop;
 
-    this.popup = window.open('/auth/'+ provider + '/login', '_blank', 'resizable=1,scrollbars=1,width=900,height=550,left=' + left + ',top=' + top);
+    var url = '/auth/' + provider + '/login?';
+    if (this.props.signup) url += 'signup';
+    if (this.props.type === 'rep') url += '&rep';
+
+    this.popup = window.open(url, '_blank', 'resizable=1,scrollbars=1,width=900,height=550,left=' + left + ',top=' + top);
     this.check_popup_open_interval = window.setInterval(this.check_popup_open, 250);
     this.popup.focus();
   }

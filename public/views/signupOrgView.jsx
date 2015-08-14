@@ -6,17 +6,17 @@ var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 
 module.exports = React.createClass({
-	render: function() {
-		return (
-			<div className="fullscreen">
+  render: function() {
+    return (
+      <div className="fullscreen">
         <Header link='/' title='Home'/>
-	      <Oauth name="Nonprofit Representative Signup" />
-	      <Main type="rep" url="/auth/signup" newID={this.getID} />
+        <Oauth type="rep" signup="true" name="Nonprofit Representative Signup" />
+        <Main type="rep" url="/auth/signup" newID={this.getID} />
         <Footer />
-			</div>
-		)
-	},
-	getID: function() {
-		// temp function
-	}
-})
+      </div>
+    );
+  },
+  getID: function() {
+    // temp function
+  }
+});
