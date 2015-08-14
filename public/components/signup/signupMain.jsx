@@ -2,8 +2,8 @@ var React = require('react/addons');
 var Dev = require('./signupDev');
 var Org = require('./signupOrg');
 var Fetch = require('whatwg-fetch');
-var ValidationMixin = require('./../../../assets/lib/react-validation-mixin');
-var Joi = require('./../../../assets/lib/joi');
+var ValidationMixin = require('react-validation-mixin');
+var Joi = require('joi');
 
 module.exports = React.createClass({
 	// see http://facebook.github.io/react/docs/two-way-binding-helpers.html
