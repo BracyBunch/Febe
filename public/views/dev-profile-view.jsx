@@ -13,7 +13,7 @@ var ProfileHeaderEdit = require('../components/profile/edit-components/profile-h
 var DevProfileBodyEdit = require('../components/profile/edit-components/dev-profile-body-edit');
 var BioEdit = require('../components/profile/edit-components/profile-bio-edit');
 
-var ProfileMethods = require('../sharedMethods');
+var ProfileMethods = require('../components/profile/sharedProfileMethods');
 
 module.exports = React.createClass({
 	mixins:[
@@ -21,9 +21,12 @@ module.exports = React.createClass({
 	],
 	getInitialState: function(){
 		return {
-			title: '',
-			location: '',
-			bio: '',
+			title: 'Please enter your title & company',
+			location: 'Please enter your location',
+			bio: 'Tell us about yourself...',
+			links: [],
+			strengths: [],
+			interests: [],
 			userData: [],
 			swap: true
 		};
@@ -50,34 +53,8 @@ module.exports = React.createClass({
       location: this.state.location,
       bio: this.state.bio
     };
-    ProfileMethods.fetch('/auth/user', 'put', updateData);
-	},
-
-	profileEdit: function(edit) {
-		return edit ? 
-      <div>
-        <button onClick={this.checking}>CLICK ME</button>
-        <ProfileHeader 
-            edit={this.edit}
-		        props={this.state.userData}
-		        firstName={this.state.userData.first_name}
-		        lastName={this.state.userData.last_name}
-		        avatar={this.state.userData.avatar}
-		        title={this.state.userData.title} />
-        <DevProfileBody />
-        <Bio bio={this.state.userData.bio} />
-        <Projects />
-      </div> 
-      :
-      <div>
-        <ProfileHeaderEdit 
-            edit={this.save}
-            updateTitle={this.updateTitle}
-            updateLocation={this.updateLocation}
-		        props={this.state.userData} />
-        <DevProfileBodyEdit />
-        <BioEdit updateBio={this.updateBio} />
-      </div>
+    console.log(this.state.bio)
+    // ProfileMethods.updateProfile('/user', 'put', updateData);
 	},
 
 	updateTitle: function(title) {
@@ -92,10 +69,47 @@ module.exports = React.createClass({
     });
 	},
 
+	updateLinks: function(link) {
+		this.state.links.push(link);
+    this.setState({
+      links: links
+    });
+	},
+
 	updateBio: function(bio) {
 		this.setState({
 			bio: bio
 		});
+	},
+
+	profileEdit: function(edit) {
+		return edit ? 
+      <div>
+        <button onClick={this.checking}>CLICK ME</button>
+        <ProfileHeader 
+            edit={this.edit}
+		        firstName={this.state.userData.first_name}
+		        lastName={this.state.userData.last_name}
+		        avatar={this.state.userData.avatar}
+		        title={this.state.title}
+		        location={this.state.location}
+		        bio={this.state.bio}
+		        links={this.state.links} />
+        <DevProfileBody />
+        <Bio bio={this.state.userData.bio} />
+        <Projects />
+      </div> 
+      :
+      <div>
+        <ProfileHeaderEdit 
+            edit={this.save}
+		        firstName={this.state.userData.first_name}
+		        lastName={this.state.userData.last_name}
+            updateTitle={this.updateTitle}
+            updateLocation={this.updateLocation} />
+        <DevProfileBodyEdit />
+        <BioEdit updateBio={this.updateBio} />
+      </div>
 	},
 
 	render: function() {

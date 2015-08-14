@@ -2,19 +2,19 @@ var React = require('react/addons');
 var Dev = require('./signupDev');
 var Org = require('./signupOrg');
 var Fetch = require('whatwg-fetch');
-var ValidationMixin = require('./../../../assets/lib/react-validation-mixin');
-var Joi = require('./../../../assets/lib/joi');
+// var ValidationMixin = require('./../../../assets/lib/react-validation-mixin');
+// var Joi = require('./../../../assets/lib/joi');
 
 module.exports = React.createClass({
 	// see http://facebook.github.io/react/docs/two-way-binding-helpers.html
-	mixins: [ValidationMixin, React.addons.LinkedStateMixin],
-  validatorTypes:  {
-  firstName: Joi.string().required().label('First Name'),
-  lastName: Joi.string().required().label('Last Name'),
-  email: Joi.string().email().label('Email'),
-  password: Joi.string().regex(/^[\s\S]{8,30}$/).label('password'),
-  confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Confirmed password must match')
-	},
+	// mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+ //  validatorTypes:  {
+ //  firstName: Joi.string().required().label('First Name'),
+ //  lastName: Joi.string().required().label('Last Name'),
+ //  email: Joi.string().email().label('Email'),
+ //  password: Joi.string().regex(/^[\s\S]{8,30}$/).label('password'),
+ //  confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Confirmed password must match')
+	// },
 	getInitialState: function() {
 		return {
 			first_name: '',
@@ -101,6 +101,7 @@ module.exports = React.createClass({
 	},
 	handleSubmit: function(comment) {
 		this.doPasswordsMatch()
+		var that = this;
 		fetch(this.props.url, {
 			method: 'post',
 		  headers: {

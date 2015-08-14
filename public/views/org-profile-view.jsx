@@ -1,8 +1,8 @@
 var React = require('react');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
-var ProfHeader = require('../components/profile/profile-header');
-var OrgProfBody = require('../components/profile/org-profile-body');
+var ProfileHeader = require('../components/profile/profile-header');
+var OrgProfileBody = require('../components/profile/org-profile-body');
 var Bio = require('../components/profile/profile-bio');
 var Projects = require('../components/profile/profile-projects');
 
@@ -12,10 +12,8 @@ module.exports = React.createClass({
 			<div className="fullscreen">
         <Header link='/' title='Home'/>
         <div className="profile centered">
-		      <ProfHeader
-			      firstName={this.state.userData.first_name}
-		        lastName={this.state.userData.last_name} />
-		      <OrgProfBody />
+		      <ProfileHeader />
+		      <OrgProfileBody />
 		      <Bio />
 		      <Projects />
 		      <Footer />

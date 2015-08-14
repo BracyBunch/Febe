@@ -24,18 +24,17 @@ module.exports = React.createClass({
 	addlFieldCount: 1,
 	addlFieldLimit: 4,
 
-	updateTitle: function(event) {
-    this.setState({
-      title: event.target.value
-    });
-    this.props.updateTitle(this.state.title);
+	updateTitle: function(title) {
+    this.props.updateTitle(title.target.value);
 	},
 
 	updateLocation: function(event) {
-    this.setState({
-    	location: event.target.value
-    });
-    this.props.updateLocation(this.state.location);
+    this.props.updateLocation(event.target.value);
+	},
+
+	updateLinks: function(link) {
+		this.props.links.push(link)
+    this.props.updateLinks(this.props.links)
 	},
 
 	render: function() {

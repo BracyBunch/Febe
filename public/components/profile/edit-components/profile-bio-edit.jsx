@@ -7,7 +7,7 @@ module.exports = React.createClass({
     };
   },
 
-  updateState: function(event) {
+  updateBio: function(event) {
     this.props.updateBio(event.target.value);
   },
   
@@ -20,7 +20,7 @@ module.exports = React.createClass({
           className="form-control" 
           rows="4" 
           cols="200"
-          onChange={this.updateState}
+          onChange={this.updateBio}
           ></textarea>
   		</div>
 	  )

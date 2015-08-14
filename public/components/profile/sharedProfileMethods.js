@@ -28,7 +28,7 @@ module.exports = {
 		})
 		.then(function(data) {
 			// call method with id returned from db
-			that.settingEmail(data.id)
+			console.log(data)
 		})
 		.catch(function(error) {
 			console.log('request failed: ', error)
