@@ -49,13 +49,13 @@ var handle_login = function(req, res, next) {
     } else if (info === 'LoginToAddOAuth') {
       res.status(409).send('<script>window.localStorage.setItem("oauth_status", "conflict")</script>');
     } else {
-      res.status(401).send('<script>window.localStorage.setItem("oauth_status", "rejected")</script>');
+      res.status(403).send('<script>window.localStorage.setItem("oauth_status", "rejected")</script>');
     }
   })(req, res, next);
 };
 
 var signal_complete = function(req, res) {
-  if (!req.isAuthenticated) return res.status(401).send();
+  if (!req.isAuthenticated) return res.status(403).send();
   res.json(req.user);
 };
 
@@ -77,7 +77,7 @@ var create_local_user = function(req, res, next) {
   var last_name = req.body.last_name;
   var can_message = (!!req.body.can_message);
 
-  if (!email || !password || !first_name) return res.status(401).send();
+  if (!email || !password || !first_name) return res.status(400).send();
 
   models.User.check_if_exists(email).then(function(exists) {
     if (exists) return res.status(409).send();
@@ -100,7 +100,7 @@ var create_local_user = function(req, res, next) {
         next();
       });
     }, function(err) {
-      return res.status(401).send();
+      return res.status(403).send();
     });
   });
 };
