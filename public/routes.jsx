@@ -7,8 +7,7 @@ var Router = ReactRouter.Router;
 //object used to configure the router
 var Route = ReactRouter.Route;
 var Main = require('./components/main');
-var Signupdev = require('./views/signupDevView');
-var SignupNp = require('./views/signupNpView');
+var Signup = require('./views/signupView');
 var Termsofuse = require('./components/shared/termsOfUse');
 var Privacypolicy = require('./components/shared/privacyPolicy');
 var Dashboard = require('./views/dashboard-view');
@@ -18,8 +17,8 @@ var NpProfile = require('./views/np-profile-view');
 module.exports = (
   <Router history={new HashHistory}>
     <Route name="home" path="/" component={Main}>
-      <Route name="signupdev" path="/signupdev" component={Signupdev} />
-      <Route name="signupnp" path="/signupnp" component={SignupNp} />
+      <Route name="signupdev" path="/signupdev" component={Signup} kind="dev" />
+      <Route name="signuporg" path="/signuporg" component={Signup} kind="rep" />
       <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />
       <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
       <Route name="dashboard" path="/dashboard" component={Dashboard} />

@@ -13,17 +13,19 @@ module.exports = React.createClass({
     Reflux.listenTo(ProfileStore, 'onChange')
   ],
   getInitialState: function() {
+    console.log(this.props.route.kind);
     return {
       userData: ['test'],
-      id: 'empty'
+      id: 'empty',
+      name: (this.props.route.kind === 'dev') ? 'Developer Signup' : 'Nonprofit Representative Signup'
     };
   },
   render: function() {
     return (
       <div className="fullscreen">
         <Header link='/' title='Home'/>
-        <Oauth type="dev" signup="true" name="Developer Signup" />
-        <Main type="dev" url="/auth/signup" newID={this.getID} />
+        <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
+        <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
         <button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
         <Footer />
       </div>
