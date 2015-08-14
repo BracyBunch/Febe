@@ -1,0 +1,82 @@
+{
+  "name": "react-validation-mixin",
+  "version": "4.2.0",
+  "description": "Simple Validation Mixin for React.",
+  "main": "ValidationMixin.js",
+  "scripts": {
+    "test": "karma start karma.conf.js --single-run",
+    "test-watch": "karma start karma.conf.js",
+    "doc": "jsdoc ValidationMixin.js",
+    "precommit": "npm test",
+    "prepush": "npm test",
+    "postmerge": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jurassix/react-validation-mixin.git"
+  },
+  "keywords": [
+    "react-component",
+    "react",
+    "validation",
+    "validator",
+    "mixin",
+    "joi",
+    "schema"
+  ],
+  "author": {
+    "name": "jurassix",
+    "url": "clinton.ayres@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jurassix/react-validation-mixin/issues"
+  },
+  "homepage": "https://github.com/jurassix/react-validation-mixin",
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "husky": "^0.8.1",
+    "joi": "^6.5.0",
+    "jsdoc": "^3.3.2",
+    "karma": "^0.12.37",
+    "karma-bro": "^0.11.1",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-mocha": "^0.2.0",
+    "mocha": "^2.2.5",
+    "react": "^0.13.3",
+    "reactify": "^1.1.1"
+  },
+  "peerDependencies": {
+    "joi": ">=5.1.0"
+  },
+  "dependencies": {
+    "he": "^0.5.0",
+    "lodash.flatten": "^3.0.2",
+    "lodash.isempty": "^3.0.4",
+    "lodash.isobject": "^3.0.2",
+    "lodash.result": "^3.1.2",
+    "lodash.union": "^3.1.0",
+    "object.assign": "^3.0.1"
+  },
+  "gitHead": "049dfc0776d9922bb0a07241133fe1cdd8dcde4e",
+  "_id": "react-validation-mixin@4.2.0",
+  "_shasum": "33f25aca431655f671bfd166aedc58d108e73369",
+  "_from": "react-validation-mixin@*",
+  "_npmVersion": "1.4.28",
+  "_npmUser": {
+    "name": "jurassix",
+    "email": "clinton.ayres@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "jurassix",
+      "email": "clinton.ayres@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "33f25aca431655f671bfd166aedc58d108e73369",
+    "tarball": "http://registry.npmjs.org/react-validation-mixin/-/react-validation-mixin-4.2.0.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/react-validation-mixin/-/react-validation-mixin-4.2.0.tgz"
+}
