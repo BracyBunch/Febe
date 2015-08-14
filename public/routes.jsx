@@ -8,7 +8,7 @@ var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Main = require('./components/main');
 var Signupdev = require('./views/signupDevView');
-var Signuporg = require('./views/signupOrgView');
+var SignupNp = require('./views/signupNpView');
 var Termsofuse = require('./components/shared/termsOfUse');
 var Privacypolicy = require('./components/shared/privacyPolicy');
 var Dashboard = require('./views/dashboard-view');
@@ -19,7 +19,7 @@ module.exports = (
   <Router history={new HashHistory}>
     <Route name="home" path="/" component={Main}>
       <Route name="signupdev" path="/signupdev" component={Signupdev} />
-      <Route name="signuporg" path="/signuporg" component={Signuporg} />
+      <Route name="signupnp" path="/signupnp" component={SignupNp} />
       <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />
       <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
       <Route name="dashboard" path="/dashboard" component={Dashboard} />
