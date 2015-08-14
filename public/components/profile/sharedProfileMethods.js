@@ -19,7 +19,8 @@ module.exports = {
 		    'Accept': 'application/json',
 		    'Content-Type': 'application/json'
 		  },
-			body: JSON.stringify(data)
+			body: JSON.stringify(data),
+			'credentials': 'same-origin'
 		})
 		.then(function(response) {
 			// This is necessary because of a problem with Chrome Dev Tools

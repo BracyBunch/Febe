@@ -17,7 +17,7 @@ var OrgProfile = require('./views/org-profile-view');
 
 module.exports = (
   <Router history={new HashHistory}>
-    <Route path="/" component={Main}>
+    <Route name="home" path="/" component={Main}>
       <Route name="signupdev" path="/signupdev" component={Signupdev} />
       <Route name="signuporg" path="/signuporg" component={Signuporg} />
       <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />

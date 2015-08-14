@@ -1,6 +1,7 @@
 var React = require('react');
 var Modal = require('react-bootstrap').Modal;
 var Oauth = require('../signup/signupOAuth');
+var LogButton = require('../shared/logInOutButton');
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -12,11 +13,10 @@ module.exports = React.createClass({
   open: function() {
     this.setState({ showModal: true });
   },
-
   render: function() {
     return (
       <div>
-        <button className="btn navbar-btn btn-success" onClick={this.open}>Login</button>
+        <LogButton open={this.open} routing={this.props.routing}/>
 
         <Modal 
           dialogClassName="loginModal"
