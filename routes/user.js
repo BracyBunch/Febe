@@ -25,7 +25,8 @@ router.delete('/remove', function(req, res){
 });
 
 router.put('/', function(req, res){
-  if (!req.isAuthenticated()) return res.status(403).send();
+  console.log(req.session);
+  // if (!req.isAuthenticated()) return res.status(403).send();
 
   var async = {};
 

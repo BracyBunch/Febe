@@ -53,8 +53,7 @@ module.exports = React.createClass({
       location: this.state.location,
       bio: this.state.bio
     };
-    console.log(this.state.bio)
-    // ProfileMethods.updateProfile('/user', 'put', updateData);
+    ProfileMethods.updateProfile('/user', 'put', updateData);
 	},
 
 	updateTitle: function(title) {

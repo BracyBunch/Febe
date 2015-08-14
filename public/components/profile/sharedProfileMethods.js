@@ -27,7 +27,6 @@ module.exports = {
 			return response.json();
 		})
 		.then(function(data) {
-			// call method with id returned from db
 			console.log(data)
 		})
 		.catch(function(error) {
