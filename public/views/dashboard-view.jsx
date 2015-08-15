@@ -12,6 +12,7 @@ module.exports = React.createClass({
         <div>Dashboard</div>
         <Link to="/devprofile"><button className="btn btn-primary">Dev Profile Temp</button></Link>
         <Link to="/orgprofile"><button className="btn btn-primary">Org Profile Temp</button></Link>
+        <Link to="/createproject"><button className="btn btn-primary">Create Project Temp</button></Link>
         <Footer />
       </div>
     )

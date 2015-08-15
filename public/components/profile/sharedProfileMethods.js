@@ -25,6 +25,7 @@ module.exports = {
 		.then(function(response) {
 			// This is necessary because of a problem with Chrome Dev Tools
 			// See https://code.google.com/p/chromium/issues/detail?id=457484
+			console.log(response)
 			return response.json();
 		})
 		.then(function(data) {

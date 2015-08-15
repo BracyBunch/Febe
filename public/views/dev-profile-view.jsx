@@ -115,7 +115,7 @@ module.exports = React.createClass({
 		<div>
       <Header link='/dashboard' title='Dashboard' />
 			{this.profileEdit(this.state.swap)}
-			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
+			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">Create Project</button>
       <Footer />	
 		</div>
 		)

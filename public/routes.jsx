@@ -14,6 +14,7 @@ var Privacypolicy = require('./components/shared/privacyPolicy');
 var Dashboard = require('./views/dashboard-view');
 var DevProfile = require('./views/dev-profile-view');
 var OrgProfile = require('./views/org-profile-view');
+var CreateProject = require('./views/create-project');
 
 module.exports = (
   <Router history={new HashHistory}>
@@ -25,6 +26,7 @@ module.exports = (
       <Route name="dashboard" path="/dashboard" component={Dashboard} />
       <Route name="devprofile" path="/devprofile" component={DevProfile} />
       <Route name="orgprofile" path="/orgprofile" component={OrgProfile} />
+      <Route name="createproject" path="/createproject" component={CreateProject} />
     </Route>
   </Router>
 );
