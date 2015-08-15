@@ -204,3 +204,14 @@ img {
 .fullscreen {
   height: 100%;
 }
+
+.autocomplete-input {
+  margin-bottom: 10px;
+}
+.autocomplete-dropdown-item {
+  cursor: pointer;
+}
+.autocomplete-list-item {
+  margin-right: 3px;
+  cursor: pointer;
+}
