@@ -1,10 +1,11 @@
 var React = require('react/addons');
-var DropdownButton = require('react-bootstrap').DropdownButton;
 var ValidationMixin = require('react-validation-mixin');
+var DropdownButton = require('../components/project/dropdown');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var DatePicker = require('../components/datepicker/datepicker');
+
 
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin],
@@ -46,65 +47,34 @@ module.exports = React.createClass({
       completionDate: date
     })
   },
-
-  renderDropdownItems: function() {
-    var people = [];
-    for (var i = 0; i < this.state.pointPeople.length; i++) {
-      var person = this.state.pointPeople[i];
-      people.push(
-        <div onClick={this.select.bind(null, person)}>
-          <span>{person}</span>
-        </div>);
-    }
-    return people;
-  },
-
   render: function() {
     return (
       <div className="fullscreen">
         <Header link='/' title='Home'/>
         <div className="">
-
           <h3>Create a Project</h3>
           <form className="form-inline">
             <div className="form-group">
               <h5>Project Name</h5>
-              <input 
-                type="text" 
-                ref="projectName" 
-                className="form-control projectName" 
-                valueLink={this.linkState('projectName')} />
+              <input type="text" ref="projectName" className="form-control projectName" valueLink={this.linkState('projectName')} />
             </div>
           </form>
-
           <div>
-            <DropdownButton 
-              onSelect={this.asdf}
-              title={this.state.pointPerson}>
-              {this.renderDropdownItems()}
-            </DropdownButton>
+            <DropdownButton pointPerson={this.state.pointPerson} pointPeople={this.state.pointPeople}/>
           </div>
-
           <div>
             <h5>Preferred Completion Date</h5>
             <DatePicker selectDate={this.selectDate} />
           </div>
-          
           <div>
             <h5>Project Description</h5>
-            <textarea
-              className="form-group"
-              rows="4"
-              cols="100"
-              valueLink={this.linkState('description')}
-            ></textarea>
+            <textarea className="form-group" rows="4" cols="100" valueLink={this.linkState('description')}>
+            </textarea>
           </div>
-
           <div>
             <h5>Technology Needs</h5>
             <input type="text" className="form-control" />
           </div>
-
           <div id="addlLinks">
             <h5>Additional Links</h5>
             <input type="url" className="form-control" placeholder="YouTube" />
@@ -114,21 +84,14 @@ module.exports = React.createClass({
               className="btn signupBtn" 
               onClick={Methods.addFields.bind(this, 'addlLinks', this.newLink)}>Add +</button> <br />
           </div>
-
           <div>
-            <input 
-              type="checkbox" 
-              value="termsAgreed" 
-              onChange={this.setTerms} 
-              className="checkbox-inline"> I agree to the terms</input>
+            <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
           </div>
-
           <div>
             <button type="submit" 
               className="btn signupBtn text-center" 
               onClick={this.createProject}>Create</button>
           </div>
-
         </div>
         <Footer />
       </div>
