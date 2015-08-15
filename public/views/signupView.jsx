@@ -2,7 +2,6 @@ var React = require('react');
 var Reflux = require('reflux');
 var Oauth = require('../components/signup/signupOAuth');
 var Main = require('../components/signup/signupMain');
-var Dev = require('../components/signup/signupDev');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Actions = require('../actions');
