@@ -37,7 +37,7 @@ module.exports = React.createClass({
   },
 
   render: function(){
-  var repTooltip = <Tooltip>Enter the email address of any additional \nusers you would like to represent your organization.</Tooltip>
+  var repTooltip = <Tooltip>Enter the email address of any additional users you would like to represent your organization.</Tooltip>
 
     return (
       <div>
@@ -97,9 +97,10 @@ module.exports = React.createClass({
           </div>
 
           <div id="addlReps">
-            <OverlayTrigger trigger="hover" position="top" overlay={repTooltip}>
-              <h5>Additional Representatives</h5>
-            </OverlayTrigger>
+              <h5 className="headerInline">Additional Representatives </h5>
+              <OverlayTrigger position="top" overlay={repTooltip}>
+                <img className="questionmark" src="assets/img/questionmark.png" />
+              </OverlayTrigger>
             <input type="url" className="form-control" placeholder="Representative's Email" />
           </div>
           <div>

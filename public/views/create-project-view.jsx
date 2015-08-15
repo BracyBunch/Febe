@@ -79,7 +79,6 @@ module.exports = React.createClass({
 
           <div>
             <DropdownButton 
-              onSelect={this.asdf}
               title={this.state.pointPerson}>
               {this.renderDropdownItems()}
             </DropdownButton>
