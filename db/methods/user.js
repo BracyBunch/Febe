@@ -72,6 +72,10 @@ var add_strength = common.add_rel_generator('User', 'strength', 'Tag', true);
  */
 var add_strengths = common.add_rels_generator(add_strength);
 
+var clear_strengths = function(user) {
+  return db.query('MATCH (n:User)-[r:strength]->(:Tag) WHERE id(n)={user_id} DELETE r', {'user_id': user.id || user});
+};
+
 /**
  * Adds Tag as an interest of User
  * @param {Integer|User}  user      User or id
@@ -86,6 +90,9 @@ var add_interest = common.add_rel_generator('User', 'interest', 'Tag', true);
  */
 var add_interests = common.add_rels_generator(add_interest);
 
+var clear_interests = function(user) {
+  return db.query('MATCH (n:User)-[r:interest]->(:Tag) WHERE id(n)={user_id} DELETE r', {'user_id': user.id || user});
+};
 
 /**
  * Fetches one User including specifed extras
@@ -98,13 +105,19 @@ var with_extras = function(user, options) {
   var include = {};
   if (options === undefined) options = true;
 
-  if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'member_of'};
-  if (options === true || options.strengths) include.strengths = {'model': Tag, 'rel': 'strength'};
-  if (options === true || options.interests) include.interests = {'model': Tag, 'rel': 'interest'};
+  if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'member_of', 'many': true};
+  if (options === true || options.strengths) include.strengths = {'model': Tag, 'rel': 'strength', 'many': true};
+  if (options === true || options.interests) include.interests = {'model': Tag, 'rel': 'interest', 'many': true};
 
 
   return User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}).then(function(user) {
-    return user[0];
+    user = user[0];
+    var cleaned_user = clean(user);
+    cleaned_user.projects = user.projects.map(function(project) {return Project.clean(project);});
+    cleaned_user.strengths = user.strengths.map(function(strength) {return Tag.clean(strength);});
+    cleaned_user.interests = user.interests.map(function(interest) {return Tag.clean(interest);});
+
+    return cleaned_user;
   });
 };
 
@@ -115,7 +128,9 @@ module.exports =  {
   'clean': clean,
   'add_strength': add_strength,
   'add_strengths': add_strengths,
+  'clear_strengths': clear_strengths,
   'add_interest': add_interest,
   'add_interests': add_interests,
+  'clear_interests': clear_interests,
   'with_extras': with_extras
 };
