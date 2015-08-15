@@ -35,17 +35,9 @@ module.exports = React.createClass({
           <button className='btn btn-warning edit-follow'> Edit/Follow </button>
         </div>
           <Participant 
-            first={this.state.repData.first_name}
-            last={this.state.repData.last_name}
-            title={this.state.repData.title}
-            location={this.state.repData.location}
-            type={this.state.repData.type} />
+            repID={this.state.repID} />
           <Participant 
-            first={this.state.managerData.first_name}
-            last={this.state.managerData.last_name}
-            title={this.state.managerData.title}
-            location={this.state.managerData.location}
-            type={this.state.repData.type} />
+            managerID={this.state.managerID} />
           <button className='btn btn-warning'> Organization Link </button>
           <Timeline />
           <Description />
