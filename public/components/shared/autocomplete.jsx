@@ -4,7 +4,10 @@ var ajax = require('../../utils/fetch');
 
 var AutocompleteForm = React.createClass({
   propTypes: {
-    'values': React.PropTypes.object,
+    'values': React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.array
+    ]),
     'placeholder': React.PropTypes.string.isRequired,
     'url': React.PropTypes.string.isRequired
   },
@@ -14,13 +17,29 @@ var AutocompleteForm = React.createClass({
     };
   },
   getInitialState: function() {
+    var values = {};
+    if (Array.isArray(this.props.values)) {
+      this.props.values.forEach(function(item) {
+        values[item.id] = item.name;
+      });
+    } else {
+      values = this.props.values;
+    }
     return {
       'last_fetch': Date.now(),
       'value': '',
-      'values': this.props.values,
+      'values': values,
       'options': {},
       'active': 0
     };
+  },
+  get_selections: function() {
+    return this.state.values;
+  },
+  get_selections_array: function() {
+    return _.map(this.state.values, function(name, id) {
+      return {'id': id, 'name': name};
+    });
   },
   handle_change: function(e) {
     this.setState({'value': e.target.value}, function() {
