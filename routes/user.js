@@ -31,7 +31,8 @@ router.put('/', function(req, res){
 
   var editable_fields = [
     'kind', 'first_name', 'last_name', 'email', 'password',
-    'can_message', 'title', 'bio', 'location', 'links'
+    'can_message', 'title', 'bio', 'location', 'links',
+    'strengths', 'interests'
   ];
 
   var fields = _.pick(req.body, editable_fields);
@@ -50,6 +51,17 @@ router.put('/', function(req, res){
     } else {
       delete fields.email;
     }
+  }
+  if ('strengths' in fields) {
+    async.strengths = User.clear_strengths(req.user.id).then(function() {
+      return User.add_strengths(req.user.id, fields.strengths.map(function(strength) {return Number(strength);}));
+    });
+  }
+
+  if ('interests' in fields && fields.interests.length) {
+    async.interests = User.clear_interests(req.user.id).then(function() {
+      return User.add_interests(req.user.id, fields.interests.map(function(interest) {return Number(interest);}));
+    });
   }
 
   Promise.props(async).then(function(slow_fields) {
