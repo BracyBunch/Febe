@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var Dev = require('./signupDev');
-var Org = require('./signupOrg');
+var NP = require('./signupNp');
 var Fetch = require('whatwg-fetch');
 var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
@@ -72,10 +72,10 @@ module.exports = React.createClass({
 		)
 	},
 	handleView: function(){
-		// render Dev or Org signup
+		// render Dev or NP signup
 		return this.props.type === "dev" ? 
 		       <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> : 
-		       <Org submitForm={this.handleSubmit} terms={this.setTerms} /> ;
+		       <NP submitForm={this.handleSubmit} terms={this.setTerms} /> ;
 	},
 	setTerms: function(){
 		this.setState({
@@ -89,7 +89,7 @@ module.exports = React.createClass({
 	},
 	settingID: function(newID){
 		{this.props.newID(newID)}
-		this.transitionTo(this.props.type==="dev"?'devprofile':'orgprofile')
+		this.transitionTo(this.props.type==="dev"?'devprofile':'npprofile')
 	},
 	passwordVerification: function(){
 		if(this.state.password === this.state.confirmedPassword && this.state.password.length >= 8){

@@ -15,7 +15,7 @@ module.exports = React.createClass({
             <div className="under-buttons">Work with others to<br/>solve problems</div>
           </div>
           <div className="col-xs-6 col-sm-pull-1">
-            <Link to="/signuporg"><button className="btn btn-primary">Nonprofit</button></Link> 
+            <Link to="/signupnp"><button className="btn btn-primary">Nonprofit</button></Link> 
             <div className="under-buttons">Post technical projects<br/>you need help with</div>
           </div>
         </div>
