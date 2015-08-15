@@ -11,8 +11,8 @@ module.exports = React.createClass({
         <Header link='/' title='Browse'/>
         <div>Dashboard</div>
         <Link to="/devprofile"><button className="btn btn-primary">Dev Profile Temp</button></Link>
-        <Link to="/orgprofile"><button className="btn btn-primary">Org Profile Temp</button></Link>
         <Link to="/createproject"><button className="btn btn-primary">Create Project Temp</button></Link>
+        <Link to="/npprofile"><button className="btn btn-primary">Np Profile Temp</button></Link>
         <Footer />
       </div>
     )

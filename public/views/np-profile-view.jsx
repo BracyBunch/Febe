@@ -3,15 +3,17 @@ var Reflux = require('reflux');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
-var DevProfileBody = require('../components/profile/dev-profile-body');
+var NPProfileBody = require('../components/profile/np-profile-body');
 var Bio = require('../components/profile/profile-bio');
 var Projects = require('../components/profile/profile-projects');
 var ProfileStore = require('../stores/profile-store');
 var Actions = require('../actions');
+var Link = require('react-router').Link;
 
 var ProfileHeaderEdit = require('../components/profile/edit-components/profile-header-edit');
-var DevProfileBodyEdit = require('../components/profile/edit-components/dev-profile-body-edit');
+var NPProfileBodyEdit = require('../components/profile/edit-components/np-profile-body-edit');
 var BioEdit = require('../components/profile/edit-components/profile-bio-edit');
+var OrgLink = require('../components/profile/org-link');
 
 var ProfileMethods = require('../components/profile/sharedProfileMethods');
 
@@ -25,10 +27,9 @@ module.exports = React.createClass({
 			location: 'Please enter your location',
 			bio: 'Tell us about yourself...',
 			links: [],
-			strengths: [],
-			interests: [],
 			userData: [],
-			swap: true
+			swap: true,
+			hasOrg: false
 		};
 	},
 
@@ -53,7 +54,8 @@ module.exports = React.createClass({
       location: this.state.location,
       bio: this.state.bio
     };
-    ProfileMethods.updateProfile('/user', updateData);
+    console.log(this.state.bio)
+    // ProfileMethods.updateProfile('/user', 'put', updateData);
 	},
 
 	updateTitle: function(title) {
@@ -81,6 +83,16 @@ module.exports = React.createClass({
 		});
 	},
 
+	joinOrg: function() {
+		// We need to ask to either join or create an org
+		console.log("joined org")
+	},
+
+	createOrg: function() {
+		// We need to ask to either join or create an org
+		console.log("created org")
+	},
+
 	profileEdit: function(edit) {
 		return edit ? 
       <div>
@@ -93,7 +105,8 @@ module.exports = React.createClass({
 		        location={this.state.location}
 		        bio={this.state.bio}
 		        links={this.state.links} />
-        <DevProfileBody />
+		    <OrgLink joinOrg={this.joinOrg} createOrg={this.createOrg} hasOrg={this.state.hasOrg} />
+        <NPProfileBody />
         <Bio bio={this.state.userData.bio} />
         <Projects />
       </div> 
@@ -105,7 +118,7 @@ module.exports = React.createClass({
 		        lastName={this.state.userData.last_name}
             updateTitle={this.updateTitle}
             updateLocation={this.updateLocation} />
-        <DevProfileBodyEdit />
+        <NPProfileBodyEdit />
         <BioEdit updateBio={this.updateBio} />
       </div>
 	},
@@ -115,7 +128,7 @@ module.exports = React.createClass({
 		<div>
       <Header link='/dashboard' title='Dashboard' />
 			{this.profileEdit(this.state.swap)}
-			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">Create Project</button>
+			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
       <Footer />	
 		</div>
 		)

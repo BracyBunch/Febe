@@ -45,8 +45,6 @@ passport.deserializeUser(function(id, done) {
       'email': user.email,
       'first_name': user.first_name,
       'last_name': user.last_name,
-      'links': user.links,
-      'can_message': user.can_message,
       'github_id': user.github_id,
       'linkedin_id': user.linkedin_id,
       'facebook_id': user.facebook_id

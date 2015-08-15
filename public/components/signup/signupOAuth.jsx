@@ -1,13 +1,13 @@
 var React = require('react');
-var Router = require('react-router');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var Tooltip = require('react-bootstrap').Tooltip;
-var Link = Router.Link;
+var Navigation = require('react-router').Navigation;
 
 
 // need form validation
 module.exports = React.createClass({
-	render: function() {
+  mixins: [Navigation],
+  render: function() {
     var liTooltip = <Tooltip>LinkedIn</Tooltip>;
     var ghTooltip = <Tooltip>GitHub</Tooltip>;
     var fbTooltip = <Tooltip>Facebook</Tooltip>;
@@ -17,29 +17,23 @@ module.exports = React.createClass({
         <div className="signupCentered">
           <h3>{this.props.name}</h3>
           <div className="btn-group">
-            <Link to="#">
               <OverlayTrigger placement="top" overlay={liTooltip}>
                 <img className="oauthPic img-rounded" src="assets/img/linkedinAuth.png" onClick={this.open_popup.bind(this, 'linkedin')} />
               </OverlayTrigger>
-            </Link>
-            <Link to="#">
               <OverlayTrigger placement="top" overlay={ghTooltip}>
                 <img className="oauthPic img-rounded" src="assets/img/githubAuth.png" onClick={this.open_popup.bind(this, 'github')} />
               </OverlayTrigger>
-            </Link>
-            <Link to="#">
               <OverlayTrigger placement="top" overlay={fbTooltip}>
                 <img className="oauthPic img-rounded" src="assets/img/facebookAuth.png" onClick={this.open_popup.bind(this, 'facebook')}  />
               </OverlayTrigger>
-            </Link>
           </div>
           <h5>Or</h5>
         </div>
       </div>
     );
-	},
+  },
 
-	popup: undefined,
+  popup: undefined,
   check_popup_open_interval: undefined,
 
   handle_flow_end: function() {
@@ -51,6 +45,7 @@ module.exports = React.createClass({
 
     if (oauth_status === 'success') {
       // Logged in
+      this.transitionTo('dashboard');
     } else if (oauth_status === 'rejected') {
       // User either denied the authorization or closed the popup
     } else if (oauth_status === 'conflict') {

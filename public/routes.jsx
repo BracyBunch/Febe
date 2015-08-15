@@ -7,26 +7,29 @@ var Router = ReactRouter.Router;
 //object used to configure the router
 var Route = ReactRouter.Route;
 var Main = require('./components/main');
-var Signupdev = require('./views/signupDevView');
-var Signuporg = require('./views/signupOrgView');
+var Signup = require('./views/signupView');
 var Termsofuse = require('./components/shared/termsOfUse');
 var Privacypolicy = require('./components/shared/privacyPolicy');
 var Dashboard = require('./views/dashboard-view');
 var DevProfile = require('./views/dev-profile-view');
-var OrgProfile = require('./views/org-profile-view');
 var CreateProject = require('./views/create-project');
+var NpProfile = require('./views/np-profile-view');
+var Createorg = require('./views/create-org-view');
+var Joinorg = require('./views/join-org-view');
 
 module.exports = (
   <Router history={new HashHistory}>
-    <Route name="home" path="/" component={Main}>
-      <Route name="signupdev" path="/signupdev" component={Signupdev} />
-      <Route name="signuporg" path="/signuporg" component={Signuporg} />
+    <Route path="/" component={Main}>
+      <Route name="signupdev" path="/signupdev" component={Signup} kind="dev" />
+      <Route name="signupnp" path="/signupnp" component={Signup} kind="rep" />
       <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />
       <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
       <Route name="dashboard" path="/dashboard" component={Dashboard} />
-      <Route name="devprofile" path="/devprofile" component={DevProfile} />
-      <Route name="orgprofile" path="/orgprofile" component={OrgProfile} />
+      <Route name="devprofile" path="/devprofile" component={DevProfile} />>
       <Route name="createproject" path="/createproject" component={CreateProject} />
+      <Route name="npprofile" path="/npprofile" component={NpProfile} />
+      <Route name="createorg" path="/createorg" component={Createorg} />
+      <Route name="joinorg" path="/joinorg" component={Joinorg} />
     </Route>
   </Router>
 );
