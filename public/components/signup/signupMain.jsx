@@ -74,8 +74,8 @@ module.exports = React.createClass({
   handleView: function(){
     // render Dev or NP signup
     return this.props.type === "dev" ?
-           <Dev submitForm={this.handleSubmit} setTerms={this.setTerms} message={this.canMessage} /> :
-           <NP submitForm={this.handleSubmit} setTerms={this.setTerms} /> ;
+           <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> :
+           <NP submitForm={this.handleSubmit} terms={this.setTerms} /> ;
   },
   setTerms: function(){
     this.setState({
