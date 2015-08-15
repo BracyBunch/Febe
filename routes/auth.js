@@ -39,10 +39,8 @@ var set_provider = function(provider) {
 
 var handle_login = function(req, res, next) {
   passport.authenticate(res.locals.provider, function(err, user, info) {
-    console.log(err, user, info)
     if (err === null && user !== false) {
       req.login(user, function() {
-        console.log(req.session)
         clear_options(req);
         next();
       });
