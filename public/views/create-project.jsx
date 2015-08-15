@@ -11,8 +11,9 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       projectName: '',
-      pointPeople: ['Yoshio Varney', 'Ryan Jones', 'James Maveety', 'Colin McKeehan'],
-      pointPerson: 'Point Person',
+      contributors: ['Yoshio Varney', 'Ryan Jones', 'James Maveety', 'Colin McKeehan'],
+      representative: 'Point Person',
+      projectManager: 'Bobby the PM',
       completionDate: '',
       description: '',
       tech: [],
@@ -39,14 +40,14 @@ module.exports = React.createClass({
 
   select: function(item) {
     this.setState({
-      pointPerson: item
+      representative: item
     });
   },
 
   renderDropdownItems: function() {
     var people = [];
-    for (var i = 0; i < this.state.pointPeople.length; i++) {
-      var person = this.state.pointPeople[i];
+    for (var i = 0; i < this.state.contributors.length; i++) {
+      var person = this.state.contributors[i];
       people.push(
         <div onClick={this.select.bind(null, person)}>
           <span>{person}</span>
@@ -70,7 +71,7 @@ module.exports = React.createClass({
           </form>
 
           <div>
-            <DropdownButton title={this.state.pointPerson}>
+            <DropdownButton title={this.state.representative}>
               {this.renderDropdownItems()}
             </DropdownButton>
           </div>
