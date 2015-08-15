@@ -15,6 +15,8 @@ var DevProfile = require('./views/dev-profile-view');
 var NpProfile = require('./views/np-profile-view');
 var Createorg = require('./views/create-org-view');
 var Joinorg = require('./views/join-org-view');
+var Organization = require('./views/org-view');
+var Project = require('./views/project-view');
 
 module.exports = (
   <Router history={new HashHistory}>
@@ -28,6 +30,8 @@ module.exports = (
       <Route name="npprofile" path="/npprofile" component={NpProfile} />
       <Route name="createorg" path="/createorg" component={Createorg} />
       <Route name="joinorg" path="/joinorg" component={Joinorg} />
+      <Route name="project" path="/project" component={Project} />
+      <Route name="organization" path="/organization" component={Organization} />
     </Route>
   </Router>
 );
