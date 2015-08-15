@@ -10,12 +10,12 @@ module.exports = React.createClass({
   
   render: function() {
     return (
-      <div> <span> Contributors: </span>
+      <div> <span> Technology: </span>
         <span> 
         {
-          this.props.contributors.map(function(contributor){
-            console.log(contributor)
-          return <Link to='#'><a className='contributor'>  {contributor} </a></Link>
+          this.props.tags.map(function(tag){
+            console.log(tag)
+          return <span className='tag'> {tag} </span>
           })
         }
         </span>
