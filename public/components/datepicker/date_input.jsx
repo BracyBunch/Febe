@@ -7,7 +7,8 @@ module.exports = React.createClass( {
     return {
       dateFormat: "MM-DD-YYYY",
       className: "datepicker__input",
-      onBlur: function() {}
+      onBlur: function() {},
+      cDate: ''
     };
   },
 
@@ -30,7 +31,6 @@ module.exports = React.createClass( {
   handleChange: function(event) {
     var value = event.target.value;
     var date = moment( value, this.props.dateFormat, true );
-
     if (date.isValid()) {
       this.props.setSelected( new DateUtil(date));
     } else if (value === "") {
