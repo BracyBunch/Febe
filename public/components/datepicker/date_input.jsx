@@ -5,45 +5,45 @@ var moment = require( "moment" );
 module.exports = React.createClass( {
   getDefaultProps: function() {
     return {
-      dateFormat: "YYYY-MM-DD",
+      dateFormat: "MM-DD-YYYY",
       className: "datepicker__input",
       onBlur: function() {}
     };
   },
 
   componentDidMount: function() {
-    this.toggleFocus( this.props.focus );
+    this.toggleFocus(this.props.focus);
   },
 
   componentWillReceiveProps: function( newProps ) {
-    this.toggleFocus( newProps.focus );
+    this.toggleFocus(newProps.focus);
   },
 
-  toggleFocus: function( focus ) {
-    if ( focus ) {
+  toggleFocus: function(focus) {
+    if (focus) {
       React.findDOMNode( this.refs.input ).focus();
     } else {
       React.findDOMNode( this.refs.input ).blur();
     }
   },
 
-  handleChange: function( event ) {
+  handleChange: function(event) {
     var value = event.target.value;
     var date = moment( value, this.props.dateFormat, true );
 
-    if ( date.isValid() ) {
-      this.props.setSelected( new DateUtil( date ) );
-    } else if ( value === "" ) {
+    if (date.isValid()) {
+      this.props.setSelected( new DateUtil(date));
+    } else if (value === "") {
       this.props.clearSelected();
     }
   },
 
-  safeDateFormat: function( date ) {
-    return !!date ? date.format( this.props.dateFormat ) : null;
+  safeDateFormat: function(date) {
+    return !!date ? date.format(this.props.dateFormat) : null;
   },
 
-  handleKeyDown: function( event ) {
-    switch ( event.key ) {
+  handleKeyDown: function(event) {
+    switch (event.key) {
     case "Enter":
       event.preventDefault();
       this.props.handleEnter();
@@ -55,9 +55,9 @@ module.exports = React.createClass( {
     }
   },
 
-  handleClick: function( event ) {
-    if ( !this.props.disabled ) {
-      this.props.handleClick( event );
+  handleClick: function(event) {
+    if (!this.props.disabled) {
+      this.props.handleClick(event);
     }
   },
 

@@ -25,7 +25,7 @@ module.exports = (
       <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />
       <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
       <Route name="dashboard" path="/dashboard" component={Dashboard} />
-      <Route name="devprofile" path="/devprofile" component={DevProfile} />>
+      <Route name="devprofile" path="/devprofile" component={DevProfile} />
       <Route name="createproject" path="/createproject" component={CreateProject} />
       <Route name="npprofile" path="/npprofile" component={NpProfile} />
       <Route name="createorg" path="/createorg" component={Createorg} />

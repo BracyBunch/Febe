@@ -25,7 +25,8 @@ module.exports = React.createClass( {
       dateFormatCalendar: "MMMM YYYY",
       moment: moment,
       onChange: function() {},
-      disabled: false
+      disabled: false,
+      placeholderText: "Click to select a date"
     };
   },
 
@@ -113,6 +114,7 @@ module.exports = React.createClass( {
   calendar: function() {
     if ( this.state.focus ) {
       return (
+        <div>
           <Calendar
             weekdays={this.props.weekdays}
             locale={this.props.locale}
@@ -125,6 +127,7 @@ module.exports = React.createClass( {
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             weekStart={this.props.weekStart} />
+        </div>
       );
     }
   },
@@ -139,6 +142,7 @@ module.exports = React.createClass( {
 
     return (
       <div className="datepicker__input-container">
+        {this.props.date}
         <DateInput
           name={this.props.name}
           date={this.state.selected}
