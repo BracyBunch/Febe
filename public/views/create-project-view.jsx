@@ -1,8 +1,8 @@
 var React = require('react/addons');
 var DropdownButton = require('react-bootstrap').DropdownButton;
+var ValidationMixin = require('react-validation-mixin');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
-var ValidationMixin = require('react-validation-mixin');
 var Methods = require('../sharedMethods');
 var DatePicker = require('../components/datepicker/datepicker');
 
@@ -69,7 +69,11 @@ module.exports = React.createClass({
           <form className="form-inline">
             <div className="form-group">
               <h5>Project Name</h5>
-              <input type="text" ref="projectName" className="form-control projectName" valueLink={this.linkState('projectName')} />
+              <input 
+                type="text" 
+                ref="projectName" 
+                className="form-control projectName" 
+                valueLink={this.linkState('projectName')} />
             </div>
           </form>
 
@@ -112,11 +116,17 @@ module.exports = React.createClass({
           </div>
 
           <div>
-            <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
+            <input 
+              type="checkbox" 
+              value="termsAgreed" 
+              onChange={this.setTerms} 
+              className="checkbox-inline"> I agree to the terms</input>
           </div>
 
           <div>
-            <button type="submit" className="btn signupBtn text-center" onClick={this.createProject}>Create</button>
+            <button type="submit" 
+              className="btn signupBtn text-center" 
+              onClick={this.createProject}>Create</button>
           </div>
 
         </div>
