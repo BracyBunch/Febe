@@ -53,7 +53,6 @@ module.exports = React.createClass({
       location: this.state.location,
       bio: this.state.bio
     };
-    console.log(this.state.bio);
     ProfileMethods.updateProfile('/user', updateData);
 	},
 
@@ -116,7 +115,7 @@ module.exports = React.createClass({
 		<div>
       <Header link='/dashboard' title='Dashboard' />
 			{this.profileEdit(this.state.swap)}
-			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
+			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">Create Project</button>
       <Footer />	
 		</div>
 		)

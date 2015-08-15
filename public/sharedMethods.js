@@ -1,6 +1,5 @@
 module.exports = {
   addFields: function(divId, newLink, count, max) {
-    console.log('adding');
     count = count || 1;
     max = max || 4;
     if (count === max) {

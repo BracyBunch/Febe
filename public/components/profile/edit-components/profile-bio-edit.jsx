@@ -1,11 +1,11 @@
 var React = require('react');
 
 module.exports = React.createClass({
-  // getInitialState: function() {
-  //   return {
-  //     bio: ''
-  //   };
-  // },
+  getInitialState: function() {
+    return {
+      bio: ''
+    };
+  },
 
   updateBio: function(event) {
     this.props.updateBio(event.target.value);
