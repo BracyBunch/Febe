@@ -31,16 +31,20 @@ module.exports = React.createClass({
 
   createProject: function() {
     if (this.state.terms) {
-      console.log("submitting")
-    } else {
-      console.log("nope")
-    }
+      console.log("submitting form")
+    } 
   },
 
   select: function(item) {
     this.setState({
       pointPerson: item
     });
+  },
+
+  selectDate: function(date) {
+    this.setState({
+      completionDate: date
+    })
   },
 
   renderDropdownItems: function() {
@@ -57,9 +61,9 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="">
+      <div className="fullscreen">
         <Header link='/' title='Home'/>
-        <div className="fullscreen">
+        <div className="">
 
           <h3>Create a Project</h3>
           <form className="form-inline">
@@ -70,14 +74,16 @@ module.exports = React.createClass({
           </form>
 
           <div>
-            <DropdownButton title={this.state.pointPerson}>
+            <DropdownButton 
+              onSelect={this.asdf}
+              title={this.state.pointPerson}>
               {this.renderDropdownItems()}
             </DropdownButton>
           </div>
 
           <div>
             <h5>Preferred Completion Date</h5>
-            <DatePicker />
+            <DatePicker selectDate={this.selectDate} />
           </div>
           
           <div>
@@ -95,10 +101,6 @@ module.exports = React.createClass({
             <input type="text" className="form-control" />
           </div>
 
-          <div>
-            <button type="submit" className="btn signupBtn text-center">Upload Media???</button>
-          </div>
-
           <div id="addlLinks">
             <h5>Additional Links</h5>
             <input type="url" className="form-control" placeholder="YouTube" />
@@ -110,7 +112,6 @@ module.exports = React.createClass({
           </div>
 
           <div>
-            {this.state.terms}
             <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
           </div>
 
@@ -123,16 +124,4 @@ module.exports = React.createClass({
       </div>
     )
   }
-//   var colours = [{
-//   name: "Red",
-//   hex: "#F21B1B"
-// }, {
-//   name: "Blue",
-//   hex: "#1B66F2"
-// }, {
-//   name: "Green",
-//   hex: "#07BA16"
-// }];
-
-// React.render(<Dropdown list={colours} selected={colours[0]} />
 });
