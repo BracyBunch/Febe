@@ -13,6 +13,8 @@ var Privacypolicy = require('./components/shared/privacyPolicy');
 var Dashboard = require('./views/dashboard-view');
 var DevProfile = require('./views/dev-profile-view');
 var NpProfile = require('./views/np-profile-view');
+var Createorg = require('./views/create-org-view');
+var Joinorg = require('./views/join-org-view');
 
 module.exports = (
   <Router history={new HashHistory}>
@@ -24,6 +26,8 @@ module.exports = (
       <Route name="dashboard" path="/dashboard" component={Dashboard} />
       <Route name="devprofile" path="/devprofile" component={DevProfile} />
       <Route name="npprofile" path="/npprofile" component={NpProfile} />
+      <Route name="createorg" path="/createorg" component={Createorg} />
+      <Route name="joinorg" path="/joinorg" component={Joinorg} />
     </Route>
   </Router>
 );
