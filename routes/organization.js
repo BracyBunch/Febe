@@ -1,12 +1,14 @@
 var Organization = require('../db').Organization;
 var express = require('express');
-var http = require('http');
 var router = express.Router();
 
-// home route
-router.get('/', function(req, res){
-  // access DB to retrieve all organizations
-  res.send(res);
+router.get('/:organization_id', function(req, res){
+  var organization_id = Number(req.params.organization_id);
+  if (Number.isNaN(organization_id)) return res.status(400).send();
+
+  Organization.with_extras(organization_id, true).then(function(organization) {
+    res.json(organization);
+  });
 });
 
 router.post('/add', function(req, res){
