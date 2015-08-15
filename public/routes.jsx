@@ -18,7 +18,7 @@ module.exports = (
   <Router history={new HashHistory}>
     <Route name="home" path="/" component={Main}>
       <Route name="signupdev" path="/signupdev" component={Signup} kind="dev" />
-      <Route name="signuporg" path="/signuporg" component={Signup} kind="rep" />
+      <Route name="signupnp" path="/signupnp" component={Signup} kind="rep" />
       <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />
       <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
       <Route name="dashboard" path="/dashboard" component={Dashboard} />

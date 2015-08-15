@@ -13,7 +13,6 @@ module.exports = React.createClass({
     Reflux.listenTo(ProfileStore, 'onChange')
   ],
   getInitialState: function() {
-    console.log(this.props.route.kind);
     return {
       userData: ['test'],
       id: 'empty',
