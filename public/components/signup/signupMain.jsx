@@ -100,7 +100,9 @@ module.exports = React.createClass({
 	handleSubmit: function(comment) {
     if( this.passwordVerification() ){
       var that = this;
-      ajax(this.props.url, {method: 'POST', body: JSON.stringify(this.state)})
+      ajax(this.props.url, {method: 'POST', body: JSON.stringify(this.state)}).then(function(response) {
+        return response.json();
+      })
       .then(function(data) {
         // call method with id returned from db
         that.settingID(data.id);

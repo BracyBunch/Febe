@@ -8,7 +8,5 @@ module.exports = function(url, options) {
       'Content-Type': 'application/json'
     }
   });
-  return fetch(url, options).then(function(response) {
-    return response.json();
-  });
+  return fetch(url, options);
 };
