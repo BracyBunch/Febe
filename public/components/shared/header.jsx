@@ -8,7 +8,7 @@ var Link = Router.Link;
 module.exports = React.createClass({
   mixins: [Navigation],
   routing: function(){
-    this.transitionTo('/') 
+    this.transitionTo('/');
   },
   render: function(){
     return (
@@ -26,6 +26,6 @@ module.exports = React.createClass({
           </div>
         </nav>
       </div>
-    )
-  },
-})
+    );
+  }
+});
