@@ -3,27 +3,26 @@ var Reflux = require('reflux');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
-var DevProfileBody = require('../components/profile/dev-profile-body');
 var Bio = require('../components/profile/profile-bio');
 var Projects = require('../components/profile/profile-projects');
 var ProfileStore = require('../stores/profile-store');
 var Actions = require('../actions');
 
 var ProfileHeaderEdit = require('../components/profile/edit-components/profile-header-edit');
-var DevProfileBodyEdit = require('../components/profile/edit-components/dev-profile-body-edit');
 var BioEdit = require('../components/profile/edit-components/profile-bio-edit');
 
 var ProfileMethods = require('../components/profile/sharedProfileMethods');
+var Autocomplete =require('../components/shared/autocomplete');
 
 module.exports = React.createClass({
-	mixins:[
+	mixins: [
 		Reflux.listenTo(ProfileStore, 'onChange')
 	],
 	getInitialState: function(){
 		return {
-			title: 'Please enter your title & company',
-			location: 'Please enter your location',
-			bio: 'Tell us about yourself...',
+			title: '',
+			location: '',
+			bio: '',
 			links: [],
 			strengths: [],
 			interests: [],
@@ -38,6 +37,14 @@ module.exports = React.createClass({
 
 	onChange: function(event, userData){
 		this.setState({userData: userData});
+    this.setState({
+      title: userData.title,
+      location: userData.location,
+      bio: userData.bio,
+      links: userData.links,
+      strengths: userData.strengths,
+      interests: userData.interests
+    });
 	},
 
 	edit: function() {
@@ -47,12 +54,14 @@ module.exports = React.createClass({
 	},
 
 	save: function() {
-    this.edit();
     var updateData = {
       title: this.state.title,
       location: this.state.location,
-      bio: this.state.bio
+      bio: this.state.bio,
+      strengths: Object.keys(this.refs.strengths.get_selections()),
+      interests: Object.keys(this.refs.interests.get_selections())
     };
+    this.setState({'strengths': this.refs.strengths.get_selections_array(), 'interests': this.refs.interests.get_selections_array()}, this.edit);
     ProfileMethods.updateProfile('/user', updateData);
 	},
 
@@ -81,6 +90,18 @@ module.exports = React.createClass({
 		});
 	},
 
+  strengthsList: function() {
+    return this.state.strengths.map(function(strength) {
+      return <span className="label label-primary">{strength.name}</span>;
+    });
+  },
+
+  interestsList: function() {
+    return this.state.interests.map(function(interest) {
+      return <span className="label label-primary">{interest.name}</span>;
+    });
+  },
+
 	profileEdit: function(edit) {
 		return edit ? 
       <div>
@@ -93,10 +114,19 @@ module.exports = React.createClass({
 		        location={this.state.location}
 		        bio={this.state.bio}
 		        links={this.state.links} />
-        <DevProfileBody />
+        <div className="">
+          <div>
+            <h3>Tech Strengths</h3>
+            {this.strengthsList()}
+          </div>
+          <div>
+            <h3>Interests</h3>
+            {this.interestsList()}
+          </div>
+        </div>
         <Bio bio={this.state.userData.bio} />
         <Projects />
-      </div> 
+      </div>
       :
       <div>
         <ProfileHeaderEdit 
@@ -105,7 +135,16 @@ module.exports = React.createClass({
 		        lastName={this.state.userData.last_name}
             updateTitle={this.updateTitle}
             updateLocation={this.updateLocation} />
-        <DevProfileBodyEdit />
+        <div className="">
+          <div id='addlStrengths'>
+            <h3>Tech Strengths</h3>
+            <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>
+          </div>
+          <div id='addlInterests'>
+            <h3>Interests</h3>
+            <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' values={this.state.interests} ref='interests'/>
+          </div>
+        </div>
         <BioEdit updateBio={this.updateBio} />
       </div>
 	},
