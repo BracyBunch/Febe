@@ -25,8 +25,7 @@ module.exports = React.createClass( {
       dateFormatCalendar: "MMMM YYYY",
       moment: moment,
       onChange: function() {},
-      disabled: false,
-      placeholderText: "Click to select a date"
+      disabled: false
     };
   },
 
@@ -34,7 +33,9 @@ module.exports = React.createClass( {
     return {
       focus: false,
       virtualFocus: false,
-      selected: this.props.selected
+      selected: this.props.selected,
+      completionDate: '',
+      placeholderText: "Click to select a date"
     };
   },
 
@@ -86,12 +87,15 @@ module.exports = React.createClass( {
   },
 
   setSelected: function( date ) {
+    var compDate = date.moment().format("MMMM Do YYYY");
     this.setState( {
       selected: date.moment(),
-      virtualFocus: true
+      virtualFocus: true,
+      placeholderText: compDate
     }, function() {
       this.props.onChange( this.state.selected );
     }.bind( this ) );
+    this.props.selectDate(compDate)
   },
 
   clearSelected: function() {
@@ -142,7 +146,6 @@ module.exports = React.createClass( {
 
     return (
       <div className="datepicker__input-container">
-        {this.props.date}
         <DateInput
           name={this.props.name}
           date={this.state.selected}
@@ -155,7 +158,7 @@ module.exports = React.createClass( {
           setSelected={this.setSelected}
           clearSelected={this.clearSelected}
           hideCalendar={this.hideCalendar}
-          placeholderText={this.props.placeholderText}
+          placeholderText={this.state.placeholderText}
           disabled={this.props.disabled}
           className={this.props.className}
           title={this.props.title} />
