@@ -7,7 +7,7 @@ module.exports = React.createClass({
     return (
       <div className="footer footer-bottom">
           <div className= "container-fluid">
-            <div className="bracy">The Bracy Bunch 
+            <div className="bracy">The Bracy Bunch
               <span className="glyphicon glyphicon-copyright-mark">2015</span>
               <span className="terms">
                 <Link to="/termsofuse" className="active terms-of-use">Terms of Use</Link>
@@ -16,6 +16,6 @@ module.exports = React.createClass({
             </div>
           </div>
       </div>
-    )
+    );
   }
-})
+});
