@@ -1,4 +1,5 @@
 var React = require('react');
+var ajax = require('../../utils/fetch')
 
 module.exports = React.createClass({
   
@@ -9,6 +10,8 @@ module.exports = React.createClass({
   },
   switchLog: function(){
     window.localStorage.removeItem('userId');
+    ajax('/auth/logout')
+    // do a get request with get profile and that as URL /auth/logout
     this.props.routing()
   },
   render: function(){
