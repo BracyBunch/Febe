@@ -1,6 +1,4 @@
 var React = require('react/addons');
-var Dev = require('./signupDev');
-var NP = require('./signupNp');
 var ajax = require('../../utils/fetch');
 var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
@@ -67,15 +65,23 @@ module.exports = React.createClass({
           </div>
         </form>
         <h5 className="signupCentered">Password must be more than 8 characters</h5>
-        {this.handleView()}
+        <form onSubmit={this.handleSubmit}>
+          <div className="signupCentered">
+            <div className="form-group">
+              {this.handleView()}
+              <input type="checkbox" ref="terms" onChange={this.terms} className="checkbox-inline"> I agree to the terms</input>
+            </div>
+              <button type="submit" className="btn signupBtn text-center">Sign Up</button>
+          </div>
+        </form>
       </div>
-    )
+    );
   },
-  handleView: function(){
+  handleView: function() {
     // render Dev or NP signup
-    return this.props.type === "dev" ?
-           <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> :
-           <NP submitForm={this.handleSubmit} terms={this.setTerms} /> ;
+    return this.props.type === 'dev' ?
+           <input type="checkbox" ref="contacted" onChange={this.message} className="checkbox-inline"> Open to being contacted</input>:
+           '';
   },
   setTerms: function(){
     this.setState({
