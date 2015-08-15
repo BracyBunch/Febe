@@ -2,7 +2,6 @@ var React = require('react');
 var ajax = require('../../utils/fetch')
 
 module.exports = React.createClass({
-  
   loginButton: function(ID){
     return window.localStorage.getItem('userId') ?
       <button className="btn navbar-btn btn-success" onClick={this.switchLog}>Logout</button> :
