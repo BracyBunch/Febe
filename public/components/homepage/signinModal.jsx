@@ -16,11 +16,11 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <LogButton open={this.open} routing={this.props.routing}/>
+        <LogButton open={this.open}/>
 
-        <Modal 
+        <Modal
           dialogClassName="loginModal"
-          show={this.state.showModal} 
+          show={this.state.showModal}
           onHide={this.close}>
 
           <Modal.Header closeButton>

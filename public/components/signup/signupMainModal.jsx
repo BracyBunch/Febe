@@ -17,7 +17,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <logButton routing={this.props.routing}/>
+        <logButton open={this.open}/>
 
         <Modal 
           dialogClassName="loginModal"
