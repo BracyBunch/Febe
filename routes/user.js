@@ -10,10 +10,11 @@ var hash = Promise.promisify(bcrypt.hash, bcrypt);
 
 router.get('/:id', function(req, res) {
   var id = Number(req.params.id);
-  if (req.isAuthenticated() && req.user.id === id) return res.json(req.user);
 
   User.read(id).then(function(user) {
-    res.json(User.clean(user));
+    user = User.clean(user);
+    if (req.isAuthenticated() && req.user.id === id) user = _.extend(user, req.user);
+    res.json(user);
   }, function() {
     res.status(400).send();
   });

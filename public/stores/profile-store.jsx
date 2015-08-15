@@ -1,12 +1,12 @@
 var Reflux = require('reflux');
 var Actions = require('../actions');
-var profileAPI = require('../utils/profile-api')
+var ajax = require('../utils/fetch');
 
 module.exports = Reflux.createStore({
-  listenables:[Actions],
-  getProfile: function(ID){
-    return profileAPI.get('/user/' + ID)
-      .then(function(data){
+  listenables: [Actions],
+  getProfile: function(id) {
+    return ajax('/user/' + id)
+      .then(function(data) {
         this.userData = data;
         this.triggerChange();
       }.bind(this));
