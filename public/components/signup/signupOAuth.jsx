@@ -7,7 +7,7 @@ var Link = Router.Link;
 
 // need form validation
 module.exports = React.createClass({
-	render: function() {
+  render: function() {
     var liTooltip = <Tooltip>LinkedIn</Tooltip>;
     var ghTooltip = <Tooltip>GitHub</Tooltip>;
     var fbTooltip = <Tooltip>Facebook</Tooltip>;
@@ -37,9 +37,9 @@ module.exports = React.createClass({
         </div>
       </div>
     );
-	},
+  },
 
-	popup: undefined,
+  popup: undefined,
   check_popup_open_interval: undefined,
 
   handle_flow_end: function() {
