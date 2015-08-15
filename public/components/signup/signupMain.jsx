@@ -69,35 +69,35 @@ module.exports = React.createClass({
         <h5 className="signupCentered">Password must be more than 8 characters</h5>
         {this.handleView()}
       </div>
-		)
-	},
-	handleView: function(){
-		// render Dev or NP signup
-		return this.props.type === "dev" ? 
-		       <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> : 
-		       <NP submitForm={this.handleSubmit} terms={this.setTerms} /> ;
-	},
-	setTerms: function(){
-		this.setState({
-			terms: !this.state.terms
-		})
-	},
-	canMessage: function(){
-		this.setState({
-			can_message: !this.state.can_message
-		})
-	},
-	settingID: function(newID){
-		{this.props.newID(newID)}
-		this.transitionTo(this.props.type==="dev"?'devprofile':'npprofile')
-	},
-	passwordVerification: function(){
-		if(this.state.password === this.state.confirmedPassword && this.state.password.length >= 8){
-			return true;
-		}
-		return false;
-	},
-	handleSubmit: function(comment) {
+    )
+  },
+  handleView: function(){
+    // render Dev or NP signup
+    return this.props.type === "dev" ?
+           <Dev submitForm={this.handleSubmit} terms={this.setTerms} message={this.canMessage} /> :
+           <NP submitForm={this.handleSubmit} terms={this.setTerms} /> ;
+  },
+  setTerms: function(){
+    this.setState({
+      terms: !this.state.terms
+    });
+  },
+  canMessage: function(){
+    this.setState({
+      can_message: !this.state.can_message
+    });
+  },
+  settingID: function(newID){
+    {this.props.newID(newID)}
+    this.transitionTo(this.props.type==="dev"?'devprofile':'npprofile');
+  },
+  passwordVerification: function(){
+    if(this.state.password === this.state.confirmedPassword && this.state.password.length >= 8){
+      return true;
+    }
+    return false;
+  },
+  handleSubmit: function(comment) {
     if( this.passwordVerification() ){
       var that = this;
       ajax(this.props.url, {method: 'POST', body: JSON.stringify(this.state)}).then(function(response) {
