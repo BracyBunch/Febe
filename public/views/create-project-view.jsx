@@ -42,8 +42,6 @@ module.exports = React.createClass({
       representative: item
     });
   },
-
-
   selectDate: function(date) {
     this.setState({
       completionDate: date
