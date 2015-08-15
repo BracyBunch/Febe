@@ -16,7 +16,7 @@ var NpProfile = require('./views/np-profile-view');
 
 module.exports = (
   <Router history={new HashHistory}>
-    <Route name="home" path="/" component={Main}>
+    <Route path="/" component={Main}>
       <Route name="signupdev" path="/signupdev" component={Signup} kind="dev" />
       <Route name="signupnp" path="/signupnp" component={Signup} kind="rep" />
       <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />
