@@ -10,13 +10,9 @@ module.exports = React.createClass({
   
   render: function() {
     return (
-      <div> <span> Contributors: </span>
+      <div> <span> Technology: </span>
         <span> 
-        {
-          this.props.contributors.map(function(contributor){
-          return <Link to='#'><a className='contributor'>  {contributor} </a></Link>
-          })
-        }
+          ORG MEDIA
         </span>
       </div>
     )
