@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var mui = require('material-ui');
 var ValidationMixin = require('react-validation-mixin');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var Tooltip = require('react-bootstrap').Tooltip;
@@ -14,6 +15,7 @@ module.exports = React.createClass({
       orgName: '',
       orgURL: '',
       logoURL: '',
+      imgUri: 'assets/img/defaultlogo.jpg',
       location: '',
       tags: [],
       representatives: [],
@@ -23,22 +25,41 @@ module.exports = React.createClass({
 
   newRepField: '<input type="email" class="form-control" placeholder="Representative\'s Email" />', 
 
+  handleSubmit: function(e) {
+    e.preventDefault();
+  },
+
   setTerms: function(){
     this.setState({
       terms: !this.state.terms
     });
   },
 
+  handleImage: function(event) {
+    var that = this;
+    var reader = new FileReader();
+    var img = event.target.files[0];
+
+    reader.onload = readSuccess;                                            
+    function readSuccess(upload) { 
+      var imgBase64 = upload.target.result;
+      that.setState({
+        imgUri: imgBase64
+      })                              
+    };
+
+    reader.readAsDataURL(img);
+  },
+
   createOrg: function() {
-    console.log(this.state)
     if (this.state.terms) {
       console.log("submitting form")
     } 
   },
 
   render: function(){
-  var repTooltip = <Tooltip>Enter the email address of any additional users you would like to represent your organization.</Tooltip>
-
+    var repTooltip = <Tooltip>Enter the email address of any additional users you would like to represent your organization.</Tooltip>
+  
     return (
       <div>
         <Header link='/' title='Browse'/>
@@ -76,12 +97,17 @@ module.exports = React.createClass({
               placeholder="Organization Website" 
               valueLink={this.linkState('orgURL')} />
           </div>
+           <img id="avatar" src={this.state.imgUri} />
 
           <div>
             <button type="submit" 
               className="btn signupBtn text-center" 
               onClick={this.uploadImage}>Upload Logo</button>
           </div>
+
+          <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+            <input type="file" onChange={this.handleImage} />
+          </form>
 
           <div>
             <input 
