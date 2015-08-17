@@ -63,9 +63,8 @@ module.exports = React.createClass({
     reader.onload = readSuccess;                                            
     function readSuccess(upload) { 
       imgBase64 = upload.target.result;
+      // slice only base64 data
       imgToUpload = imgBase64.slice(23);
-      // console.log(imgToUpload)
-      // that.uploadImage(imgToUpload)
       ImgurUpload.imgurUpload(imgToUpload)
       that.setState({
         imgUri: imgBase64
@@ -88,7 +87,7 @@ module.exports = React.createClass({
       })
       .then(function(data) {
         // what do we want to do here?
-        console.log(data);
+        console.log("org returned data: ", data);
       })
       .catch(function(error) {
         console.log('request failed: ', error);
