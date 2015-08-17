@@ -60,9 +60,7 @@ module.exports = React.createClass({
             </div>
           </form>
           <div>
-            <DropdownButton title={this.state.representative}>
-              {this.renderDropdownItems()}
-            </DropdownButton>
+            <DropdownButton pointPerson={this.state.representative} pointPeople={this.state.contributors} />
           </div>
           <div>
             <h5>Preferred Completion Date</h5>
