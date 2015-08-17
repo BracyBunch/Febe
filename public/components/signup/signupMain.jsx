@@ -69,7 +69,7 @@ module.exports = React.createClass({
           <div className="signupCentered">
             <div className="form-group">
               {this.handleView()}
-              <input type="checkbox" ref="terms" onChange={this.terms} className="checkbox-inline"> I agree to the terms</input>
+              <input type="checkbox" ref="terms" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
             </div>
               <button type="submit" className="btn signupBtn text-center">Sign Up</button>
           </div>
@@ -84,6 +84,7 @@ module.exports = React.createClass({
            '';
   },
   setTerms: function(){
+    console.log(this.state.terms)
     this.setState({
       terms: !this.state.terms
     });
@@ -104,7 +105,7 @@ module.exports = React.createClass({
     return false;
   },
   handleSubmit: function(comment) {
-    if( this.passwordVerification() ){
+    if( this.passwordVerification() && this.state.terms ){
       var that = this;
       ajax(this.props.url, {method: 'POST', body: JSON.stringify(this.state)}).then(function(response) {
         return response.json();
@@ -117,7 +118,7 @@ module.exports = React.createClass({
         console.log('request failed: ', error);
       });
     } else {
-      alert('Please verify that your passwords match and contain 8 or more characters');
+      console.log('Please verify that your passwords match and contain 8 or more characters');
     }
   }
 });
