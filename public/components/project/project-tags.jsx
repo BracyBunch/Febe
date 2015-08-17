@@ -14,7 +14,6 @@ module.exports = React.createClass({
         <span> 
         {
           this.props.tags.map(function(tag){
-            console.log(tag)
           return <span className='tag'> {tag} </span>
           })
         }
