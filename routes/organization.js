@@ -13,6 +13,7 @@ router.get('/:organization_id', function(req, res){
 });
 
 router.post('/', function(req, res){
+  console.log(req.user)
   if (!req.isAuthenticated()) return res.status(403).send();
   if (req.user.kind !== 'rep') return res.status(400).send('Must be a rep to create an organization');
 

@@ -13,8 +13,8 @@ module.exports = React.createClass({
   ],
   getInitialState: function() {
     return {
-      userData: ['test'],
-      id: 'empty',
+      userData: [],
+      id: '',
       name: (this.props.route.kind === 'dev') ? 'Developer Signup' : 'Nonprofit Representative Signup'
     };
   },
