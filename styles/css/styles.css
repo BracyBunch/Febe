@@ -205,6 +205,16 @@ img {
   height: 100%;
 }
 
+.headerInline {
+  display: inline;
+  position: relative;
+}
+
+.questionmark {
+  height: 15px;
+  width: 10px;
+}
+
 .autocomplete-input {
   margin-bottom: 10px;
 }
