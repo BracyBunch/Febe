@@ -214,3 +214,14 @@ img {
   height: 15px;
   width: 10px;
 }
+
+.autocomplete-input {
+  margin-bottom: 10px;
+}
+.autocomplete-dropdown-item {
+  cursor: pointer;
+}
+.autocomplete-list-item {
+  margin-right: 3px;
+  cursor: pointer;
+}

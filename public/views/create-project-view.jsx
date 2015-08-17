@@ -12,8 +12,9 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       projectName: '',
-      pointPeople: ['Yoshio Varney', 'Ryan Jones', 'James Maveety', 'Colin McKeehan'],
-      pointPerson: 'Point Person',
+      contributors: ['Yoshio Varney', 'Ryan Jones', 'James Maveety', 'Colin McKeehan'],
+      representative: 'Point Person',
+      projectManager: 'Bobby the PM',
       completionDate: '',
       description: '',
       tech: [],
@@ -38,10 +39,9 @@ module.exports = React.createClass({
 
   select: function(item) {
     this.setState({
-      pointPerson: item
+      representative: item
     });
   },
-
   selectDate: function(date) {
     this.setState({
       completionDate: date
@@ -60,7 +60,9 @@ module.exports = React.createClass({
             </div>
           </form>
           <div>
-            <DropdownButton pointPerson={this.state.pointPerson} pointPeople={this.state.pointPeople}/>
+            <DropdownButton title={this.state.representative}>
+              {this.renderDropdownItems()}
+            </DropdownButton>
           </div>
           <div>
             <h5>Preferred Completion Date</h5>

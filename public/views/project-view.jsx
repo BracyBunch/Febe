@@ -5,20 +5,22 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var Participant = require('../components/profile/participant')
-var Timeline = require('../components/profile/org-link')
-var Description = require('../components/profile/org-link')
-var ProjectTags = require('../components/profile/org-link')
-var Contributors = require('../components/profile/org-link')
-var ProjectMedia = require('../components/profile/org-link')
+var Timeline = require('../components/project/project-timeline')
+var Description = require('../components/project/project-description')
+var ProjectTags = require('../components/project/project-tags')
+var Contributors = require('../components/project/project-contrib')
+var ProjectMedia = require('../components/project/project-media')
 
 module.exports = React.createClass({
   getInitialState: function(){
     return {
-      title: 'Project Title',
-      location: 'Project Location',
-      bio: 'Project info',
-      technology: [],
-      projectData: [],
+      projectData: {
+        title: 'Project Title',
+        location: 'Project Location',
+        description: 'Project info',
+        tags: ['javascript', 'angular', 'bootstrap', 'html'],
+        contributors: ['john', 'bob', 'joe', 'sally']
+      },
       managerData: [],
       repData: [],
       devData: [],
@@ -26,12 +28,16 @@ module.exports = React.createClass({
     };
   },
 
+  componentWillMount: function(){
+    //gather project data here
+  },
+
   render: function(){
     return (
       <div>
         <Header link='/' title='Browse'/>
         <div>
-          <h3> {this.state.title} </h3> 
+          <h3> {this.state.projectData.title} </h3> 
           <button className='btn btn-warning edit-follow'> Edit/Follow </button>
         </div>
           <Participant 
@@ -41,8 +47,8 @@ module.exports = React.createClass({
           <button className='btn btn-warning'> Organization Link </button>
           <Timeline />
           <Description />
-          <ProjectTags />
-          <Contributors />
+          <ProjectTags tags={this.state.projectData.tags} />
+          <Contributors contributors={this.state.projectData.contributors} />
           <ProjectMedia />
         <Footer />
       </div>
