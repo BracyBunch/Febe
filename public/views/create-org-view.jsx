@@ -6,6 +6,9 @@ var Tooltip = require('react-bootstrap').Tooltip;
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
+var ImgurUpload = require('../utils/imgur');
+var keys = require('../../keys');
+
 
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin],
@@ -25,8 +28,8 @@ module.exports = React.createClass({
 
   newRepField: '<input type="email" class="form-control" placeholder="Representative\'s Email" />', 
 
-  handleSubmit: function(e) {
-    e.preventDefault();
+  handleSubmit: function(event) {
+    event.preventDefault();
   },
 
   setTerms: function(){
@@ -36,19 +39,60 @@ module.exports = React.createClass({
   },
 
   handleImage: function(event) {
+    window.localStorage.image = window.btoa(event.target.files[0]).slice(23)
     var that = this;
     var reader = new FileReader();
     var img = event.target.files[0];
+    var imgToUpload, imgBase64;
 
     reader.onload = readSuccess;                                            
     function readSuccess(upload) { 
-      var imgBase64 = upload.target.result;
+      imgBase64 = upload.target.result;
+      imgToUpload = imgBase64.slice(23);
+      // console.log(imgToUpload)
+      // that.uploadImage(imgToUpload)
+      ImgurUpload.imgurUpload(imgToUpload)
       that.setState({
         imgUri: imgBase64
       })                              
     };
 
     reader.readAsDataURL(img);
+  },
+
+  uploadImage: function(image) {
+      $.ajax({
+      url: 'https://api.imgur.com/3/image',
+      type: 'POST',
+      headers: {
+        Authorization: 'Client-ID ' + keys.IMGUR_API_ID
+      },
+      data: {
+        image: image
+      },
+      success: function(result) {
+        var url = result.data.link
+        this.setState({
+          logoURL: url
+        })
+        console.log(url)
+      }
+    });
+  //   fetch('https://api.imgur.com/3/image', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Authorization': 'Client-ID ' + keys.IMGUR_API_ID
+  //     },
+  //     body: {
+  //       image: image
+  //     }
+  //   })
+  //   .then(function(response) {
+  //     return response.json();
+  //   })
+  //   .then(function(data) {
+  //     console.log(data);
+  //   })
   },
 
   createOrg: function() {
@@ -101,6 +145,7 @@ module.exports = React.createClass({
 
           <div>
             <button type="submit" 
+              id="img"
               className="btn signupBtn text-center" 
               onClick={this.uploadImage}>Upload Logo</button>
           </div>
