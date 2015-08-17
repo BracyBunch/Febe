@@ -1,12 +1,9 @@
+var _ = require('lodash');
+var url_parse = require('url').parse;
+var validator = require('validator');
 var Project = require('../db').Project;
 var express = require('express');
 var router = express.Router();
-
-// home route
-router.get('/', function(req, res){
-  // access DB to retrieve all projects
-  res.send(res);
-});
 
 var validate_id = function(req, res, next) {
   var project_id = Number(req.params.project_id);
@@ -31,22 +28,41 @@ router.get('/:project_id', validate_id, function(req, res) {
   });
 });
 
-router.post('/add', function(req, res){
-  if (req.body.Test === 'test'){
-    return res.send("Test done...");
+router.post('/', function(req, res) {
+  if (!req.isAuthenticated() || req.user.kind !== 'rep') return res.status(403).send();
+
+  var required_fields = [
+    'organization_id', 'name', 'complete_by', 'description'
+  ];
+
+  if (!_.all(required_fields, function(field) {return field in req.body;})) return res.status(400).send();
+
+  var organization_id = Number(req.body.organization_id);
+
+  var links = [];
+  if ('links' in req.body && Array.isArray(req.body.links) && req.body.links.length) {
+    req.body.links.forEach(function(link) {
+      if (validator.isURL(link, {'protocol': ['http', 'https']})) {
+        var hostname = url_parse(link).hostname;
+        var type = _.get({
+          'facebook.com': 'facebook',
+          'github.com': 'github',
+          'linkedin.com': 'linkedin'
+        }, hostname, 'other');
+
+        links.push([type, link].join('|'));
+      }
+    });
   }
-  // access DB to add a new project
-  res.send();
-});
 
-router.delete('/remove', function(req, res){
-  // access DB to remove a new project
-  res.send();
-});
-
-router.put('/update', function(req, res){
-  // access DB to update a new project
-  res.send();
+  Project.create({
+    'name': req.body.name,
+    'complete_by': req.body.complete_by,
+    'description': req.body.description,
+    'links': links
+  }, organization_id, req.user.id).then(function(project) {
+    res.json(project);
+  });
 });
 
 router.put('/:project_id/add_member/:user_id', validate_id, function(req, res) {
