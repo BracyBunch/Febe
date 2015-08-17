@@ -7,8 +7,7 @@ module.exports = React.createClass( {
     return {
       dateFormat: "MM-DD-YYYY",
       className: "datepicker__input",
-      onBlur: function() {},
-      cDate: ''
+      onBlur: function() {}
     };
   },
 

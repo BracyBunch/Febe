@@ -32,6 +32,7 @@
     "formsy-react": "^0.14.1",
     "joi": "^6.6.1",
     "lodash": "^3.10.1",
+    "material-ui": "^0.10.4",
     "moment": "^2.10.6",
     "passport": "^0.2.2",
     "passport-facebook": "^2.0.0",
