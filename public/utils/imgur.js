@@ -16,6 +16,7 @@ module.exports = {
       },
       success: function(result) {
         console.log(result.data.link)
+        return result.data.link
       }
     });
 

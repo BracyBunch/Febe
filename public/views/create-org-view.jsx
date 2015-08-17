@@ -8,28 +8,41 @@ var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var ImgurUpload = require('../utils/imgur');
 var keys = require('../../keys');
-
+var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin],
   getInitialState: function() {
     return {
-      EIN: '',
-      orgName: '',
-      orgURL: '',
+      ein: '',
+      name: '',
+      website_url: '',
       logoURL: '',
       imgUri: 'assets/img/defaultlogo.jpg',
       location: '',
       tags: [],
       representatives: [],
-      mission: ''
+      description: ''
     }
   },
 
   newRepField: '<input type="email" class="form-control" placeholder="Representative\'s Email" />', 
 
-  handleSubmit: function(event) {
-    event.preventDefault();
+  handleSubmit: function(comment) {
+    var that = this;
+    ajax('/organization', {
+      method: 'POST', 
+      body: JSON.stringify(this.state)
+    }).then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      // what do we want to do here?
+      console.log(data);
+    })
+    .catch(function(error) {
+      console.log('request failed: ', error);
+    }); 
   },
 
   setTerms: function(){
@@ -39,12 +52,14 @@ module.exports = React.createClass({
   },
 
   handleImage: function(event) {
-    window.localStorage.image = window.btoa(event.target.files[0]).slice(23)
     var that = this;
+    // FileReader is a native browser file reader
     var reader = new FileReader();
+    // Assign file to img
     var img = event.target.files[0];
     var imgToUpload, imgBase64;
-
+    
+    // run function on 
     reader.onload = readSuccess;                                            
     function readSuccess(upload) { 
       imgBase64 = upload.target.result;
@@ -56,48 +71,28 @@ module.exports = React.createClass({
         imgUri: imgBase64
       })                              
     };
-
+    
+    // readAsDataURL converts file to base64
     reader.readAsDataURL(img);
   },
 
-  uploadImage: function(image) {
-      $.ajax({
-      url: 'https://api.imgur.com/3/image',
-      type: 'POST',
-      headers: {
-        Authorization: 'Client-ID ' + keys.IMGUR_API_ID
-      },
-      data: {
-        image: image
-      },
-      success: function(result) {
-        var url = result.data.link
-        this.setState({
-          logoURL: url
-        })
-        console.log(url)
-      }
-    });
-  //   fetch('https://api.imgur.com/3/image', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Authorization': 'Client-ID ' + keys.IMGUR_API_ID
-  //     },
-  //     body: {
-  //       image: image
-  //     }
-  //   })
-  //   .then(function(response) {
-  //     return response.json();
-  //   })
-  //   .then(function(data) {
-  //     console.log(data);
-  //   })
-  },
-
   createOrg: function() {
+    console.log(this.state)
     if (this.state.terms) {
-      console.log("submitting form")
+      var that = this;
+      ajax('/organization', {
+        method: 'POST', 
+        body: JSON.stringify(this.state)
+      }).then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // what do we want to do here?
+        console.log(data);
+      })
+      .catch(function(error) {
+        console.log('request failed: ', error);
+      }); 
     } 
   },
 
@@ -116,10 +111,10 @@ module.exports = React.createClass({
                 <h5>Project Name</h5>
                 <input 
                   type="text" 
-                  ref="EIN" 
-                  className="form-control EIN" 
+                  ref="ein" 
+                  className="form-control ein" 
                   placeholder="EIN" 
-                  valueLink={this.linkState('EIN')} />
+                  valueLink={this.linkState('ein')} />
               </div>
             </form>
           </div>
@@ -127,10 +122,10 @@ module.exports = React.createClass({
           <div>
             <input 
               type="text" 
-              ref="orgName" 
-              className="form-control orgName" 
+              ref="name" 
+              className="form-control" 
               placeholder="Organization Name" 
-              valueLink={this.linkState('orgName')} />
+              valueLink={this.linkState('name')} />
           </div>
 
           <div>
@@ -139,7 +134,7 @@ module.exports = React.createClass({
               ref="orgURL" 
               className="form-control orgURL" 
               placeholder="Organization Website" 
-              valueLink={this.linkState('orgURL')} />
+              valueLink={this.linkState('website_url')} />
           </div>
            <img id="avatar" src={this.state.imgUri} />
 
@@ -178,6 +173,17 @@ module.exports = React.createClass({
             <button 
               className="btn signupBtn" 
               onClick={Methods.addFields.bind(this, 'addlReps', this.newRepField)}>Add +</button> <br />
+          </div>
+
+          <div>
+            <h3>Mission / About</h3>
+            <textarea
+              defaultValue="Tell us about organization and it's mission..."
+              className="form-control"
+              rows="4"
+              cols="200"
+              valueLink={this.linkState('description')}
+              ></textarea>
           </div>
 
           <div>
