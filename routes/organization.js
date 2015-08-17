@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var Organization = require('../db').Organization;
 var express = require('express');
 var router = express.Router();
@@ -11,21 +12,29 @@ router.get('/:organization_id', function(req, res){
   });
 });
 
-router.post('/add', function(req, res){
-  if (req.body.Test === 'test'){
-    return res.send("Test done...");
-  }
-  // access DB to add a new organization
+router.post('/', function(req, res){
+  if (!req.isAuthenticated()) return res.status(403).send();
+  if (req.user.kind !== 'rep') return res.status(400).send('Must be a rep to create an organization');
+
+  var required_fields = [
+    'ein', 'name', 'description', 'website_url', 'location'
+  ];
+
+  if (!_.all(required_fields, function(field) {return field in req.body;})) return res.status(400).send();
+
   Organization.create({
-    'ein': 123456,
-    'verified': false,
-    'name': "Bob's Redmill",
-    'description': "Really fun place to hang out with the boys",
-    'website_url': 'www.imhere.com',
-    'location': "Scottsdale, AZ"
-  }, "TEST_OWNER").then(function(org){
-    console.log("Org added:", org)
-    res.send(org);
+    'ein': req.body.ein,
+    'name': req.body.name,
+    'description': req.body.description,
+    'website_url': req.body.website_url,
+    'donation_url': req.body.donation_url,
+    'logo_url': req.body.logo_url,
+    'location': req.body.location
+  }, req.user.id).then(function(organization) {
+    res.json(organization);
+  }, function(err) {
+    console.error(err);
+    res.status(500).send();
   });
 });
 
