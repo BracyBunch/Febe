@@ -28,7 +28,7 @@ module.exports = React.createClass( {
   },
 
   componentWillReceiveProps: function( nextProps ) {
-    if ( nextProps.selected === null ) { return; }
+    if ( nextProps.selected == null ) { return; }
 
     // When the selected date changed
     if ( nextProps.selected !== this.props.selected ) {

@@ -32,7 +32,7 @@ module.exports = (
       <Route name="npprofile" path="/npprofile" component={NpProfile} />
       <Route name="createorg" path="/createorg" component={Createorg} />
       <Route name="joinorg" path="/joinorg" component={Joinorg} />
-      <Route name="project" path="/project" component={Project} />
+      <Route name="project" path="/project/:id" component={Project} />
       <Route name="organization" path="/organization" component={Organization} />
     </Route>
   </Router>

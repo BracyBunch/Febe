@@ -1,26 +1,28 @@
 var React = require('react/addons');
+var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
 var DropdownButton = require('../components/project/dropdown');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var DatePicker = require('../components/datepicker/datepicker');
-
+var Autocomplete =require('../components/shared/autocomplete');
+var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
-  mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+  mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
   getInitialState: function() {
     return {
       projectName: '',
-      contributors: ['Yoshio Varney', 'Ryan Jones', 'James Maveety', 'Colin McKeehan'],
       representative: 'Point Person',
       projectManager: 'Bobby the PM',
       completionDate: '',
       description: '',
       tech: [],
+      organization: {},
       links: [],
       terms: false
-    }
+    };
   },
 
   newLink: '<input type="url" class="form-control" placeholder="Additional Link" />',
@@ -33,8 +35,18 @@ module.exports = React.createClass({
 
   createProject: function() {
     if (this.state.terms) {
-      console.log("submitting form")
-    } 
+      ajax('/project', {'method': 'POST', 'body': JSON.stringify({
+        'name': this.state.projectName,
+        'description': this.state.description,
+        'complete_by': this.state.completionDate,
+        'tech': this.state.tech.map(function(tech) {return tech.id;}),
+        'organization_id': this.state.organization.id
+      })}).then(function(res) {
+        return res.json();
+      }).then(function(data) {
+        this.transitionTo('/project/' + data.id);
+      }.bind(this));
+    }
   },
 
   select: function(item) {
@@ -42,10 +54,13 @@ module.exports = React.createClass({
       representative: item
     });
   },
-  selectDate: function(date) {
-    this.setState({
-      completionDate: date
-    })
+  setDate: function(date) {
+    this.setState({completionDate: date});
+  },
+  on_autocomplete_change: function(field) {
+    var values = {};
+    values[field] = this.refs[field].get_selections_array();
+    this.setState(values);
   },
   render: function() {
     return (
@@ -60,11 +75,12 @@ module.exports = React.createClass({
             </div>
           </form>
           <div>
-            <DropdownButton pointPerson={this.state.representative} pointPeople={this.state.contributors} />
+            <Autocomplete url='/organization/search?fragment=' placeholder='Search for an organization'
+            multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
           </div>
           <div>
             <h5>Preferred Completion Date</h5>
-            <DatePicker selectDate={this.selectDate} />
+            <DatePicker onChange={this.setDate} />
           </div>
           <div>
             <h5>Project Description</h5>
@@ -73,28 +89,29 @@ module.exports = React.createClass({
           </div>
           <div>
             <h5>Technology Needs</h5>
-            <input type="text" className="form-control" />
+            <Autocomplete url='/tag/search?fragment=' placeholder='Search for technology'
+            ref='tech' on_change={this.on_autocomplete_change.bind(this, 'tech')}/>
           </div>
           <div id="addlLinks">
             <h5>Additional Links</h5>
             <input type="url" className="form-control" placeholder="YouTube" />
           </div>
           <div>
-            <button 
-              className="btn signupBtn" 
+            <button
+              className="btn signupBtn"
               onClick={Methods.addFields.bind(this, 'addlLinks', this.newLink)}>Add +</button> <br />
           </div>
           <div>
             <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
           </div>
           <div>
-            <button type="submit" 
-              className="btn signupBtn text-center" 
+            <button type="submit"
+              className="btn signupBtn text-center"
               onClick={this.createProject}>Create</button>
           </div>
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 });
