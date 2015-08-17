@@ -3,6 +3,13 @@ var Organization = require('../db').Organization;
 var express = require('express');
 var router = express.Router();
 
+router.get('/search', function(req, res) {
+  var fragment = req.query.fragment;
+  if (!fragment || fragment.length < 3) return res.status(400).send();
+
+  Organization.find_by_fragment(fragment).then(res.json.bind(res));
+});
+
 router.get('/:organization_id', function(req, res){
   var organization_id = Number(req.params.organization_id);
   if (Number.isNaN(organization_id)) return res.status(400).send();
@@ -37,16 +44,6 @@ router.post('/', function(req, res){
     console.error(err);
     res.status(500).send();
   });
-});
-
-router.delete('/remove', function(req, res){
-  // access DB to add a new organization
-  res.send();
-});
-
-router.put('/update', function(req, res){
-  // access DB to add a new organization
-  res.send();
 });
 
 module.exports = router;

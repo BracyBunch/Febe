@@ -8,11 +8,14 @@ var AutocompleteForm = React.createClass({
       React.PropTypes.object,
       React.PropTypes.array
     ]),
+    'multi': React.PropTypes.bool,
+    'on_change': React.PropTypes.func,
     'placeholder': React.PropTypes.string.isRequired,
     'url': React.PropTypes.string.isRequired
   },
   getDefaultProps: function() {
     return {
+      'multi': true,
       'values': {}
     };
   },
@@ -25,6 +28,7 @@ var AutocompleteForm = React.createClass({
     } else {
       values = this.props.values;
     }
+
     return {
       'last_fetch': Date.now(),
       'value': '',
@@ -37,9 +41,14 @@ var AutocompleteForm = React.createClass({
     return this.state.values;
   },
   get_selections_array: function() {
-    return _.map(this.state.values, function(name, id) {
-      return {'id': id, 'name': name};
-    });
+    if (this.props.multi) {
+      return _.map(this.state.values, function(name, id) {
+        return {'id': id, 'name': name};
+      });
+    } else {
+      var id = Object.keys(this.state.values)[0];
+      return {'id': id, 'name': this.state.values[id]};
+    }
   },
   handle_change: function(e) {
     this.setState({'value': e.target.value}, function() {
@@ -65,14 +74,20 @@ var AutocompleteForm = React.createClass({
   handle_select: function(id) {
     var values = _.extend({}, this.state.values);
     values[id] = this.state.options[id];
-    this.setState({'values': values});
-    this.setState({'value': ''});
-    this.setState({'options': {}});
+    this.setState({
+      'values': values,
+      'value': '',
+      'options': {}
+    }, function() {
+      if (this.props.on_change) this.props.on_change(this.state.values);
+    });
   },
   handle_remove: function(id) {
     var values = _.extend({}, this.state.values);
     delete values[id];
-    this.setState({'values': values});
+    this.setState({'values': values}, function() {
+      if (this.props.on_change) this.props.on_change(this.state.values);
+    });
   },
   handle_key: function(e) {
     if (e.key === 'ArrowDown') {
@@ -88,9 +103,11 @@ var AutocompleteForm = React.createClass({
     }
   },
   render: function() {
+    var classes = 'autocomplete-input form-control';
+    if (Object.keys(this.state.values).length > 0 && !this.props.multi) classes += ' hidden';
     return (
       <div className='autocomplete-container dropdown'>
-        <input type='text' className='autocomplete-input form-control' placeholder={this.props.placeholder} data-toggle='dropdown'
+        <input type='text' className={classes} placeholder={this.props.placeholder} data-toggle='dropdown'
          value={this.state.value} onChange={this.handle_change} onKeyDown={this.handle_key} />
         <SelectionList remove_handler={this.handle_remove} values={this.state.values}/>
         <SelectDropdown select_handler={this.handle_select} options={this.state.options} active={this.state.active}/>

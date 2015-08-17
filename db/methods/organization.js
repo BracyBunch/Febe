@@ -101,6 +101,12 @@ var find_by_cause = function(cause_ids) {
   return Organization.query(query, {'tags': cause_ids});
 };
 
+var find_by_fragment = function(fragment) {
+  return Organization.where({'name': new RegExp(fragment + '.*', 'i')}).then(function(organizations) {
+    return organizations.map(clean);
+  });
+};
+
 module.exports = {
   'create': create,
   'update': update,
@@ -108,5 +114,6 @@ module.exports = {
   'add_cause': add_cause,
   'add_causes': add_causes,
   'with_extras': with_extras,
-  'find_by_cause': find_by_cause
+  'find_by_cause': find_by_cause,
+  'find_by_fragment': find_by_fragment
 };
