@@ -122,12 +122,14 @@ module.exports = React.createClass({
     return (
       <div className="signupCentered">
         <div>{name}</div>
-        <div className="names">
+        <div>
             <TextField
+              style={{"width":"20%"}}
               hintText="First Name"
               floatingLabelText= "First Name"
               valueLink={this.linkState('first_name')} />
             <TextField
+              style={{"width":"20%"}}
               hintText="Last Name"
               floatingLabelText= "Last Name"
               valueLink={this.linkState('last_name')} />
@@ -135,18 +137,20 @@ module.exports = React.createClass({
 
         <div className={this.getClasses('email')}>
           <TextField
-          hintText="Email Address"
-          floatingLabelText="Email Address"
-          valueLink={this.linkState('email')}
-          onBlur={this.handleValidation('email')} />
+            style={{"width":"40%"}}
+            hintText="Email Address"
+            floatingLabelText="Email Address"
+            valueLink={this.linkState('email')}
+            onBlur={this.handleValidation('email')} />
           <div>
             {this.getValidationMessages('email').map(this.renderHelpText)}
           </div>
         </div>
 
-        <div className="passwords">
+        <div>
           <div className={this.getClasses('password')}>
             <TextField
+              style={{"width":"20%"}}
               type="password"
               hintText="Password"
               floatingLabelText= "Password"
@@ -154,6 +158,7 @@ module.exports = React.createClass({
               onBlur={this.handleValidation('password')}
               valueLink={this.linkState('password')} />
             <TextField
+              style={{"width":"20%"}}
               type="password"
               hintText="Password"
               floatingLabelText= "Password"

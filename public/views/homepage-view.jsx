@@ -12,7 +12,7 @@ module.exports = React.createClass({
     return (
       <div id="main">
         <section>
-          <div className="fullscreen">
+          <div className="fullscreen background-image">
             <Header link='/' title='About' link2="/" title2='Browse' link3='/' title3='Team'/>
             <Landing />
           </div>

@@ -37,12 +37,16 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <AppBar title="Good In This World" showMenuIconButton={false}>
-          <Link to={this.props.link} className="navbar-brand headerText">{this.props.title}</Link>
-          <Link to={this.props.link2} className="navbar-brand headerText">{this.props.title2}</Link>
-          <Link to={this.props.link3} className="navbar-brand headerText">{this.props.title3}</Link> 
-          <SigninModal />     
+        <AppBar
+          showMenuIconButton={false}
+          style={{"opacity": "0.25"}}>
+            <Link to={this.props.link} className="navbar-brand headerText">{this.props.title}</Link>
+            <Link to={this.props.link2} className="navbar-brand headerText">{this.props.title2}</Link>
+            <Link to={this.props.link3} className="navbar-brand headerText">{this.props.title3}</Link> 
+            <div className="headerMargin" />
+            <SigninModal />  
         </AppBar>
+
       </div>
     );
   }
