@@ -14,17 +14,18 @@ var validate_id = function(req, res, next) {
 
 router.get('/:project_id', validate_id, function(req, res) {
   Project.with_extras(req.params.project_id, true).then(function(project) {
-    if (!project.published) {
-      if (!req.isAuthenticated()) return res.status(403).send();
-      Project.user_has_access(project, req.user).then(function(has_access) {
-        if (!has_access) return res.status(403).send();
-        res.json(project);
-      }, function() {
-        return res.status(500).send();
-      });
-    } else {
-      res.json(project);
-    }
+    // if (!project.published) {
+    //   if (!req.isAuthenticated()) return res.status(403).send();
+    //   Project.user_has_access(project, req.user).then(function(has_access) {
+    //     if (!has_access) return res.status(403).send();
+    //     res.json(project);
+    //   }, function() {
+    //     return res.status(500).send();
+    //   });
+    // } else {
+    //   res.json(project);
+    // }
+    res.json(project);
   });
 });
 
