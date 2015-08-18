@@ -8,6 +8,7 @@ var validator = require('validator');
  */
 var Organization = model(db, 'Organization');
 Organization.schema = {
+  'model': {'type': String, 'default': 'Organization'},
   'ein': {'type': String, 'required': true},
   'verified': {'type': Boolean, 'default': false},
   'name': {'type': String, 'required': true},
@@ -22,6 +23,7 @@ Organization.useTimestamps();
 
 Organization.public_fields = [
   'id',
+  'model',
   'ein',
   'verified',
   'name',
