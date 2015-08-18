@@ -10,6 +10,7 @@ module.exports = Reflux.createStore({
         return response.json();
       })
       .then(function(data) {
+        console.log("I AM PROJECT DATA", data)
         this.projectData = data;
         this.triggerChange();
       }.bind(this));
