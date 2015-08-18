@@ -15,14 +15,21 @@ var validate_id = function(req, res, next) {
 router.get('/:project_id', validate_id, function(req, res) {
   Project.with_extras(req.params.project_id, true).then(function(project) {
     if (!project.published) {
-      if (!req.isAuthenticated()) return res.status(403).send();
+      console.log('no pub')
+      if (!req.isAuthenticated()) { 
+      console.log('no auth')
+        return res.status(403).send();
+      }
       Project.user_has_access(project, req.user).then(function(has_access) {
-        if (!has_access) return res.status(403).send();
+        if (!has_access) 
+      console.log('no access')
+          return res.status(403).send();
         res.json(project);
       }, function() {
         return res.status(500).send();
       });
     } else {
+      console.log("Project: ", res.json(project))
       res.json(project);
     }
   });
@@ -63,6 +70,13 @@ router.post('/', function(req, res) {
   }, organization_id, req.user.id).then(function(project) {
     res.json(project);
   });
+});
+
+router.put('/:project_id', validate_id, function(req, res){
+  var project_id = Number(req.params.project_id);
+  var projectData = req.body
+  console.log("project data:", projectData)
+  Project.update(product_id, projectData)
 });
 
 router.put('/:project_id/add_member/:user_id', validate_id, function(req, res) {
