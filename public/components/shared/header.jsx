@@ -39,7 +39,7 @@ module.exports = React.createClass({
       <div>
         <AppBar
           showMenuIconButton={false}
-          style={{"opacity": "0.25"}}>
+          style={{"opacity": "0.2"}}>
             <Link to={this.props.link} className="navbar-brand headerText">{this.props.title}</Link>
             <Link to={this.props.link2} className="navbar-brand headerText">{this.props.title2}</Link>
             <Link to={this.props.link3} className="navbar-brand headerText">{this.props.title3}</Link> 
