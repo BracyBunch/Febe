@@ -48,6 +48,7 @@ module.exports = React.createClass({
 	},
 
 	edit: function() {
+    console.log('swapped')
     this.setState({
     	swap: !this.state.swap
     });
