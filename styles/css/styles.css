@@ -55,6 +55,10 @@
 }
 
 /*Landing Page*/
+.background-image {
+  background-image: url('/assets/img/homepage.jpg');
+  background-size: 100% 100%;
+}
 
 .landing-page{
   width: 100%;
@@ -112,6 +116,12 @@
 .scroll-down{
   top: 44%;
   width:100%;
+}
+
+/*header*/
+
+.headerMargin {
+  width: 90%;
 }
 
 /*footer*/
@@ -223,6 +233,14 @@
 }
 
 /*other*/
+.roundedButton {
+  border-radius: 10px; 
+  -moz-border-radius: 10px; 
+  -webkit-border-radius: 10px; 
+  border: 1px solid white;
+  color: white;
+}
+
 .fullscreen {
   height: 100%;
 }

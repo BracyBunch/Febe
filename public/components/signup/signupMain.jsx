@@ -21,6 +21,9 @@ module.exports = React.createClass({
     password: Joi.string().regex(/^[\s\S]{8,30}$/).label('password'),
     confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Confirmed password must match')
   },
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
   getInitialState: function() {
     return {
       first_name: '',
@@ -44,6 +47,14 @@ module.exports = React.createClass({
       // accent3Color: "#999999" 
     }); 
   },
+  getChildContext: function() {
+    return {
+      // muiTheme: ThemeManager.setTheme(mytheme)
+      // this doesn't work, returning default class, needs fixing once we decide on our palette
+      muiTheme: ThemeManager.getCurrentTheme(mytheme.getPalette())
+    }
+  },
+// form verification methods
   renderHelpText: function(message) {
     return (
       <div>
@@ -62,17 +73,7 @@ module.exports = React.createClass({
     this.clearValidations();
     this.setState(this.getInitialState());
   },
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-
-  getChildContext: function() {
-    return {
-      // muiTheme: ThemeManager.setTheme(mytheme)
-      // this doesn't work, returning default class, needs fixing once we decide on our palette
-      muiTheme: ThemeManager.getCurrentTheme(mytheme.getPalette())
-    }
-  },
+// form methods
   handleView: function() {
     // render Dev or NP signup
     return this.props.type === 'dev' ?
@@ -121,12 +122,14 @@ module.exports = React.createClass({
     return (
       <div className="signupCentered">
         <div>{name}</div>
-        <div className="names">
+        <div>
             <TextField
+              style={{"width":"20%"}}
               hintText="First Name"
               floatingLabelText= "First Name"
               valueLink={this.linkState('first_name')} />
             <TextField
+              style={{"width":"20%"}}
               hintText="Last Name"
               floatingLabelText= "Last Name"
               valueLink={this.linkState('last_name')} />
@@ -134,18 +137,20 @@ module.exports = React.createClass({
 
         <div className={this.getClasses('email')}>
           <TextField
-          hintText="Email Address"
-          floatingLabelText="Email Address"
-          valueLink={this.linkState('email')}
-          onBlur={this.handleValidation('email')} />
+            style={{"width":"40%"}}
+            hintText="Email Address"
+            floatingLabelText="Email Address"
+            valueLink={this.linkState('email')}
+            onBlur={this.handleValidation('email')} />
           <div>
             {this.getValidationMessages('email').map(this.renderHelpText)}
           </div>
         </div>
 
-        <div className="passwords">
+        <div>
           <div className={this.getClasses('password')}>
             <TextField
+              style={{"width":"20%"}}
               type="password"
               hintText="Password"
               floatingLabelText= "Password"
@@ -153,6 +158,7 @@ module.exports = React.createClass({
               onBlur={this.handleValidation('password')}
               valueLink={this.linkState('password')} />
             <TextField
+              style={{"width":"20%"}}
               type="password"
               hintText="Password"
               floatingLabelText= "Password"
