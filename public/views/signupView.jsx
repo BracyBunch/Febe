@@ -18,17 +18,6 @@ module.exports = React.createClass({
       name: (this.props.route.kind === 'dev') ? 'Developer Signup' : 'Nonprofit Representative Signup'
     };
   },
-  render: function() {
-    return (
-      <div className="fullscreen">
-        <Header link='/' title='Home'/>
-        <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
-        <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
-        <button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
-        <Footer />
-      </div>
-    );
-  },
   onChange: function(event, userData) {
     this.setState({userData: userData});
   },
@@ -39,10 +28,17 @@ module.exports = React.createClass({
     window.localStorage.setItem('userId', newID);
     this.setProfileStore();
   },
-  checking: function() {
-    console.log('this is from signup', this.state.userData);
-  },
   setProfileStore: function(){
     Actions.getProfile(this.state.id);
+  },
+  render: function() {
+    return (
+      <div className="fullscreen">
+        <Header link='/' title='Home'/>
+        <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
+        <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
+        <Footer />
+      </div>
+    );
   }
 });
