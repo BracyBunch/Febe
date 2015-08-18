@@ -3,6 +3,13 @@ var ajax = require('../../utils/fetch');
 var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
 var Joi = require('joi');
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
+var mytheme = require('../../material-ui/material-ui-theme');
+var Colors = require('../../material-ui/colors');
+var TextField = mui.TextField;
+var RaisedButton = mui.RaisedButton;
+var Checkbox = mui.Checkbox;
 
 module.exports = React.createClass({
   // see http://facebook.github.io/react/docs/two-way-binding-helpers.html
@@ -26,9 +33,22 @@ module.exports = React.createClass({
       terms: false
     };
   },
+  componentWillMount: function() { 
+    ThemeManager.setPalette({ 
+      primary1Color: Colors.indigo500, 
+      // primary2Color: Colors.red700, 
+      // primary3Color: Colors.green100, 
+      // textColor: Colors.darkBlack,
+      // accent1Color: "#000000", 
+      // accent2Color: "#111111", 
+      // accent3Color: "#999999" 
+    }); 
+  },
   renderHelpText: function(message) {
     return (
-      <span className="help-block">{message}</span>
+      <div>
+        <span className="help-block">{message}</span>
+      </div>
     );
   },
   getClasses: function(field) {
@@ -42,49 +62,24 @@ module.exports = React.createClass({
     this.clearValidations();
     this.setState(this.getInitialState());
   },
-  render: function() {
-    return (
-      <div>
-        <div>{name}</div>
-        <form className="form-inline names">
-          <div className="form-group">
-            <input type="text" ref="firstName" className="form-control firstName" valueLink={this.linkState('first_name')} placeholder="First Name"/>
-            <input type="text" ref="lastName" className="form-control lastName" valueLink={this.linkState('last_name')} placeholder="Last Name"/>
-          </div>
-        </form>
-        <div className={this.getClasses('email')}>
-          <input type="email" ref="emailAddress" className="form-control emailFill" valueLink={this.linkState('email')} onBlur={this.handleValidation('email')} placeholder="Email Address"/>
-          <div className='names'>
-          {this.getValidationMessages('email').map(this.renderHelpText)}
-          </div>
-        </div>
-        <form className="form-inline passwords">
-          <div className={this.getClasses('password')}>
-            <input type="password" ref="password" className="form-control password" onBlur={this.handleValidation('password')} valueLink={this.linkState('password')} placeholder="Password"/>
-            <input type="password" ref="confirmedPassword" className="form-control" onBlur={this.handleValidation('confirmedPassword')}  valueLink={this.linkState('confirmedPassword')} placeholder="Confirm Password"/>
-          </div>
-        </form>
-        <h5 className="signupCentered">Password must be more than 8 characters</h5>
-        <form onSubmit={this.handleSubmit}>
-          <div className="signupCentered">
-            <div className="form-group">
-              {this.handleView()}
-              <input type="checkbox" ref="terms" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
-            </div>
-              <button type="submit" className="btn signupBtn text-center">Sign Up</button>
-          </div>
-        </form>
-      </div>
-    );
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
+  getChildContext: function() {
+    return {
+      // muiTheme: ThemeManager.setTheme(mytheme)
+      // this doesn't work, returning default class, needs fixing once we decide on our palette
+      muiTheme: ThemeManager.getCurrentTheme(mytheme.getPalette())
+    }
   },
   handleView: function() {
     // render Dev or NP signup
     return this.props.type === 'dev' ?
-           <input type="checkbox" ref="contacted" onChange={this.message} className="checkbox-inline"> Open to being contacted</input>:
-           '';
+      <Checkbox name="contacted" onChange={this.message} label="Open to being contacted" />
+      : '';
   },
   setTerms: function(){
-    console.log(this.state.terms)
     this.setState({
       terms: !this.state.terms
     });
@@ -105,6 +100,7 @@ module.exports = React.createClass({
     return false;
   },
   handleSubmit: function(comment) {
+    console.log(this.state.terms)
     if( this.passwordVerification() && this.state.terms ){
       var that = this;
       ajax(this.props.url, {method: 'POST', body: JSON.stringify(this.state)}).then(function(response) {
@@ -120,5 +116,68 @@ module.exports = React.createClass({
     } else {
       console.log('Please verify that your passwords match and contain 8 or more characters');
     }
+  },
+  render: function() {
+    return (
+      <div className="signupCentered">
+        <div>{name}</div>
+        <div className="names">
+            <TextField
+              hintText="First Name"
+              floatingLabelText= "First Name"
+              valueLink={this.linkState('first_name')} />
+            <TextField
+              hintText="Last Name"
+              floatingLabelText= "Last Name"
+              valueLink={this.linkState('last_name')} />
+        </div>
+
+        <div className={this.getClasses('email')}>
+          <TextField
+          hintText="Email Address"
+          floatingLabelText="Email Address"
+          valueLink={this.linkState('email')}
+          onBlur={this.handleValidation('email')} />
+          <div>
+            {this.getValidationMessages('email').map(this.renderHelpText)}
+          </div>
+        </div>
+
+        <div className="passwords">
+          <div className={this.getClasses('password')}>
+            <TextField
+              type="password"
+              hintText="Password"
+              floatingLabelText= "Password"
+              valueLink={this.linkState('password')}
+              onBlur={this.handleValidation('password')}
+              valueLink={this.linkState('password')} />
+            <TextField
+              type="password"
+              hintText="Password"
+              floatingLabelText= "Password"
+              onBlur={this.handleValidation('confirmedPassword')}  
+              valueLink={this.linkState('confirmedPassword')} />
+          </div>
+        </div>
+
+        <h5>Password must be more than 8 characters</h5>
+          <div>
+            <div>
+              {this.handleView()}
+            </div>
+            <div>
+              <Checkbox
+                name="terms"
+                value="terms"
+                onCheck={this.setTerms}
+                label="I agree to the terms" />
+            </div>
+              <RaisedButton
+                label="Sign Up"
+                onClick={this.handleSubmit} />
+          </div>
+      </div>
+    );
   }
 });

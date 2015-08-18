@@ -31,14 +31,12 @@
   margin-right: 10px;
 }
 
-.names, .passwords{
+.names, .passwords {
+  display: inline-block;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  position: relative;
-  font-family: futura;
-  max-width: 400px;
-}
+} 
 
 .emailFill{
   width: 400px;
@@ -203,6 +201,10 @@ img {
 /*other*/
 .fullscreen {
   height: 100%;
+}
+
+.headerText {
+  color: white;
 }
 
 .headerInline {
