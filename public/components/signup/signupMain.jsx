@@ -21,6 +21,9 @@ module.exports = React.createClass({
     password: Joi.string().regex(/^[\s\S]{8,30}$/).label('password'),
     confirmedPassword: Joi.any().valid(Joi.ref('password')).required().label('Confirmed password must match')
   },
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
   getInitialState: function() {
     return {
       first_name: '',
@@ -44,6 +47,14 @@ module.exports = React.createClass({
       // accent3Color: "#999999" 
     }); 
   },
+  getChildContext: function() {
+    return {
+      // muiTheme: ThemeManager.setTheme(mytheme)
+      // this doesn't work, returning default class, needs fixing once we decide on our palette
+      muiTheme: ThemeManager.getCurrentTheme(mytheme.getPalette())
+    }
+  },
+// form verification methods
   renderHelpText: function(message) {
     return (
       <div>
@@ -62,17 +73,7 @@ module.exports = React.createClass({
     this.clearValidations();
     this.setState(this.getInitialState());
   },
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-
-  getChildContext: function() {
-    return {
-      // muiTheme: ThemeManager.setTheme(mytheme)
-      // this doesn't work, returning default class, needs fixing once we decide on our palette
-      muiTheme: ThemeManager.getCurrentTheme(mytheme.getPalette())
-    }
-  },
+// form methods
   handleView: function() {
     // render Dev or NP signup
     return this.props.type === 'dev' ?
