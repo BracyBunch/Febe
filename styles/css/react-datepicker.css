@@ -52,6 +52,7 @@
   border-radius: 4px;
   display: inline-block;
   position: absolute;
+  z-index: 2147483647;
 }
 
 .datepicker__container {

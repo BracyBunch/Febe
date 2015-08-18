@@ -31,7 +31,7 @@ module.exports = React.createClass({
   image: function(){
     var holder = ['https://media.licdn.com/media/AAEAAQAAAAAAAAKNAAAAJDNjYzIyMTNjLWEwOWMtNDc1ZC1iMDQ5LTE3NGQ2Y2FiNTE1MQ.jpg', 'https://media.licdn.com/media/AAEAAQAAAAAAAAR2AAAAJGVlOWJlMTFkLTc3N2YtNGVkZC05YjY2LWMxNzA4OTllN2YyMQ.jpg'];
     return holder.map(function(image){
-      return <img src={image} />
+      return <img className="team-image" src={image} />
     })
   },
   handleMouseEnter: function(){

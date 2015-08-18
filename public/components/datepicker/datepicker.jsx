@@ -95,7 +95,6 @@ module.exports = React.createClass( {
     }, function() {
       this.props.onChange( this.state.selected );
     }.bind( this ) );
-    this.props.selectDate(compDate)
   },
 
   clearSelected: function() {
