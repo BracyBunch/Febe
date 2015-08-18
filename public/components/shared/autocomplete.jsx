@@ -124,7 +124,7 @@ var SelectDropdown = React.createClass({
   },
   getDefaultProps: function() {
     return {
-      'options': [],
+      'options': {},
       'active': 0
     };
   },
@@ -155,7 +155,7 @@ var SelectionList = React.createClass({
   },
   getDefaultProps: function() {
     return {
-      'values': []
+      'values': {}
     };
   },
   remove_handler: function(e) {
