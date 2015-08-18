@@ -158,10 +158,9 @@
 }
 
 .inset {
-  position: absolute;
-  bottom: 11%;
-  width: 89%;
-  height: 87%;
+  position: relative;
+  width: 265px;
+  height: 240px;
   background-color: black;
   text-align: center;
   color: white;
@@ -179,12 +178,17 @@
   position: relative;
   padding: 10px;
   overflow: auto;
+  height: 300px;
+  width: 300px;
 }
 .eachThumbnail{
   position: relative;
   display: inline-block;
-  height: 300px;
-  width: 300px;
+}
+
+.thumbnail-image{
+  height: 60%;
+  width: 60%;
 }
 
 .team-image{

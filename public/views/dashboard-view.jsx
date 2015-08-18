@@ -20,7 +20,7 @@ module.exports = React.createClass({
         <div>
           <ThumbnailList />
         </div>  
-        
+        <Footer />
       </div>
     )
   },

@@ -1,4 +1,6 @@
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 module.exports = React.createClass({
   getInitialState: function(){
@@ -22,17 +24,25 @@ module.exports = React.createClass({
   handleMouseLeave: function(){
     this.setState({hovering: false});
   },
+  thumbnailInformation: function(){
+    return (
+      <div>
+        <img className="thumbnail-image" src={this.props.imageURL}></img>
+        <div className="caption">
+          <h3>{this.props.header}</h3>
+        </div>
+      </div>
+    )
+  },
   render: function(){
     return (
-        <div className="thumbnail-preview row">
+      <Link to={this.props.projLink}>
+        <div className="thumbnail-preview col-sm-4">
           <div className="thumbnail" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-            <img src={this.props.imageURL}></img>
-            <div className="caption">
-              <h3>{this.props.header}</h3>
-              {this.state.hovering ? this.inset() : null}
-            </div>
+            {this.state.hovering ? this.inset() : this.thumbnailInformation()}
           </div>
         </div>
+      </Link>
     )
   }
 });
