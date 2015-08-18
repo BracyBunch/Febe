@@ -6,6 +6,7 @@ var validator = require('validator');
 /*
   [:member_of]-(:Project)
   [:follows]-(:Project)
+  [:follows]-(:User)
   [:follows]-(:Organization)
   {kind: 'rep'}-[:owns]-(:Project)
   {kind: 'dev'}-[:skill]-(:Tag {kind: 'skill'})
@@ -13,6 +14,7 @@ var validator = require('validator');
  */
 var User = model(db, 'User');
 User.schema = {
+  'model': {'type': String, 'default': 'User'},
   'kind': {'type': String, 'default': 'dev', 'enum': ['dev', 'rep']},
   'first_name': {'type': String, 'required': true},
   'last_name': {'type': String},
@@ -32,6 +34,7 @@ User.useTimestamps();
 
 User.public_fields = [
   'id',
+  'model',
   'kind',
   'first_name',
   'last_name',

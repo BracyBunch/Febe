@@ -8,6 +8,7 @@ var model = require('seraph-model');
  */
 var Project = model(db, 'Project');
 Project.schema = {
+  'model': {'type': String, 'default': 'Project'},
   'name': {'type': String, 'required': true},
   'complete_by': {'type': Date, 'required': true},
   'description': {'type': String, 'required': true},
@@ -19,6 +20,7 @@ Project.useTimestamps();
 
 Project.public_fields = [
   'id',
+  'model',
   'name',
   'complete_by',
   'description',
