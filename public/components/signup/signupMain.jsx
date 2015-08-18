@@ -33,7 +33,8 @@ module.exports = React.createClass({
       confirmedPassword: '',
       can_message: false,
       user_kind: this.props.type,
-      terms: false
+      terms: false, 
+      errorText: "This does not appear to be a valid email"
     };
   },
   componentWillMount: function() { 
@@ -120,24 +121,26 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
+      <div className="row">
+      <div className="col-md-6 col-md-offset-3">
       <div className="signupCentered">
-        <div>{name}</div>
-        <div>
+        <div className="">
             <TextField
-              style={{"width":"20%"}}
+              style={{"width":"40%"}}
               hintText="First Name"
               floatingLabelText= "First Name"
               valueLink={this.linkState('first_name')} />
             <TextField
-              style={{"width":"20%"}}
+              style={{"width":"40%"}}
               hintText="Last Name"
               floatingLabelText= "Last Name"
               valueLink={this.linkState('last_name')} />
         </div>
 
-        <div className={this.getClasses('email')}>
+        <div className={this.getClasses('email') + " signupCentered"}>
           <TextField
-            style={{"width":"40%"}}
+            type="email"
+            style={{"width":"80%"}}
             hintText="Email Address"
             floatingLabelText="Email Address"
             valueLink={this.linkState('email')}
@@ -150,7 +153,7 @@ module.exports = React.createClass({
         <div>
           <div className={this.getClasses('password')}>
             <TextField
-              style={{"width":"20%"}}
+              style={{"width":"40%"}}
               type="password"
               hintText="Password"
               floatingLabelText= "Password"
@@ -158,7 +161,7 @@ module.exports = React.createClass({
               onBlur={this.handleValidation('password')}
               valueLink={this.linkState('password')} />
             <TextField
-              style={{"width":"20%"}}
+              style={{"width":"40%"}}
               type="password"
               hintText="Password"
               floatingLabelText= "Password"
@@ -168,22 +171,26 @@ module.exports = React.createClass({
         </div>
 
         <h5>Password must be more than 8 characters</h5>
-          <div>
+          <div className="checkbox">
             <div>
               {this.handleView()}
             </div>
-            <div>
+
               <Checkbox
                 name="terms"
                 value="terms"
                 onCheck={this.setTerms}
                 label="I agree to the terms" />
-            </div>
+          </div>
+          <div className="signupCentered signupBtn">
               <RaisedButton
+                style={{"opacity": "0.7"}}
                 label="Sign Up"
                 onClick={this.handleSubmit} />
           </div>
       </div>
+      </div>
+    </div>  
     );
   }
 });
