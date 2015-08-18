@@ -28,6 +28,8 @@ module.exports = React.createClass({
       description: 'Project info',
       technology: ['javascript', 'angular', 'bootstrap', 'html'],
       contributors: ['john', 'bob', 'joe', 'sally'],
+      startDate: 'START DATE',
+      endDate: 'END DATE',
       orgData: [],
       managerData: [],
       repData: [],
@@ -37,15 +39,19 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function(){
-    Actions.getProject(48);
+    Actions.getProject(51);
   },
 
-  onChange: function(event, projectData){
+  onChange: function(event, data){
+    console.log("data: ", data)
     this.setState({
-      title: projectData.title,
-      location: projectData.location,
-      description: projectData.description,
-      contributors: projectData.contributors,
+      title: data.name,
+      location: data.organization.location,
+      description: data.description,
+      startDate: data.created,
+      endDate: data.complete_by,
+      owner: data.owner.first_name + data.owner.last_name,
+      repData: data.owner
     });
   },
 
@@ -102,7 +108,7 @@ module.exports = React.createClass({
   profileEdit: function(edit) {
     return edit ? 
       <div>
-        <Timeline time={this.state.location} />
+        <Timeline time={this.state.endDate} />
         <Description desc={this.state.description} />
         <ProjectTags tags={this.state.technology} />
         <Contributors contributors={this.state.contributors} />
@@ -133,10 +139,11 @@ module.exports = React.createClass({
           <Participant 
             managerID={this.state.managerID} />
           <button className='btn btn-warning'> Organization Link </button>
-          <Timeline />
-          <Description />
+          <Timeline 
+            start={this.state.startDate}
+            end={this.state.endDate} />
+          <Description desc={this.state.description} />
           <ProjectTags tags={this.state.technology} />
-          <Contributors contributors={this.state.contributors} />
           <ProjectMedia />
         <Footer />
       </div>
