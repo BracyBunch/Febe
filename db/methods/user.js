@@ -63,7 +63,8 @@ var clean = common.clean_generator(User);
  * @param {Integer|User}  user   User or id
  * @param {Integer|Tag}   skill  Tag or id
  */
-var add_strength = common.add_rel_generator('User', 'strength', 'Tag', true);
+// var add_strength = common.add_rel_generator('User', 'strength', 'Tag', true);
+var add_strength = common.add_rel_generator('strength', true);
 
 /**
  * Adds an array of Tags as strengths of User
@@ -81,7 +82,9 @@ var clear_strengths = function(user) {
  * @param {Integer|User}  user      User or id
  * @param {Integer|Tag}   interest  Tag or id
  */
-var add_interest = common.add_rel_generator('User', 'interest', 'Tag', true);
+// var add_interest = common.add_rel_generator('User', 'interest', 'Tag', true);
+var add_interest = common.add_rel_generator('interest', true);
+
 
 /**
  * Adds an array of Tags as interests of User
@@ -112,10 +115,12 @@ var with_extras = function(user, options) {
 
   return User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}).then(function(user) {
     user = user[0];
+
     var cleaned_user = clean(user);
-    cleaned_user.projects = user.projects.map(function(project) {return Project.clean(project);});
-    cleaned_user.strengths = user.strengths.map(function(strength) {return Tag.clean(strength);});
-    cleaned_user.interests = user.interests.map(function(interest) {return Tag.clean(interest);});
+
+    if (user.projects) cleaned_user.projects = user.projects.map(Project.clean);
+    if (user.strengths) cleaned_user.strengths = user.strengths.map(Tag.clean);
+    if (user.interests) cleaned_user.interests = user.interests.map(Tag.clean);
 
     return cleaned_user;
   });

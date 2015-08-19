@@ -28,6 +28,7 @@ var create = function(fields, organization, owner) {
       db.relate(owner, 'owns', project)
     ]).then(function() {
       TimelineEntry.create('create', organization, 'created project', project);
+      User.follow(owner, project);
       return project;
     });
   });
@@ -62,7 +63,11 @@ var clean = common.clean_generator(Project);
  * @param {Integer|Project}  project   Project object or id to add User to
  * @param {Integer|User}     member    User or id to add to Project
  */
-var add_member = common.add_rel_generator('User', 'member_of', 'Project');
+// var add_member = common.add_rel_generator('User', 'member_of', 'Project');
+var add_member = common.add_rel_generator('member_of', false, function(project, user) {
+  TimelineEntry.create('update', project, 'added member', user);
+  User.follow(user, project);
+});
 
 /**
  * Adds an array of Users as members of Project
@@ -76,7 +81,8 @@ var add_members = common.add_rels_generator(add_member);
  * @param {Integer|Project}  project  Project or id
  * @param {Integer|Tag}      skill    Tag or id
  */
-var add_skill = common.add_rel_generator('Project', 'skill', 'Tag', true);
+// var add_skill = common.add_rel_generator('Project', 'skill', 'Tag', true);
+var add_skill = common.add_rel_generator('skill', true);
 
 /**
  * Adds an array of Tags as skills of Project

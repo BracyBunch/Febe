@@ -22,8 +22,6 @@ TimelineEntry.read = Promise.promisify(TimelineEntry.read, TimelineEntry);
 TimelineEntry.where = Promise.promisify(TimelineEntry.where, TimelineEntry);
 
 TimelineEntry.create = function(event, from, text, to) {
-  console.log(event, from, text, to);
-
   from = from.id || from;
   if (to !== undefined) to = to.id || to;
 
