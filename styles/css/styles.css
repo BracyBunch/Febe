@@ -1,6 +1,30 @@
-/* signup */
+/* main font */
+html *
+{
+   color: #000 !important;
+   font-family: Gotham !important;
+}
 
-.oauthPic, .signupBtn{
+/* signup */
+.signupBorder {
+  border: 2px solid lightgrey;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  padding: 15px;
+  opacity: 50%;
+}
+.checkbox {
+  text-align: left;
+  margin: 0 auto;
+  padding: 0px 0 0 36%;
+}
+
+.signupBtn {
+  margin: 12px auto auto auto;
+}
+
+.oauthPic {
 	width: 180px;
 	height: 40px;
 	margin: 5px;
@@ -9,6 +33,12 @@
 .center {
   margin-left: auto ;
   margin-right: auto ;
+}
+
+.centerSignup {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .loginModal {
@@ -42,7 +72,6 @@
   width: 400px;
   margin-left: auto;
   margin-right: auto;
-  font-family: futura;
 }
 
 .techstrengths{
@@ -50,7 +79,6 @@
   margin-right: auto;
   text-align: center;
   position: relative;
-  font-family: futura;
   max-width: 400px;
 }
 
@@ -74,7 +102,6 @@
   text-align: center;
   float: none;
   position: relative;
-  font-family: futura;
   width: 100%;
 }
 .site-name, .iamdev, .slogan, .scroll-down, .signup-buttons{
@@ -237,20 +264,13 @@
 }
 
 /*other*/
-.roundedButton {
-  border-radius: 10px; 
-  -moz-border-radius: 10px; 
-  -webkit-border-radius: 10px; 
-  border: 1px solid white;
-  color: white;
-}
-
 .fullscreen {
   height: 100%;
 }
 
 .headerText {
-  color: white;
+  color: black;
+  opacity: 100%;
 }
 
 .headerInline {
