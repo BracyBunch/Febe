@@ -5,10 +5,11 @@ var causes = require('./causes.json');
 
 var queries = [];
 
-if (process.env.TRAVIS) process.exit();
-
-db.Tag.where({'name': skills[0].name}).then(function(rows) {
-  if (rows.length) process.exit();
+queries.push(db.Tag.where({'name': skills[0].name}).then(function(rows) {
+  if (rows.length || process.env.TRAVIS){
+    console.log('Not installing fixtures');
+    process.exit();
+  }
 
   skills.forEach(function(t) {
     queries.push(db.Tag.save({name: t.name, kind: 'skill'}));
@@ -17,6 +18,6 @@ db.Tag.where({'name': skills[0].name}).then(function(rows) {
   causes.forEach(function(t) {
     queries.push(db.Tag.save({name: t.name, kind: 'cause'}));
   });
-});
+}));
 
 Promise.all(queries).then(function(){console.log('done');});
