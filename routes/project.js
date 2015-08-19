@@ -12,6 +12,18 @@ var validate_id = function(req, res, next) {
   next();
 };
 
+router.get('/search', function(req, res) {
+  if ('tags' in req.query) {
+    Project.find_by_tags(JSON.parse(req.query.tags), {'only_published': false, 'order_by': 'project.created DESC'}).then(function(projects) {
+      res.json(projects);
+    });
+  } else {
+    Project.with_extras(null, true).then(function(projects) {
+      res.json(projects);
+    });
+  }
+});
+
 router.get('/:project_id', validate_id, function(req, res) {
   Project.with_extras(req.params.project_id, true).then(function(project) {
     // if (!project.published) {
