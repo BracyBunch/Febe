@@ -9,6 +9,8 @@ var User = require('../models/user');
 var Organization = require('../models/organization');
 var Tag = require('../models/tag');
 
+var TimelineEntry = require('../models/timelineentry');
+
 /**
  * Create and save a new Project
  * @param  {Object}                fields        Fields to create Project with
@@ -25,6 +27,7 @@ var create = function(fields, organization, owner) {
       db.relate(organization, 'owns', project),
       db.relate(owner, 'owns', project)
     ]).then(function() {
+      TimelineEntry.create('create', organization, 'created project', project);
       return project;
     });
   });

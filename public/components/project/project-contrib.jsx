@@ -12,7 +12,8 @@ module.exports = React.createClass({
     return (
       <div> <span> Contributors: </span>
         <span> 
-        {
+            console.log('contrib', this.props.contributors)
+        { 
           this.props.contributors.map(function(contributor){
           return <Link to='#'><a className='contributor'>  {contributor} </a></Link>
           })

@@ -1,12 +1,40 @@
 var _ = require('lodash');
 var Promise = require('bluebird');
-var User = require('../db').User;
+var models = require('../db');
+var User = models.User;
 var express = require('express');
 var router = express.Router();
 var validator = require('validator');
 
 var bcrypt = require('bcrypt');
 var hash = Promise.promisify(bcrypt.hash, bcrypt);
+
+router.get('/timeline', function(req, res) {
+  if (!req.isAuthenticated()) return res.status(403).send();
+
+  var query = [
+    'MATCH (user:User) WHERE id(user)={user_id}',
+    'MATCH (entry),(followed) WHERE (user)-[:follows]->(followed)<-[:entry_from|:entry_to]-(entry:TimelineEntry)',
+    'OR (user)-[:follows]->(followed)-[:owns]->(:Organization)<-[:entry_from|:entry_to]-(entry:TimelineEntry)',
+    'MATCH (entry)-[:entry_to]-(entry_to)',
+    'MATCH (entry)-[:entry_from]-(entry_from)',
+    'RETURN DISTINCT entry, followed, entry_to, entry_from',
+    'ORDER BY entry.created DESC'
+  ];
+
+  models.db.query(query.join(' '), {'user_id': req.user.id}).then(function(rows) {
+    var data = [];
+    rows.forEach(function(row) {
+      data.push({
+        'entry': row.entry,
+        'from': models[row.entry_from.model].clean(row.entry_from),
+        'to': (row.entry_to !== undefined) ? models[row.entry_to.model].clean(row.entry_to) : undefined
+      });
+    });
+
+    res.json(data);
+  }, console.error);
+});
 
 router.get('/:id', function(req, res) {
   var id = Number(req.params.id);
@@ -17,11 +45,6 @@ router.get('/:id', function(req, res) {
   }, function() {
     res.status(400).send();
   });
-});
-
-router.delete('/remove', function(req, res){
-  // access DB to remove a user
-  res.send('New User Added');
 });
 
 router.put('/', function(req, res){

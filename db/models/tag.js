@@ -15,6 +15,7 @@ var model = require('seraph-model');
 
 var Tag = model(db, 'Tag');
 Tag.schema = {
+  'model': {'type': String, 'default': 'Tag'},
   'kind': {'type': String, 'required': true, 'enum': ['skill', 'cause']},
   'name': {'type': String, 'required': true}
 };
@@ -23,6 +24,7 @@ Tag.useTimestamps();
 
 Tag.public_fields = [
   'id',
+  'model',
   'kind',
   'name'
 ];
