@@ -1,6 +1,8 @@
 var React = require('react/addons');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
+var LeftNav = mui.LeftNav;
+var MenuItem = mui.MenuItem;
 var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
 var DropdownButton = require('../components/project/dropdown');
@@ -22,6 +24,36 @@ module.exports = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  generateMenu: [
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '/', 
+      text: 'Home'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/dashboard', 
+      text: 'Dashboard'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/browse', 
+      text: 'Browse'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/devprofile', 
+      text: 'My Profile'
+    },
+    { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+    { route: '/', text: 'About' },
+    { route: '/', text: 'Team' },
+    { 
+      type: MenuItem.Types.LINK, 
+      payload: 'https://github.com/BracyBunch/Febe', 
+      text: 'GitHub' 
+    }
+  ],
   getInitialState: function() {
     return {
       projectName: '',
@@ -78,7 +110,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="fullscreen">
-        <Header link='/' title='Home'/>
+        <Header generateMenu = {this.generateMenu}/>
         <div className="">
           <h3>Create a Project</h3>
           <form className="form-inline">

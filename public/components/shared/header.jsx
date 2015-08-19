@@ -16,35 +16,10 @@ injectTapEventPlugin();
 module.exports = React.createClass({ 
   getInitialState: function() {
     return { 
-      menuItems: [
-        {
-           type: MenuItem.Types.LINK, 
-           payload: '/', 
-           text: 'Home'
-        },
-        {
-           type: MenuItem.Types.LINK, 
-           payload: '/', 
-           text: 'Browse'
-        },
-        {
-           type: MenuItem.Types.LINK, 
-           payload: '/devprofile', 
-           text: 'My Profile'
-        },
-        { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
-        { route: '/', text: 'About' },
-        { route: '/', text: 'Team' },
-        { 
-           type: MenuItem.Types.LINK, 
-           payload: 'https://github.com/BracyBunch/Febe', 
-           text: 'GitHub' 
-        }
-      ]
+      menuItems: this.props.generateMenu
     };
   },
   showMenu: function(){
-    console.log("testing");
     this.refs.leftNav.toggle()
   },
   render: function() {

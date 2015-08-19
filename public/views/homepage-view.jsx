@@ -1,6 +1,8 @@
 var React = require('react');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
+var LeftNav = mui.LeftNav;
+var MenuItem = mui.MenuItem;
 var Header = require('../components/shared/header');
 var Landing = require('../components/homepage/landing');
 var Footer = require('../components/shared/footer');
@@ -19,12 +21,32 @@ module.exports = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  generateMenu: [
+      {
+        type: MenuItem.Types.LINK, 
+        payload: '/', 
+        text: 'Home'
+      },
+      {
+        type: MenuItem.Types.LINK, 
+        payload: '/', 
+        text: 'Browse'
+      },
+      { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+      { route: '/', text: 'About' },
+      { route: '/', text: 'Team' },
+      { 
+        type: MenuItem.Types.LINK, 
+        payload: 'https://github.com/BracyBunch/Febe', 
+        text: 'GitHub' 
+      }
+  ],
   render: function(){
     return (
       <div id="main">
         <section>
           <div className="fullscreen background-image">
-            <Header link='/' title='About' link2="/" title2='Browse' link3='/' title3='Team'/>
+            <Header generateMenu = {this.generateMenu}/>
             <Landing />
           </div>
         </section>

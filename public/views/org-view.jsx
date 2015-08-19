@@ -1,6 +1,8 @@
 var React = require('react');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
+var LeftNav = mui.LeftNav;
+var MenuItem = mui.MenuItem;
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
@@ -20,6 +22,36 @@ module.exports = React.createClass({
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
+  generateMenu: [
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '/', 
+      text: 'Home'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/dashboard', 
+      text: 'Dashboard'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/browse', 
+      text: 'Browse'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/devprofile', 
+      text: 'My Profile'
+    },
+    { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+    { route: '/', text: 'About' },
+    { route: '/', text: 'Team' },
+    { 
+      type: MenuItem.Types.LINK, 
+      payload: 'https://github.com/BracyBunch/Febe', 
+      text: 'GitHub' 
+    }
+  ],
   getChildContext: function(){ 
     return {
       muiTheme: ThemeManager.getCurrentTheme()
@@ -51,7 +83,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <Header link='/' title='Browse'/>
+        <Header generateMenu = {this.generateMenu}/>
         <div>
           <h3> {this.state.orgData.title} </h3> 
           <button className='btn btn-warning edit-follow'> Edit/Follow </button>
