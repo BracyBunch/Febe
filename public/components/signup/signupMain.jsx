@@ -5,8 +5,6 @@ var ValidationMixin = require('react-validation-mixin');
 var Joi = require('joi');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var mytheme = require('../../material-ui/material-ui-theme');
-var Colors = require('../../material-ui/colors');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Checkbox = mui.Checkbox;
@@ -36,24 +34,6 @@ module.exports = React.createClass({
       terms: false, 
       errorText: "This does not appear to be a valid email"
     };
-  },
-  componentWillMount: function() { 
-    ThemeManager.setPalette({ 
-      primary1Color: Colors.indigo500, 
-      // primary2Color: Colors.red700, 
-      // primary3Color: Colors.green100, 
-      // textColor: Colors.darkBlack,
-      // accent1Color: "#000000", 
-      // accent2Color: "#111111", 
-      // accent3Color: "#999999" 
-    }); 
-  },
-  getChildContext: function() {
-    return {
-      // muiTheme: ThemeManager.setTheme(mytheme)
-      // this doesn't work, returning default class, needs fixing once we decide on our palette
-      muiTheme: ThemeManager.getCurrentTheme(mytheme.getPalette())
-    }
   },
 // form verification methods
   renderHelpText: function(message) {

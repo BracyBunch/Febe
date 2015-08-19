@@ -1,11 +1,12 @@
 var React = require('react');
 var Reflux = require('reflux');
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
 var Actions = require('../actions');
 var Link = Router.Link;
-
 var Participant = require('../components/profile/participant')
 var Timeline = require('../components/project/project-timeline')
 var Description = require('../components/project/project-description')
@@ -22,6 +23,14 @@ module.exports = React.createClass({
   mixins: [
     Reflux.listenTo(ProjectStore, 'onChange')
   ],
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function(){ 
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
   getInitialState: function(){
     return {
       title: 'Project Title',

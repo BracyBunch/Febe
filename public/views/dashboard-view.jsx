@@ -1,6 +1,8 @@
 var _ = require('lodash');
 var React = require('react');
 var Reflux = require('reflux');
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
@@ -14,6 +16,14 @@ var TimelineEntry = require('../components/dashboard/timelineEntry');
 
 module.exports = React.createClass({
   mixins: [Reflux.listenTo(TimelineStore, 'onLoad')],
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function(){ 
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
   componentWillMount: function(){
     Actions.getTimeline();
   },

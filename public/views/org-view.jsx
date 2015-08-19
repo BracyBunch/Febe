@@ -1,11 +1,12 @@
 var React = require('react');
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
 var Actions = require('../actions');
 var Reflux = require('reflux');
 var Link = Router.Link;
-
 var Participant = require('../components/profile/participant')
 var Description = require('../components/organization/org-description')
 var OrgMedia = require('../components/organization/org-media')
@@ -16,6 +17,14 @@ module.exports = React.createClass({
   mixins: [
     Reflux.listenTo(OrgStore, 'onChange')
   ],
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function(){ 
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
   getInitialState: function(){
     return {
       orgData: [],
