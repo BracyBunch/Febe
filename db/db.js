@@ -21,10 +21,17 @@ var db = seraph(options);
 db.query = Promise.promisify(db.query);
 db.relate = Promise.promisify(db.relate);
 
-db.has_rel = function(start_label, start_id, rel_name, end_label, end_id) {
+/**
+ * Check if there is a relationship of the specified type between two nodes
+ * @param  {Integer}  start_id  Id of the start node
+ * @param  {String}   rel_name  Name of the relationship
+ * @param  {Integer}  end_id    Id of the end node
+ * @return {Boolean}
+ */
+db.has_rel = function(start_id, rel_name, end_id) {
   var query = [
-    'MATCH (start:' + start_label + ') WHERE id(start)={start_id}',
-    'MATCH (end:'+ end_label + ') WHERE id(end)={end_id} AND (start)-[:' + rel_name + ']->(end)',
+    'MATCH (start) WHERE id(start)={start_id}',
+    'MATCH (end) WHERE id(end)={end_id} AND (start)-[:' + rel_name + ']->(end)',
     'RETURN COUNT(end)>0 AS exists'
   ].join(' ');
 

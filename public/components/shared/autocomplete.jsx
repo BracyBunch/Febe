@@ -8,6 +8,7 @@ var AutocompleteForm = React.createClass({
       React.PropTypes.object,
       React.PropTypes.array
     ]),
+    'min_chars': React.PropTypes.number,
     'multi': React.PropTypes.bool,
     'on_change': React.PropTypes.func,
     'placeholder': React.PropTypes.string.isRequired,
@@ -15,6 +16,7 @@ var AutocompleteForm = React.createClass({
   },
   getDefaultProps: function() {
     return {
+      'min_chars': 3,
       'multi': true,
       'values': {}
     };
@@ -52,7 +54,7 @@ var AutocompleteForm = React.createClass({
   },
   handle_change: function(e) {
     this.setState({'value': e.target.value}, function() {
-      if (this.state.value.length > 2 && Date.now() - this.state.last_fetch > 2) {
+      if (this.state.value.length >= this.props.min_chars && Date.now() - this.state.last_fetch > 2) {
         this.setState({'last_fetch': Date.now()});
         ajax(this.props.url + this.state.value).then(function(res) {
           return res.json();

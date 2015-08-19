@@ -4,11 +4,10 @@ var expect    = require('chai').expect;
 var models = require('../../db');
 
 var clean_up = function(ids, cb) {
-  models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() DELETE n,r', {'ids': ids}, function() {
+  models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() OPTIONAL MATCH (te:TimelineEntry)<-[r2]->(n) DELETE n,r,r2,te', {'ids': ids}, function() {
     cb();
   });
 };
-
 
 describe('Project tests', function() {
   var ids_to_be_deleted = [];
@@ -21,8 +20,8 @@ describe('Project tests', function() {
       'dev2': models.User.create({'first_name': 'test2', 'last_name': 'user', 'email': 'p_test_dev2@gmail.com'}),
       'dev3': models.User.create({'first_name': 'test3', 'last_name': 'user', 'email': 'p_test_dev3@gmail.com'})
       // 'tag1': models.Tag.create
-    }).then(function(p_users) {
-      instances.users = p_users;
+    }).then(function(users) {
+      instances.users = users;
       for (var key in instances.users) {
         ids_to_be_deleted.push(instances.users[key].id);
       }

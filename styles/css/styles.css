@@ -1,10 +1,13 @@
 /* main font */
 html *
 {
-   color: #000 !important;
-   font-family: Gotham !important;
+   color: #000;
+   font-family: Gotham;
 }
 
+body{
+  background-color: #f2f2f2;
+}
 /* signup */
 .signupBorder {
   border: 2px solid lightgrey;
@@ -104,8 +107,8 @@ html *
   position: relative;
   width: 100%;
 }
-.site-name, .iamdev, .slogan, .scroll-down, .signup-buttons{
-  color: white;
+.site-name, .iamdev, .scroll-text, .signup-buttons, .glyphicon-circle-arrow-down{
+  color: #ffffff;
 }
 
 .carouselProjects {
@@ -114,20 +117,21 @@ html *
 }
 
 .site-name{
-  padding-top: 5%;
+  padding-top: 2%;
+  padding-left: 5%;
   font-size: 40px;
   color: #1CB3FF;
 }
 
 .iamdev{
-  top: 10%;
+  top: 7%;
   padding-top: 15px;
   padding-bottom: 15px;
   font-size: 30px;
 }
 
 .signup-buttons{
-  top: 15%;
+  top: 10%;
 }
 
 .under-buttons{
@@ -137,7 +141,8 @@ html *
 .slogan{
   padding-top: 15px;
   font-size: 20px;
-  top: 30%;
+  top: 20%;
+  color: #4B7091;
 }
 
 .scroll-down{
@@ -149,6 +154,14 @@ html *
 
 .headerMargin {
   width: 90%;
+}
+
+.header-button1{
+  color: white;
+}
+
+.first-button{
+  color: rgba(0,0,255,0.2);
 }
 
 /*footer*/
@@ -185,10 +198,9 @@ html *
 }
 
 .inset {
-  position: absolute;
-  bottom: 11%;
-  width: 89%;
-  height: 87%;
+  position: relative;
+  width: 265px;
+  height: 240px;
   background-color: black;
   text-align: center;
   color: white;
@@ -206,12 +218,17 @@ html *
   position: relative;
   padding: 10px;
   overflow: auto;
+  height: 300px;
+  width: 300px;
 }
 .eachThumbnail{
   position: relative;
   display: inline-block;
-  height: 300px;
-  width: 300px;
+}
+
+.thumbnail-image{
+  height: 60%;
+  width: 60%;
 }
 
 .team-image{

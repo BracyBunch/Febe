@@ -4,13 +4,12 @@ var db = require('../db');
 
 /**
  * Generates a function to relate two nodes
- * @param  {String}  target_label Label of the target node
- * @param  {String}  rel_name     Name of the relationship
- * @param  {String}  rel_label    Label of the start node
- * @param  {Boolean} reverse      If true swaps the direction of the relationship
+ * @param  {String}   rel_name         Name of the relationship
+ * @param  {Boolean}  [reverse=false]  If true swaps the direction of the relationship
+ * @param  {Function} [when_complete]  Function to run when done
  * @return {Function}
  */
-var add_rel_generator = function(target_label, rel_name, rel_label, reverse) {
+var add_rel_generator = function(rel_name, reverse, when_complete) {
   reverse = (reverse === undefined || typeof reverse !=='boolean') ? false : reverse;
 
   /**
@@ -26,10 +25,11 @@ var add_rel_generator = function(target_label, rel_name, rel_label, reverse) {
       target = temp;
     }
 
-    return db.has_rel(target_label, rel.id || rel, rel_name, rel_label, target.id || target).then(function(exists) {
-      if (exists) throw new Error(target_label + ' already has ' + rel_label + ' as ' + rel_name);
+    return db.has_rel(rel.id || rel, rel_name, target.id || target).then(function(exists) {
+      if (exists) throw new Error(target + ' already has ' + rel + ' as ' + rel_name);
 
       return db.relate(rel, rel_name, target).then(function() {
+        if (when_complete) when_complete(target, rel);
         return true;
       });
     });
