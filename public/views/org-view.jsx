@@ -60,10 +60,12 @@ module.exports = React.createClass({
   getInitialState: function(){
     return {
       orgData: [],
-      managerData: [],
+      ownerData: [],
       repData: [],
       devData: [],
-      swap: false
+      verified: null,
+      swap: false,
+      
     };
   },
 
@@ -73,9 +75,11 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log("data: ", data)
+    console.log("Data fetched from view: ", data)
     this.setState({
-      orgData: data
+      orgData: data,
+      ownerData: data.owner,
+      verified: data.verified.toString().toUpperCase()
     });
   },
   
@@ -88,8 +92,15 @@ module.exports = React.createClass({
           <h3> {this.state.orgData.title} </h3> 
           <button className='btn btn-warning edit-follow'> Edit/Follow </button>
         </div>
-          <button className='btn btn-warning'> Organization Link </button>
-          <Description />
+          <Description 
+          name={this.state.orgData.name}
+          location={this.state.orgData.location}
+          ein={this.state.orgData.ein}
+          owner={this.state.ownerData}
+          description={this.state.orgData.description}
+          causes={this.state.orgData.causes}
+          verified={this.state.verified}
+          website={this.state.orgData.website_url} />
           <OrgMedia />
         <Footer />
       </div>

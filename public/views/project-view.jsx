@@ -74,7 +74,7 @@ module.exports = React.createClass({
       endDate: 'END DATE',
       managerData: [],
       orgData: [],
-      orgName: 'g',
+      orgName: '',
       repData: [],
       devData: [],
       swap: false,
@@ -152,7 +152,7 @@ module.exports = React.createClass({
     });
   },
 
-  profileEdit: function(edit) {
+  projectEdit: function(edit) {
     return edit ? 
       <div>
         <Timeline time={this.state.endDate} />
