@@ -1,7 +1,8 @@
 var _ = require('lodash');
 var url_parse = require('url').parse;
 var validator = require('validator');
-var Project = require('../db').Project;
+var models = require('../db');
+var Project = models.Project;
 var express = require('express');
 var router = express.Router();
 
@@ -74,6 +75,10 @@ router.post('/', function(req, res) {
     'description': req.body.description,
     'links': links
   }, organization_id, req.user.id).then(function(project) {
+    if ('tech' in req.body && Array.isArray(req.body.tech) && req.body.tech.length) {
+      Project.add_skills(project, req.body.tech.map(Number));
+    }
+
     res.json(project);
   });
 });
