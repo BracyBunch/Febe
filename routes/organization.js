@@ -14,7 +14,6 @@ router.get('/search', function(req, res) {
 });
 
 router.get('/:organization_id', function(req, res) {
-  console.log('get got it')
   var organization_id = Number(req.params.organization_id);
   if (Number.isNaN(organization_id)) return res.status(400).send();
 

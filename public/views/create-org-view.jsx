@@ -4,6 +4,7 @@ var ThemeManager = new mui.Styles.ThemeManager();
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
 var Reflux = require('reflux');
+var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var Tooltip = require('react-bootstrap').Tooltip;
@@ -15,15 +16,17 @@ var keys = require('../../keys');
 var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
-  mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+  mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
+  
   getChildContext: function(){ 
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+
   generateMenu: [
     { 
       type: MenuItem.Types.LINK, 
@@ -54,6 +57,7 @@ module.exports = React.createClass({
       text: 'GitHub' 
     }
   ],
+
   getInitialState: function() {
     return {
       ein: '',
@@ -69,25 +73,6 @@ module.exports = React.createClass({
   },
 
   newRepField: '<input type="email" class="form-control" placeholder="Representative\'s Email" />', 
-
-  handleSubmit: function(comment) {
-    var that = this;
-    ajax('/organization', {
-      method: 'POST', 
-      body: JSON.stringify(this.state)
-    }).then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      // what do we want to do here?
-      sessionStorage.setItem('orgId', data.id)
-      this.transitionTo('/organization/' + data.id);
-      console.log('org data', data);
-    })
-    .catch(function(error) {
-      console.log('request failed: ', error);
-    }); 
-  },
 
   setTerms: function(){
     this.setState({
@@ -131,11 +116,10 @@ module.exports = React.createClass({
       })
       .then(function(data) {
         // what do we want to do here?
+        sessionStorage.setItem('orgId', data.id)
         console.log("org returned data: ", data);
-      })
-      .catch(function(error) {
-        console.log('request failed: ', error);
-      }); 
+        this.transitionTo('/organization/' + data.id);
+      }.bind(this));
     } 
   },
 
@@ -246,5 +230,5 @@ module.exports = React.createClass({
         <Footer />
       </div>
     )
-  },
+  }
 });
