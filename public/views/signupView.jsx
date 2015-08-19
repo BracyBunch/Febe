@@ -2,6 +2,8 @@ var React = require('react');
 var Reflux = require('reflux');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
+var LeftNav = mui.LeftNav;
+var MenuItem = mui.MenuItem;
 var Oauth = require('../components/signup/signupOAuth');
 var Main = require('../components/signup/signupMain');
 var Header = require('../components/shared/header');
@@ -21,6 +23,26 @@ module.exports = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  generateMenu: [
+      {
+        type: MenuItem.Types.LINK, 
+        payload: '/', 
+        text: 'Home'
+      },
+      {
+        type: MenuItem.Types.LINK, 
+        payload: '/', 
+        text: 'Browse'
+      },
+      { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+      { route: '/', text: 'About' },
+      { route: '/', text: 'Team' },
+      { 
+        type: MenuItem.Types.LINK, 
+        payload: 'https://github.com/BracyBunch/Febe', 
+        text: 'GitHub' 
+      }
+  ],
   getInitialState: function() {
     return {
       userData: [],
@@ -44,7 +66,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="fullscreen">
-        <Header link='/' title='Home'/>
+        <Header generateMenu = {this.generateMenu} />
         <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
         <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
         <Footer />

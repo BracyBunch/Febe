@@ -1,6 +1,8 @@
 var React = require('react/addons');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
+var LeftNav = mui.LeftNav;
+var MenuItem = mui.MenuItem;
 var Reflux = require('reflux');
 var ValidationMixin = require('react-validation-mixin');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
@@ -24,6 +26,36 @@ module.exports = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  generateMenu: [
+    { 
+      type: MenuItem.Types.LINK, 
+      payload: '/', 
+      text: 'Home'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/dashboard', 
+      text: 'Dashboard'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/browse', 
+      text: 'Browse'
+    },
+    {
+      type: MenuItem.Types.LINK, 
+      payload: '#/devprofile', 
+      text: 'My Profile'
+    },
+    { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+    { route: '/', text: 'About' },
+    { route: '/', text: 'Team' },
+    { 
+      type: MenuItem.Types.LINK, 
+      payload: 'https://github.com/BracyBunch/Febe', 
+      text: 'GitHub' 
+    }
+  ],
   getInitialState: function() {
     return {
       ein: '',
@@ -116,7 +148,7 @@ module.exports = React.createClass({
   
     return (
       <div>
-        <Header link='/' title='Browse'/>
+        <Header generateMenu = {this.generateMenu}/>
         <div>
           
           <div>
