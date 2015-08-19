@@ -16,21 +16,19 @@ module.exports = React.createClass({
     this.forceUpdate();
   },
 
-  forceUpdate: function(data){
-    console.log(data);
-  },
-
   componentWillMount: function(){
-    setTimeout(function(){this.calcTime()}.bind(this), 100)
+    setTimeout(function(){this.calcTime()}.bind(this), 500)
   },
 
   calcTime: function(){
-    console.log('\'calc\'')
-    var now = new Date(Date.now()).toString();
+    var now = new Date().getTime();
     var lengthMs = this.props.end - this.props.start;
     var lengthInDays = (1.157407407 * Math.pow(10, -8)) * lengthMs;
     var projectStart = new Date(this.props.start);
+    var elapsed = now - projectStart;
+    var elapsedInDays = (1.157407407 * Math.pow(10, -8)) * elapsed;
     var projectEnd = new Date(this.props.end);
+    var days = (elapsedInDays < 0.6) ? 1 : elapsedInDays; 
     projectStart = projectStart.toString();
     projectEnd = projectEnd.toString();
 
@@ -38,7 +36,7 @@ module.exports = React.createClass({
       start: projectStart,
       end: projectEnd,
       length: lengthInDays.toFixed(1),
-      now: now
+      elapsed: days.toFixed(1)
     })
   },
 
@@ -49,12 +47,10 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-      <span> Start date: {this.state.start} </span> <br/>
-      <span> Elapsed time: {this.state.now} </span> <br/>
-      <span> Desired completion date: {this.state.end} </span> <br/>
+      <span> Start Date: {this.state.start} </span> <br/>
+      <span> Days Since Start: {this.state.elapsed} </span> <br/>
+      <span> Desired Completion Date: {this.state.end} </span> <br/>
       <span> Time In Days Until Complete: {this.state.length} </span> <br/>
-       Time Button: <button onClick={this.calcTime}>likerklikken</button>
-
       </div>
     )
   }

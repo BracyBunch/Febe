@@ -15,6 +15,7 @@ var ProjectMedia = require('../components/project/project-media')
 var ProjectMethods = require('../components/project/sharedProjectMethods/')
 var ProjectEdit = require('../components/project/edit-components/project-body-edit')
 var ProjectStore = require('../stores/project-store');
+var Organization = require('../components/organization/org-description');
 
 
 module.exports = React.createClass({
@@ -30,16 +31,17 @@ module.exports = React.createClass({
       contributors: ['john', 'bob', 'joe', 'sally'],
       startDate: 'START DATE',
       endDate: 'END DATE',
-      orgData: [],
       managerData: [],
+      orgData: [],
+      orgName: 'g',
       repData: [],
       devData: [],
-      swap: false
+      swap: false,
     };
   },
 
   componentWillMount: function(){
-    Actions.getProject(51);
+    Actions.getProject(sessionStorage.getItem('projectId'));
   },
 
   onChange: function(event, data){
@@ -50,8 +52,12 @@ module.exports = React.createClass({
       description: data.description,
       startDate: data.created,
       endDate: data.complete_by,
-      owner: data.owner.first_name + data.owner.last_name,
-      repData: data.owner
+      ownerFirst: data.owner.first_name,
+      ownerLast: data.owner.last_name,
+      ownerName: data.owner.first_name + data.owner.last_name,
+      repData: data.owner,
+      orgData: data.organization,
+      orgName: data.organization.name
     });
   },
 
@@ -111,7 +117,6 @@ module.exports = React.createClass({
         <Timeline time={this.state.endDate} />
         <Description desc={this.state.description} />
         <ProjectTags tags={this.state.technology} />
-        <Contributors contributors={this.state.contributors} />
         <ProjectMedia />
       </div>
       :
@@ -135,9 +140,20 @@ module.exports = React.createClass({
           <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit/Follow </button>
         </div>
           <Participant 
-            repID={this.state.repID} />
+            firstName={this.state.ownerFirst}
+            lastName={this.state.ownerLast}
+            title={this.state.orgName} 
+            location={this.state.location} 
+            type={'Non-Profit Representative'}/>
           <Participant 
-            managerID={this.state.managerID} />
+            firstName={this.state.ownerFirst}
+            lastName={this.state.ownerLast}
+            title={this.state.orgName} 
+            location={this.state.location} 
+            type={'Project Manager'}/>
+        <div className='org-desc'>
+          <Organization name={this.state.orgName} location={this.state.location} />
+        </div>
           <button className='btn btn-warning'> Organization Link </button>
           <Timeline 
             start={this.state.startDate}
