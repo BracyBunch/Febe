@@ -8,7 +8,7 @@ var TimelineEntry = require('../db/models/timelineentry');
 
 router.get('/search', function(req, res) {
   var fragment = req.query.fragment;
-  if (!fragment || fragment.length < 3) return res.status(400).send();
+  if (!fragment || fragment.length < 2) return res.status(400).send();
 
   Organization.find_by_fragment(fragment).then(res.json.bind(res));
 });
