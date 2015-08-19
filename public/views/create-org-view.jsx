@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var mui = require('material-ui');
+var Reflux = require('reflux');
 var ValidationMixin = require('react-validation-mixin');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var Tooltip = require('react-bootstrap').Tooltip;
@@ -38,7 +39,9 @@ module.exports = React.createClass({
     })
     .then(function(data) {
       // what do we want to do here?
-      console.log(data);
+      sessionStorage.setItem('orgId', data.id)
+      this.transitionTo('/organization/' + data.id);
+      console.log('org data', data);
     })
     .catch(function(error) {
       console.log('request failed: ', error);

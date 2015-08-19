@@ -33,7 +33,7 @@ module.exports = (
       <Route name="createorg" path="/createorg" component={Createorg} />
       <Route name="joinorg" path="/joinorg" component={Joinorg} />
       <Route name="project" path="/project/:id" component={Project} />
-      <Route name="organization" path="/organization" component={Organization} />
+      <Route name="organization" path="/organization/:id" component={Organization} />
     </Route>
   </Router>
 );

@@ -2,20 +2,23 @@ var React = require('react');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
+var Actions = require('../actions');
+var Reflux = require('reflux');
 var Link = Router.Link;
 
 var Participant = require('../components/profile/participant')
 var Description = require('../components/organization/org-description')
 var OrgMedia = require('../components/organization/org-media')
+var OrgStore = require('../stores/org-store');
+
 
 module.exports = React.createClass({
+  mixins: [
+    Reflux.listenTo(OrgStore, 'onChange')
+  ],
   getInitialState: function(){
     return {
-      orgData: {
-        title: 'Org Title',
-        location: 'Org Location',
-        description: 'Org info',
-      },
+      orgData: [],
       managerData: [],
       repData: [],
       devData: [],
@@ -24,8 +27,17 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function(){
-    //gather org data here
+    Actions.getOrg(sessionStorage.getItem('orgId'));
+    // 411
   },
+
+  onChange: function(event, data){
+    console.log("data: ", data)
+    this.setState({
+      orgData: data
+    });
+  },
+  
 
   render: function(){
     return (
