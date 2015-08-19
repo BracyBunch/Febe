@@ -46,7 +46,11 @@ router.post('/', function(req, res) {
     res.json(organization);
   }, function(err) {
     console.error(err);
-    res.status(500).send();
+    if (err.code === 'Neo.ClientError.Schema.ConstraintViolation') {
+      res.status(409).send('Organization with EIN ' + req.body.ein + ' already exists');
+    } else {
+      res.status(500).send();
+    }
   });
 });
 
