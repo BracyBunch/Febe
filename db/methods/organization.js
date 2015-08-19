@@ -18,6 +18,7 @@ var create = function(fields, owner) {
   if (owner === undefined) return Promise.reject('Owner not given.');
 
   return Organization.save(fields).then(function(organization) {
+    User.follow(owner, organization);
     return db.relate(owner, 'owns', organization).then(function() {
       return organization;
     });
@@ -53,7 +54,8 @@ var clean = common.clean_generator(Organization);
  * @param {Integer|Organization}  organization  Organization object or id to add Tag to
  * @param {Integer|Tag}           cause         Tag or id to add to Organization
  */
-var add_cause = common.add_rel_generator('Organization', 'cause', 'Tag', true);
+// var add_cause = common.add_rel_generator('Organization', 'cause', 'Tag', true);
+var add_cause = common.add_rel_generator('cause', true);
 
 /**
  * Adds an array of Tags as causes of Organization

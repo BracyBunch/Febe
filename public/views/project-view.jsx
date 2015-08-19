@@ -16,6 +16,7 @@ var ProjectMedia = require('../components/project/project-media')
 var ProjectMethods = require('../components/project/sharedProjectMethods/')
 var ProjectEdit = require('../components/project/edit-components/project-body-edit')
 var ProjectStore = require('../stores/project-store');
+var Organization = require('../components/organization/org-description');
 
 
 module.exports = React.createClass({
@@ -39,16 +40,17 @@ module.exports = React.createClass({
       contributors: ['john', 'bob', 'joe', 'sally'],
       startDate: 'START DATE',
       endDate: 'END DATE',
-      orgData: [],
       managerData: [],
+      orgData: [],
+      orgName: 'g',
       repData: [],
       devData: [],
-      swap: false
+      swap: false,
     };
   },
 
   componentWillMount: function(){
-    Actions.getProject(51);
+    Actions.getProject(sessionStorage.getItem('projectId'));
   },
 
   onChange: function(event, data){
@@ -59,12 +61,16 @@ module.exports = React.createClass({
       description: data.description,
       startDate: data.created,
       endDate: data.complete_by,
-      owner: data.owner.first_name + data.owner.last_name,
-      repData: data.owner
+      ownerFirst: data.owner.first_name,
+      ownerLast: data.owner.last_name,
+      repData: data.owner,
+      orgData: data.organization,
+      orgName: data.organization.name
     });
   },
 
   edit: function() {
+    console.log('rep', this.state.repData, 'org', this.state.orgData)
     this.setState({
       swap: !this.state.swap
     });
@@ -120,7 +126,6 @@ module.exports = React.createClass({
         <Timeline time={this.state.endDate} />
         <Description desc={this.state.description} />
         <ProjectTags tags={this.state.technology} />
-        <Contributors contributors={this.state.contributors} />
         <ProjectMedia />
       </div>
       :
@@ -144,10 +149,25 @@ module.exports = React.createClass({
           <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit/Follow </button>
         </div>
           <Participant 
-            repID={this.state.repID} />
+            firstName={this.state.repData.first_name}
+            lastName={this.state.repData.last_name}
+            title={this.state.orgData.name} 
+            location={this.state.repData.location} 
+            type={'Non-Profit Representative'}/>
           <Participant 
-            managerID={this.state.managerID} />
-          <button className='btn btn-warning'> Organization Link </button>
+            firstName={this.state.ownerFirst}
+            lastName={this.state.ownerLast}
+            title={this.state.orgName} 
+            location={this.state.location} 
+            type={'Project Manager'}/>
+        <div className='org-desc'>
+          <Organization 
+          name={this.state.orgData.name} 
+          location={this.state.orgData.location}
+          website={this.state.orgData.website_url}
+          ein={this.state.orgData.ein} />
+        </div>
+          <button className='btn btn-warning' onClick={this.goToOrg}> Organization Link </button>
           <Timeline 
             start={this.state.startDate}
             end={this.state.endDate} />

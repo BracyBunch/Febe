@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "0.12"
+services:
+  - neo4j
+env:
+  - GRAPHSTORY_URL=https://neo4j:neo4j@localhost:7474

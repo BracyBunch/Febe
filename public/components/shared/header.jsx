@@ -29,7 +29,7 @@ module.exports = React.createClass({
         },
         {
            type: MenuItem.Types.LINK, 
-           payload: 'devprofile', 
+           payload: '/devprofile', 
            text: 'My Profile'
         },
         { type: MenuItem.Types.SUBHEADER, text: 'Resources' },

@@ -4,7 +4,7 @@ var expect    = require('chai').expect;
 var models = require('../../db');
 
 var clean_up = function(ids, cb) {
-  models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() DELETE n,r', {'ids': ids}, function() {
+  models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() OPTIONAL MATCH (te:TimelineEntry)<-[r2]->(n) DELETE n,r,r2,te', {'ids': ids}, function() {
     cb();
   });
 };
@@ -56,11 +56,11 @@ describe('Integration tests', function() {
 
   it('should be able to add Users as members of a Project', function(done) {
     models.Project.add_members(instances.project, [instances.users.dev1, instances.users.dev2, instances.users.dev3]).then(function() {
-      models.Project.with_extras(instances.project, {'members': true}).then(function(t_project) {
-        expect(t_project.members).to.be.an('array');
-        expect(t_project.members).to.have.length(3);
-        expect(t_project.members[0]).to.be.an('object');
-        expect(t_project.members[0].kind).to.eql('dev');
+      models.Project.with_extras(instances.project, {'members': true}).then(function(project) {
+        expect(project.members).to.be.an('array');
+        expect(project.members).to.have.length(3);
+        expect(project.members[0]).to.be.an('object');
+        expect(project.members[0].kind).to.eql('dev');
         done();
       }, done);
     }, done);

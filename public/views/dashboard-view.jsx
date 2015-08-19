@@ -44,9 +44,10 @@ module.exports = React.createClass({
             return <TimelineEntry key={entry.entry.id} entry={entry}/>;
           }.bind(this))}
         </div> 
-        <Link to="/devprofile"><button className="btn btn-primary">Dev Profile Temp</button></Link>
-        <Link to="/createproject"><button className="btn btn-primary">Create Project Temp</button></Link>
-        <Link to="/npprofile"><button className="btn btn-primary">Np Profile Temp</button></Link>
+        <Link to="/devprofile"><button className="btn btn-primary">Dev Profile</button></Link>
+        <Link to="/createproject"><button className="btn btn-primary">Create Project</button></Link>
+        <Link to="/npprofile"><button className="btn btn-primary">View NP Profile</button></Link>
+        <Link to="/createorg"><button className="btn btn-primary">Create Organization</button></Link>
         <div>
           <ThumbnailList />
         </div> 

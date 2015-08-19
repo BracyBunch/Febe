@@ -1,7 +1,6 @@
 var React = require('react');
 var Link = require('react-router').Link
 
-
 module.exports = React.createClass({
   getInitialState: function() {
     return {
@@ -10,9 +9,16 @@ module.exports = React.createClass({
   
   render: function() {
     return (
-      <div> <span> Contributors: </span>
+      <div>
         <span> 
-          ORG DESCRIPTION
+          Organization: {this.props.name}
+        </span> 
+        <br/>
+        EIN: {this.props.ein} <br/>
+        Website: <a href={this.props.website}> {this.props.website} </a>
+        <br/>
+        <span>
+          Location: {this.props.location}
         </span>
       </div>
     )

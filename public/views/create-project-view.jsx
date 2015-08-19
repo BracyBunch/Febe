@@ -9,6 +9,7 @@ var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var DatePicker = require('../components/datepicker/datepicker');
 var Autocomplete =require('../components/shared/autocomplete');
+var ProjectView = require('./project-view');
 var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
@@ -54,6 +55,8 @@ module.exports = React.createClass({
       })}).then(function(res) {
         return res.json();
       }).then(function(data) {
+        // i need to pass this to /project/ view
+        sessionStorage.setItem('projectId', data.id);
         this.transitionTo('/project/' + data.id);
       }.bind(this));
     }
@@ -86,7 +89,7 @@ module.exports = React.createClass({
           </form>
           <div>
             <Autocomplete url='/organization/search?fragment=' placeholder='Search for an organization'
-            multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
+             min_chars={2} multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
           </div>
           <div>
             <h5>Preferred Completion Date</h5>
