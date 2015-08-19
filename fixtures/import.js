@@ -5,12 +5,18 @@ var causes = require('./causes.json');
 
 var queries = [];
 
-skills.forEach(function(t) {
-  queries.push(db.Tag.save({name: t.name, kind: 'skill'}));
-});
+if (process.env.TRAVIS) process.exit();
 
-causes.forEach(function(t) {
-  queries.push(db.Tag.save({name: t.name, kind: 'cause'}));
+db.Tag.where({'name': skills[0].name}).then(function(rows) {
+  if (rows.length) process.exit();
+
+  skills.forEach(function(t) {
+    queries.push(db.Tag.save({name: t.name, kind: 'skill'}));
+  });
+
+  causes.forEach(function(t) {
+    queries.push(db.Tag.save({name: t.name, kind: 'cause'}));
+  });
 });
 
 Promise.all(queries).then(function(){console.log('done');});

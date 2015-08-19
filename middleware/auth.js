@@ -14,7 +14,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var keys;
 
-if (process.env.NODE_ENV === 'production' || process.env.TRAVIS === true) {
+if (process.env.NODE_ENV === 'production' || process.env.TRAVIS) {
   keys = {
     'FACEBOOK_APP_ID': process.env.FACEBOOK_APP_ID,
     'FACEBOOK_APP_SECRET': process.env.FACEBOOK_APP_SECRET,

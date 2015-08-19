@@ -6,6 +6,12 @@ services:
 env:
   global:
     - GRAPHSTORY_URL=http://neo4j:neo4j@localhost:7474
+    - GITHUB_APP_ID='a'
+    - GITHUB_APP_SECRET='a'
+    - FACEBOOK_APP_ID='a'
+    - FACEBOOK_APP_SECRET='a'
+    - LINKEDIN_APP_ID='a'
+    - LINKEDIN_APP_SECRET='a'
 jdk:
   - oraclejdk7
 before_install:
