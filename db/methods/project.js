@@ -136,7 +136,7 @@ var with_extras = function(project, options) {
       cleaned_projects.push(cleaned_project);
     });
 
-    return (project_id === null) ? projects : projects[0];
+    return (project_id === null) ? cleaned_projects : cleaned_projects[0];
   });
 };
 
