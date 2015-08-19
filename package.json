@@ -4,7 +4,7 @@
   "description": "Service to connect non-profits with engineers looking to help their communities",
   "main": "bin/www",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --recursive",
     "dev-server": "gulp",
     "server": "node ./bin/www",
     "start": "npm run server & npm run dev-server",
