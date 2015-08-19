@@ -6,7 +6,14 @@ html *
 }
 
 /* signup */
-
+.signupBorder {
+  border: 2px solid lightgrey;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  padding: 15px;
+  opacity: 50%;
+}
 .checkbox {
   text-align: left;
   margin: 0 auto;
@@ -14,7 +21,7 @@ html *
 }
 
 .signupBtn {
-  padding: 10px auto;
+  margin: 12px auto auto auto;
 }
 
 .oauthPic {
@@ -29,7 +36,6 @@ html *
 }
 
 .centerSignup {
-
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -254,20 +260,13 @@ html *
 }
 
 /*other*/
-.roundedButton {
-  border-radius: 10px; 
-  -moz-border-radius: 10px; 
-  -webkit-border-radius: 10px; 
-  border: 1px solid white;
-  color: white;
-}
-
 .fullscreen {
   height: 100%;
 }
 
 .headerText {
-  color: white;
+  color: black;
+  opacity: 100%;
 }
 
 .headerInline {
