@@ -5,6 +5,7 @@ var mytheme = require('../../material-ui/material-ui-theme');
 var Colors = require('../../material-ui/colors');
 var AppBar = mui.AppBar;
 var Checkbox = mui.Checkbox;
+var FlatButton = mui.FlatButton;
 var Router = require('react-router');
 var SigninModal = require('../homepage/signinModal');
 var Link = Router.Link;
@@ -40,6 +41,10 @@ module.exports = React.createClass({
         <AppBar
           showMenuIconButton={false}
           style={{"opacity": "0.2"}}>
+            
+            {<FlatButton label={this.props.title} />}
+            {<FlatButton label={this.props.title2} />}
+            {<FlatButton label={this.props.title3} />}
             <Link to={this.props.link} className="navbar-brand headerText">{this.props.title}</Link>
             <Link to={this.props.link2} className="navbar-brand headerText">{this.props.title2}</Link>
             <Link to={this.props.link3} className="navbar-brand headerText">{this.props.title3}</Link> 
