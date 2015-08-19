@@ -4,10 +4,9 @@ var db = require('../db');
 
 /**
  * Generates a function to relate two nodes
- * @param  {String}  target_label Label of the target node
- * @param  {String}  rel_name     Name of the relationship
- * @param  {String}  rel_label    Label of the start node
- * @param  {Boolean} reverse      If true swaps the direction of the relationship
+ * @param  {String}   rel_name         Name of the relationship
+ * @param  {Boolean}  [reverse=false]  If true swaps the direction of the relationship
+ * @param  {Function} [when_complete]  Function to run when done
  * @return {Function}
  */
 var add_rel_generator = function(rel_name, reverse, when_complete) {

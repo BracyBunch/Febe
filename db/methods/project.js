@@ -92,10 +92,10 @@ var add_skill = common.add_rel_generator('skill', true);
 var add_skills = common.add_rels_generator(add_skill);
 
 /**
- * Fetches one Project including specifed extras
- * @param  {Integer|Project}  [project]       Project or id
- * @param  {Object|Boolean}   [options=true]  Either an object with with the extras to include or true to include all extras
- * @return {Promise.<Project>}                Project with all specified models included
+ * Fetches one or more Projects including specifed extras
+ * @param  {Integer|Project}  [project]             Project or id, if not given or null will return multiple projects
+ * @param  {Object|Boolean}   [options=true]        Either an object with with the extras to include or true to include all extras
+ * @return {Promise.<Project>|Promise.<Project[]>}  Projects with all specified models included
  */
 var with_extras = function(project, options) {
   var project_id = (project == null) ? null : (project.id || project);
@@ -104,7 +104,11 @@ var with_extras = function(project, options) {
     (project_id !== null) ? 'WHERE id(node)={id}' : ''
   ].join(' ');
 
-  if (options === undefined || options === true) options = {'include': true};
+  if (options === undefined || options === true) {
+    options = {'include': true};
+  } else if (typeof options !== 'object') {
+    options = {};
+  }
 
   var include = {};
   if (options.include === true || options.members) include.members = {'model': User, 'rel': 'member_of', 'direction': 'in', 'many': true};
