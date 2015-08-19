@@ -252,11 +252,12 @@ html *
   width: 80%;
 }
 
-.profileBox {
-  display: inline-block;
-  width: 30%;
-  height: 200px;
-  margin: 1em;
+.profileMargin {
+  margin: 30px auto 10px auto;
+}
+
+.label-color {
+  background-color: #9fa8da;
 }
 
 /*other*/

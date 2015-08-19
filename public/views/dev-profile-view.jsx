@@ -48,7 +48,6 @@ module.exports = React.createClass({
 	},
 
 	edit: function() {
-    console.log('swapped')
     this.setState({
     	swap: !this.state.swap
     });
@@ -62,7 +61,10 @@ module.exports = React.createClass({
       strengths: Object.keys(this.refs.strengths.get_selections()),
       interests: Object.keys(this.refs.interests.get_selections())
     };
-    this.setState({'strengths': this.refs.strengths.get_selections_array(), 'interests': this.refs.interests.get_selections_array()}, this.edit);
+    this.setState({
+      'strengths': this.refs.strengths.get_selections_array(), 
+      'interests': this.refs.interests.get_selections_array()});
+    this.edit();
     ProfileMethods.updateProfile('/user', updateData);
 	},
 
@@ -79,7 +81,8 @@ module.exports = React.createClass({
 	},
 
 	updateLinks: function(link) {
-		this.state.links.push(link);
+    var links = this.state.links.slice();
+    links.push(link);
     this.setState({
       links: links
     });
@@ -93,60 +96,80 @@ module.exports = React.createClass({
 
   strengthsList: function() {
     return this.state.strengths.map(function(strength) {
-      return <span className="label label-primary">{strength.name}</span>;
+      return <span className="label label-color">{strength.name}</span>;
     });
   },
 
   interestsList: function() {
     return this.state.interests.map(function(interest) {
-      return <span className="label label-primary">{interest.name}</span>;
+      return <span className="label label-color">{interest.name}</span>;
     });
   },
 
 	profileEdit: function(edit) {
 		return edit ? 
-      <div>
-        <ProfileHeader 
-            edit={this.edit}
-		        firstName={this.state.userData.first_name}
-		        lastName={this.state.userData.last_name}
-		        avatar={this.state.userData.avatar}
-		        title={this.state.title}
-		        location={this.state.location}
-		        bio={this.state.bio}
-		        links={this.state.links} />
-        <div className="">
-          <div>
-            <h3>Tech Strengths</h3>
-            {this.strengthsList()}
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 col-md-offset-2" style={{"border": "2px solid black"}}>
+            <ProfileHeader 
+                edit={this.edit}
+    		        firstName={this.state.userData.first_name}
+    		        lastName={this.state.userData.last_name}
+    		        avatar={this.state.userData.avatar}
+    		        title={this.state.title}
+    		        location={this.state.location}
+    		        bio={this.state.bio}
+    		        links={this.state.links} />
           </div>
-          <div>
-            <h3>Interests</h3>
-            {this.interestsList()}
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+              <div>
+                <h3>Tech Strengths</h3>
+                {this.strengthsList()}
+              </div>
+              <div>
+                <h3>Interests</h3>
+                {this.interestsList()}
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+              <Bio bio={this.state.userData.bio} />
+              <Projects />
+            </div>
           </div>
         </div>
-        <Bio bio={this.state.userData.bio} />
-        <Projects />
       </div>
       :
       <div>
-        <ProfileHeaderEdit 
-            edit={this.save}
-		        firstName={this.state.userData.first_name}
-		        lastName={this.state.userData.last_name}
-            updateTitle={this.updateTitle}
-            updateLocation={this.updateLocation} />
-        <div className="">
-          <div id='addlStrengths'>
-            <h3>Tech Strengths</h3>
-            <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>
-          </div>
-          <div id='addlInterests'>
-            <h3>Interests</h3>
-            <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' values={this.state.interests} ref='interests'/>
+        <div className="row">
+          <div className="col-md-10 col-md-offset-1">
+            <ProfileHeaderEdit 
+                edit={this.save}
+    		        firstName={this.state.userData.first_name}
+    		        lastName={this.state.userData.last_name}
+                updateTitle={this.updateTitle}
+                updateLocation={this.updateLocation} />
           </div>
         </div>
-        <BioEdit updateBio={this.updateBio} />
+        <div className="row">
+          <div className="col-md-10 col-md-offset-1">
+            <div>
+              <h3>Tech Strengths</h3>
+              <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>
+            </div>
+            <div>
+              <h3>Interests</h3>
+              <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' values={this.state.interests} ref='interests'/>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-10 col-md-offset-1">
+            <BioEdit updateBio={this.updateBio} />
+          </div>
+        </div>
       </div>
 	},
 

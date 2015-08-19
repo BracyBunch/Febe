@@ -10,6 +10,8 @@ var ImgurUpload = require('../utils/imgur');
 var keys = require('../../keys');
 var ajax = require('../utils/fetch');
 
+var Promise = require('bluebird');
+
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin],
   getInitialState: function() {
@@ -52,6 +54,8 @@ module.exports = React.createClass({
   },
 
   handleImage: function(event) {
+    var imagePromise = new Promise(ImgurUpload.imgurUpload(image))
+
     var that = this;
     // FileReader is a native browser file reader
     var reader = new FileReader();
