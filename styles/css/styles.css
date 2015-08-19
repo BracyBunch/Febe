@@ -1,6 +1,33 @@
-/* signup */
+/* main font */
+html *
+{
+   color: #000;
+   font-family: Gotham;
+}
 
-.oauthPic, .signupBtn{
+body{
+  background-color: #f2f2f2;
+}
+/* signup */
+.signupBorder {
+  border: 2px solid lightgrey;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  padding: 15px;
+  opacity: 50%;
+}
+.checkbox {
+  text-align: left;
+  margin: 0 auto;
+  padding: 0px 0 0 36%;
+}
+
+.signupBtn {
+  margin: 12px auto auto auto;
+}
+
+.oauthPic {
 	width: 180px;
 	height: 40px;
 	margin: 5px;
@@ -9,6 +36,12 @@
 .center {
   margin-left: auto ;
   margin-right: auto ;
+}
+
+.centerSignup {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .loginModal {
@@ -42,7 +75,6 @@
   width: 400px;
   margin-left: auto;
   margin-right: auto;
-  font-family: futura;
 }
 
 .techstrengths{
@@ -50,7 +82,6 @@
   margin-right: auto;
   text-align: center;
   position: relative;
-  font-family: futura;
   max-width: 400px;
 }
 
@@ -74,11 +105,10 @@
   text-align: center;
   float: none;
   position: relative;
-  font-family: futura;
   width: 100%;
 }
-.site-name, .iamdev, .slogan, .scroll-down, .signup-buttons{
-  color: white;
+.site-name, .iamdev, .scroll-text, .signup-buttons, .glyphicon-circle-arrow-down{
+  color: #ffffff;
 }
 
 .carouselProjects {
@@ -87,20 +117,21 @@
 }
 
 .site-name{
-  padding-top: 5%;
+  padding-top: 2%;
+  padding-left: 5%;
   font-size: 40px;
   color: #1CB3FF;
 }
 
 .iamdev{
-  top: 10%;
+  top: 7%;
   padding-top: 15px;
   padding-bottom: 15px;
   font-size: 30px;
 }
 
 .signup-buttons{
-  top: 15%;
+  top: 10%;
 }
 
 .under-buttons{
@@ -110,7 +141,8 @@
 .slogan{
   padding-top: 15px;
   font-size: 20px;
-  top: 30%;
+  top: 20%;
+  color: #4B7091;
 }
 
 .scroll-down{
@@ -122,6 +154,14 @@
 
 .headerMargin {
   width: 90%;
+}
+
+.header-button1{
+  color: white;
+}
+
+.first-button{
+  color: rgba(0,0,255,0.2);
 }
 
 /*footer*/
@@ -237,20 +277,13 @@
 }
 
 /*other*/
-.roundedButton {
-  border-radius: 10px; 
-  -moz-border-radius: 10px; 
-  -webkit-border-radius: 10px; 
-  border: 1px solid white;
-  color: white;
-}
-
 .fullscreen {
   height: 100%;
 }
 
 .headerText {
-  color: white;
+  color: black;
+  opacity: 100%;
 }
 
 .headerInline {

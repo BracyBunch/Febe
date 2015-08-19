@@ -1,4 +1,6 @@
 var React = require('react/addons');
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
 var DropdownButton = require('../components/project/dropdown');
@@ -11,6 +13,14 @@ var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function(){ 
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
   getInitialState: function() {
     return {
       projectName: '',

@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 var ValidationMixin = require('react-validation-mixin');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var Tooltip = require('react-bootstrap').Tooltip;
@@ -12,6 +13,14 @@ var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function(){ 
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
   getInitialState: function() {
     return {
       ein: '',

@@ -1,5 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
@@ -9,18 +11,24 @@ var Projects = require('../components/profile/profile-projects');
 var ProfileStore = require('../stores/profile-store');
 var Actions = require('../actions');
 var Link = require('react-router').Link;
-
 var ProfileHeaderEdit = require('../components/profile/edit-components/profile-header-edit');
 var NPProfileBodyEdit = require('../components/profile/edit-components/np-profile-body-edit');
 var BioEdit = require('../components/profile/edit-components/profile-bio-edit');
 var OrgLink = require('../components/profile/org-link');
-
 var ProfileMethods = require('../components/profile/sharedProfileMethods');
 
 module.exports = React.createClass({
 	mixins:[
 		Reflux.listenTo(ProfileStore, 'onChange')
 	],
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function(){ 
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
 	getInitialState: function(){
 		return {
 			title: 'Please enter your title & company',

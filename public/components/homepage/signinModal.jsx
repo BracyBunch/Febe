@@ -48,7 +48,7 @@ module.exports = React.createClass({
           show={this.state.showModal}
           onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title className="site-name">Good In This World</Modal.Title>
+            <Modal.Title className="signupCentered">Good In This World</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Oauth />
