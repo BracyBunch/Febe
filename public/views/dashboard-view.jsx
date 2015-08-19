@@ -4,6 +4,7 @@ var Reflux = require('reflux');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
+var ThumbnailList = require('../components/thumbnail/thumbnailList');
 var Link = Router.Link;
 
 var TimelineStore = require('../stores/timeline-store');
@@ -32,11 +33,13 @@ module.exports = React.createClass({
           {this.state.timeline.map(function(entry) {
             return <TimelineEntry key={entry.entry.id} entry={entry}/>;
           }.bind(this))}
-        </div>
-        <div>Dashboard</div>
+        </div> 
         <Link to="/devprofile"><button className="btn btn-primary">Dev Profile Temp</button></Link>
         <Link to="/createproject"><button className="btn btn-primary">Create Project Temp</button></Link>
         <Link to="/npprofile"><button className="btn btn-primary">Np Profile Temp</button></Link>
+        <div>
+          <ThumbnailList />
+        </div> 
         <Footer />
       </div>
     );
