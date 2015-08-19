@@ -76,7 +76,7 @@ module.exports = React.createClass({
           </form>
           <div>
             <Autocomplete url='/organization/search?fragment=' placeholder='Search for an organization'
-            multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
+             min_chars={2} multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
           </div>
           <div>
             <h5>Preferred Completion Date</h5>

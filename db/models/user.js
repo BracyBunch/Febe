@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var Promise = require('bluebird');
 var db = require('../db');
 var model = require('seraph-model');
@@ -64,5 +65,14 @@ User.query = Promise.promisify(User.query, User);
 User.save = Promise.promisify(User.save, User);
 User.read = Promise.promisify(User.read, User);
 User.where = Promise.promisify(User.where, User);
+
+User.follow = function(user, target) {
+  var user_id = _.get(user, 'id', user);
+  var target_id = _.get(target, 'id', target);
+
+  return db.has_rel(user_id, 'follows', target_id).then(function(exists) {
+    if (!exists) return db.relate(user_id, 'follows', target_id);
+  });
+};
 
 module.exports = User;

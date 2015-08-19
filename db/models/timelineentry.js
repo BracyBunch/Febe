@@ -21,9 +21,15 @@ TimelineEntry.save = Promise.promisify(TimelineEntry.save, TimelineEntry);
 TimelineEntry.read = Promise.promisify(TimelineEntry.read, TimelineEntry);
 TimelineEntry.where = Promise.promisify(TimelineEntry.where, TimelineEntry);
 
+/**
+ * Creates a TimelineEntry
+ * @param  {String}         event   ['create', 'update']
+ * @param  {Integer|Model}  from    Model generating the entry
+ * @param  {String}         [text]  Optional info text
+ * @param  {Integer|Model}  [to]    Optional model to connect the entry to
+ * @return {Promise}
+ */
 TimelineEntry.create = function(event, from, text, to) {
-  console.log(event, from, text, to);
-
   from = from.id || from;
   if (to !== undefined) to = to.id || to;
 

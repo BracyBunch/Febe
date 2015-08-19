@@ -1,16 +1,19 @@
 var _ = require('lodash');
-var Organization = require('../db').Organization;
+var models = require('../db');
+var Organization = models.Organization;
 var express = require('express');
 var router = express.Router();
 
+var TimelineEntry = require('../db/models/timelineentry');
+
 router.get('/search', function(req, res) {
   var fragment = req.query.fragment;
-  if (!fragment || fragment.length < 3) return res.status(400).send();
+  if (!fragment || fragment.length < 2) return res.status(400).send();
 
   Organization.find_by_fragment(fragment).then(res.json.bind(res));
 });
 
-router.get('/:organization_id', function(req, res){
+router.get('/:organization_id', function(req, res) {
   var organization_id = Number(req.params.organization_id);
   if (Number.isNaN(organization_id)) return res.status(400).send();
 
@@ -19,8 +22,7 @@ router.get('/:organization_id', function(req, res){
   });
 });
 
-router.post('/', function(req, res){
-  console.log(req.user)
+router.post('/', function(req, res) {
   if (!req.isAuthenticated()) return res.status(403).send();
   if (req.user.kind !== 'rep') return res.status(400).send('Must be a rep to create an organization');
 
@@ -39,6 +41,7 @@ router.post('/', function(req, res){
     'logo_url': req.body.logo_url,
     'location': req.body.location
   }, req.user.id).then(function(organization) {
+    TimelineEntry.create('create', req.user, 'created organization', organization);
     res.json(organization);
   }, function(err) {
     console.error(err);
