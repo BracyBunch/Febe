@@ -12,7 +12,10 @@ module.exports = React.createClass({
       <div>
         <span> 
           Organization: {this.props.name}
-        </span>
+        </span> 
+        <br/>
+        EIN: {this.props.ein} <br/>
+        Website: <a href={this.props.website}> {this.props.website} </a>
         <br/>
         <span>
           Location: {this.props.location}

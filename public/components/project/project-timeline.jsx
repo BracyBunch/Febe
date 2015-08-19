@@ -12,10 +12,6 @@ module.exports = React.createClass({
     }
   },
 
-  componentDidMount: function(){
-    this.forceUpdate();
-  },
-
   componentWillMount: function(){
     setTimeout(function(){this.calcTime()}.bind(this), 500)
   },

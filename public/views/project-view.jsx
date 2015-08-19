@@ -54,7 +54,6 @@ module.exports = React.createClass({
       endDate: data.complete_by,
       ownerFirst: data.owner.first_name,
       ownerLast: data.owner.last_name,
-      ownerName: data.owner.first_name + data.owner.last_name,
       repData: data.owner,
       orgData: data.organization,
       orgName: data.organization.name
@@ -62,6 +61,7 @@ module.exports = React.createClass({
   },
 
   edit: function() {
+    console.log('rep', this.state.repData, 'org', this.state.orgData)
     this.setState({
       swap: !this.state.swap
     });
@@ -140,10 +140,10 @@ module.exports = React.createClass({
           <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit/Follow </button>
         </div>
           <Participant 
-            firstName={this.state.ownerFirst}
-            lastName={this.state.ownerLast}
-            title={this.state.orgName} 
-            location={this.state.location} 
+            firstName={this.state.repData.first_name}
+            lastName={this.state.repData.last_name}
+            title={this.state.orgData.name} 
+            location={this.state.repData.location} 
             type={'Non-Profit Representative'}/>
           <Participant 
             firstName={this.state.ownerFirst}
@@ -152,9 +152,13 @@ module.exports = React.createClass({
             location={this.state.location} 
             type={'Project Manager'}/>
         <div className='org-desc'>
-          <Organization name={this.state.orgName} location={this.state.location} />
+          <Organization 
+          name={this.state.orgData.name} 
+          location={this.state.orgData.location}
+          website={this.state.orgData.website_url}
+          ein={this.state.orgData.ein} />
         </div>
-          <button className='btn btn-warning'> Organization Link </button>
+          <button className='btn btn-warning' onClick={this.goToOrg}> Organization Link </button>
           <Timeline 
             start={this.state.startDate}
             end={this.state.endDate} />
