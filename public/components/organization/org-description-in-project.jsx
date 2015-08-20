@@ -24,17 +24,9 @@ module.exports = React.createClass({
           Location: {this.props.location}
         </p>
         <p>
-          Description: {this.props.description}
-        </p>
-        <p>
           Website: <a href={this.props.website}> {this.props.website} </a>
         </p>
-        <p>
-          Causes: {this.props.causes}
-        </p>
-        <p>
-          Verified: {this.props.verified}
-        </p>
+
       </div>
     )
   }
