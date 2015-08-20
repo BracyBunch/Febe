@@ -4,10 +4,7 @@ var Oauth = require('../signup/signupOAuth');
 var LogButton = require('../shared/logInOutButton');
 var ajax = require('../../utils/fetch');
 var Navigation = require('react-router').Navigation;
-var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
-var mytheme = require('../../material-ui/material-ui-theme');
-var Colors = require('../../material-ui/colors');
+var mui = require('material-ui')
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 

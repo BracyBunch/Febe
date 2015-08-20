@@ -4,6 +4,7 @@ var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
+var Paper = mui.Paper;
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
@@ -44,7 +45,7 @@ module.exports = React.createClass({
 		Actions.getProfile(window.localStorage.getItem('userId'));
 	},
 	onChange: function(event, userData){
-		this.setState({userData: userData});
+		// this.setState({userData: userData});
     this.setState({
       title: userData.title,
       location: userData.location,
@@ -116,9 +117,10 @@ module.exports = React.createClass({
 
 	profileEdit: function(edit) {
 		return edit ? 
-      <div className="container">
+      <div className="container profileMargin">
+      <Paper zDepth={4}>
         <div className="row">
-          <div className="col-md-8 col-md-offset-2" style={{"border": "2px solid black"}}>
+          <div className="col-md-8 col-md-offset-1 profileBox">
             <ProfileHeader 
                 edit={this.edit}
     		        firstName={this.state.userData.first_name}
@@ -130,7 +132,7 @@ module.exports = React.createClass({
     		        links={this.state.links} />
           </div>
           <div className="row">
-            <div className="col-md-8 col-md-offset-2">
+            <div className="col-md-8 col-md-offset-1">
               <div>
                 <h3>Tech Strengths</h3>
                 {this.strengthsList()}
@@ -142,12 +144,13 @@ module.exports = React.createClass({
             </div>
           </div>
           <div className="row">
-            <div className="col-md-8 col-md-offset-2">
+            <div className="col-md-8 col-md-offset-1">
               <Bio bio={this.state.userData.bio} />
               <Projects />
             </div>
           </div>
         </div>
+      </Paper>
       </div>
       :
       <div>
@@ -181,34 +184,14 @@ module.exports = React.createClass({
       </div>
 	},
   generateMenu: [
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '/', 
-      text: 'Home'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/dashboard', 
-      text: 'Dashboard'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/browse', 
-      text: 'Browse'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/devprofile', 
-      text: 'My Profile'
-    },
+    { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
+    { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
+    { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
+    { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
     { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
-    { route: '/', text: 'About' },
-    { route: '/', text: 'Team' },
-    { 
-      type: MenuItem.Types.LINK, 
-      payload: 'https://github.com/BracyBunch/Febe', 
-      text: 'GitHub' 
-    }
+    { route: '/', text: 'About'},
+    { route: '/', text: 'Team'},
+    { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub' }
   ],
 	render: function() {
 		return (

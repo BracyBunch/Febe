@@ -277,6 +277,10 @@ body{
   background-color: #9fa8da;
 }
 
+.profileBox {
+  background-color: white;
+}
+
 /*other*/
 .fullscreen {
   height: 100%;
