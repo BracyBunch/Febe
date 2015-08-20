@@ -105,13 +105,13 @@ module.exports = React.createClass({
 
   strengthsList: function() {
     return this.state.strengths.map(function(strength) {
-      return <span className="label label-color">{strength.name}</span>;
+      return <h4 className="label-inline"> <span className="label label-color">{strength.name}</span> </h4>;
     });
   },
 
   interestsList: function() {
     return this.state.interests.map(function(interest) {
-      return <span className="label label-color">{interest.name}</span>;
+      return <h4 className="label-inline"> <span className="label label-color">{interest.name}</span> </h4>;
     });
   },
 

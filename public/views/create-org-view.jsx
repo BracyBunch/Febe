@@ -12,7 +12,6 @@ var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var ImgurUpload = require('../utils/imgur');
-var keys = require('../../keys');
 var ajax = require('../utils/fetch');
 
 var Promise = require('bluebird');

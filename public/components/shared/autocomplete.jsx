@@ -167,7 +167,7 @@ var SelectionList = React.createClass({
     return (
       <div className='autocomplete-list'>
         {_.map(this.props.values, function(name, id) {
-          return <span key={id} onClick={this.remove_handler} data-id={id} data-name={id} className='autocomplete-list-item label label-color'>{name}</span>;
+          return <h4 className="label-inline"> <span key={id} onClick={this.remove_handler} data-id={id} data-name={id} className='autocomplete-list-item label label-color'>{name}</span> </h4>;
         }.bind(this))}
       </div>
     );
