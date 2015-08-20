@@ -9,7 +9,7 @@ var passport      = require('./middleware/auth');
 
 var auth          = require('./routes/auth');
 var user          = require('./routes/user');
-var EIN           = require('./routes/ein');
+var ein           = require('./routes/ein');
 var organization  = require('./routes/organization');
 var project       = require('./routes/project');
 var tag           = require('./routes/tag');
@@ -33,7 +33,7 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 app.use('/auth', auth.router);
 
-app.use('/ein', EIN);
+app.use('/ein', ein);
 app.use('/user', user);
 app.use('/organization', organization);
 app.use('/project', project);

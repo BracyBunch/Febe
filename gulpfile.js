@@ -1,12 +1,12 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var server = require('gulp-server-livereload');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var reactify = require('reactify');
 var notifier = require('node-notifier');
-var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 
 
 var notify = function(error) {
@@ -50,12 +50,12 @@ function bundle() {
     })
     .on('error', notify)
     .pipe(source('main.js'))
-    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./'));
 }
-bundler.on('update', bundle)
+bundler.on('update', bundle);
 
 gulp.task('build', function() {
-  bundle()
+  bundle();
 });
 
 gulp.task('serve', function(done) {
@@ -65,8 +65,8 @@ gulp.task('serve', function(done) {
         enable: true,
         filter: function(filePath, cb) {
           if(/main.js/.test(filePath)) {
-            cb(true)
-          } 
+            cb(true);
+          }
         }
       },
       open: true
@@ -74,3 +74,19 @@ gulp.task('serve', function(done) {
 });
 
 gulp.task('default', ['build', 'serve']);
+gulp.task('heroku:production', function() {
+  browserify({
+    entries: ['./public/app.jsx'],
+    transform: [reactify],
+    extensions: ['.jsx'],
+    debug: false,
+    cache: {},
+    packageCache: {},
+    fullPaths: true
+  })
+  .bundle()
+  .pipe(source('main.js'))
+  .pipe(buffer())
+  .pipe(uglify())
+  .pipe(gulp.dest('./'));
+});
