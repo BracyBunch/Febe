@@ -6,7 +6,7 @@ var app           = require('../../app');
 
 chai.use(chaiHttp);
 
-describe('Organization Route Tests', function() {
+xdescribe('Organization Route Tests', function() {
 
     it('should return with status code 200 after POST to /organization/add', function(done) {
       chai.request(app)

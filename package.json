@@ -4,11 +4,10 @@
   "description": "Service to connect non-profits with engineers looking to help their communities",
   "main": "bin/www",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --recursive --delay",
     "dev-server": "gulp",
     "server": "node ./bin/www",
-    "start": "npm run server & npm run dev-server",
-    "postinstall": "gulp build & node fixtures/import"
+    "start": "npm run server & npm run dev-server"
   },
   "repository": {
     "type": "git",
@@ -57,15 +56,15 @@
     "chai": "^3.2.0",
     "chai-http": "^1.0.0",
     "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
     "gulp-react": "^3.0.1",
     "gulp-server-livereload": "^1.4.0",
-    "gulp-util": "^3.0.6",
+    "gulp-uglify": "^1.2.0",
     "gulp-watch": "^4.3.4",
     "mocha": "^2.2.5",
     "node-notifier": "^4.2.3",
     "reactify": "^1.1.1",
     "sinon": "^1.15.4",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.3.1"
   }

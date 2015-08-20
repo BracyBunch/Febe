@@ -8,6 +8,11 @@ var clean_up = function(ids, cb) {
   });
 };
 
+clean_up([], function() {
+setTimeout(function() {run();}, 5000);
+});
+
+
 describe('User tests', function() {
   var ids_to_be_deleted = [];
   var instances = {};

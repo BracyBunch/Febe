@@ -6,7 +6,7 @@ var app      = require('../../app');
 
 chai.use(chaiHttp);
 
-describe('User Route Tests', function() {
+xdescribe('User Route Tests', function() {
 
     it('should return with status code 200 after POST to /user/add', function(done) {
       chai.request(app)
