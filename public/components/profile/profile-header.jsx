@@ -18,6 +18,11 @@ module.exports = React.createClass({
         var link = link.slice(7);
         return <a href={link} className="links">GitHub</a>
       }
+      if (link.slice(0,8) === 'linkedin') {
+        var link = link.slice(9);
+        return <a href={link} className="links">LinkedIn</a>
+      }
+      
       return <span>{link}</span>
     })
   },
