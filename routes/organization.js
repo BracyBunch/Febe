@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var Promise = require('bluebird');
 var models = require('../db');
 var Organization = models.Organization;
 var express = require('express');
@@ -51,6 +52,34 @@ router.post('/', function(req, res) {
       res.status(500).send();
     }
   });
+});
+
+router.put('/:organization_id', function(req, res) {
+  // Check permissions here
+  var organization_id = Number(req.params.organization_id);
+
+  var async = {};
+
+  var editable_fields = [
+    'name', 'description', 'website_url', 'donation_url', 'logo_url', 'location'
+  ];
+
+  var fields = _.pick(req.body, editable_fields);
+
+  var relations = _.pick(req.body, ['causes']);
+
+  if ('causes' in relations) {
+    async.causes = Organization.clear_causes(organization_id).then(function() {
+      return Organization.add_causes(organization_id, relations.causes.map(Number));
+    });
+  }
+
+  Promise.props(async).then(function() {
+    Organization.update(organization_id, fields).then(function() {
+      res.send();
+    });
+  });
+
 });
 
 module.exports = router;

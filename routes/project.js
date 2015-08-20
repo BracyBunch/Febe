@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var Promise = require('bluebird');
 var url_parse = require('url').parse;
 var validator = require('validator');
 var models = require('../db');
@@ -83,11 +84,31 @@ router.post('/', function(req, res) {
   });
 });
 
-router.put('/:project_id', validate_id, function(req, res){
-  var project_id = Number(req.params.project_id);
-  var projectData = req.body
-  console.log("project data:", projectData)
-  Project.update(product_id, projectData)
+router.put('/:project_id', validate_id, function(req, res) {
+  // Check permissions here
+  var project_id = req.params.project_id;
+
+  var async = {};
+
+  var editable_fields = [
+    'name', 'complete_by', 'description', 'links', 'published', 'active'
+  ];
+
+  var fields = _.pick(req.body, editable_fields);
+
+  var relations = _.pick(req.body, ['tech']);
+
+  if ('tech' in relations) {
+    async.tech = Project.clear_skills(project_id).then(function() {
+      return Project.add_skills(project_id, relations.tech.map(Number));
+    });
+  }
+
+  Promise.props(async).then(function() {
+    Project.update(project_id, fields).then(function() {
+      res.send();
+    });
+  });
 });
 
 router.put('/:project_id/add_member/:user_id', validate_id, function(req, res) {

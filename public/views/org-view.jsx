@@ -55,6 +55,7 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
+    console.log("Org Data:", data)
     this.setState({
       orgData: data,
       ownerData: data.owner,
@@ -74,6 +75,7 @@ module.exports = React.createClass({
           <Description 
           name={this.state.orgData.name}
           location={this.state.orgData.location}
+          createDate={this.state.orgData.created}
           ein={this.state.orgData.ein}
           owner={this.state.ownerData}
           description={this.state.orgData.description}

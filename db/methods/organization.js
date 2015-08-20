@@ -6,6 +6,7 @@ var common = require('./common');
 
 var Organization = require('../models/organization');
 var User = require('../models/user');
+var Project = require('../models/project');
 var Tag = require('../models/tag');
 
 /**
@@ -64,6 +65,10 @@ var add_cause = common.add_rel_generator('cause', true);
  */
 var add_causes = common.add_rels_generator(add_cause);
 
+var clear_causes = function(organization) {
+  return db.query('MATCH (n:Organization)-[r:cause]->(:Tag) WHERE id(n)={organization_id} DELETE r', {'organization_id': organization.id || organization});
+};
+
 /**
  * Fetches one Organization including specifed extras
  * @param  {Integer|Organization}  organization   Organization or id
@@ -76,15 +81,19 @@ var with_extras = function(organization, options) {
   if (options === undefined) options = true;
 
   if (options === true || options.owner) include.owner = {'model': User, 'rel': 'owns', 'direction': 'in', 'many': false};
+  if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'owns', 'direction': 'out', 'many': true};
   if (options === true || options.causes) include.causes = {'model': Tag, 'rel': 'cause', 'direction': 'out', 'many': true};
 
 
   return Organization.query('MATCH (node:Organization) WHERE id(node)={id}', {'id': organization_id}, {'include': include}).then(function(organization) {
     organization = organization[0];
+    var cleaned_organization = Organization.clean(organization);
 
-    if (organization.owner) organization.owner = User.clean(organization.owner);
+    if (organization.owner) cleaned_organization.owner = User.clean(organization.owner);
+    if (organization.projects) cleaned_organization.projects = organization.projects.map(Project.clean);
+    if (organization.causes) cleaned_organization.causes = organization.causes.map(Tag.clean);
 
-    return organization;
+    return cleaned_organization;
   });
 };
 
@@ -115,6 +124,7 @@ module.exports = {
   'clean': clean,
   'add_cause': add_cause,
   'add_causes': add_causes,
+  'clear_causes': clear_causes,
   'with_extras': with_extras,
   'find_by_cause': find_by_cause,
   'find_by_fragment': find_by_fragment
