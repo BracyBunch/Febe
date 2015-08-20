@@ -55,7 +55,6 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log("Data fetched from view: ", data)
     this.setState({
       orgData: data,
       ownerData: data.owner,

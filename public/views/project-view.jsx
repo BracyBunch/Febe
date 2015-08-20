@@ -8,6 +8,7 @@ var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
 var Actions = require('../actions');
+var Navigation = require('react-router').Navigation;
 var Link = Router.Link;
 var Participant = require('../components/profile/participant')
 var Timeline = require('../components/project/project-timeline')
@@ -18,13 +19,11 @@ var ProjectMedia = require('../components/project/project-media')
 var ProjectMethods = require('../components/project/sharedProjectMethods/')
 var ProjectEdit = require('../components/project/edit-components/project-body-edit')
 var ProjectStore = require('../stores/project-store');
-var Organization = require('../components/organization/org-description');
+var Organization = require('../components/organization/org-description-in-project');
 
 
 module.exports = React.createClass({
-  mixins: [
-    Reflux.listenTo(ProjectStore, 'onChange')
-  ],
+  mixins: [Reflux.listenTo(ProjectStore, 'onChange'), Navigation],
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -57,6 +56,7 @@ module.exports = React.createClass({
       orgName: '',
       repData: [],
       devData: [],
+      orgID: null,
       swap: false,
     };
   },
@@ -77,7 +77,8 @@ module.exports = React.createClass({
       ownerLast: data.owner.last_name,
       repData: data.owner,
       orgData: data.organization,
-      orgName: data.organization.name
+      orgName: data.organization.name,
+      orgID: data.organization.id
     });
   },
 
@@ -132,6 +133,11 @@ module.exports = React.createClass({
     });
   },
 
+  goToOrg: function(orgID){
+    console.log("id", orgID);
+    this.transitionTo('/organization/' + orgID);
+  },
+
   projectEdit: function(edit) {
     return edit ? 
       <div>
@@ -179,7 +185,8 @@ module.exports = React.createClass({
           website={this.state.orgData.website_url}
           ein={this.state.orgData.ein} />
         </div>
-          <button className='btn btn-warning' onClick={this.goToOrg}> Organization Link </button>
+          <button className='btn btn-warning' onClick={function(){this.goToOrg(this.state.orgID)}.bind(this)}> Organization Link </button>
+          <Link to="/organization/"><button className="btn btn-primary">ORG</button></Link>
           <Timeline 
             start={this.state.startDate}
             end={this.state.endDate} />
