@@ -65,6 +65,10 @@ var add_cause = common.add_rel_generator('cause', true);
  */
 var add_causes = common.add_rels_generator(add_cause);
 
+var clear_causes = function(organization) {
+  return db.query('MATCH (n:Organization)-[r:cause]->(:Tag) WHERE id(n)={organization_id} DELETE r', {'organization_id': organization.id || organization});
+};
+
 /**
  * Fetches one Organization including specifed extras
  * @param  {Integer|Organization}  organization   Organization or id
@@ -120,6 +124,7 @@ module.exports = {
   'clean': clean,
   'add_cause': add_cause,
   'add_causes': add_causes,
+  'clear_causes': clear_causes,
   'with_extras': with_extras,
   'find_by_cause': find_by_cause,
   'find_by_fragment': find_by_fragment
