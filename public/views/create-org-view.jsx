@@ -13,7 +13,6 @@ var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var ImgurUpload = require('../utils/imgur');
 var ajax = require('../utils/fetch');
-
 var Promise = require('bluebird');
 
 module.exports = React.createClass({
