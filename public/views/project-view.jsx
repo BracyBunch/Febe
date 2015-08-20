@@ -134,7 +134,6 @@ module.exports = React.createClass({
   },
 
   goToOrg: function(orgID){
-    console.log("id", orgID);
     this.transitionTo('/organization/' + orgID);
   },
 
@@ -185,8 +184,7 @@ module.exports = React.createClass({
           website={this.state.orgData.website_url}
           ein={this.state.orgData.ein} />
         </div>
-          <button className='btn btn-warning' onClick={function(){this.goToOrg(this.state.orgID)}.bind(this)}> Organization Link </button>
-          <Link to="/organization/"><button className="btn btn-primary">ORG</button></Link>
+          <button className='btn btn-warning' onClick={this.goToOrg.bind(this, this.state.orgID)}> Organization Link </button>
           <Timeline 
             start={this.state.startDate}
             end={this.state.endDate} />
