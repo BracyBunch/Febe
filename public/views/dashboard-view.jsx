@@ -8,7 +8,6 @@ var MenuItem = mui.MenuItem;
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
-var ThumbnailList = require('../components/thumbnail/thumbnailList');
 var Link = Router.Link;
 var TimelineStore = require('../stores/timeline-store');
 var Actions = require('../actions');
@@ -58,9 +57,7 @@ module.exports = React.createClass({
         <Link to="/createproject"><button className="btn btn-primary">Create Project</button></Link>
         <Link to="/npprofile"><button className="btn btn-primary">View NP Profile</button></Link>
         <Link to="/createorg"><button className="btn btn-primary">Create Organization</button></Link>
-        <div>
-          <ThumbnailList />
-        </div> 
+        
         <Footer />
       </div>
     );

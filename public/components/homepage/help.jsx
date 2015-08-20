@@ -1,11 +1,13 @@
 var React = require('react');
+var mui = require('material-ui');
+var RaisedButton = mui.RaisedButton;
 
 module.exports = React.createClass({
   render: function(){
     return (
       <div className="help">
-        <div> Want to help out at Good In This World? </div> 
-        <button className="btn btn-primary" type="submit">Contact Us</button>
+        <h4>Want to help us out?</h4> 
+        <RaisedButton linkButton={true} href="#/browse" secondary={true} label="Contact Us" />
       </div>
     )
   }

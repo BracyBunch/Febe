@@ -1,33 +1,45 @@
 var React = require('react');
+var mui = require('material-ui');
+var Paper = mui.Paper;
 
 module.exports = React.createClass({
   render: function(){
     return (
-      <div>
-        <div className="stack">Tech Stack</div>
-        <div className="row thumbnail">
-          <div className="col-xs-6 col-sm-3 stack-images">
-            <a href="http://facebook.github.io/react/" target="_blank">
-              <img src="http://jpsierens.com/wp-content/uploads/2015/05/react-logo.png"/>
-            </a>
-          </div>
-          <div className="col-xs-6 col-sm-3 stack-images">
-            <a href="https://nodejs.org/" target="_blank">
-              <img src="http://code-maven.com/img/node.png"/>
-            </a>
-          </div>
-          <div className="col-xs-6 col-sm-3 stack-images neo4j">
-            <a href="http://neo4j.com/" target="_blank">
-              <img src="http://businessintelligence.com/wp-content/themes/bi/assets/images/vendor/neo4j-logo.png"/>
-            </a>
-          </div>
-          <div className="col-xs-6 col-sm-3 stack-images">
-            <a href="http://gulpjs.com/" target="_blank">
-              <img src="http://brunch.io/images/others/gulp.png"/>
-            </a>
+      <Paper zdepth={1}>
+        <div>
+          <div className="stack">Tech Stack</div>
+          <div className="row entire-stack">
+            <div className="col-sm-3">
+              <div className="thumbnail stack-tags">
+                <a href="http://facebook.github.io/react/" target="_blank">
+                  <img className="stack-images" src="http://yycjs.com/real-world-react/img/react-logo.png"/>
+                </a>
+              </div>
+            </div>
+            <div className="col-sm-3">
+              <div className="thumbnail stack-tags">
+                <a href="https://nodejs.org/" target="_blank">
+                  <img className="stack-images" src="http://code-maven.com/img/node.png"/>
+                </a>
+              </div>
+            </div>
+            <div className="col-sm-3">
+              <div className="thumbnail stack-tags">
+                <a href="http://neo4j.com/" target="_blank">
+                  <img className="stack-images neo4j-image" src="http://opencredo-website.s3.amazonaws.com/2013/10/neo4j-logo.png"/>
+                </a>
+              </div>
+            </div>
+            <div className="col-sm-3">
+              <div className="thumbnail stack-tags">
+                <a href="http://gulpjs.com/" target="_blank">
+                  <img className="stack-images" src="http://brunch.io/images/others/gulp.png"/>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </Paper>
     )
   }
 });
