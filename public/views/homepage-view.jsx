@@ -24,7 +24,7 @@ module.exports = React.createClass({
   },
   generateMenu: [
       { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
-      { type: MenuItem.Types.LINK, payload: '/', text: 'Browse'},
+      { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
       { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
       { route: '/', text: 'About'},
       { route: '/', text: 'Team'},
