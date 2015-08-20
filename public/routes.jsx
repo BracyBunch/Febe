@@ -18,6 +18,7 @@ var Createorg = require('./views/create-org-view');
 var Joinorg = require('./views/join-org-view');
 var Organization = require('./views/org-view');
 var Project = require('./views/project-view');
+var Browse = require('./views/browse-view');
 
 module.exports = (
   <Router history={new HashHistory}>
@@ -34,6 +35,7 @@ module.exports = (
       <Route name="joinorg" path="/joinorg" component={Joinorg} />
       <Route name="project" path="/project/:id" component={Project} />
       <Route name="organization" path="/organization/:id" component={Organization} />
+      <Route name="browse" path="/browse" component={Browse} />
     </Route>
   </Router>
 );
