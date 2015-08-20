@@ -18,10 +18,8 @@ module.exports = React.createClass({
   },
   loginButton: function() {
     return window.localStorage.getItem('userId') ?
-      // <div className="roundedButton">Log Out</div> 
-      // :<div className="roundedButton navbar-btn">Log In</div>  
-      <RaisedButton className="navbar-btn" onClick={this.switchLog} label="Log Out" />
-      : <RaisedButton className="navbar-btn" onClick={this.props.open} label="Log In" />
+      <RaisedButton className="navbar-btn" onClick={this.switchLog} label="Sign Out" />
+      : <RaisedButton className="navbar-btn" onClick={this.props.open} label="Sign In" />
   },
   switchLog: function() {
     window.localStorage.removeItem('userId');

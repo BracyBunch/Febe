@@ -15,6 +15,8 @@ var ImgurUpload = require('../utils/imgur');
 var keys = require('../../keys');
 var ajax = require('../utils/fetch');
 
+var Promise = require('bluebird');
+
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
   childContextTypes: {
@@ -28,34 +30,14 @@ module.exports = React.createClass({
   },
 
   generateMenu: [
-    { 
-      type: MenuItem.Types.LINK, 
-      payload: '/', 
-      text: 'Home'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/dashboard', 
-      text: 'Dashboard'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/browse', 
-      text: 'Browse'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/devprofile', 
-      text: 'My Profile'
-    },
-    { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
-    { route: '/', text: 'About' },
-    { route: '/', text: 'Team' },
-    { 
-      type: MenuItem.Types.LINK, 
-      payload: 'https://github.com/BracyBunch/Febe', 
-      text: 'GitHub' 
-    }
+    { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
+    { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
+    { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
+    { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
+    { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
+    { route: '/', text: 'About'},
+    { route: '/', text: 'Team'},
+    { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub'}
   ],
 
   getInitialState: function() {
@@ -81,6 +63,8 @@ module.exports = React.createClass({
   },
 
   handleImage: function(event) {
+    var imagePromise = new Promise(ImgurUpload.imgurUpload(image))
+
     var that = this;
     // FileReader is a native browser file reader
     var reader = new FileReader();

@@ -137,7 +137,6 @@ module.exports = React.createClass({
               type="password"
               hintText="Password"
               floatingLabelText= "Password"
-              valueLink={this.linkState('password')}
               onBlur={this.handleValidation('password')}
               valueLink={this.linkState('password')} />
             <TextField
