@@ -26,7 +26,8 @@ Project.public_fields = [
   'description',
   'links',
   'published',
-  'active'
+  'active',
+  'created'
 ];
 
 Project.query = Promise.promisify(Project.query, Project);

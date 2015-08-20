@@ -22,7 +22,7 @@ module.exports = React.createClass({
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
-  
+
   getChildContext: function(){ 
     return {
       muiTheme: ThemeManager.getCurrentTheme()
@@ -89,7 +89,7 @@ module.exports = React.createClass({
   },
 
   createOrg: function() {
-    console.log(this.state)
+    console.log("Org", this.state)
     if (this.state.terms) {
       var that = this;
       ajax('/organization', {
@@ -101,7 +101,6 @@ module.exports = React.createClass({
       .then(function(data) {
         // what do we want to do here?
         sessionStorage.setItem('orgId', data.id)
-        console.log("org returned data: ", data);
         this.transitionTo('/organization/' + data.id);
       }.bind(this));
     } 
