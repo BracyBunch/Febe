@@ -13,9 +13,10 @@ module.exports = React.createClass({
       <div> <span> Technology: </span>
         <span> 
         {
-          this.props.tags.map(function(tag){
-          return <span className='tag'> {tag} </span>
-          })
+          this.props.tags.map(function(obj){
+            console.log('obj', obj)
+            return <span className='tag'> {obj['name']} </span>
+            })
         }
         </span>
       </div>

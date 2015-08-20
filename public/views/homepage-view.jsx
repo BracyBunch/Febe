@@ -9,6 +9,7 @@ var Footer = require('../components/shared/footer');
 var Team = require('../components/homepage/team');
 var Stack = require('../components/homepage/stack');
 var Help = require('../components/homepage/help');
+var AboutUs = require('../components/homepage/aboutUS');
 var FeaturedProjects = require('../components/homepage/featuredProjects');
 
 
@@ -40,13 +41,24 @@ module.exports = React.createClass({
         </section>
         <section>
           <div className="fullscreen">
-            <FeaturedProjects />
+            <div className="aboutUsMain">
+             <AboutUs />
+            </div> 
+            <div className="teamMain"> 
+             <Team />
+            </div> 
           </div>
         </section>
         <section>
-          <div className="fullscreen">
-            <Team />
-            <Stack />
+          <div className="featuredMain">
+            <FeaturedProjects/>
+          </div>
+        </section>
+        <section>
+          <div>   
+            <div className="stackMain">
+              <Stack />
+            </div>
             <Help />
             <Footer />
           </div>

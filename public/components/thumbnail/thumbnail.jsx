@@ -11,8 +11,8 @@ module.exports = React.createClass({
   inset: function(){
     return (
       <div className="inset">
-        <h4 className="descriptionHeader">Description</h4>
-        <div className="insetDescription">
+        <h4 style={{"color":"#f2f2f2"}} className="descriptionHeader">Description</h4>
+        <div style={{"color":"#f2f2f2"}} className="insetDescription">
           {this.props.description}
         </div>
       </div>
@@ -29,7 +29,7 @@ module.exports = React.createClass({
       <div>
         <img className="thumbnail-image" src={this.props.imageURL}></img>
         <div className="caption">
-          <h3>{this.props.header}</h3>
+          <h4>{this.props.header}</h4>
         </div>
       </div>
     )

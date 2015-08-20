@@ -47,7 +47,18 @@ module.exports = React.createClass({
       title: 'Project Title',
       location: 'Project Location',
       description: 'Project info',
-      technology: ['javascript', 'angular', 'bootstrap', 'html'],
+      technology: [
+      { id: 124,
+        kind: "skill",
+        model: "Tag",
+        name: "javascript"
+      }, {
+        id: 125,
+        kind: "skill",
+        model: "Tag",
+        name: "hugging"
+      }
+      ],
       contributors: ['john', 'bob', 'joe', 'sally'],
       startDate: 'START DATE',
       endDate: 'END DATE',
@@ -78,7 +89,8 @@ module.exports = React.createClass({
       repData: data.owner,
       orgData: data.organization,
       orgName: data.organization.name,
-      orgID: data.organization.id
+      orgID: data.organization.id,
+      tags: data.skills
     });
   },
 

@@ -56,6 +56,7 @@ body{
   margin: 2px;
 }
 
+
 .login-margin {
   margin-top: 10px;
 }
@@ -99,7 +100,7 @@ body{
 }
 
 .site-name, .iamdev, .slogan, .scroll-down, .signup-buttons, 
-.team-header, .stack, .featured, .signupCentered, .centered{
+.team-header, .stack, .featured, .aboutUs, .signupCentered, .centered{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -192,18 +193,11 @@ body{
   position: relative;
 }
 
-.team-header{
-  font-size: 40px;
-  padding-bottom: 20px;
-}
-
 .inset {
-  position: relative;
-  width: 265px;
-  height: 240px;
+  width: 220px;
+  height: 180px;
   background-color: black;
   text-align: center;
-  color: white;
   opacity: .9;
 }
 
@@ -218,8 +212,8 @@ body{
   position: relative;
   padding: 10px;
   overflow: auto;
-  height: 300px;
-  width: 300px;
+  height: 250px;
+  width: 250px;
 }
 .eachThumbnail{
   position: relative;
@@ -227,8 +221,8 @@ body{
 }
 
 .thumbnail-image{
-  height: 60%;
-  width: 60%;
+  height: 50%;
+  width: 50%;
 }
 
 .team-image{
@@ -238,14 +232,65 @@ body{
 
 /*stack*/
 
-.stack, .featured{
-  font-size: 40px;
-  padding-top: 45px;
+.stack, .featured, .aboutUs, .team-header{
+  font-size: 30px;
+  padding-top: 20px;
   padding-bottom: 20px;
 }
 
+.aboutUsStatement{
+  text-align: center;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-bottom: 2%;
+  font-size: 18px;
+}
+
+.aboutUsMain, .teamMain, .featuredMain, .stackMain{
+  padding: 15px;
+}
+
+.aboutUsMain{
+  padding-top: 30px;
+}
+
+.paperTeam{
+  height: 400px;
+}
 .stack-images{
   display: inline-block;
+}
+
+.browse-button{
+  text-align: center;
+}
+
+.nametags{
+  height: 200px;
+  width: 200px;
+}
+
+.stack-tags{
+  height: 200px;
+  width: 200px;
+}
+
+.stack-images{
+  height: 200px;
+  width: 200px;
+  vertical-align: center;
+}
+
+.entire-stack{
+  padding-left: 2px;
+}
+
+.neo4j-image{
+  margin-top: 20%;
+}
+
+.entire-team{
+  margin-left: 5%;
 }
 
 .thumbnail{
@@ -258,8 +303,7 @@ body{
 }
 
 .help{
-  float: none;
-  display: inline;
+  text-align: center;
 }
 
 /*featured projects*/
