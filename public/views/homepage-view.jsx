@@ -62,13 +62,15 @@ module.exports = React.createClass({
           </div>
         </section>
         <section>
-          <div className="fullscreen">
-            <FeaturedProjects />
+          <div className="featuredMain">
+            <FeaturedProjects/>
           </div>
         </section>
         <section>
-          <div className="fullscreen">   
-            <Stack />
+          <div>   
+            <div className="stackMain">
+              <Stack />
+            </div>
             <Help />
             <Footer />
           </div>
