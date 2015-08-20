@@ -5,7 +5,15 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       ownerData: this.props.owner,
-      verified: this.props.verified
+      verified: this.props.verified,
+      description: "No description available",
+      causes: this.props.causes     
+    };
+  },
+
+  getDefaultProps: function() {
+    return {
+      causes: 'No causes specified'
     };
   },
   
@@ -24,7 +32,7 @@ module.exports = React.createClass({
           Location: {this.props.location}
         </p>
         <p>
-          Description: {this.props.description}
+          Description: {this.props.description || this.state.description}
         </p>
         <p>
           Website: <a href={this.props.website}> {this.props.website} </a>
