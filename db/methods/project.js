@@ -91,6 +91,10 @@ var add_skill = common.add_rel_generator('skill', true);
  */
 var add_skills = common.add_rels_generator(add_skill);
 
+var clear_skills = function(project) {
+  return db.query('MATCH (n:Project)-[r:skill]->(:Tag) WHERE id(n)={project_id} DELETE r', {'project_id': project.id || project});
+};
+
 /**
  * Fetches one or more Projects including specifed extras
  * @param  {Integer|Project}  [project]             Project or id, if not given or null will return multiple projects
@@ -199,6 +203,7 @@ module.exports = {
   'add_members': add_members,
   'add_skill': add_skill,
   'add_skills': add_skills,
+  'clear_skills': clear_skills,
   'with_extras': with_extras,
   'find_by_tags': find_by_tags,
   'user_has_access': user_has_access
