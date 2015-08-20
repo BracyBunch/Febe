@@ -313,11 +313,25 @@ body{
   width: 80%;
 }
 
+.profileMargin {
+  margin: 30px auto 10px auto;
+}
+
+.label-color {
+  background-color: indigo;
+}
+
+.label-inline {
+  display: inline;
+}
+
 .profileBox {
-  display: inline-block;
-  width: 30%;
-  height: 200px;
-  margin: 1em;
+  background-color: white;
+}
+
+.links {
+  text-decoration: underline;
+  color: blue;
 }
 
 /*other*/

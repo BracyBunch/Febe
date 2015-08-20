@@ -4,6 +4,9 @@ var Oauth = require('../signup/signupOAuth');
 var LogButton = require('../shared/logInOutButton');
 var ajax = require('../../utils/fetch');
 var Navigation = require('react-router').Navigation;
+var mui = require('material-ui')
+var TextField = mui.TextField;
+var RaisedButton = mui.RaisedButton;
 
 module.exports = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Navigation],
@@ -53,9 +56,24 @@ module.exports = React.createClass({
           <Modal.Body>
             <Oauth />
             <form className="form-group" onSubmit={this.createSigninData}>
-                <input type="email" className="form-control login-margin" ref="emailAddress" valueLink={this.linkState('email')} placeholder="Email Address"/>
-                <input type="password" className="form-control login-margin" valueLink={this.linkState('password')} placeholder="Password"/>
-                <button type="submit" className="btn signupBtn signupCentered login-margin">Login</button>
+              <div>
+                <TextField
+                  style={{"width":"80%"}}
+                  type="email"
+                  hintText="Email Address"
+                  floatingLabelText="Email Address"
+                  valueLink={this.linkState('email')} />
+                <TextField
+                  style={{"width":"80%"}}
+                  type="password"
+                  hintText="Password"
+                  floatingLabelText="Password"
+                  valueLink={this.linkState('password')} />
+              </div>
+              <div className="signupCentered">
+                <RaisedButton
+                  label="Sign In" />
+              </div>
             </form>
           </Modal.Body>
         </Modal>

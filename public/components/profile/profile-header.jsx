@@ -1,4 +1,6 @@
 var React = require('react');
+var mui = require('material-ui');
+var RaisedButton = mui.RaisedButton;
 
 module.exports = React.createClass({
   getDefaultProps: function() {
@@ -10,12 +12,22 @@ module.exports = React.createClass({
     };
   },
 
+  renderLinks: function() {
+    return this.props.links.map(function(link) {
+      if (link.slice(0,6) === 'github') {
+        var link = link.slice(7);
+        return <a href={link} className="links">GitHub</a>
+      }
+      return <span>{link}</span>
+    })
+  },
+
   render: function() {
     return (
-      <div className="profile">
-        <div className="row row-centered">
+      <div className="container profileMargin">
+        <div className="row">
 
-          <div className="col-md-3 ">
+          <div className="col-md-2">
             <div className="">
               <img src={this.props.avatar} /> <br />
             </div>
@@ -30,13 +42,16 @@ module.exports = React.createClass({
               <p>{this.props.location}</p>
             </div>
             <div>
-              <p>{this.props.links}</p>
+              <p>{this.renderLinks()}</p>
             </div>
-            <button className="btn btn-primary" type="submit">Contact</button>
+            <RaisedButton
+              label="Contact" />
           </div>
 
           <div className="col-md-2">
-            <button className="btn signupBtn" type="submit" onClick={this.props.edit}>Edit</button>
+            <RaisedButton
+              label="Edit"
+              onClick={this.props.edit} />
           </div>
 
         </div>

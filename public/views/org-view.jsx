@@ -23,34 +23,14 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
   generateMenu: [
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '/', 
-      text: 'Home'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/dashboard', 
-      text: 'Dashboard'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/browse', 
-      text: 'Browse'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/devprofile', 
-      text: 'My Profile'
-    },
-    { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
-    { route: '/', text: 'About' },
-    { route: '/', text: 'Team' },
-    { 
-      type: MenuItem.Types.LINK, 
-      payload: 'https://github.com/BracyBunch/Febe', 
-      text: 'GitHub' 
-    }
+    { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
+    { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
+    { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
+    { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
+    { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
+    { route: '/', text: 'About'},
+    { route: '/', text: 'Team'},
+    { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub' }
   ],
   getChildContext: function(){ 
     return {
@@ -60,10 +40,12 @@ module.exports = React.createClass({
   getInitialState: function(){
     return {
       orgData: [],
-      managerData: [],
+      ownerData: [],
       repData: [],
       devData: [],
-      swap: false
+      verified: null,
+      swap: false,
+      
     };
   },
 
@@ -73,9 +55,10 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log("data: ", data)
     this.setState({
-      orgData: data
+      orgData: data,
+      ownerData: data.owner,
+      verified: data.verified.toString().toUpperCase()
     });
   },
   
@@ -88,8 +71,15 @@ module.exports = React.createClass({
           <h3> {this.state.orgData.title} </h3> 
           <button className='btn btn-warning edit-follow'> Edit/Follow </button>
         </div>
-          <button className='btn btn-warning'> Organization Link </button>
-          <Description />
+          <Description 
+          name={this.state.orgData.name}
+          location={this.state.orgData.location}
+          ein={this.state.orgData.ein}
+          owner={this.state.ownerData}
+          description={this.state.orgData.description}
+          causes={this.state.orgData.causes}
+          verified={this.state.verified}
+          website={this.state.orgData.website_url} />
           <OrgMedia />
         <Footer />
       </div>

@@ -4,6 +4,7 @@ var ThemeManager = new mui.Styles.ThemeManager();
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
 var Reflux = require('reflux');
+var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var Tooltip = require('react-bootstrap').Tooltip;
@@ -11,49 +12,33 @@ var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var ImgurUpload = require('../utils/imgur');
-var keys = require('../../keys');
 var ajax = require('../utils/fetch');
 
+var Promise = require('bluebird');
+
 module.exports = React.createClass({
-  mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+  mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
+
   getChildContext: function(){ 
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+
   generateMenu: [
-    { 
-      type: MenuItem.Types.LINK, 
-      payload: '/', 
-      text: 'Home'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/dashboard', 
-      text: 'Dashboard'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/browse', 
-      text: 'Browse'
-    },
-    {
-      type: MenuItem.Types.LINK, 
-      payload: '#/devprofile', 
-      text: 'My Profile'
-    },
-    { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
-    { route: '/', text: 'About' },
-    { route: '/', text: 'Team' },
-    { 
-      type: MenuItem.Types.LINK, 
-      payload: 'https://github.com/BracyBunch/Febe', 
-      text: 'GitHub' 
-    }
+    { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
+    { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
+    { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
+    { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
+    { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
+    { route: '/', text: 'About'},
+    { route: '/', text: 'Team'},
+    { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub'}
   ],
+
   getInitialState: function() {
     return {
       ein: '',
@@ -70,25 +55,6 @@ module.exports = React.createClass({
 
   newRepField: '<input type="email" class="form-control" placeholder="Representative\'s Email" />', 
 
-  handleSubmit: function(comment) {
-    var that = this;
-    ajax('/organization', {
-      method: 'POST', 
-      body: JSON.stringify(this.state)
-    }).then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      // what do we want to do here?
-      sessionStorage.setItem('orgId', data.id)
-      this.transitionTo('/organization/' + data.id);
-      console.log('org data', data);
-    })
-    .catch(function(error) {
-      console.log('request failed: ', error);
-    }); 
-  },
-
   setTerms: function(){
     this.setState({
       terms: !this.state.terms
@@ -96,6 +62,8 @@ module.exports = React.createClass({
   },
 
   handleImage: function(event) {
+    var imagePromise = new Promise(ImgurUpload.imgurUpload(image))
+
     var that = this;
     // FileReader is a native browser file reader
     var reader = new FileReader();
@@ -120,7 +88,7 @@ module.exports = React.createClass({
   },
 
   createOrg: function() {
-    console.log(this.state)
+    console.log("Org", this.state)
     if (this.state.terms) {
       var that = this;
       ajax('/organization', {
@@ -131,11 +99,9 @@ module.exports = React.createClass({
       })
       .then(function(data) {
         // what do we want to do here?
-        console.log("org returned data: ", data);
-      })
-      .catch(function(error) {
-        console.log('request failed: ', error);
-      }); 
+        sessionStorage.setItem('orgId', data.id)
+        this.transitionTo('/organization/' + data.id);
+      }.bind(this));
     } 
   },
 
@@ -246,5 +212,5 @@ module.exports = React.createClass({
         <Footer />
       </div>
     )
-  },
+  }
 });
