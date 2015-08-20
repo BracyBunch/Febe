@@ -4,7 +4,7 @@ var ajax = require('../../utils/fetch');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var Colors = require('../../material-ui/colors');
-var RaisedButton = mui.RaisedButton;
+var FlatButton = mui.FlatButton;
 
 module.exports = React.createClass({
   mixins: [Navigation],
@@ -18,10 +18,8 @@ module.exports = React.createClass({
   },
   loginButton: function() {
     return window.localStorage.getItem('userId') ?
-      // <div className="roundedButton">Log Out</div> 
-      // :<div className="roundedButton navbar-btn">Log In</div>  
-      <RaisedButton className="navbar-btn" onClick={this.switchLog} label="Log Out" />
-      : <RaisedButton className="navbar-btn" onClick={this.props.open} label="Log In" />
+      <FlatButton className="navbar-btn" onClick={this.switchLog} label="Log Out" />
+      : <FlatButton className="navbar-btn" onClick={this.props.open} label="Log In" />
   },
   switchLog: function() {
     window.localStorage.removeItem('userId');

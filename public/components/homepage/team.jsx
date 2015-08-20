@@ -1,4 +1,6 @@
 var React = require('react');
+var mui = require('material-ui');
+var Paper = mui.Paper;
 
 module.exports = React.createClass({
   getInitialState: function(){
@@ -8,15 +10,17 @@ module.exports = React.createClass({
   },
   render: function(){
     return (
-      <div>
-        <div className="team-header">Team</div>
-          <div className="thumbnail-preview" 
-            onMouseEnter={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseLeave}>
-              {this.image()}
-              {this.state.hovering ? this.inset() : null}
-          </div>
-      </div>
+      <Paper zdepth={2}>
+        <div>
+          <div className="team-header">The Team</div>
+            <div className="thumbnail-preview" 
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}>
+                {this.image()}
+                {this.state.hovering ? this.inset() : null}
+            </div>
+        </div>
+      </Paper>
     )
   },
   inset: function(){

@@ -56,6 +56,7 @@ body{
   margin: 2px;
 }
 
+
 .login-margin {
   margin-top: 10px;
 }
@@ -99,7 +100,7 @@ body{
 }
 
 .site-name, .iamdev, .slogan, .scroll-down, .signup-buttons, 
-.team-header, .stack, .featured, .signupCentered, .centered{
+.team-header, .stack, .featured, .aboutUs, .signupCentered, .centered{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -192,11 +193,6 @@ body{
   position: relative;
 }
 
-.team-header{
-  font-size: 40px;
-  padding-bottom: 20px;
-}
-
 .inset {
   position: relative;
   width: 265px;
@@ -238,10 +234,22 @@ body{
 
 /*stack*/
 
-.stack, .featured{
-  font-size: 40px;
-  padding-top: 45px;
+.stack, .featured, .aboutUs, .team-header{
+  font-size: 30px;
+  padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.aboutUsStatement{
+  text-align: center;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-bottom: 2%;
+  font-size: 18px;
+}
+
+.aboutUsMain, .teamMain{
+  padding: 10px;
 }
 
 .stack-images{
