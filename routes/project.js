@@ -100,7 +100,7 @@ router.put('/:project_id', validate_id, function(req, res) {
 
   if ('tech' in relations) {
     async.tech = Project.clear_skills(project_id).then(function() {
-      return Project.add_skills(relations.tech.map(Number));
+      return Project.add_skills(project_id, relations.tech.map(Number));
     });
   }
 
