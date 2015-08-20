@@ -13,13 +13,13 @@ var Link = Router.Link;
 var Participant = require('../components/profile/participant')
 var Timeline = require('../components/project/project-timeline')
 var Description = require('../components/project/project-description')
-var ProjectTags = require('../components/project/project-tags')
 var Contributors = require('../components/project/project-contrib')
 var ProjectMedia = require('../components/project/project-media')
 var ProjectMethods = require('../components/project/sharedProjectMethods/')
 var ProjectEdit = require('../components/project/edit-components/project-body-edit')
 var ProjectStore = require('../stores/project-store');
 var Organization = require('../components/organization/org-description-in-project');
+var ProjectTags = require('../components/project/project-tags')
 
 
 module.exports = React.createClass({
@@ -59,6 +59,7 @@ module.exports = React.createClass({
         name: "hugging"
       }
       ],
+      tags: [],
       contributors: ['john', 'bob', 'joe', 'sally'],
       startDate: 'START DATE',
       endDate: 'END DATE',
@@ -77,7 +78,7 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log("data: ", data)
+    console.log("data: ", data.skills)
     this.setState({
       title: data.name,
       location: data.organization.location,
@@ -201,7 +202,7 @@ module.exports = React.createClass({
             start={this.state.startDate}
             end={this.state.endDate} />
           <Description desc={this.state.description} />
-          <ProjectTags tags={this.state.technology} />
+          <ProjectTags tags={this.state.tags} />
           <ProjectMedia />
         <Footer />
       </div>
