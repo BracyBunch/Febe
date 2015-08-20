@@ -54,11 +54,12 @@ router.put('/', function(req, res){
 
   var editable_fields = [
     'kind', 'first_name', 'last_name', 'email', 'password',
-    'can_message', 'title', 'bio', 'location', 'links',
-    'strengths', 'interests'
+    'can_message', 'title', 'bio', 'location', 'links'
   ];
 
   var fields = _.pick(req.body, editable_fields);
+
+  var relations = _.pick(req.body, ['strengths', 'interests']);
 
   if ('password' in fields) {
     async.password = hash(fields.password, 10).then(function(encrypted) {
@@ -75,15 +76,15 @@ router.put('/', function(req, res){
       delete fields.email;
     }
   }
-  if ('strengths' in fields) {
+  if ('strengths' in relations && Array.isArray(relations.strengths)) {
     async.strengths = User.clear_strengths(req.user.id).then(function() {
-      return User.add_strengths(req.user.id, fields.strengths.map(function(strength) {return Number(strength);}));
+      return User.add_strengths(req.user.id, relations.strengths.map(Number));
     });
   }
 
-  if ('interests' in fields && fields.interests.length) {
+  if ('interests' in relations && Array.isArray(relations.strengths)) {
     async.interests = User.clear_interests(req.user.id).then(function() {
-      return User.add_interests(req.user.id, fields.interests.map(function(interest) {return Number(interest);}));
+      return User.add_interests(req.user.id, relations.interests.map(Number));
     });
   }
 
