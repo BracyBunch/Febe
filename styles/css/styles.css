@@ -274,11 +274,20 @@ body{
 }
 
 .label-color {
-  background-color: #9fa8da;
+  background-color: indigo;
+}
+
+.label-inline {
+  display: inline;
 }
 
 .profileBox {
   background-color: white;
+}
+
+.links {
+  text-decoration: underline;
+  color: blue;
 }
 
 /*other*/

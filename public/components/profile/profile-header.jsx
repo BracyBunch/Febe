@@ -12,6 +12,16 @@ module.exports = React.createClass({
     };
   },
 
+  renderLinks: function() {
+    return this.props.links.map(function(link) {
+      if (link.slice(0,6) === 'github') {
+        var link = link.slice(7);
+        return <a href={link} className="links">GitHub</a>
+      }
+      return <span>{link}</span>
+    })
+  },
+
   render: function() {
     return (
       <div className="container profileMargin">
@@ -32,7 +42,7 @@ module.exports = React.createClass({
               <p>{this.props.location}</p>
             </div>
             <div>
-              <p>{this.props.links}</p>
+              <p>{this.renderLinks()}</p>
             </div>
             <RaisedButton
               label="Contact" />
