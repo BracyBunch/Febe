@@ -230,6 +230,20 @@ body{
   width: 200px;
 }
 
+.entire-team{
+  margin: 0 auto;
+  display: inline;
+}
+
+.thumbnail{
+  text-align: center;
+}
+
+.nametags{
+  height: 10%;
+  width: 25%;
+}
+
 /*stack*/
 
 .stack, .featured, .aboutUs, .team-header{
@@ -254,9 +268,6 @@ body{
   padding-top: 30px;
 }
 
-.paperTeam{
-  height: 400px;
-}
 .stack-images{
   display: inline-block;
 }
@@ -265,14 +276,10 @@ body{
   text-align: center;
 }
 
-.nametags{
-  height: 200px;
-  width: 200px;
-}
-
 .stack-tags{
-  height: 200px;
-  width: 200px;
+  width: 25%;
+  height: 20%;
+  margin: auto;
 }
 
 .stack-images{
@@ -286,20 +293,14 @@ body{
 }
 
 .neo4j-image{
-  margin-top: 20%;
-}
-
-.entire-team{
-  margin-left: 5%;
-}
-
-.thumbnail{
-  text-align: center;
+  padding: auto;
 }
 
 .neo4j{
+  min-height: 50px;
+  height: 203px;
   position: relative;
-  padding-top: 5%;
+  padding: 15%;
 }
 
 .help{
@@ -323,6 +324,11 @@ body{
   margin: 30px auto 10px auto;
 }
 
+.paperMargin {
+  margin-left: 70px;
+  margin-right: auto;
+}
+
 .label-color {
   background-color: indigo;
 }
@@ -338,6 +344,17 @@ body{
 .links {
   text-decoration: underline;
   color: blue;
+}
+
+.profileAvatar {
+  border-radius: 50%;
+  width: 175px;
+  height: 175px;
+  margin: auto;
+}
+
+.bio {
+  margin-bottom: 30px;
 }
 
 /*other*/

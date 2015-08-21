@@ -33,7 +33,7 @@ module.exports = React.createClass({
 		return {
 			title: '',
 			location: '',
-			bio: '',
+			bio: 'test',
 			links: [],
 			strengths: [],
 			interests: [],
@@ -47,6 +47,8 @@ module.exports = React.createClass({
 	onChange: function(event, userData){
 		// this.setState({userData: userData});
     this.setState({
+      first_name: "Yoshio",
+      last_name: "Varney",
       title: userData.title,
       location: userData.location,
       bio: userData.bio,
@@ -123,8 +125,8 @@ module.exports = React.createClass({
           <div className="col-md-8 col-md-offset-1 profileBox">
             <ProfileHeader 
                 edit={this.edit}
-    		        firstName={this.state.userData.first_name}
-    		        lastName={this.state.userData.last_name}
+    		        firstName={this.state.first_name}
+    		        lastName={this.state.last_name}
     		        avatar={this.state.userData.avatar}
     		        title={this.state.title}
     		        location={this.state.location}
@@ -145,7 +147,7 @@ module.exports = React.createClass({
           </div>
           <div className="row">
             <div className="col-md-8 col-md-offset-1">
-              <Bio bio={this.state.userData.bio} />
+              <Bio bio={this.state.bio} />
               <Projects />
             </div>
           </div>
@@ -153,9 +155,10 @@ module.exports = React.createClass({
       </Paper>
       </div>
       :
-      <div>
+      <div className="container profileMargin">
+      <Paper zDepth={4}>
         <div className="row">
-          <div className="col-md-10 col-md-offset-1">
+          <div className="col-md-8 col-md-offset-1 profileBox">
             <ProfileHeaderEdit 
                 edit={this.save}
     		        firstName={this.state.userData.first_name}
@@ -165,22 +168,23 @@ module.exports = React.createClass({
           </div>
         </div>
         <div className="row">
-          <div className="col-md-10 col-md-offset-1">
+          <div className="col-md-8 col-md-offset-1">
             <div>
               <h3>Tech Strengths</h3>
               <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>
             </div>
             <div>
               <h3>Interests</h3>
-              <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' values={this.state.interests} ref='interests'/>
+              <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>
             </div>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-10 col-md-offset-1">
+          <div className="col-md-8 col-md-offset-1">
             <BioEdit updateBio={this.updateBio} />
           </div>
         </div>
+      </Paper>
       </div>
 	},
   generateMenu: [
@@ -198,7 +202,6 @@ module.exports = React.createClass({
 		<div>
       <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu} />
 			{this.profileEdit(this.state.swap)}
-			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">Create Project</button>
       <Footer />	
 		</div>
 		)

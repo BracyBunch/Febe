@@ -43,6 +43,11 @@ router.post('/', function(req, res) {
     'location': req.body.location
   }, req.user.id).then(function(organization) {
     TimelineEntry.create('create', req.user, 'created organization', organization);
+
+    if ('causes' in req.body && Array.isArray(req.body.causes) && req.body.causes.length) {
+      Organization.add_causes(organization, req.body.causes.map(Number));
+    }
+
     res.json(organization);
   }, function(err) {
     console.error(err);

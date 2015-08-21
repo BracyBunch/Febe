@@ -39,6 +39,11 @@ var AutocompleteForm = React.createClass({
       'active': 0
     };
   },
+  componentWillMount: function() {
+    if (this.props.min_chars === 0) {
+      this.fetch_options();
+    }
+  },
   get_selections: function() {
     return this.state.values;
   },
@@ -52,23 +57,27 @@ var AutocompleteForm = React.createClass({
       return {'id': id, 'name': this.state.values[id]};
     }
   },
+  fetch_options: function() {
+    this.setState({'last_fetch': Date.now()});
+    ajax(this.props.url + this.state.value).then(function(res) {
+      return res.json();
+    }).then(function(data) {
+      var options = {};
+      data.forEach(function(item) {
+        options[item.id] = item.name;
+      }.bind(this));
+
+      this.setState({'options': this.filter_options(options)});
+    }.bind(this));
+  },
+  filter_options: function(options) {
+    return _.omit(options, Object.keys(this.state.values));
+  },
   handle_change: function(e) {
     this.setState({'value': e.target.value}, function() {
       if (this.state.value.length >= this.props.min_chars && Date.now() - this.state.last_fetch > 2) {
-        this.setState({'last_fetch': Date.now()});
-        ajax(this.props.url + this.state.value).then(function(res) {
-          return res.json();
-        }).then(function(data) {
-          var options = {};
-          data.forEach(function(item) {
-            if (!(item.id in this.state.values)) {
-              options[item.id] = item.name;
-            }
-          }.bind(this));
-
-          this.setState({'options': options});
-        }.bind(this));
-      } else if (this.state.value.length < 3) {
+        this.fetch_options();
+      } else if (this.state.value.length < this.props.min_chars) {
         this.setState({'options': {}});
       }
     });
@@ -78,9 +87,9 @@ var AutocompleteForm = React.createClass({
     values[id] = this.state.options[id];
     this.setState({
       'values': values,
-      'value': '',
-      'options': {}
+      'value': ''
     }, function() {
+      this.setState({'options': (this.props.min_chars === 0) ? this.filter_options(this.state.options) : {}});
       if (this.props.on_change) this.props.on_change(this.state.values);
     });
   },
@@ -88,6 +97,7 @@ var AutocompleteForm = React.createClass({
     var values = _.extend({}, this.state.values);
     delete values[id];
     this.setState({'values': values}, function() {
+      this.fetch_options();
       if (this.props.on_change) this.props.on_change(this.state.values);
     });
   },
