@@ -90,7 +90,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="fullscreen">
-        <Header generateMenu = {this.generateMenu}/>
+        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div className="">
           <h3>Create a Project</h3>
           <form className="form-inline">

@@ -145,7 +145,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 		<div>
-      <Header link='/dashboard' title='Dashboard' />
+      <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu} />
 			{this.profileEdit(this.state.swap)}
 			<button type="submit" onClick={this.checking} className="btn signupBtn text-center">checkstate</button>
       <Footer />	

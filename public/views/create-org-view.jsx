@@ -112,7 +112,7 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <Header generateMenu = {this.generateMenu}/>
+        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div>
 
           <div>

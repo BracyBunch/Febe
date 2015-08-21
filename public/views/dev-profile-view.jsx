@@ -200,7 +200,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 		<div>
-      <Header generateMenu = {this.generateMenu} />
+      <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu} />
 			{this.profileEdit(this.state.swap)}
       <Footer />	
 		</div>
