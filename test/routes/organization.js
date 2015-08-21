@@ -1,59 +1,71 @@
-var chai          = require('chai');
-var expect        = require('chai').expect;
-var chaiHttp      = require('chai-http');
-var organization  = require('../../routes/organization');
-var app           = require('../../app');
-
+var Promise = require('bluebird');
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var expect = chai.expect;
 chai.use(chaiHttp);
+chai.request.addPromises(Promise);
+
+var app = require('../../app');
+var models = require('../../db');
+
+var http = chai.request.agent(app);
+
+var clean_up = function(ids, cb) {
+  models.db.query('MATCH (n) WHERE id(n) IN {ids} OPTIONAL MATCH (n)-[r]-() OPTIONAL MATCH (te:TimelineEntry)<-[r2]->(n) DELETE n,r,r2,te', {'ids': ids}, function() {
+    cb();
+  }, function() {
+    cb();
+  });
+};
 
 describe('Organization Route Tests', function() {
+  var ids_to_be_deleted = [];
+  var instances = {};
 
-    it('should return with status code 200 after POST to /organization/add', function(done) {
-      chai.request(app)
-        .post('/organization/add')
-        .send({'Test': 'test'})
-        .end(function(res){
-          expect(res.req.method).to.equal('POST');
-          expect(res).to.have.status(200);
-          done();
-        });
+  before(function(done) {
+    models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep@gmail.com', 'password': '$2a$10$rRuOCaxfc4p16.cjoAYI2els/JeZvqB9kb707zNcWpFB6ZlP1yzYe'}).then(function(user) {
+      instances.user = user;
+      ids_to_be_deleted.push(instances.user.id);
+      return http.post('/auth/login').send({'email': 'p_test_rep@gmail.com', 'password': 'testtest'});
+    }).then(function() {
+      done();
     });
+  });
 
-    it('should return with status code 404 after GET to /organization/add', function(done) {
-      chai.request(app)
-        .get('/organization/add')
-        .end(function(res){
-          expect(res.res.body.status).to.equal(404);
-          done();
-        });
-    });
+  after(function(done) {
+    clean_up(ids_to_be_deleted, done);
+  });
 
-    it('should use delete method on /remove', function(done) {
-      // var randomEmail = function(){
-      //   return Math.floor(Math.random(100000) * 100000).toString();
-      // };
-      chai.request(app)
-        .delete('/organization/remove')
-        .send({'Test': 'text'})
-        .then(function(res){
-          expect(res.req.method).to.equal('DELETE');
-          expect(res).to.have.status(200);
-          done();
-        });
-    });
+  it('should be able to create an Organization', function(done) {
+    http.post('/organization')
+    .send({
+      'ein': '123',
+      'name': 'test_org',
+      'description': 'abc',
+      'website_url': 'http://cats.com',
+      'location': 'cat city'
+    }).then(function(res) {
+      instances.organization = res.body;
+      ids_to_be_deleted.push(instances.organization.id);
 
-    it('should use put method on /update', function(done) {
-      // var randomEmail = function(){
-      //   return Math.floor(Math.random(100000) * 100000).toString();
-      // };
-      chai.request(app)
-        .put('/organization/update')
-        .send({})
-        .end(function(err, res){
-          expect(res.req.method).to.equal('PUT');
-          expect(res).to.have.status(200);
-          done();
-        });
+      expect(res).to.have.status(200);
+      expect(res).to.be.json;
+      expect(res.body.name).to.be.eql('test_org');
+      done();
+    }, done);
+  });
+
+  it('should be able to update an Organization', function(done) {
+    http.put('/organization/' + instances.organization.id)
+    .send({
+      'name': 'updated_test_org'
+    }).then(function(res) {
+      expect(res).to.have.status(200);
+      return models.Organization.read(instances.organization.id);
+    }).then(function(organization) {
+      expect(organization.name).to.be.eql('updated_test_org');
+      done();
     });
+  });
 
 });

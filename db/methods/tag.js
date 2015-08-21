@@ -44,8 +44,9 @@ var clean = common.clean_generator(Tag);
  * @param  {String} kind      Either skill or cause
  * @return {Tag[]}
  */
-var find_by_fragment = function(fragment, kind) {
-  return Tag.where({'name': new RegExp(fragment + '.*', 'i'), 'kind': kind}).then(function(tags) {
+var find_by_fragment = function(fragment, kind, limit) {
+  limit = (limit === undefined) ? 25 : limit;
+  return Tag.where({'name': new RegExp('.*' + fragment + '.*', 'i'), 'kind': kind}, {'limit': limit}).then(function(tags) {
     return tags.map(clean);
   });
 };

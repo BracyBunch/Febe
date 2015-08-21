@@ -3,7 +3,6 @@ var db = require('../db');
 var model = require('seraph-model');
 
 /*
-  ?[:cause]-(:Tag {kind: 'cause'})
   [:skill]-(:Tag {kind: 'skill'})
  */
 var Project = model(db, 'Project');

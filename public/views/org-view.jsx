@@ -1,18 +1,19 @@
 var React = require('react');
+var Reflux = require('reflux');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
+var Router = require('react-router');
+var Link = Router.Link;
+var Actions = require('../actions');
+var OrgStore = require('../stores/org-store');
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
-var Router = require('react-router');
-var Actions = require('../actions');
-var Reflux = require('reflux');
-var Link = Router.Link;
 var Participant = require('../components/profile/participant')
 var Description = require('../components/organization/org-description')
 var OrgMedia = require('../components/organization/org-media')
-var OrgStore = require('../stores/org-store');
+var Projects = require('../components/organization/org-projects')
 
 
 module.exports = React.createClass({
@@ -41,8 +42,7 @@ module.exports = React.createClass({
     return {
       orgData: [],
       ownerData: [],
-      repData: [],
-      devData: [],
+      projectData: [],
       verified: null,
       swap: false,
       
@@ -59,6 +59,7 @@ module.exports = React.createClass({
     this.setState({
       orgData: data,
       ownerData: data.owner,
+      projectData: data.projects,
       verified: data.verified.toString().toUpperCase()
     });
   },
@@ -83,6 +84,9 @@ module.exports = React.createClass({
           verified={this.state.verified}
           website={this.state.orgData.website_url} />
           <OrgMedia />
+          <div className='org-projects'> Projects Belonging To {this.state.orgData.name}:
+          <Projects projects={this.state.projectData}/>
+          </div>
         <Footer />
       </div>
     )
