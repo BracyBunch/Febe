@@ -2,12 +2,6 @@ var Tag = require('../db').Tag;
 var express = require('express');
 var router = express.Router();
 
-// home route
-router.get('/', function(req, res){
-  // access DB to retrieve all tags
-  res.send(res);
-});
-
 router.get('/search', function(req, res) {
   var fragment = req.query.fragment;
   var kind = req.query.kind || 'skill';

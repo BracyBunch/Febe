@@ -27,7 +27,7 @@ describe('Signup tests', function() {
   });
 
   it('should be able to signup as a dev with a password', function(done) {
-    chai.request(app).post('/auth/signup').send({'first_name': 'test', 'last_name': 'user', 'email': 'test@testy.com', 'password': 'iconapop',}).then(function(res) {
+    chai.request(app).post('/auth/signup').send({'first_name': 'test', 'last_name': 'user', 'email': 'test@testy.com', 'password': 'iconapop'}).then(function(res) {
       expect(res.status).to.eql(200);
 
       models.User.where({'email': 'test@testy.com'}).then(function(user) {
