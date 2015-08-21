@@ -5,10 +5,10 @@ var Paper = mui.Paper;
 module.exports = React.createClass({
   render: function(){
     return (
-      <Paper style={{"height": "64%"}} zdepth={1}>
+      <Paper style={{"minHeight": "65%"}} zdepth={1}>
         <div className="team-header">The Team</div>
           <div className="entire-team">
-            <div className="col-sm-4 nametags">
+            <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/colinmckeehan" target="_blank">
                   <img src="/assets/img/colin.jpg"/>
@@ -19,7 +19,7 @@ module.exports = React.createClass({
                 </a>
               </div>
             </div>
-            <div className="col-sm-4 nametags">
+            <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/mavmeister" target="_blank">
                   <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAKNAAAAJDNjYzIyMTNjLWEwOWMtNDc1ZC1iMDQ5LTE3NGQ2Y2FiNTE1MQ.jpg"/>
@@ -30,7 +30,7 @@ module.exports = React.createClass({
                 </a>
               </div>
             </div>
-            <div className="col-sm-4 nametags">
+            <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/ryanjones10" target="_blank">
                   <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAYqAAAAJDFiZDRmM2I1LTZlOTItNDUxZi1iNWZjLTM3NWI2MTI2ZjcxOA.jpg"/>
@@ -41,7 +41,7 @@ module.exports = React.createClass({
                 </a>
               </div>
             </div>
-            <div className="col-sm-4 nametags">
+            <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/yoshiv" target="_blank">
                   <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAR2AAAAJGVlOWJlMTFkLTc3N2YtNGVkZC05YjY2LWMxNzA4OTllN2YyMQ.jpg"/>
@@ -52,7 +52,7 @@ module.exports = React.createClass({
                 </a>
               </div>
             </div>
-        </div>
+          </div>
       </Paper>
     )
   }

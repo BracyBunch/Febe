@@ -231,8 +231,7 @@ body{
 }
 
 .entire-team{
-  margin: 0 auto;
-  display: inline;
+  margin-left: 6%;
 }
 
 .thumbnail{
@@ -240,8 +239,8 @@ body{
 }
 
 .nametags{
-  height: 10%;
-  width: 25%;
+  height: 14%;
+  width: 23%;
 }
 
 /*stack*/
@@ -262,6 +261,10 @@ body{
 
 .aboutUsMain, .teamMain, .featuredMain, .stackMain{
   padding: 15px;
+}
+
+.break-point{
+  padding-top: 2%;
 }
 
 .aboutUsMain{
