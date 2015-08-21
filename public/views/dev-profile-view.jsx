@@ -172,7 +172,7 @@ module.exports = React.createClass({
             </div>
             <div>
               <h3>Interests</h3>
-              <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' values={this.state.interests} ref='interests'/>
+              <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>
             </div>
           </div>
         </div>

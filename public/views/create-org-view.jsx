@@ -13,6 +13,8 @@ var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var ImgurUpload = require('../utils/imgur');
 var ajax = require('../utils/fetch');
+var Autocomplete =require('../components/shared/autocomplete');
+
 var Promise = require('bluebird');
 
 module.exports = React.createClass({
@@ -21,7 +23,7 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext: function(){ 
+  getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
@@ -46,10 +48,10 @@ module.exports = React.createClass({
       logoURL: '',
       imgUri: 'assets/img/defaultlogo.jpg',
       location: '',
-      tags: [],
+      causes: [],
       representatives: [],
       description: ''
-    }
+    };
   },
 
   newRepField: '<input type="email" class="form-control" placeholder="Representative\'s Email" />', 
@@ -61,7 +63,7 @@ module.exports = React.createClass({
   },
 
   handleImage: function(event) {
-    var imagePromise = new Promise(ImgurUpload.imgurUpload(image))
+    var imagePromise = new Promise(ImgurUpload.imgurUpload(image));
 
     var that = this;
     // FileReader is a native browser file reader
@@ -69,87 +71,90 @@ module.exports = React.createClass({
     // Assign file to img
     var img = event.target.files[0];
     var imgToUpload, imgBase64;
-    
-    // run function on 
-    reader.onload = readSuccess;                                            
-    function readSuccess(upload) { 
+
+    // run function on
+    reader.onload = readSuccess;
+    function readSuccess(upload) {
       imgBase64 = upload.target.result;
       // slice only base64 data
       imgToUpload = imgBase64.slice(23);
-      ImgurUpload.imgurUpload(imgToUpload)
+      ImgurUpload.imgurUpload(imgToUpload);
       that.setState({
         imgUri: imgBase64
-      })                              
-    };
-    
+      });
+    }
+
     // readAsDataURL converts file to base64
     reader.readAsDataURL(img);
   },
 
+  on_autocomplete_change: function(selections) {
+    this.setState({'causes': Object.keys(selections)});
+  },
+
   createOrg: function() {
-    console.log("Org", this.state)
+    console.log("Org", this.state);
     if (this.state.terms) {
-      var that = this;
       ajax('/organization', {
-        method: 'POST', 
+        method: 'POST',
         body: JSON.stringify(this.state)
       }).then(function(response) {
         return response.json();
       })
       .then(function(data) {
         // what do we want to do here?
-        sessionStorage.setItem('orgId', data.id)
+        sessionStorage.setItem('orgId', data.id);
         this.transitionTo('/organization/' + data.id);
       }.bind(this));
-    } 
+    }
   },
 
   render: function(){
-    var repTooltip = <Tooltip>Enter the email address of any additional users you would like to represent your organization.</Tooltip>
-  
+    var repTooltip = <Tooltip>Enter the email address of any additional users you would like to represent your organization.</Tooltip>;
+
     return (
       <div>
         <Header generateMenu = {this.generateMenu}/>
         <div>
-          
+
           <div>
             <h3>EIN</h3>
             <form className="form-inline">
               <div className="form-group">
                 <h5>Project Name</h5>
-                <input 
-                  type="text" 
-                  ref="ein" 
-                  className="form-control ein" 
-                  placeholder="EIN" 
+                <input
+                  type="text"
+                  ref="ein"
+                  className="form-control ein"
+                  placeholder="EIN"
                   valueLink={this.linkState('ein')} />
               </div>
             </form>
           </div>
 
           <div>
-            <input 
-              type="text" 
-              ref="name" 
-              className="form-control" 
-              placeholder="Organization Name" 
+            <input
+              type="text"
+              ref="name"
+              className="form-control"
+              placeholder="Organization Name"
               valueLink={this.linkState('name')} />
           </div>
 
           <div>
-            <input 
-              type="url" 
-              ref="orgURL" 
-              className="form-control orgURL" 
-              placeholder="Organization Website" 
+            <input
+              type="url"
+              ref="orgURL"
+              className="form-control orgURL"
+              placeholder="Organization Website"
               valueLink={this.linkState('website_url')} />
           </div>
            <img id="avatar" src={this.state.imgUri} />
 
           <div>
-            <button type="submit" 
+            <button type="submit"
               id="img"
-              className="btn signupBtn text-center" 
+              className="btn signupBtn text-center"
               onClick={this.uploadImage}>Upload Logo</button>
           </div>
 
@@ -158,16 +163,17 @@ module.exports = React.createClass({
           </form>
 
           <div>
-            <input 
-              type="text" 
-              ref="location" 
-              className="form-control location" 
-              placeholder="Organization Location" 
+            <input
+              type="text"
+              ref="location"
+              className="form-control location"
+              placeholder="Organization Location"
               valueLink={this.linkState('location')} />
           </div>
-          
+
           <div>
-          TAGS GO HERE
+            <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes'
+             min_chars={0} ref='causes' on_change={this.on_autocomplete_change.bind(this)}/>
           </div>
 
           <div id="addlReps">
@@ -178,8 +184,8 @@ module.exports = React.createClass({
             <input type="url" className="form-control" placeholder="Representative's Email" />
           </div>
           <div>
-            <button 
-              className="btn signupBtn" 
+            <button
+              className="btn signupBtn"
               onClick={Methods.addFields.bind(this, 'addlReps', this.newRepField)}>Add +</button> <br />
           </div>
 
@@ -195,10 +201,10 @@ module.exports = React.createClass({
           </div>
 
           <div>
-            <input 
-              type="checkbox" 
-              value="termsAgreed" 
-              onChange={this.setTerms} 
+            <input
+              type="checkbox"
+              value="termsAgreed"
+              onChange={this.setTerms}
               className="checkbox-inline"> I agree to the terms</input>
           </div>
 
@@ -210,6 +216,6 @@ module.exports = React.createClass({
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 });
