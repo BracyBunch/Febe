@@ -93,7 +93,6 @@ module.exports = React.createClass({
   },
 
   createOrg: function() {
-    console.log("Org", this.state);
     if (this.state.terms) {
       ajax('/organization', {
         method: 'POST',
@@ -102,7 +101,6 @@ module.exports = React.createClass({
         return response.json();
       })
       .then(function(data) {
-        // what do we want to do here?
         sessionStorage.setItem('orgId', data.id);
         this.transitionTo('/organization/' + data.id);
       }.bind(this));

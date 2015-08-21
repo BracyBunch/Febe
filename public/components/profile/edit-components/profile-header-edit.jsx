@@ -1,5 +1,7 @@
 var React = require('react/addons');
 var ProfileMethods = require('../../../sharedMethods');
+var mui = require('material-ui');
+var RaisedButton = mui.RaisedButton;
 
 module.exports = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
@@ -39,10 +41,10 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="profile">
-        <div className="row row-centered">
+      <div className="container profileMargin">
+        <div className="row">
 
-          <div className="col-md-3 ">
+          <div className="col-md-2">
             <div className="">
               <img src={this.props.avatar} /> <br />
               <a href="#" className="">upload avatar</a>
@@ -58,7 +60,6 @@ module.exports = React.createClass({
                 placeholder="Your position & company"
                 onChange={this.updateTitle} />
             </div>
-
             <div>
               <input
                 type="text"
@@ -66,7 +67,6 @@ module.exports = React.createClass({
                 placeholder="Your location"
                 onChange={this.updateLocation} />
             </div>
-
             <div>
               <div className="form-group techstrengths" id="addlLinks">
                 <input type="text" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." className="form-control" />
@@ -76,8 +76,11 @@ module.exports = React.createClass({
           </div>
 
           <div className="col-md-2">
-            <button className="btn signupBtn" type="submit" onClick={this.props.edit}>Save</button>
+            <RaisedButton
+              label="Save"
+              onClick={this.props.edit} />
           </div>
+
         </div>
       </div>
     );
