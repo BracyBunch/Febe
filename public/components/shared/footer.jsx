@@ -1,6 +1,8 @@
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
+var mui = require('material-ui');
+var Paper = mui.Paper;
 
 module.exports = React.createClass({
   render: function(){
