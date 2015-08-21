@@ -33,12 +33,13 @@ module.exports = React.createClass({
 		return {
 			title: '',
 			location: '',
-			bio: 'test',
+			bio: '',
 			links: [],
 			strengths: [],
 			interests: [],
 			userData: [],
-			swap: true
+			swap: true,
+      hasOrg: false
 		};
 	},
 	componentWillMount: function(){
@@ -47,8 +48,9 @@ module.exports = React.createClass({
 	onChange: function(event, userData){
 		// this.setState({userData: userData});
     this.setState({
-      first_name: "Yoshio",
-      last_name: "Varney",
+      kind: userData.kind,
+      first_name: userData.first_name,
+      last_name: userData.last_name,
       title: userData.title,
       location: userData.location,
       bio: userData.bio,
@@ -68,13 +70,16 @@ module.exports = React.createClass({
     var updateData = {
       title: this.state.title,
       location: this.state.location,
-      bio: this.state.bio,
-      strengths: Object.keys(this.refs.strengths.get_selections()),
-      interests: Object.keys(this.refs.interests.get_selections())
+      bio: this.state.bio
     };
-    this.setState({
-      'strengths': this.refs.strengths.get_selections_array(), 
-      'interests': this.refs.interests.get_selections_array()});
+    if (this.state.kind === 'dev') {
+      updateData.strengths = Object.keys(this.refs.strengths.get_selections());
+      updateData.interests = Object.keys(this.refs.interests.get_selections());
+      this.setState({
+        'strengths': this.refs.strengths.get_selections_array(),
+        'interests': this.refs.interests.get_selections_array()
+      });
+    }
     this.edit();
     ProfileMethods.updateProfile('/user', updateData);
 	},
@@ -117,6 +122,36 @@ module.exports = React.createClass({
     });
   },
 
+  devFields: function() {
+    if (this.state.kind !== 'dev') return '';
+    return (
+      <div className="row">
+        <div className="col-md-8 col-md-offset-1">
+          <div>
+            <h3>Tech Strengths</h3>
+            {(function() {
+              if (this.state.swap) {
+                return this.strengthsList();
+              } else {
+                return <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>;
+              }
+            }.bind(this))()}
+          </div>
+          <div>
+            <h3>Interests</h3>
+            {(function() {
+              if (this.state.swap) {
+                return this.interestsList();
+              } else {
+                return <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>;
+              }
+            }.bind(this))()}
+          </div>
+        </div>
+      </div>
+    );
+  },
+
 	profileEdit: function(edit) {
 		return edit ? 
       <div className="container profileMargin">
@@ -133,18 +168,7 @@ module.exports = React.createClass({
     		        bio={this.state.bio}
     		        links={this.state.links} />
           </div>
-          <div className="row">
-            <div className="col-md-8 col-md-offset-1">
-              <div>
-                <h3>Tech Strengths</h3>
-                {this.strengthsList()}
-              </div>
-              <div>
-                <h3>Interests</h3>
-                {this.interestsList()}
-              </div>
-            </div>
-          </div>
+          {this.devFields()}
           <div className="row">
             <div className="col-md-8 col-md-offset-1">
               <Bio bio={this.state.bio} />
@@ -159,7 +183,7 @@ module.exports = React.createClass({
       <Paper zDepth={4}>
         <div className="row">
           <div className="col-md-8 col-md-offset-1 profileBox">
-            <ProfileHeaderEdit 
+            <ProfileHeaderEdit
                 edit={this.save}
     		        firstName={this.state.userData.first_name}
     		        lastName={this.state.userData.last_name}
@@ -167,18 +191,7 @@ module.exports = React.createClass({
                 updateLocation={this.updateLocation} />
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-8 col-md-offset-1">
-            <div>
-              <h3>Tech Strengths</h3>
-              <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>
-            </div>
-            <div>
-              <h3>Interests</h3>
-              <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>
-            </div>
-          </div>
-        </div>
+        {this.devFields()}
         <div className="row">
           <div className="col-md-8 col-md-offset-1">
             <BioEdit updateBio={this.updateBio} />
@@ -191,7 +204,7 @@ module.exports = React.createClass({
     { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
     { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
     { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-    { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
+    { type: MenuItem.Types.LINK, payload: '#/profile', text: 'My Profile'},
     { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
     { route: '/', text: 'About'},
     { route: '/', text: 'Team'},

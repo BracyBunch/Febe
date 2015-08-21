@@ -73,7 +73,7 @@ module.exports = React.createClass({
   },
   settingID: function(newID){
     {this.props.newID(newID)}
-    this.transitionTo(this.props.type==="dev"?'devprofile':'npprofile');
+    this.transitionTo('profile');
   },
   passwordVerification: function(){
     if(this.state.password === this.state.confirmedPassword && this.state.password.length >= 8){
