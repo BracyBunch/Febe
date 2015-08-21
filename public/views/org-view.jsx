@@ -68,7 +68,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <Header generateMenu = {this.generateMenu}/>
+        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div>
           <h3> {this.state.orgData.title} </h3> 
           <button className='btn btn-warning edit-follow'> Edit/Follow </button>

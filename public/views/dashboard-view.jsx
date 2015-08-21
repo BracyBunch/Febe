@@ -47,7 +47,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <Header generateMenu = {this.generateMenu}/>
+        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div className="timeline-container">
           {this.state.timeline.map(function(entry) {
             return <TimelineEntry key={entry.entry.id} entry={entry}/>;
@@ -57,7 +57,6 @@ module.exports = React.createClass({
         <Link to="/createproject"><button className="btn btn-primary">Create Project</button></Link>
         <Link to="/npprofile"><button className="btn btn-primary">View NP Profile</button></Link>
         <Link to="/createorg"><button className="btn btn-primary">Create Organization</button></Link>
-        
         <Footer />
       </div>
     );

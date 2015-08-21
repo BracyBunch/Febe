@@ -54,7 +54,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="fullscreen">
-        <Header generateMenu = {this.generateMenu} />
+        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu} />
         <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
         <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
         <Footer />
