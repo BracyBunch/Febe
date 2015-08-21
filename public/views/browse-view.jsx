@@ -5,6 +5,7 @@ var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
+var BrowseProjects = require('../components/browse/browseProjects');
 
 module.exports = React.createClass({
   childContextTypes: {
@@ -30,7 +31,7 @@ module.exports = React.createClass({
       <div>
         <Header generateMenu = {this.generateMenu}/>
         <div>
-          Browse Page
+          <BrowseProjects />
         </div>
         <Footer />
       </div>

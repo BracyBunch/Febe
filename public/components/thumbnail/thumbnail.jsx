@@ -24,6 +24,11 @@ module.exports = React.createClass({
   handleMouseLeave: function(){
     this.setState({hovering: false});
   },
+  strengthsList: function() {
+    return this.props.tags.map(function(tags) {
+      return <h4 className="label-inline"> <span className="label label-color">{tags}</span> </h4>;
+    });
+  },
   thumbnailInformation: function(){
     return (
       <div>
@@ -40,6 +45,9 @@ module.exports = React.createClass({
         <div className="thumbnail-preview col-sm-4">
           <div className="thumbnail" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
             {this.state.hovering ? this.inset() : this.thumbnailInformation()}
+          </div>
+          <div className="thumbnail-tags">
+            {this.strengthsList()}
           </div>
         </div>
       </Link>

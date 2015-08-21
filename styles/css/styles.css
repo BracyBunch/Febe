@@ -8,6 +8,10 @@ html *
 body{
   background-color: #f2f2f2;
 }
+
+.main{
+  height: 100%;
+}
 /* signup */
 .signupBorder {
   border: 2px solid lightgrey;
@@ -176,10 +180,9 @@ body{
 
 .footer-bottom{
   position: relative;
-  bottom: 0;
+  bottom: -3em;
   width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  height: 3em;
 }
 
 .terms-of-use{
@@ -306,7 +309,13 @@ body{
   text-align: center;
 }
 
-/*featured projects*/
+/*browse projects*/
+
+.searchbar{
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 /*profile*/
 .profile {
