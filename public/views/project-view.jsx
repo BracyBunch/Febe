@@ -47,18 +47,6 @@ module.exports = React.createClass({
       title: 'Project Title',
       location: 'Project Location',
       description: 'Project info',
-      technology: [
-      { id: 124,
-        kind: "skill",
-        model: "Tag",
-        name: "javascript"
-      }, {
-        id: 125,
-        kind: "skill",
-        model: "Tag",
-        name: "hugging"
-      }
-      ],
       tags: [],
       contributors: ['john', 'bob', 'joe', 'sally'],
       startDate: 'START DATE',
@@ -78,7 +66,6 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log("data: ", data.skills)
     this.setState({
       title: data.name,
       location: data.organization.location,
