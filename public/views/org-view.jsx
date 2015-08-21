@@ -13,7 +13,7 @@ var Footer = require('../components/shared/footer');
 var Participant = require('../components/profile/participant')
 var Description = require('../components/organization/org-description')
 var OrgMedia = require('../components/organization/org-media')
-var Projects = require('../components/organization/org-projects')
+var Projects = require('../components/organization/org-projects-2')
 
 
 module.exports = React.createClass({
@@ -55,7 +55,7 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log("Org Data:", data)
+    console.log('org', data.projects)
     this.setState({
       orgData: data,
       ownerData: data.owner,
@@ -71,8 +71,9 @@ module.exports = React.createClass({
         <Header generateMenu = {this.generateMenu}/>
         <div>
           <h3> {this.state.orgData.title} </h3> 
-          <button className='btn btn-warning edit-follow'> Edit/Follow </button>
+          <button className='btn btn-primary edit-follow'> Edit/Follow </button>
         </div>
+        <Link to="/createproject"><button className="btn btn-primary">Create Project</button></Link>
           <Description 
           name={this.state.orgData.name}
           location={this.state.orgData.location}
