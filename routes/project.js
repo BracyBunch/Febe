@@ -6,6 +6,7 @@ var models = require('../db');
 var Project = models.Project;
 var express = require('express');
 var router = express.Router();
+var transform_links = require('../utils/transform_links');
 
 var validate_id = function(req, res, next) {
   var project_id = Number(req.params.project_id);
@@ -56,18 +57,7 @@ router.post('/', function(req, res) {
 
   var links = [];
   if ('links' in req.body && Array.isArray(req.body.links) && req.body.links.length) {
-    req.body.links.forEach(function(link) {
-      if (validator.isURL(link, {'protocol': ['http', 'https']})) {
-        var hostname = url_parse(link).hostname;
-        var type = _.get({
-          'facebook.com': 'facebook',
-          'github.com': 'github',
-          'linkedin.com': 'linkedin'
-        }, hostname, 'other');
-
-        links.push([type, link].join('|'));
-      }
-    });
+    links = transform_links(req.body.links);
   }
 
   Project.create({
@@ -97,6 +87,10 @@ router.put('/:project_id', validate_id, function(req, res) {
   var fields = _.pick(req.body, editable_fields);
 
   var relations = _.pick(req.body, ['tech']);
+
+  if ('links' in fields && Array.isArray(fields.links)) {
+    fields.links = transform_links(fields.links);
+  }
 
   if ('tech' in relations) {
     async.tech = Project.clear_skills(project_id).then(function() {
