@@ -42,8 +42,7 @@ module.exports = React.createClass({
     return {
       orgData: [],
       ownerData: [],
-      repData: [],
-      devData: [],
+      projectData: [],
       verified: null,
       swap: false,
       
@@ -60,6 +59,7 @@ module.exports = React.createClass({
     this.setState({
       orgData: data,
       ownerData: data.owner,
+      projectData: data.projects,
       verified: data.verified.toString().toUpperCase()
     });
   },
@@ -84,7 +84,9 @@ module.exports = React.createClass({
           verified={this.state.verified}
           website={this.state.orgData.website_url} />
           <OrgMedia />
-          <Projects />
+          <div className='org-projects'> Projects Belonging To {this.state.orgData.name}:
+          <Projects projects={this.state.projectData}/>
+          </div>
         <Footer />
       </div>
     )

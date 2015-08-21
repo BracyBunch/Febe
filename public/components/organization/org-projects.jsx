@@ -7,26 +7,28 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
+      projectID: null
     };
   },
 
-  getDefaultProps: function() {
-    return {
-    };
+  goToProject: function(projectID){
+    this.transitionTo('/project/' + projectID);
   },
 
   render: function() {
+    var that = this;
     return (
     <div>
-      <div> Project 1
-      </div>
-      <div> Project 2
-      </div>
-      <div> Project 3
-      </div>
-      <div> Project 4
-      </div>
-    </div>
-    )
-  }
+    {this.props.projects.map(function(obj){
+        return (
+        <div className='org-view-project' onClick={that.goToProject.bind(that, obj['id'])}>
+         Project: {obj['name']} <br/>
+         Description: {obj['description']} <br/>
+         Active: {obj['active'].toString()}
+        </div>
+        )
+      })
+    }
+    </div> )
+    }
 });
