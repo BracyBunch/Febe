@@ -89,8 +89,15 @@ var with_extras = function(organization, options) {
     organization = organization[0];
     var cleaned_organization = Organization.clean(organization);
 
+    if (organization.projects) {
+      cleaned_organization.projects = organization.projects.map(function(project) {
+        project = Project.clean(project);
+        project.skills = project.skills.map(Tag.clean);
+        return project;
+      });
+    }
+
     if (organization.owner) cleaned_organization.owner = User.clean(organization.owner);
-    if (organization.projects) cleaned_organization.projects = organization.projects.map(Project.clean);
     if (organization.causes) cleaned_organization.causes = organization.causes.map(Tag.clean);
 
     return cleaned_organization;
