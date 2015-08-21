@@ -5,7 +5,7 @@ var RaisedButton = mui.RaisedButton;
 module.exports = React.createClass({
   getDefaultProps: function() {
     return {
-      avatar: '/assets/img/avatar.png',
+      avatar: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAR2AAAAJGVlOWJlMTFkLTc3N2YtNGVkZC05YjY2LWMxNzA4OTllN2YyMQ.jpg",
       title: 'Please enter a title/company',
       location: 'Please enter a location',
       links: 'Please enter your GitHub, LinkedIn, etc'
@@ -22,7 +22,7 @@ module.exports = React.createClass({
         var link = link.slice(9);
         return <a href={link} className="links">LinkedIn</a>
       }
-      
+
       return <span>{link}</span>
     })
   },
@@ -34,7 +34,7 @@ module.exports = React.createClass({
 
           <div className="col-md-2">
             <div className="">
-              <img src={this.props.avatar} /> <br />
+              <img className="profileAvatar" src={this.props.avatar} /> <br />
             </div>
           </div>
 

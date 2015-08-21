@@ -17,10 +17,11 @@ module.exports = React.createClass({
         <h3>Bio</h3>
         <textarea
           defaultValue="Tell us about yourself..."
-          className="form-control"
+          className="form-control bio"
           rows="4"
           cols="200"
           onChange={this.updateBio}
+          style={{"margin-bottom": "20px"}}
           ></textarea>
       </div>
     );
