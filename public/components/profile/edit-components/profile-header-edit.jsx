@@ -15,7 +15,7 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       avatar: '/assets/img/avatar.png',
-      title: <a href="devprofile">Please enter your title/company</a>,
+      title: 'Please enter your title/company',
       location: 'Please enter a location',
       links: 'Please enter your GitHub, LinkedIn, etc'
     };
