@@ -1,6 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
 var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var Oauth = require('../components/signup/signupOAuth');
 var Main = require('../components/signup/signupMain');
@@ -12,6 +13,14 @@ module.exports = React.createClass({
   mixins: [
     Reflux.listenTo(ProfileStore, 'onChange')
   ],
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
   getInitialState: function() {
     return {
       userData: [],
