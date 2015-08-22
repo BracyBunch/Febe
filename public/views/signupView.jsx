@@ -2,6 +2,7 @@ var React = require('react');
 var Reflux = require('reflux');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
+var Paper = mui.Paper;
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
 var Oauth = require('../components/signup/signupOAuth');
@@ -55,8 +56,10 @@ module.exports = React.createClass({
     return (
       <div className="fullscreen">
         <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu} />
-        <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
-        <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
+          <Paper zDepth={1} style={{"margin": "20px auto auto auto", "padding": "20px", "width": "60%"}}>
+            <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
+            <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
+          </Paper>
         <Footer />
       </div>
     );

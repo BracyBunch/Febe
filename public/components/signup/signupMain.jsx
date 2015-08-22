@@ -96,7 +96,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="row">
-      <div className="col-md-6 col-md-offset-3 signupBorder">
+      <div className="col-md-10 col-md-offset-1 signupBorder">
       <div className="signupCentered">
         <div className="">
             <TextField

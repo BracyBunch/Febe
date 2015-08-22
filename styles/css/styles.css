@@ -18,6 +18,7 @@ body{
   padding: 15px;
   opacity: 50%;
 }
+
 .checkbox {
   text-align: left;
   margin: 0 auto;
@@ -194,9 +195,15 @@ body{
 }
 
 .inset {
+<<<<<<< HEAD
   width: 268px;
   height: 270px;
   background-color: #5967AD;
+=======
+  width: 220px;
+  height: 162px;
+  background-color: black;
+>>>>>>> 7e1952e6e849e34984caa0dcc28ff676834d3824
   text-align: center;
   opacity: .9;
 }
@@ -240,7 +247,7 @@ body{
   margin-left: 6%;
 }
 
-.thumbnail{
+.thumbnail {
   text-align: center;
 }
 
@@ -346,10 +353,6 @@ body{
   display: inline;
 }
 
-.profileBox {
-  background-color: white;
-}
-
 .links {
   text-decoration: underline;
   color: blue;
@@ -381,6 +384,27 @@ body{
 .org-projects {
   text-align: center;
   font-size: 20px;
+}
+
+/* org */
+.short-form, .long-form, .form-margin{
+  margin: 8px 0;
+}
+
+.short-form {
+  width: 35%;
+}
+
+.long-form {
+  width: 70%;
+}
+
+.create {
+  text-align: center;
+}
+
+.center-form {
+  margin-left: auto;
 }
 
 /*other*/
