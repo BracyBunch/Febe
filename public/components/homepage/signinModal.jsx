@@ -5,6 +5,7 @@ var LogButton = require('../shared/logInOutButton');
 var ajax = require('../../utils/fetch');
 var Navigation = require('react-router').Navigation;
 var mui = require('material-ui')
+var ThemeManager = new mui.Styles.ThemeManager();
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 
@@ -17,6 +18,14 @@ module.exports = React.createClass({
       password: '',
       signinData: '',
       id: ''
+    };
+  },
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
     };
   },
   close: function() {

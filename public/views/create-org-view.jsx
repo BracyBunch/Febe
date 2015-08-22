@@ -5,6 +5,7 @@ var Promise = require('bluebird');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
+var RaisedButton = mui.RaisedButton;
 // router / navigation
 var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
@@ -155,10 +156,10 @@ module.exports = React.createClass({
                     </OverlayTrigger>
                     <input type="url" className="form-control" placeholder="Representative's Email" />
                   </div>
-                  <div className="orgButton">
-                    <button
-                      className="btn signupBtn"
-                      onClick={Methods.addFields.bind(this, 'addlReps', this.newRepField)}>Add +</button> <br />
+                  <div className="orgButton signupBtn">
+                    <RaisedButton
+                      label="Add +"
+                      onClick={Methods.addFields.bind(this, 'addlReps', this.newRepField)} />
                   </div>
                   <h3>Mission / About</h3>
                   <textarea
@@ -181,8 +182,10 @@ module.exports = React.createClass({
                         onChange={this.setTerms}
                         className="checkbox-inline"> I agree to the terms</input>
                     </div>
-                    <div>
-                      <button type="submit" className="btn signupBtn" onClick={this.createOrg}>Create</button>
+                    <div className="signupBtn">
+                      <RaisedButton 
+                        label="Create"
+                        onClick={this.createOrg} />
                     </div>
                   </div>
                 </div>

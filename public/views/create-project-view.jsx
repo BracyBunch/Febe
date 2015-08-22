@@ -8,6 +8,7 @@ var DropdownButton = require('../components/project/dropdown');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
+var RaisedButton = mui.RaisedButton;
 //shared components
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
@@ -117,18 +118,18 @@ module.exports = React.createClass({
                   <input type="url" className="form-control" placeholder="Youtube, Facebook, Additional Media" />
                 </div>
                 <div className="orgButton">
-                  <div>
-                    <button
-                      className="btn signupBtn profileMargin"
-                      onClick={Methods.addFields.bind(this, 'addlLinks', this.newLink)}>Add +</button> <br />
+                  <div className="signupBtn">
+                    <RaisedButton
+                      label="Add +"
+                      onClick={Methods.addFields.bind(this, 'addlLinks', this.newLink)} />
                   </div>
-                  <div>
+                  <div className="signupBtn">
                     <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
                   </div>
-                  <div>
-                    <button type="submit"
-                      className="btn signupBtn text-center"
-                      onClick={this.createProject}>Create</button>
+                  <div className="signupBtn">
+                    <RaisedButton
+                      label="Create"
+                      onClick={this.createProject} />
                   </div>
                 </div>
               </div>

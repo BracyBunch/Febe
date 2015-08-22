@@ -24,13 +24,11 @@ module.exports = React.createClass({
       projectData: [],
       verified: null,
       swap: false,
-      
     };
   },
 
   componentWillMount: function(){
     Actions.getOrg(sessionStorage.getItem('orgId'));
-    // 411
   },
 
   onChange: function(event, data){
@@ -52,7 +50,7 @@ module.exports = React.createClass({
           <button className='btn btn-primary edit-follow'> Edit/Follow </button>
         </div>
         <Link to="/createproject"><button className="btn btn-primary">Create Project</button></Link>
-          <Description 
+        <Description 
           name={this.state.orgData.name}
           location={this.state.orgData.location}
           createDate={this.state.orgData.created}
@@ -62,10 +60,10 @@ module.exports = React.createClass({
           causes={this.state.orgData.causes}
           verified={this.state.verified}
           website={this.state.orgData.website_url} />
-          <OrgMedia />
-          <div className='org-projects'> Projects Belonging To {this.state.orgData.name}:
+        <OrgMedia />
+        <div className='org-projects'> Projects Belonging To {this.state.orgData.name}:
           <Projects projects={this.state.projectData}/>
-          </div>
+        </div>
         <Footer />
       </div>
     )
