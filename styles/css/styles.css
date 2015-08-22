@@ -195,9 +195,15 @@ body{
 }
 
 .inset {
+<<<<<<< HEAD
+  width: 268px;
+  height: 270px;
+  background-color: #5967AD;
+=======
   width: 220px;
-  height: 180px;
+  height: 162px;
   background-color: black;
+>>>>>>> 7e1952e6e849e34984caa0dcc28ff676834d3824
   text-align: center;
   opacity: .9;
 }
@@ -205,20 +211,26 @@ body{
 .insetDescription{
   padding-left: 5%;
   padding-right: 5%;
+  font-size: 16px;
 }
+
 .descriptionHeader{
   text-decoration: underline;
+  font-size: 20px;
 }
+
 .thumbnail-preview{
   position: relative;
   padding: 10px;
   overflow: auto;
-  height: 250px;
-  width: 250px;
+  height: 350px;
+  width: 300px;
 }
+
 .eachThumbnail{
   position: relative;
   display: inline-block;
+  padding-left: 20px;
 }
 
 .thumbnail-image{
@@ -363,6 +375,10 @@ body{
   display: inline-block;
   padding: 20px;
   margin: 40px;
+}
+
+.createorg-button{
+  padding-right: 20px;
 }
 
 .org-projects {

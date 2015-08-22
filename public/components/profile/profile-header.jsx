@@ -44,7 +44,7 @@ var ProfileHeader = React.createClass({
           </div>
 
           <div className="col-md-4">
-            <p>{this.props.firstName} {this.props.lastName}</p>
+            <p>{this.props.first_name} {this.props.last_name}</p>
             <div>
               <p>{this.props.title}</p>
             </div>
@@ -54,8 +54,6 @@ var ProfileHeader = React.createClass({
             <div>
               <p>{this.renderLinks()}</p>
             </div>
-            <RaisedButton
-              label="Contact" />
           </div>
 
           <div className="col-md-2">

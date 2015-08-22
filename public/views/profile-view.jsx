@@ -5,6 +5,7 @@ var ThemeManager = new mui.Styles.ThemeManager();
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
 var Paper = mui.Paper;
+var RaisedButton = mui.RaisedButton;
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
@@ -38,7 +39,7 @@ var ProfileView = React.createClass({
       strengths: [],
       interests: [],
       userData: {},
-      editting: false,
+      editing: false,
       hasOrg: false
     };
   },
@@ -61,7 +62,7 @@ var ProfileView = React.createClass({
 
   edit_toggle: function() {
     this.setState({
-      editting: !this.state.editting
+      editing: !this.state.editing
     });
   },
 
@@ -119,7 +120,7 @@ var ProfileView = React.createClass({
           <div>
             <h3>Tech Strengths</h3>
             {(function() {
-              if (this.state.editting) {
+              if (this.state.editing) {
                 return <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>;
               } else {
                 return this.strengthsList();
@@ -129,7 +130,7 @@ var ProfileView = React.createClass({
           <div>
             <h3>Interests</h3>
             {(function() {
-              if (this.state.editting) {
+              if (this.state.editing) {
                 return <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>;
               } else {
                 return this.interestsList();
@@ -140,9 +141,21 @@ var ProfileView = React.createClass({
       </div>
     );
   },
-
+  repButtons: function(){
+    if (this.state.kind !== 'rep') return '';
+    return (
+      <div>
+        <span className="createorg-button">
+          <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Create Organization"/>
+        </span>
+        <span>
+          <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Join an Organization"/>
+        </span>
+      </div>
+    )
+  },
   profile: function() {
-    if (this.state.editting) {
+    if (this.state.editing) {
       return (
         <div className="container profileMargin">
         <Paper zDepth={1}>
@@ -198,8 +211,19 @@ var ProfileView = React.createClass({
             <div className="row">
               <div className="col-md-8 col-md-offset-1">
                 <div>
+                  {this.repButtons()}
+                </div>
+                <div>
                   <h3>Bio</h3>
-                  {this.state.bio}
+                  <textarea
+                  value={this.state.bio}
+                  onChange={this.updateBio}
+                  placeholder="Tell us about yourself...just hit the edit button"
+                  className="form-control bio"
+                  rows="4"
+                  cols="200"
+                  style={{'marginBottom': '20px'}}
+                  >{this.state.bio}</textarea> 
                 </div>
                 <Projects />
               </div>
