@@ -368,6 +368,7 @@ body{
 .bio {
   margin-bottom: 30px;
 }
+
 /*organization*/
 .org-view-project {
   border: 1px solid black;
@@ -386,7 +387,7 @@ body{
   font-size: 20px;
 }
 
-/* org */
+/* create org */
 .short-form, .long-form, .form-margin{
   margin: 8px 0;
 }
@@ -404,7 +405,19 @@ body{
 }
 
 .center-form {
+  padding: 20px;
   margin-left: auto;
+  margin-right: auto;
+}
+
+.orgPic {
+  width: 100%;
+  max-width: 200px;
+  margin-top: 16px;
+}
+
+.orgButton {
+  text-align: center;
 }
 
 /*other*/

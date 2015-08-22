@@ -117,34 +117,39 @@ module.exports = React.createClass({
     return (
       <div>
         <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
-        <div className="container profileMargin">
-
-            <Paper zDepth={1} style={{"width": "80%"}}>
+        <div className="container profileMargin" style={{"width": "60%"}}>
+            <Paper zDepth={1} style={{"width": "100%"}}>
             <div className="center-form">
               <div className="row">
-                <div className="col-md-8 col-md-offset-1">
+                <div className="col-md-8">
                   <h3>Create an Organization</h3>
                   <input
                     type="text"
                     ref="ein"
-                    className="form-control short-form"
+                    className="form-control form-margin"
                     placeholder="EIN"
                     valueLink={this.linkState('ein')} />
                   <input
                     type="text"
                     ref="name"
-                    className="form-control long-form"
+                    className="form-control form-margin"
                     placeholder="Organization Name"
                     valueLink={this.linkState('name')} />
                   <input
                     type="url"
                     ref="orgURL"
-                    className="form-control long-form"
+                    className="form-control form-margin"
                     placeholder="Organization Website"
                     valueLink={this.linkState('website_url')} />
+                  <input
+                    type="text"
+                    ref="location"
+                    className="form-control"
+                    placeholder="Organization Location"
+                    valueLink={this.linkState('location')} />
                 </div>
-                <span>
-                    <img id="avatar" src={this.state.imgUri} />
+                <span className="col-md-4">
+                    <img id="avatar" className="orgPic" src={this.state.imgUri} />
                     <form onSubmit={this.handleSubmit} encType="multipart/form-data">
                       <input type="file" onChange={this.handleImage} />
                     </form>
@@ -152,13 +157,7 @@ module.exports = React.createClass({
               </div>
 
               <div className="row">
-                <div className="col-md-8 col-md-offset-1">
-                  <input
-                    type="text"
-                    ref="location"
-                    className="form-control form-margin"
-                    placeholder="Organization Location"
-                    valueLink={this.linkState('location')} />
+                <div className="col-md-12">
                   <Autocomplete 
                     className="long-form"
                     url='/tag/search?kind=cause&fragment=' 
@@ -167,13 +166,13 @@ module.exports = React.createClass({
                     ref='causes' 
                     on_change={this.on_autocomplete_change.bind(this)} />
                   <div id="addlReps">
-                      <h5 className="headerInline">Additional Representatives </h5>
-                      <OverlayTrigger position="top" overlay={repTooltip}>
-                        <img className="questionmark" src="assets/img/questionmark.png" />
-                      </OverlayTrigger>
+                    <h5 className="headerInline">Additional Representatives </h5>
+                    <OverlayTrigger position="top" overlay={repTooltip}>
+                      <img className="questionmark" src="assets/img/questionmark.png" />
+                    </OverlayTrigger>
                     <input type="url" className="form-control" placeholder="Representative's Email" />
                   </div>
-                  <div>
+                  <div className="orgButton">
                     <button
                       className="btn signupBtn"
                       onClick={Methods.addFields.bind(this, 'addlReps', this.newRepField)}>Add +</button> <br />
@@ -190,16 +189,18 @@ module.exports = React.createClass({
               </div>
 
               <div className="row">
-                <div className="col-md-8 col-md-offset-1 create form-margin">
-                  <div>
-                    <input
-                      type="checkbox"
-                      value="termsAgreed"
-                      onChange={this.setTerms}
-                      className="checkbox-inline"> I agree to the terms</input>
-                  </div>
-                  <div>
-                    <button type="submit" className="btn signupBtn text-center" onClick={this.createOrg}>Create</button>
+                <div className="col-md-12">
+                  <div className="form-margin orgButton">
+                    <div>
+                      <input
+                        type="checkbox"
+                        value="termsAgreed"
+                        onChange={this.setTerms}
+                        className="checkbox-inline"> I agree to the terms</input>
+                    </div>
+                    <div>
+                      <button type="submit" className="btn signupBtn" onClick={this.createOrg}>Create</button>
+                    </div>
                   </div>
                 </div>
               </div>
