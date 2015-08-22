@@ -139,35 +139,44 @@ module.exports = React.createClass({
     return (
       <div>
         <div>
-          <h3> {this.state.title} </h3> 
-          <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit/Follow </button>
+          <h3 className='proj-title'> {this.state.title} </h3> 
+          <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit </button>
         </div>
+        <div className='project-prof'>
+        <div className='project-prof1'>
           <Participant 
             firstName={this.state.repData.first_name}
             lastName={this.state.repData.last_name}
             title={this.state.orgData.name} 
             location={this.state.repData.location} 
             type={'Non-Profit Representative'}/>
+        </div>
+        <div className='project-prof2'>
           <Participant 
             firstName={this.state.ownerFirst}
             lastName={this.state.ownerLast}
             title={this.state.orgName} 
             location={this.state.location} 
             type={'Project Manager'}/>
+        </div>
+        </div>
         <div className='org-desc'>
           <Organization 
           name={this.state.orgData.name} 
           location={this.state.orgData.location}
-          website={this.state.orgData.website_url}
-          ein={this.state.orgData.ein} />
+          website={this.state.orgData.website_url} />
         </div>
-          <button className='btn btn-warning' onClick={this.goToOrg.bind(this, this.state.orgID)}> Organization Link </button>
+          <button className='btn btn-warning org-link-btn' onClick={this.goToOrg.bind(this, this.state.orgID)}> Organization Link </button>
+        <div className='timeline-proj'>
           <Timeline 
             start={this.state.startDate}
             end={this.state.endDate} />
+        </div>
+        <div className='proj-desc'>
           <Description desc={this.state.description} />
           <ProjectTags tags={this.state.tags} />
           <ProjectMedia />
+        </div>
         <Footer />
       </div>
     )

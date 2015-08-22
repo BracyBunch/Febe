@@ -47,11 +47,11 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <div>
-          <h3> {this.state.orgData.title} </h3> 
-          <button className='btn btn-primary edit-follow'> Edit/Follow </button>
+        <div className='two-btns'>
+          <button className='btn btn-primary edit-follow'> Edit </button>
+        <Link to="/createproject"><button className="btn btn-primary create-proj">Create Project</button></Link>
         </div>
-        <Link to="/createproject"><button className="btn btn-primary">Create Project</button></Link>
+        <div className='org-view-desc'>
           <Description 
           name={this.state.orgData.name}
           location={this.state.orgData.location}
@@ -63,6 +63,7 @@ module.exports = React.createClass({
           verified={this.state.verified}
           website={this.state.orgData.website_url} />
           <OrgMedia />
+        </div>
           <div className='org-projects'> Projects Belonging To {this.state.orgData.name}:
           <Projects projects={this.state.projectData}/>
           </div>

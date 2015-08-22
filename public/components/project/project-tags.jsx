@@ -16,7 +16,7 @@ module.exports = React.createClass({
         <span> 
         {
           this.props.tags.map(function(obj){
-            return <span className='tag'> {obj['name']} </span>
+            return <font className='label-inline label label-color tag'> {obj['name']} </font>
             })
         }
         </span>

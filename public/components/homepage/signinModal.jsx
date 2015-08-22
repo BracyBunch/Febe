@@ -54,7 +54,7 @@ module.exports = React.createClass({
             <Modal.Title className="signupCentered">Good In This World</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Oauth />
+            <Oauth snackbar={this.props.snackbar} closeModal={this.close} />
             <form className="form-group" onSubmit={this.createSigninData}>
               <div>
                 <TextField
@@ -87,6 +87,8 @@ module.exports = React.createClass({
       return response.json();
     })
     .then(function(data) {
+      that.props.snackbar()
+      that.close()
       // call method with id returned from db
       that.settingID(data.id);
     })
