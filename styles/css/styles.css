@@ -202,11 +202,13 @@ body{
   background-color: #5967AD;
 =======
   width: 220px;
-  height: 162px;
+  height: 180px;
   background-color: black;
 >>>>>>> 7e1952e6e849e34984caa0dcc28ff676834d3824
   text-align: center;
   opacity: .9;
+  margin-top: -10px;
+  margin-bottom: -8px;
 }
 
 .insetDescription{
