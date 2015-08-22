@@ -4,6 +4,7 @@ var db = require('../db');
 var common = require('./common');
 
 var User = require('../models/user');
+var Organization = require('../models/organization');
 var Project = require('../models/project');
 var Tag = require('../models/tag');
 
@@ -111,7 +112,7 @@ var with_extras = function(user, options) {
   if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'member_of', 'many': true};
   if (options === true || options.strengths) include.strengths = {'model': Tag, 'rel': 'strength', 'many': true};
   if (options === true || options.interests) include.interests = {'model': Tag, 'rel': 'interest', 'many': true};
-
+  if (options === true || options.organization) include.organization = {'model': Organization, 'rel': 'owns', 'many': false};
 
   return User.query('MATCH (node:User) WHERE id(node)={id}', {'id': user_id}, {'include': include}).then(function(user) {
     user = user[0];
@@ -121,6 +122,7 @@ var with_extras = function(user, options) {
     if (user.projects) cleaned_user.projects = user.projects.map(Project.clean);
     if (user.strengths) cleaned_user.strengths = user.strengths.map(Tag.clean);
     if (user.interests) cleaned_user.interests = user.interests.map(Tag.clean);
+    if (user.organization) cleaned_user.organization = Organization.clean(user.organization);
 
     return cleaned_user;
   });
