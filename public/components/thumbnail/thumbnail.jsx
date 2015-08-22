@@ -11,7 +11,7 @@ module.exports = React.createClass({
   inset: function(){
     return (
       <div className="inset">
-        <h4 style={{"color":"#f2f2f2"}} className="descriptionHeader">Description</h4>
+        <h4 style={{"color":"#f2f2f2"}} className="descriptionHeader">{this.props.header}</h4>
         <div style={{"color":"#f2f2f2"}} className="insetDescription">
           {this.props.description}
         </div>
@@ -26,7 +26,7 @@ module.exports = React.createClass({
   },
   strengthsList: function() {
     return this.props.tags.map(function(tags) {
-      return <h4 className="label-inline"> <span className="label label-color">{tags}</span> </h4>;
+      return <h4 className="label-inline"> <span className="label label-color">{tags.name}</span> </h4>;
     });
   },
   thumbnailInformation: function(){
@@ -41,16 +41,14 @@ module.exports = React.createClass({
   },
   render: function(){
     return (
-      <Link to={this.props.projLink}>
-        <div className="thumbnail-preview col-sm-4">
-          <div className="thumbnail" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+        <div className="thumbnail-preview col-sm-4" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+          <div className="thumbnail">
             {this.state.hovering ? this.inset() : this.thumbnailInformation()}
           </div>
           <div className="thumbnail-tags">
             {this.strengthsList()}
           </div> 
         </div>
-      </Link>
     )
   }
 });

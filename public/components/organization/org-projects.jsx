@@ -17,10 +17,11 @@ module.exports = React.createClass({
     this.setState({
       projects: this.props.projects
     })
-    console.log('what', this.state.projects)
   },
 
   goToProject: function(projectID){
+    console.log(projectID)
+    sessionStorage.setItem('projectId', projectID)
     this.transitionTo('/project/' + projectID);
     {this.renderThumbnail()}
   },
@@ -39,16 +40,19 @@ module.exports = React.createClass({
   },
 
   render: function() {
+    var that = this;
     return (
     <div>
     {this.props.projects.map(function(thumbnailProps){
-      console.log('tb',thumbnailProps)
-      return <Thumbnail
+      return (
+      <div onClick={that.goToProject.bind(that, thumbnailProps['id'])}>
+      <Thumbnail 
        header={thumbnailProps.name} 
        imageURL={'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/HSUS_logo.svg/1280px-HSUS_logo.svg.png'} 
        description={thumbnailProps.description} 
-       tags={['angular', 'node']} /> })
-    }
+       tags={thumbnailProps.skills} /> 
+       </div>) 
+    })}
     </div> )
   }
 });
