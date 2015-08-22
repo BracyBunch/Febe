@@ -417,8 +417,12 @@ body{
   margin-top: 16px;
 }
 
-.orgButton {
+.orgButton, .createTitle {
   text-align: center;
+}
+
+.containerWidth {
+  width: 60%;
 }
 
 /*other*/
