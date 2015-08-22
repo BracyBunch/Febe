@@ -183,8 +183,8 @@ body{
 }
 
 .footer-bottom{
-  position: relative;
-  bottom: -3em;
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 3em;
 }
@@ -231,7 +231,7 @@ body{
 
 .eachThumbnail{
   position: relative;
-  display: inline-block;
+  /*display: inline-block;*/
   padding-left: 20px;
 }
 
