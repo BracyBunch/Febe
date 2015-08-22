@@ -49,7 +49,6 @@ describe('Project Route Tests', function() {
   it('should be able to create a Project', function(done) {
     http.post('/project')
     .send({
-      'organization_id': instances.organization.id,
       'name': 'test_project',
       'complete_by': Date.now(),
       'description': 'def',
