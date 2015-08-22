@@ -1,19 +1,32 @@
 var React = require('react');
 var LandingPage = require('../views/homepage-view');
+var Header = require('./shared/header');
+
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 
 module.exports = React.createClass({
-  render: function(){
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
+  render: function() {
     return (
       <div>
+        <Header location={this.props.location.pathname} />
         {this.content()}
       </div>
-    )
+    );
   },
-  content: function(){
+  content: function() {
     if(this.props.children){
-      return this.props.children
+      return this.props.children;
     } else {
-      return <LandingPage />
+      return <LandingPage />;
     }
   }
 });

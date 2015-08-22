@@ -1,13 +1,9 @@
 var React = require('react');
 var Reflux = require('reflux');
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
-var LeftNav = mui.LeftNav;
-var MenuItem = mui.MenuItem;
 var Oauth = require('../components/signup/signupOAuth');
 var Main = require('../components/signup/signupMain');
-var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Actions = require('../actions');
 var ProfileStore = require('../stores/profile-store');
@@ -15,22 +11,6 @@ var ProfileStore = require('../stores/profile-store');
 module.exports = React.createClass({
   mixins: [
     Reflux.listenTo(ProfileStore, 'onChange')
-  ],
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-  getChildContext: function(){ 
-    return {
-      muiTheme: ThemeManager.getCurrentTheme()
-    };
-  },
-  generateMenu: [
-      { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
-      { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-      { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
-      { route: '/', text: 'About'},
-      { route: '/', text: 'Team'},
-      { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub'}
   ],
   getInitialState: function() {
     return {
@@ -55,11 +35,10 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="fullscreen">
-        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu} />
-          <Paper zDepth={1} style={{"margin": "20px auto auto auto", "padding": "20px", "width": "60%"}}>
-            <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
-            <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
-          </Paper>
+        <Paper zDepth={1} style={{"margin": "20px auto auto auto", "padding": "20px", "width": "60%"}}>
+          <Oauth type={this.props.route.kind} signup="true" name={this.state.name} />
+          <Main type={this.props.route.kind} url="/auth/signup" newID={this.getID} />
+        </Paper>
         <Footer />
       </div>
     );
