@@ -39,7 +39,7 @@ var ProfileView = React.createClass({
       editing: false,
       hasOrg: false,
       projects: [],
-      org: {}
+      organization: ''
     };
   },
   componentWillMount: function() {
@@ -56,7 +56,7 @@ var ProfileView = React.createClass({
       links: userData.links,
       strengths: userData.strengths,
       interests: userData.interests,
-      org: userData.org,
+      organization: userData.organization,
       projects: userData.projects
     });
   },
@@ -145,11 +145,14 @@ var ProfileView = React.createClass({
   setBio: function(){
     return this.state.bio ? this.state.bio : 'Tell us about yourself...just hit the edit button'
   },
+  createOrgURL: function(){
+    return '#/organization/:' + this.state.organization.id
+  },
   repButtons: function(){
     if (this.state.kind !== 'rep') return '';
     return (
-      this.state.org.id ? 
-        <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Create Organization"/> :
+      this.state.organization.id ? 
+        <RaisedButton linkButton={true} href={this.createOrgURL()} secondary={true} label={this.state.organization.name}/> :
         <div>
           <span className="createorg-button">
             <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Create Organization"/>
