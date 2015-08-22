@@ -7,7 +7,8 @@
     "test": "mocha --recursive",
     "dev-server": "gulp",
     "server": "node ./bin/www",
-    "start": "npm run server & npm run dev-server"
+    "start": "npm run server & npm run dev-server",
+    "postinstall": "gulp heroku:production"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,7 @@
     "lodash": "^3.10.1",
     "material-ui": "^0.10.4",
     "moment": "^2.10.6",
-    "passport": "^0.2.2",
+    "passport": "^0.3",
     "passport-facebook": "^2.0.0",
     "passport-github2": "^0.1.9",
     "passport-linkedin-oauth2": "^1.2.1",
@@ -45,7 +46,7 @@
     "seraph": "^0.13.2",
     "seraph-model": "^0.7.2",
     "serve-favicon": "^2.3.0",
-    "session-file-store": "0.0.17",
+    "session-file-store": "~0.0.17",
     "tether": "^1.1.0",
     "validator": "^4.0.2",
     "whatwg-fetch": "^0.9.0"
