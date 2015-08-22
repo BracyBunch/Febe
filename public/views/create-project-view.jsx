@@ -1,17 +1,33 @@
 var React = require('react/addons');
 var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
+var ajax = require('../utils/fetch');
+//react bootstrap
 var DropdownButton = require('../components/project/dropdown');
+// material ui
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
+var Paper = mui.Paper;
+//shared components
 var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var DatePicker = require('../components/datepicker/datepicker');
 var Autocomplete =require('../components/shared/autocomplete');
 var ProjectView = require('./project-view');
-var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
+
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
+
   getInitialState: function() {
     return {
       projectName: '',
@@ -67,50 +83,60 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <div className="">
-        <h3>Create a Project</h3>
-        <form className="form-inline">
-          <div className="form-group">
-            <h5>Project Name</h5>
-            <input type="text" ref="projectName" className="form-control projectName" valueLink={this.linkState('projectName')} />
-          </div>
-        </form>
-        <div>
-          <Autocomplete url='/organization/search?fragment=' placeholder='Search for an organization'
-           min_chars={2} multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
-        </div>
-        <div>
-          <h5>Preferred Completion Date</h5>
-          <DatePicker onChange={this.setDate} />
-        </div>
-        <div>
-          <h5>Project Description</h5>
-          <textarea className="form-group" rows="4" cols="100" valueLink={this.linkState('description')}>
-          </textarea>
-        </div>
-        <div>
-          <h5>Technology Needs</h5>
-          <Autocomplete url='/tag/search?fragment=' placeholder='Search for technology'
-          ref='tech' on_change={this.on_autocomplete_change.bind(this, 'tech')}/>
-        </div>
-        <div id="addlLinks">
-          <h5>Additional Links</h5>
-          <input type="url" className="form-control" placeholder="YouTube" />
-        </div>
-        <div>
-          <button
-            className="btn signupBtn"
-            onClick={Methods.addFields.bind(this, 'addlLinks', this.newLink)}>Add +</button> <br />
-        </div>
-        <div>
-          <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
-        </div>
-        <div>
-          <button type="submit"
-            className="btn signupBtn text-center"
-            onClick={this.createProject}>Create</button>
-        </div>
+      <div>
+        <div className="container profileMargin containerWidth">
+          <Paper zDepth={1} style={{"width": "100%"}}>
+            <div className="center-form">
+              <div>
+                <span className="createTitle">
+                  <h3>Create a Project</h3>
+                </span>
+                    <div className="form-group">
+                      <input type="text" ref="projectName" className="form-control" placeholder="Project Name" valueLink={this.linkState('projectName')} />
+                    </div>
+                  <div>
+                    <Autocomplete url='/organization/search?fragment=' placeholder='Search for an organization'
+                     min_chars={2} multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
+                  </div>
+                  <div>
+                    <h5>Preferred Completion Date</h5>
+                    <DatePicker onChange={this.setDate} />
+                  </div>
+                  <div>
+                    <h5>Project Description</h5>
+                    <textarea className="form-control" rows="4" valueLink={this.linkState('description')}>
+                    </textarea>
+                  </div>
+                  <div>
+                    <h5>Technology Needs</h5>
+                    <Autocomplete url='/tag/search?fragment=' placeholder='Search for technology'
+                    ref='tech' on_change={this.on_autocomplete_change.bind(this, 'tech')}/>
+                  </div>
+                  <div id="addlLinks">
+                    <h5>Additional Links</h5>
+                    <input type="url" className="form-control" placeholder="Youtube, Facebook, Additional Media" />
+                  </div>
+                  <div className="orgButton">
+
+                    <div>
+                      <button
+                        className="btn signupBtn profileMargin"
+                        onClick={Methods.addFields.bind(this, 'addlLinks', this.newLink)}>Add +</button> <br />
+                    </div>
+                    <div>
+                      <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
+                    </div>
+                    <div>
+                      <button type="submit"
+                        className="btn signupBtn text-center"
+                        onClick={this.createProject}>Create</button>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </Paper>
         <Footer />
+        </div>
       </div>
     );
   }
