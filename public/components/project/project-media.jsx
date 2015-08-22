@@ -16,10 +16,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        media links: <br/>
-        here: <br/>
-        here:  <br/>
-        here:
+        Media Links: 
       </div>
     )
   }

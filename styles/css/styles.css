@@ -406,17 +406,26 @@ body{
 }
 
 .timeline-proj {
-  border: 1px solid black;
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
 }
 
 .proj-desc {
-  border: 1px solid red;
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
 }
 
 .org-link-btn {
   width: 300px;
   margin-left: 5%;
   margin-bottom: 20px;
+}
+
+.tag {
+  padding: 5px;
+  margin: 0px 5px 0px 5px;
 }
 
 /*organization*/
