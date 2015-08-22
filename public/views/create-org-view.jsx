@@ -119,7 +119,7 @@ module.exports = React.createClass({
         <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div className="container profileMargin">
 
-            <Paper zDepth={4} style={{"width": "800px"}}>
+            <Paper zDepth={1} style={{"width": "80%"}}>
             <div className="center-form">
               <div className="row">
                 <div className="col-md-8 col-md-offset-1">
@@ -143,7 +143,7 @@ module.exports = React.createClass({
                     placeholder="Organization Website"
                     valueLink={this.linkState('website_url')} />
                 </div>
-                <span className="col-md-3">
+                <span>
                     <img id="avatar" src={this.state.imgUri} />
                     <form onSubmit={this.handleSubmit} encType="multipart/form-data">
                       <input type="file" onChange={this.handleImage} />
