@@ -55,12 +55,6 @@ module.exports = React.createClass({
     this.setState(this.getInitialState());
   },
 // form methods
-  handleView: function() {
-    // render Dev or NP signup
-    return this.props.type === 'dev' ?
-      <Checkbox name="contacted" onChange={this.message} label="Open to being contacted" />
-      : '';
-  },
   setTerms: function(){
     this.setState({
       terms: !this.state.terms
@@ -151,10 +145,6 @@ module.exports = React.createClass({
 
         <h5>Password must be more than 8 characters</h5>
           <div className="checkbox">
-            <div>
-              {this.handleView()}
-            </div>
-
               <Checkbox
                 name="terms"
                 value="terms"
