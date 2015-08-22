@@ -158,7 +158,7 @@ var ProfileView = React.createClass({
     if (this.state.editing) {
       return (
         <div className="container profileMargin">
-        <Paper zDepth={4}>
+        <Paper zDepth={1}>
           <div className="row">
             <div className="col-md-8 col-md-offset-1 profileBox">
               <ProfileHeaderEdit
@@ -195,7 +195,7 @@ var ProfileView = React.createClass({
     } else {
       return (
         <div className="container profileMargin">
-        <Paper zDepth={4}>
+        <Paper zDepth={1}>
           <div className="row">
             <div className="col-md-8 col-md-offset-1 profileBox">
               <ProfileHeader
