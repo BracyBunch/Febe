@@ -17,7 +17,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <Header location={this.props.location.pathname} />
+        <Header location={this.props.location.pathname}  signinMessage={"Signed in Successfully"} />
         {this.content()}
       </div>
     );

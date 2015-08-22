@@ -91,47 +91,46 @@ module.exports = React.createClass({
                 <span className="createTitle">
                   <h3>Create a Project</h3>
                 </span>
-                    <div className="form-group">
-                      <input type="text" ref="projectName" className="form-control" placeholder="Project Name" valueLink={this.linkState('projectName')} />
-                    </div>
+                <div className="form-group">
+                  <input type="text" ref="projectName" className="form-control" placeholder="Project Name" valueLink={this.linkState('projectName')} />
+                </div>
+                <div>
+                  <Autocomplete url='/organization/search?fragment=' placeholder='Search for an organization'
+                   min_chars={2} multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
+                </div>
+                <div>
+                  <h5>Preferred Completion Date</h5>
+                  <DatePicker onChange={this.setDate} />
+                </div>
+                <div>
+                  <h5>Project Description</h5>
+                  <textarea className="form-control" rows="4" valueLink={this.linkState('description')}>
+                  </textarea>
+                </div>
+                <div>
+                  <h5>Technology Needs</h5>
+                  <Autocomplete url='/tag/search?fragment=' placeholder='Search for technology'
+                  ref='tech' on_change={this.on_autocomplete_change.bind(this, 'tech')}/>
+                </div>
+                <div id="addlLinks">
+                  <h5>Additional Links</h5>
+                  <input type="url" className="form-control" placeholder="Youtube, Facebook, Additional Media" />
+                </div>
+                <div className="orgButton">
                   <div>
-                    <Autocomplete url='/organization/search?fragment=' placeholder='Search for an organization'
-                     min_chars={2} multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
+                    <button
+                      className="btn signupBtn profileMargin"
+                      onClick={Methods.addFields.bind(this, 'addlLinks', this.newLink)}>Add +</button> <br />
                   </div>
                   <div>
-                    <h5>Preferred Completion Date</h5>
-                    <DatePicker onChange={this.setDate} />
+                    <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
                   </div>
                   <div>
-                    <h5>Project Description</h5>
-                    <textarea className="form-control" rows="4" valueLink={this.linkState('description')}>
-                    </textarea>
+                    <button type="submit"
+                      className="btn signupBtn text-center"
+                      onClick={this.createProject}>Create</button>
                   </div>
-                  <div>
-                    <h5>Technology Needs</h5>
-                    <Autocomplete url='/tag/search?fragment=' placeholder='Search for technology'
-                    ref='tech' on_change={this.on_autocomplete_change.bind(this, 'tech')}/>
-                  </div>
-                  <div id="addlLinks">
-                    <h5>Additional Links</h5>
-                    <input type="url" className="form-control" placeholder="Youtube, Facebook, Additional Media" />
-                  </div>
-                  <div className="orgButton">
-
-                    <div>
-                      <button
-                        className="btn signupBtn profileMargin"
-                        onClick={Methods.addFields.bind(this, 'addlLinks', this.newLink)}>Add +</button> <br />
-                    </div>
-                    <div>
-                      <input type="checkbox" value="termsAgreed" onChange={this.setTerms} className="checkbox-inline"> I agree to the terms</input>
-                    </div>
-                    <div>
-                      <button type="submit"
-                        className="btn signupBtn text-center"
-                        onClick={this.createProject}>Create</button>
-                    </div>
-                  </div>
+                </div>
               </div>
             </div>
           </Paper>

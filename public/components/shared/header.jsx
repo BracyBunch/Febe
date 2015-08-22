@@ -4,6 +4,7 @@ var ThemeManager = new mui.Styles.ThemeManager();
 var AppBar = mui.AppBar;
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
+var Snackbar = mui.Snackbar;
 var injectTapEventPlugin = require('react-tap-event-plugin');
 var Router = require('react-router');
 var Link = Router.Link;
@@ -40,6 +41,9 @@ var Header = React.createClass({
         { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub'}
       ];
   },
+  snackbarShow: function() {
+    this.refs.snackbar.show()
+  },
   render: function() {
     var background = (this.props.location === '/') ? {'backgroundColor': 'rgba(0,0,255,0.2)'} : {'backgroundColor': '#6E7FD5'};
     return (
@@ -50,7 +54,12 @@ var Header = React.createClass({
           onLeftIconButtonTouchTap={this.showMenu}
           style={background}
           title="Good In This World"
-          iconElementRight={<SigninModal />} />
+          iconElementRight={<SigninModal snackbar={this.snackbarShow} />} />
+        <Snackbar
+          ref="snackbar"
+          message={this.props.signinMessage}
+          autoHideDuration={2500}
+          style={{"backgroundColor": "#6E7FD5", "textAlign": "center", "color":"white", "opacity": "0.9"}}/>
       </div>
     );
   }
