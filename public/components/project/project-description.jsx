@@ -16,6 +16,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
+      <span> Description: </span> <br/>
         {this.props.desc}
       </div>
     )
