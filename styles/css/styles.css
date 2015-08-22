@@ -9,13 +9,6 @@ body{
   background-color: #f2f2f2;
 }
 
-<<<<<<< HEAD
-.main{
-  height: 100%;
-}
-
-=======
->>>>>>> 2b8ae3f340854af4d378f9c320ff9bc0f24981f8
 /* signup */
 .signupBorder {
   border: 2px solid lightgrey;
@@ -341,7 +334,7 @@ body{
 }
 
 .label-color {
-  background-color: indigo;
+  background-color: #6E7FD5;
 }
 
 .label-inline {
