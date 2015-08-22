@@ -12,10 +12,13 @@ var Actions = require('../actions');
 var ProfileHeaderEdit = require('../components/profile/edit-components/profile-header-edit');
 var ProfileMethods = require('../components/profile/sharedProfileMethods');
 var Autocomplete =require('../components/shared/autocomplete');
+var TimelineEntry = require('../components/dashboard/timelineEntry');
+var TimelineStore = require('../stores/timeline-store');
 
 var ProfileView = React.createClass({
   mixins: [
-    Reflux.listenTo(ProfileStore, 'onChange')
+    Reflux.listenTo(ProfileStore, 'onChange'),
+    Reflux.listenTo(TimelineStore, 'onLoad')
   ],
   childContextTypes: {
     muiTheme: React.PropTypes.object
@@ -39,11 +42,16 @@ var ProfileView = React.createClass({
       editing: false,
       hasOrg: false,
       projects: [],
-      organization: ''
+      organization: '',
+      'timeline': []
     };
   },
   componentWillMount: function() {
-    return Actions.getProfile(window.localStorage.getItem('userId'));
+    Actions.getProfile(window.localStorage.getItem('userId'));
+    Actions.getTimeline();
+  },
+  onLoad: function(event, timeline) {
+    this.setState({'timeline': timeline});
   },
   onChange: function(event, userData) {
     this.setState({
@@ -146,6 +154,7 @@ var ProfileView = React.createClass({
     return this.state.bio ? this.state.bio : 'Tell us about yourself...just hit the edit button'
   },
   createOrgURL: function(){
+    console.log(this.state.timeline)
     return '#/organization/:' + this.state.organization.id
   },
   repButtons: function(){
@@ -203,34 +212,48 @@ var ProfileView = React.createClass({
       );
     } else {
       return (
-        <div className="container profileMargin">
-        <Paper zDepth={1}>
-          <div className="row">
-            <div className="col-md-8 col-md-offset-1 profileBox">
-              <ProfileHeader
-                  edit_toggle={this.edit_toggle}
-                  first_name={this.state.first_name}
-                  last_name={this.state.last_name}
-                  avatar={this.state.userData.avatar}
-                  title={this.state.title}
-                  location={this.state.location}
-                  links={this.state.links} />
-            </div>
-            {this.devFields()}
-            <div className="row">
-              <div className="col-md-8 col-md-offset-1">
-                <div>
-                  {this.repButtons()}
+        <div className="profileMargin">
+          <Paper style={{'maxWidth': '100%'}} zDepth={1}>
+            <div className="all-of-them">
+              <div className="profile-info">
+                <div className="profileBox">
+                  <ProfileHeader
+                      edit_toggle={this.edit_toggle}
+                      first_name={this.state.first_name}
+                      last_name={this.state.last_name}
+                      avatar={this.state.userData.avatar}
+                      title={this.state.title}
+                      location={this.state.location}
+                      links={this.state.links} />
                 </div>
-                <div>
-                  <h3>Bio</h3>
-                  <div>{this.setBio()}</div>
+                <div className="rest-of-profile">
+                {this.devFields()}
                 </div>
-                <Projects />
+                <div className="rest-of-profile">
+                  <div className="">
+                    <div>
+                      {this.repButtons()}
+                    </div>
+                    <div>
+                      <h3>Bio</h3>
+                      <div>{this.setBio()}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="projects-in-profile">
+                  <Projects />
+                </div>  
+              </div>  
+              <div className="timeline-container">
+                <h3>Timeline</h3>
+                <div className="each-card">
+                  {this.state.timeline.map(function(entry) {
+                    return <TimelineEntry key={entry.entry.id} entry={entry}/>;
+                  }.bind(this))}
+                </div>
               </div>
             </div>
-          </div>
-        </Paper>
+          </Paper>
         </div>
       );
     }
