@@ -22,6 +22,11 @@ module.exports = React.createClass({
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
   getInitialState: function() {
     return {
       first_name: '',

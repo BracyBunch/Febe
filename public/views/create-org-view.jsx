@@ -14,7 +14,6 @@ var ValidationMixin = require('react-validation-mixin');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var Tooltip = require('react-bootstrap').Tooltip;
 // shared components
-var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var ImgurUpload = require('../utils/imgur');
@@ -23,26 +22,15 @@ var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
+
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
-
   getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
-
-  generateMenu: [
-    { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
-    { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
-    { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-    { type: MenuItem.Types.LINK, payload: '#/profile', text: 'My Profile'},
-    { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
-    { route: '/', text: 'About'},
-    { route: '/', text: 'Team'},
-    { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub'}
-  ],
 
   getInitialState: function() {
     return {
@@ -67,8 +55,6 @@ module.exports = React.createClass({
   },
 
   handleImage: function(event) {
-    var imagePromise = new Promise(ImgurUpload.imgurUpload(image));
-
     var that = this;
     // FileReader is a native browser file reader
     var reader = new FileReader();
@@ -116,7 +102,6 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div className="container profileMargin" style={{"width": "60%"}}>
             <Paper zDepth={1} style={{"width": "100%"}}>
             <div className="center-form">

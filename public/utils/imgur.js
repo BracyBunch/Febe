@@ -5,7 +5,7 @@ module.exports = {
       url: 'https://api.imgur.com/3/image',
       type: 'POST',
       headers: {
-        Authorization: 'Client-ID ' + IMGUR_API_ID,
+        Authorization: 'Client-ID ' + this.IMGUR_API_ID,
         Accept: 'application/json'
       },
       data: {
@@ -14,6 +14,7 @@ module.exports = {
       }
     })
     .then(function(res) {
+      console.log(res.data.link)
       return res.data.link
     });
   }

@@ -2,11 +2,8 @@ var React = require('react');
 var Reflux = require('reflux');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var LeftNav = mui.LeftNav;
-var MenuItem = mui.MenuItem;
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
-var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
 var Projects = require('../components/profile/profile-projects');
@@ -34,7 +31,7 @@ var ProfileView = React.createClass({
       last_name: '',
       title: '',
       location: '',
-      bio: '',
+      bio: null,
       links: [],
       strengths: [],
       interests: [],
@@ -141,6 +138,9 @@ var ProfileView = React.createClass({
       </div>
     );
   },
+  setBio: function(){
+    return this.state.bio ? this.state.bio : 'Tell us about yourself...just hit the edit button'
+  },
   repButtons: function(){
     if (this.state.kind !== 'rep') return '';
     return (
@@ -215,15 +215,7 @@ var ProfileView = React.createClass({
                 </div>
                 <div>
                   <h3>Bio</h3>
-                  <textarea
-                  value={this.state.bio}
-                  onChange={this.updateBio}
-                  placeholder="Tell us about yourself...just hit the edit button"
-                  className="form-control bio"
-                  rows="4"
-                  cols="200"
-                  style={{'marginBottom': '20px'}}
-                  >{this.state.bio}</textarea> 
+                  <div>{this.setBio()}</div>
                 </div>
                 <Projects />
               </div>
@@ -234,20 +226,9 @@ var ProfileView = React.createClass({
       );
     }
   },
-  generateMenu: [
-    { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
-    { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
-    { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-    { type: MenuItem.Types.LINK, payload: '#/profile', text: 'My Profile'},
-    { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
-    { route: '/', text: 'About'},
-    { route: '/', text: 'Team'},
-    { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub' }
-  ],
   render: function() {
     return (
       <div>
-        <Header color={{'backgroundColor': '#6E7FD5'}} generateMenu = {this.generateMenu} />
         {this.profile()}
         <Footer />
       </div>

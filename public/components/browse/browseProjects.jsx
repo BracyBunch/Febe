@@ -1,7 +1,4 @@
 var React = require('react');
-var mui = require('material-ui');
-var Paper = mui.Paper;
-var RaisedButton = mui.RaisedButton;
 var ThumbnailList = require('../thumbnail/thumbnailList');
 var SearchBar = require('./searchbar');
 

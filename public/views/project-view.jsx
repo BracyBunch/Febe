@@ -1,10 +1,5 @@
 var React = require('react');
 var Reflux = require('reflux');
-var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
-var LeftNav = mui.LeftNav;
-var MenuItem = mui.MenuItem;
-var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Router = require('react-router');
 var Actions = require('../actions');
@@ -24,24 +19,7 @@ var ProjectTags = require('../components/project/project-tags')
 
 module.exports = React.createClass({
   mixins: [Reflux.listenTo(ProjectStore, 'onChange'), Navigation],
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-  generateMenu: [
-    { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
-    { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
-    { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-    { type: MenuItem.Types.LINK, payload: '#/profile', text: 'My Profile'},
-    { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
-    { route: '/', text: 'About'},
-    { route: '/', text: 'Team'},
-    { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub'}
-  ],
-  getChildContext: function(){ 
-    return {
-      muiTheme: ThemeManager.getCurrentTheme()
-    };
-  },
+
   getInitialState: function(){
     return {
       title: 'Project Title',
@@ -160,7 +138,6 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div>
           <h3> {this.state.title} </h3> 
           <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit/Follow </button>
