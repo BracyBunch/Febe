@@ -7,7 +7,8 @@
     "test": "mocha --recursive",
     "dev-server": "gulp",
     "server": "node ./bin/www",
-    "start": "npm run server & npm run dev-server"
+    "start": "npm run server & npm run dev-server",
+    "postinstall": "gulp heroku:production"
   },
   "repository": {
     "type": "git",
