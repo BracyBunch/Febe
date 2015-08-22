@@ -9,10 +9,13 @@ body{
   background-color: #f2f2f2;
 }
 
+<<<<<<< HEAD
 .main{
   height: 100%;
 }
 
+=======
+>>>>>>> 2b8ae3f340854af4d378f9c320ff9bc0f24981f8
 /* signup */
 .signupBorder {
   border: 2px solid lightgrey;
@@ -236,8 +239,7 @@ body{
 }
 
 .entire-team{
-  margin: 0 auto;
-  display: inline;
+  margin-left: 6%;
 }
 
 .thumbnail {
@@ -245,8 +247,8 @@ body{
 }
 
 .nametags{
-  height: 10%;
-  width: 25%;
+  height: 14%;
+  width: 23%;
 }
 
 /*stack*/
@@ -267,6 +269,10 @@ body{
 
 .aboutUsMain, .teamMain, .featuredMain, .stackMain{
   padding: 15px;
+}
+
+.break-point{
+  padding-top: 2%;
 }
 
 .aboutUsMain{
@@ -356,6 +362,19 @@ body{
 
 .bio {
   margin-bottom: 30px;
+}
+/*organization*/
+.org-view-project {
+  border: 1px solid black;
+  width: 25%;
+  display: inline-block;
+  padding: 20px;
+  margin: 40px;
+}
+
+.org-projects {
+  text-align: center;
+  font-size: 20px;
 }
 
 /* org */

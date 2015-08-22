@@ -72,7 +72,7 @@ module.exports = React.createClass({
               </div>
               <div className="signupCentered">
                 <RaisedButton
-                  label="Sign In" />
+                  label="Sign In" onClick={this.handleSubmit} />
               </div>
             </form>
           </Modal.Body>
@@ -82,8 +82,8 @@ module.exports = React.createClass({
   },
   handleSubmit: function(comment) {
     var that = this;
-    console.log('this is the state', that.state.signinData);
-    ajax('auth/login', {method: 'POST', body: JSON.stringify(this.state.signinData)}).then(function(response) {
+    console.log('this is the state', that.state);
+    ajax('auth/login', {method: 'POST', body: JSON.stringify(this.state)}).then(function(response) {
       return response.json();
     })
     .then(function(data) {

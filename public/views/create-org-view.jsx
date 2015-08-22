@@ -37,7 +37,7 @@ module.exports = React.createClass({
     { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
     { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
     { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-    { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
+    { type: MenuItem.Types.LINK, payload: '#/profile', text: 'My Profile'},
     { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
     { route: '/', text: 'About'},
     { route: '/', text: 'Team'},
@@ -116,7 +116,7 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <Header generateMenu = {this.generateMenu}/>
+        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div className="container profileMargin">
 
             <Paper zDepth={4} style={{"width": "800px"}}>
@@ -186,7 +186,6 @@ module.exports = React.createClass({
                     cols="200"
                     valueLink={this.linkState('description')}
                     ></textarea>
-
                 </div>
               </div>
 

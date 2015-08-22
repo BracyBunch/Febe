@@ -5,6 +5,7 @@ var User = models.User;
 var express = require('express');
 var router = express.Router();
 var validator = require('validator');
+var transform_links = require('../utils/transform_links');
 
 var bcrypt = require('bcrypt');
 var hash = Promise.promisify(bcrypt.hash, bcrypt);
@@ -67,6 +68,10 @@ router.put('/', function(req, res){
     });
   }
 
+  if ('links' in fields && Array.isArray(fields.links)) {
+    fields.links = transform_links(fields.links);
+  }
+
   if ('email' in fields) {
     if (validator.isEmail(fields.email) && fields.email !== req.user.email) {
       async.email = User.check_if_exists(fields.email).then(function(exists) {
@@ -76,6 +81,7 @@ router.put('/', function(req, res){
       delete fields.email;
     }
   }
+
   if ('strengths' in relations && Array.isArray(relations.strengths)) {
     async.strengths = User.clear_strengths(req.user.id).then(function() {
       return User.add_strengths(req.user.id, relations.strengths.map(Number));

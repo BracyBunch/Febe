@@ -61,19 +61,27 @@ describe('Project Route Tests', function() {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body.name).to.be.eql('test_project');
-      done();
+
+      models.Project.with_extras(instances.project).then(function(project) {
+        expect(project.links).to.have.length(1);
+        expect(project.links[0]).to.be.eql('facebook|http://facebook.com/cats');
+        expect(project.active).to.be.true;
+        done();
+      });
     }, done);
   });
 
   it('should be able to update a Project', function(done) {
     http.put('/project/' + instances.project.id)
     .send({
-      'name': 'updated_test_project'
+      'name': 'updated_test_project',
+      'links': ['http://facebook.com/cats', 'http://cats.com']
     }).then(function(res) {
       expect(res).to.have.status(200);
       return models.Project.read(instances.project.id);
     }).then(function(project) {
       expect(project.name).to.be.eql('updated_test_project');
+      expect(project.links).to.have.length(2);
       done();
     });
   });

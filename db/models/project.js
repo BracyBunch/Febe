@@ -26,8 +26,15 @@ Project.public_fields = [
   'links',
   'published',
   'active',
-  'created'
+  'created',
+  'skills'
 ];
+
+Project.addComputedField('skills', function(project, cb) {
+  db.query('MATCH (p:Project)-[:skill]-(tags:Tag) where id(p)={project_id} RETURN tags', {'project_id': project.id}).then(function(tags) {
+    cb(null, tags);
+  }, console.error);
+});
 
 Project.query = Promise.promisify(Project.query, Project);
 Project.save = Promise.promisify(Project.save, Project);

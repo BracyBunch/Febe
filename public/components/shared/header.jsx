@@ -25,7 +25,7 @@ module.exports = React.createClass({
         <AppBar
           showMenuIconButton={true}
           onLeftIconButtonTouchTap={this.showMenu}
-          style={{"backgroundColor": "rgba(0,0,255,0.2)"}}
+          style={this.props.color}
           title="Good In This World"
           iconElementRight={<SigninModal />} />
       </div>

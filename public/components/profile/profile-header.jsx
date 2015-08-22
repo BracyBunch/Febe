@@ -2,29 +2,34 @@ var React = require('react');
 var mui = require('material-ui');
 var RaisedButton = mui.RaisedButton;
 
-module.exports = React.createClass({
+var ProfileHeader = React.createClass({
+  propTypes: {
+    'edit_toggle': React.PropTypes.func.isRequired,
+    'avatar': React.PropTypes.string,
+    'first_name': React.PropTypes.string.isRequired,
+    'last_name': React.PropTypes.string.isRequired,
+    'title': React.PropTypes.string.isRequired,
+    'location': React.PropTypes.string.isRequired,
+    'links': React.PropTypes.array.isRequired
+  },
   getDefaultProps: function() {
     return {
-      avatar: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAR2AAAAJGVlOWJlMTFkLTc3N2YtNGVkZC05YjY2LWMxNzA4OTllN2YyMQ.jpg",
-      title: 'Please enter a title/company',
-      location: 'Please enter a location',
-      links: 'Please enter your GitHub, LinkedIn, etc'
+      avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAR2AAAAJGVlOWJlMTFkLTc3N2YtNGVkZC05YjY2LWMxNzA4OTllN2YyMQ.jpg'
     };
   },
 
   renderLinks: function() {
     return this.props.links.map(function(link) {
-      if (link.slice(0,6) === 'github') {
-        var link = link.slice(7);
-        return <a href={link} className="links">GitHub</a>
-      }
-      if (link.slice(0,8) === 'linkedin') {
-        var link = link.slice(9);
-        return <a href={link} className="links">LinkedIn</a>
-      }
+      var parts = link.split('|');
+      var text = {
+        'github': 'Github',
+        'facebook': 'Facebook',
+        'linkedin': 'LinkedIn',
+        'other': parts[1]
+      };
 
-      return <span>{link}</span>
-    })
+     return <a href={parts[1]} className="links">{text[parts[0]]}</a>;
+    });
   },
 
   render: function() {
@@ -34,7 +39,7 @@ module.exports = React.createClass({
 
           <div className="col-md-2">
             <div className="">
-              <img className="profileAvatar" src={this.props.avatar} /> <br />
+              <img className="profileAvatar" src={this.props.avatar} />
             </div>
           </div>
 
@@ -56,7 +61,7 @@ module.exports = React.createClass({
           <div className="col-md-2">
             <RaisedButton
               label="Edit"
-              onClick={this.props.edit} />
+              onClick={this.props.edit_toggle} />
           </div>
 
         </div>
@@ -64,3 +69,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ProfileHeader;

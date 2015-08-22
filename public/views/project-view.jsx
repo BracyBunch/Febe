@@ -31,7 +31,7 @@ module.exports = React.createClass({
     { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
     { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
     { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-    { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
+    { type: MenuItem.Types.LINK, payload: '#/profile', text: 'My Profile'},
     { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
     { route: '/', text: 'About'},
     { route: '/', text: 'Team'},
@@ -47,18 +47,6 @@ module.exports = React.createClass({
       title: 'Project Title',
       location: 'Project Location',
       description: 'Project info',
-      technology: [
-      { id: 124,
-        kind: "skill",
-        model: "Tag",
-        name: "javascript"
-      }, {
-        id: 125,
-        kind: "skill",
-        model: "Tag",
-        name: "hugging"
-      }
-      ],
       tags: [],
       contributors: ['john', 'bob', 'joe', 'sally'],
       startDate: 'START DATE',
@@ -78,7 +66,6 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log("data: ", data.skills)
     this.setState({
       title: data.name,
       location: data.organization.location,
@@ -173,7 +160,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <Header generateMenu = {this.generateMenu}/>
+        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div>
           <h3> {this.state.title} </h3> 
           <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit/Follow </button>

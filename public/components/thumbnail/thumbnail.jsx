@@ -48,7 +48,7 @@ module.exports = React.createClass({
           </div>
           <div className="thumbnail-tags">
             {this.strengthsList()}
-          </div>
+          </div> 
         </div>
       </Link>
     )

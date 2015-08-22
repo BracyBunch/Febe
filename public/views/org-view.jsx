@@ -13,7 +13,7 @@ var Footer = require('../components/shared/footer');
 var Participant = require('../components/profile/participant')
 var Description = require('../components/organization/org-description')
 var OrgMedia = require('../components/organization/org-media')
-var Projects = require('../components/organization/org-projects')
+var Projects = require('../components/organization/org-projects-2')
 
 
 module.exports = React.createClass({
@@ -27,7 +27,7 @@ module.exports = React.createClass({
     { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
     { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
     { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-    { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
+    { type: MenuItem.Types.LINK, payload: '#/profile', text: 'My Profile'},
     { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
     { route: '/', text: 'About'},
     { route: '/', text: 'Team'},
@@ -55,7 +55,7 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log("Org Data:", data)
+    console.log('org', data.projects)
     this.setState({
       orgData: data,
       ownerData: data.owner,
@@ -68,11 +68,12 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <Header generateMenu = {this.generateMenu}/>
+        <Header color={{"background-color":"#6E7FD5"}} generateMenu = {this.generateMenu}/>
         <div>
           <h3> {this.state.orgData.title} </h3> 
-          <button className='btn btn-warning edit-follow'> Edit/Follow </button>
+          <button className='btn btn-primary edit-follow'> Edit/Follow </button>
         </div>
+        <Link to="/createproject"><button className="btn btn-primary">Create Project</button></Link>
           <Description 
           name={this.state.orgData.name}
           location={this.state.orgData.location}

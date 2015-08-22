@@ -3,21 +3,33 @@ var ProfileMethods = require('../../../sharedMethods');
 var mui = require('material-ui');
 var RaisedButton = mui.RaisedButton;
 
-module.exports = React.createClass({
+var ProfileHeaderEdit = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
-  getInitialState: function() {
-    return {
-      title: '',
-      location: ''
-    };
+  propTypes: {
+    'save': React.PropTypes.func.isRequired,
+    'onChange': React.PropTypes.func.isRequired,
+    'avatar': React.PropTypes.string,
+    'first_name': React.PropTypes.string.isRequired,
+    'last_name': React.PropTypes.string.isRequired,
+    'title': React.PropTypes.string.isRequired,
+    'location': React.PropTypes.string.isRequired,
+    'links': React.PropTypes.array.isRequired
   },
 
   getDefaultProps: function() {
     return {
-      avatar: '/assets/img/avatar.png',
-      title: <a href="devprofile">Please enter your title/company</a>,
-      location: 'Please enter a location',
-      links: 'Please enter your GitHub, LinkedIn, etc'
+      avatar: '/assets/img/avatar.png'
+    };
+  },
+
+  getInitialState: function() {
+    return {
+      // 'first_name': this.props.first_name,
+      // 'last_name': this.props.last_name,
+      'title': this.props.title,
+      'location': this.props.location,
+      'links': this.props.links,
+      'avatar': this.props.avatar
     };
   },
 
@@ -26,17 +38,21 @@ module.exports = React.createClass({
   addlFieldCount: 1,
   addlFieldLimit: 4,
 
-  updateTitle: function(title) {
-    this.props.updateTitle(title.target.value);
-  },
-
-  updateLocation: function(event) {
-    this.props.updateLocation(event.target.value);
+  onChange: function() {
+    this.props.onChange(this.state);
   },
 
   updateLinks: function(link) {
     this.props.links.push(link);
     this.props.updateLinks(this.props.links);
+  },
+
+  updateField: function(field, event) {
+    var update = {};
+    update[field] = event.target.value;
+    this.setState(update, function() {
+      this.onChange(this.state);
+    });
   },
 
   render: function() {
@@ -52,20 +68,20 @@ module.exports = React.createClass({
           </div>
 
           <div className="col-md-4">
-            <p>{this.props.firstName} {this.props.lastName}</p>
+            <p>{this.props.first_name} {this.props.last_name}</p>
             <div>
               <input
                 type="text"
                 className="form-control techstrengths"
                 placeholder="Your position & company"
-                onChange={this.updateTitle} />
+                value={this.state.title} onChange={this.updateField.bind(this, 'title')} />
             </div>
             <div>
               <input
                 type="text"
                 className="form-control techstrengths"
                 placeholder="Your location"
-                onChange={this.updateLocation} />
+                value={this.state.location} onChange={this.updateField.bind(this, 'location')} />
             </div>
             <div>
               <div className="form-group techstrengths" id="addlLinks">
@@ -78,7 +94,7 @@ module.exports = React.createClass({
           <div className="col-md-2">
             <RaisedButton
               label="Save"
-              onClick={this.props.edit} />
+              onClick={this.props.save} />
           </div>
 
         </div>
@@ -86,3 +102,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ProfileHeaderEdit;

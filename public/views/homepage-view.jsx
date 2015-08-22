@@ -22,20 +22,37 @@ module.exports = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
-  generateMenu: [
-      { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
-      { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
-      { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
-      { route: '/', text: 'About'},
-      { route: '/', text: 'Team'},
-      { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub'}
-  ],
+  generateMenu: [],
+  whichMenu: function(){
+    window.localStorage.getItem('userId') ?
+      this.generateMenu.push(
+        { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
+        { type: MenuItem.Types.LINK, payload: '#/dashboard', text: 'Dashboard'},
+        { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
+        { type: MenuItem.Types.LINK, payload: '#/devprofile', text: 'My Profile'},
+        { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+        { route: '/', text: 'About'},
+        { route: '/', text: 'Team'},
+        { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub' } 
+      ):
+      this.generateMenu.push(
+        { type: MenuItem.Types.LINK, payload: '/', text: 'Home'},
+        { type: MenuItem.Types.LINK, payload: '#/browse', text: 'Browse'},
+        { type: MenuItem.Types.SUBHEADER, text: 'Resources'},
+        { route: '/', text: 'About'},
+        { route: '/', text: 'Team'},
+        { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub'}
+      )
+  },
+  componentWillMount: function(){
+    this.whichMenu();
+  },
   render: function(){
     return (
       <div id="main">
         <section>
           <div className="fullscreen background-image">
-            <Header generateMenu = {this.generateMenu}/>
+            <Header color={{"backgroundColor": "rgba(0,0,255,0.2)"}} generateMenu = {this.generateMenu}/>
             <Landing />
           </div>
         </section>
@@ -49,15 +66,11 @@ module.exports = React.createClass({
             </div> 
           </div>
         </section>
-        <section>
+        <section className="break-point">
           <div className="fullscreen">
             <div className="featuredMain">
               <FeaturedProjects/>
             </div>
-          </div>
-        </section>
-        <section>
-          <div>   
             <div className="stackMain">
               <Stack />
             </div>
