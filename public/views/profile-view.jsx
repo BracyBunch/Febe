@@ -37,7 +37,9 @@ var ProfileView = React.createClass({
       interests: [],
       userData: {},
       editing: false,
-      hasOrg: false
+      hasOrg: false,
+      projects: [],
+      org: {}
     };
   },
   componentWillMount: function() {
@@ -53,7 +55,9 @@ var ProfileView = React.createClass({
       bio: userData.bio,
       links: userData.links,
       strengths: userData.strengths,
-      interests: userData.interests
+      interests: userData.interests,
+      org: userData.org,
+      projects: userData.projects
     });
   },
 
@@ -144,14 +148,16 @@ var ProfileView = React.createClass({
   repButtons: function(){
     if (this.state.kind !== 'rep') return '';
     return (
-      <div>
-        <span className="createorg-button">
-          <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Create Organization"/>
-        </span>
-        <span>
-          <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Join an Organization"/>
-        </span>
-      </div>
+      this.state.org.id ? 
+        <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Create Organization"/> :
+        <div>
+          <span className="createorg-button">
+            <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Create Organization"/>
+          </span>
+          <span>
+            <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Join an Organization"/>
+          </span>
+        </div>
     )
   },
   profile: function() {
