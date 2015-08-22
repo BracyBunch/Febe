@@ -12,6 +12,7 @@ body{
 .main{
   height: 100%;
 }
+
 /* signup */
 .signupBorder {
   border: 2px solid lightgrey;
@@ -21,6 +22,7 @@ body{
   padding: 15px;
   opacity: 50%;
 }
+
 .checkbox {
   text-align: left;
   margin: 0 auto;
@@ -238,7 +240,7 @@ body{
   display: inline;
 }
 
-.thumbnail{
+.thumbnail {
   text-align: center;
 }
 
@@ -340,10 +342,6 @@ body{
   display: inline;
 }
 
-.profileBox {
-  background-color: white;
-}
-
 .links {
   text-decoration: underline;
   color: blue;
@@ -358,6 +356,27 @@ body{
 
 .bio {
   margin-bottom: 30px;
+}
+
+/* org */
+.short-form, .long-form, .form-margin{
+  margin: 8px 0;
+}
+
+.short-form {
+  width: 35%;
+}
+
+.long-form {
+  width: 70%;
+}
+
+.create {
+  text-align: center;
+}
+
+.center-form {
+  margin-left: auto;
 }
 
 /*other*/

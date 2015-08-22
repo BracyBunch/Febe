@@ -5,7 +5,7 @@ var Paper = mui.Paper;
 module.exports = React.createClass({
   render: function(){
     return (
-      <Paper style={{"height": "64%"}} zdepth={1}>
+      <Paper style={{"height": "64%", "min-height": "400px"}} zdepth={1}>
         <div className="team-header">The Team</div>
           <div className="entire-team">
             <div className="col-sm-4 nametags">
