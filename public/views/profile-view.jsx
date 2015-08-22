@@ -31,7 +31,7 @@ var ProfileView = React.createClass({
       last_name: '',
       title: '',
       location: '',
-      bio: '',
+      bio: null,
       links: [],
       strengths: [],
       interests: [],
@@ -138,6 +138,9 @@ var ProfileView = React.createClass({
       </div>
     );
   },
+  setBio: function(){
+    return this.state.bio ? this.state.bio : 'Tell us about yourself...just hit the edit button'
+  },
   repButtons: function(){
     if (this.state.kind !== 'rep') return '';
     return (
@@ -212,15 +215,7 @@ var ProfileView = React.createClass({
                 </div>
                 <div>
                   <h3>Bio</h3>
-                  <textarea
-                  value={this.state.bio}
-                  onChange={this.updateBio}
-                  placeholder="Tell us about yourself...just hit the edit button"
-                  className="form-control bio"
-                  rows="4"
-                  cols="200"
-                  style={{'marginBottom': '20px'}}
-                  >{this.state.bio}</textarea> 
+                  <div>{this.setBio()}</div>
                 </div>
                 <Projects />
               </div>
