@@ -4,8 +4,6 @@ var Promise = require('bluebird');
 // material ui
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var LeftNav = mui.LeftNav;
-var MenuItem = mui.MenuItem;
 var Paper = mui.Paper;
 // router / navigation
 var Navigation = require('react-router').Navigation;
@@ -102,8 +100,8 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <div className="container profileMargin" style={{"width": "60%"}}>
-            <Paper zDepth={1} style={{"width": "100%"}}>
+        <div className="container profileMargin containerWidth">
+          <Paper zDepth={1} style={{"width": "100%"}}>
             <div className="center-form">
               <div className="row">
                 <div className="col-md-8">
@@ -192,7 +190,6 @@ module.exports = React.createClass({
             </div>
           </Paper>
         </div>
-
         <Footer />
       </div>
     );
