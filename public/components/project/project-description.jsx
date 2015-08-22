@@ -16,9 +16,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <p>
         {this.props.desc}
-        </p>
       </div>
     )
   }

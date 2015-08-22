@@ -140,7 +140,7 @@ module.exports = React.createClass({
       <div>
         <div>
           <h3 className='proj-title'> {this.state.title} </h3> 
-          <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit/Follow </button>
+          <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit </button>
         </div>
         <div className='project-prof'>
         <div className='project-prof1'>
