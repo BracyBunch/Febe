@@ -166,7 +166,7 @@ module.exports = React.createClass({
           location={this.state.orgData.location}
           website={this.state.orgData.website_url} />
         </div>
-          <button className='btn btn-warning org-link-btn' onClick={this.goToOrg.bind(this, this.state.orgID)}> Organization Link </button>
+          <button className='btn btn-primary org-link-btn' onClick={this.goToOrg.bind(this, this.state.orgID)}> Organization Link </button>
         <div className='timeline-proj'>
           <Timeline 
             start={this.state.startDate}
