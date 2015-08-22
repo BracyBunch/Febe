@@ -203,10 +203,12 @@ body{
 
 .inset {
   width: 220px;
-  height: 162px;
+  height: 180px;
   background-color: black;
   text-align: center;
   opacity: .9;
+  margin-top: -10px;
+  margin-bottom: -8px;
 }
 
 .insetDescription{

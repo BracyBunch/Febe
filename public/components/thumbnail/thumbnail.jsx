@@ -11,7 +11,7 @@ module.exports = React.createClass({
   inset: function(){
     return (
       <div className="inset">
-        <h4 style={{"color":"#f2f2f2"}} className="descriptionHeader">Description</h4>
+        <h4 style={{"color":"#f2f2f2"}} className="descriptionHeader">{this.props.header}</h4>
         <div style={{"color":"#f2f2f2"}} className="insetDescription">
           {this.props.description}
         </div>
