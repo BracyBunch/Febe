@@ -9,7 +9,7 @@ var Footer = require('../components/shared/footer');
 var Participant = require('../components/profile/participant')
 var Description = require('../components/organization/org-description')
 var OrgMedia = require('../components/organization/org-media')
-var Projects = require('../components/organization/org-projects-2')
+var Projects = require('../components/organization/org-projects')
 
 
 module.exports = React.createClass({

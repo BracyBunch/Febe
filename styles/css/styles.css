@@ -9,6 +9,10 @@ body{
   background-color: #f2f2f2;
 }
 
+.main{
+  height: 100%;
+}
+
 /* signup */
 .signupBorder {
   border: 2px solid lightgrey;
@@ -197,6 +201,7 @@ body{
 
 .inset {
 <<<<<<< HEAD
+<<<<<<< HEAD
   width: 268px;
   height: 270px;
   background-color: #5967AD;
@@ -205,6 +210,11 @@ body{
   height: 180px;
   background-color: black;
 >>>>>>> 7e1952e6e849e34984caa0dcc28ff676834d3824
+=======
+  width: 100%;
+  height: 180px;
+  background-color: #6E7FD5;
+>>>>>>> [styling] Add styling for thumbnails
   text-align: center;
   opacity: .9;
   margin-top: -10px;
@@ -225,9 +235,9 @@ body{
 .thumbnail-preview{
   position: relative;
   padding: 10px;
-  overflow: auto;
-  height: 350px;
-  width: 300px;
+  overflow: none;
+  height: 250px;
+  width: 25%;
 }
 
 .eachThumbnail{
