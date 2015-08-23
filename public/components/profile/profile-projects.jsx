@@ -5,12 +5,12 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <div>
+        <div className="project-list">
           <h3>Current Projects</h3>
             <ThumbnailList />
         </div>
 
-        <div>
+        <div className="project-list">
           <h3>Completed Projects</h3>
             <ThumbnailList />
         </div>

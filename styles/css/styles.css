@@ -13,6 +13,45 @@ body{
   height: 100%;
 }
 
+/* Timeline */
+
+.timeline-container{
+  width: 25%;
+  float: right;
+  padding-right: 20px
+}
+
+.projects-in-profile, .profileBox{
+  width: 100%;
+}
+.profileBox{
+  padding-left: 2%;
+}
+.rest-of-profile{
+  padding-left: 4%;
+}
+
+.project-list h3{
+  padding-left: 4%;
+}
+
+.each-card{
+  padding-top: 10px;
+}
+
+.profile-info{
+  width: 75%;
+  float: left;
+  padding-right: 10px;
+}
+
+.all-of-them{
+ display: inline-block;
+}
+
+.timeline-container h3 {
+  text-align: center;
+}
 /* signup */
 .signupBorder {
   border: 2px solid lightgrey;
@@ -339,7 +378,10 @@ body{
 }
 
 .profileMargin {
-  margin: 30px auto 10px auto;
+  margin-top: 30px; 
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 10px;
 }
 
 .paperMargin {
