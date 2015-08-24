@@ -32,7 +32,6 @@ var AutocompleteForm = React.createClass({
     }
 
     return {
-      'last_fetch': Date.now(),
       'value': '',
       'values': values,
       'options': {},
@@ -57,9 +56,8 @@ var AutocompleteForm = React.createClass({
       return {'id': id, 'name': this.state.values[id]};
     }
   },
-  fetch_options: function() {
+  fetch_options: _.debounce(function() {
     if (this.state.value.length < this.props.min_chars) return;
-    this.setState({'last_fetch': Date.now()});
     ajax(this.props.url + this.state.value).then(function(res) {
       return res.json();
     }).then(function(data) {
@@ -70,13 +68,13 @@ var AutocompleteForm = React.createClass({
 
       this.setState({'options': this.filter_options(options)});
     }.bind(this));
-  },
+  }, 500),
   filter_options: function(options) {
     return _.omit(options, Object.keys(this.state.values));
   },
   handle_change: function(e) {
     this.setState({'value': e.target.value}, function() {
-      if (this.state.value.length >= this.props.min_chars && Date.now() - this.state.last_fetch > 2) {
+      if (this.state.value.length >= this.props.min_chars) {
         this.fetch_options();
       } else if (this.state.value.length < this.props.min_chars) {
         this.setState({'options': {}});
