@@ -17,7 +17,6 @@ var tag           = require('./routes/tag');
 // ***************** APP configure ******************
 var app = express();
 
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/')));
