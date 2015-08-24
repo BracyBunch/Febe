@@ -27,6 +27,11 @@ body{
 .profileBox{
   padding-left: 2%;
 }
+
+.dev-fields{
+  padding-left: 2%
+}
+
 .rest-of-profile{
   padding-left: 4%;
 }
