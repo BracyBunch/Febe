@@ -147,32 +147,21 @@ var with_extras = function(project, options) {
  /**
  * Find Projects with relationships to all specified Tags
  * @param  {Integer[]}  tag_ids  Array of Tag ids
- * @param  {Object}     options
- * @return {Promise.<Project[]>}
+ * @return {Promise.<Integer[]>}
  */
-var find_by_tags = function(tag_ids, options) {
-  var only_published = _.get(options, 'only_published', true);
-  var order_by = _.get(options, 'order_by', undefined);
+var find_by_tags = function(tag_ids) {
   var query = [
     'MATCH (tags:Tag) WHERE id(tags) IN {tags}',
     'WITH COLLECT(tags) AS t',
-    'MATCH (project:Project)-->(tags) WHERE ALL(tag IN t WHERE (project)-[:skill]->(tag) OR (project)<-[:owns]-(:Organization)-[:cause]->(tag))',
-    (only_published) ? 'AND project.published=true' : '',
-    'RETURN DISTINCT project',
-    (order_by) ? 'ORDER BY ' + order_by : ''
+    'MATCH (projects:Project)-->(tags) WHERE ALL(tag IN t WHERE (projects)-[:skill]->(tag) OR (projects)<-[:owns]-(:Organization)-[:cause]->(tag))',
+    'RETURN DISTINCT extract(p in collect(projects)|id(p))'
   ].join(' ');
 
-  return db.query(query, {'tags': tag_ids}).then(function(projects) {
-    if (!projects.length) return [];
+  return db.query(query, {'tags': tag_ids}).then(_.flatten);
+};
 
-    var calls = [];
-
-    projects.forEach(function(project) {
-      calls.push(with_extras(project, true));
-    });
-
-    return Promise.all(calls);
-  });
+var find_by_name = function(name) {
+  return db.query('MATCH (projects:Project) WHERE projects.name=~".*' + name + '.*" RETURN extract(p in collect(projects)|id(p))').then(_.flatten);
 };
 
 /**
@@ -206,5 +195,6 @@ module.exports = {
   'clear_skills': clear_skills,
   'with_extras': with_extras,
   'find_by_tags': find_by_tags,
+  'find_by_name': find_by_name,
   'user_has_access': user_has_access
 };

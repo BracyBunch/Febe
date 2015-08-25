@@ -14,15 +14,31 @@ var validate_id = function(req, res, next) {
 };
 
 router.get('/search', function(req, res) {
+  var async = [];
+
+  var tags = [];
+
   if ('tags' in req.query) {
-    Project.find_by_tags(JSON.parse(req.query.tags).map(Number), {'only_published': false, 'order_by': 'project.created DESC'}).then(function(projects) {
-      res.json(projects);
-    });
-  } else {
-    Project.with_extras(null, true).then(function(projects) {
-      res.json(projects);
-    });
+    tags = JSON.parse(req.query.tags).map(Number);
   }
+
+  if (!tags.length && !('name' in req.query)) {
+    return Project.with_extras(null, true).then(res.json.bind(res));
+  } else {
+    if (tags.length) {
+      async.push(Project.find_by_tags(tags, {'only_published': false, 'order_by': 'project.created DESC'}));
+    }
+    if ('name' in req.query) {
+      async.push(Project.find_by_name(req.query.name));
+    }
+  }
+
+  Promise.all(async).then(function(project_ids) {
+    project_ids = _.intersection.apply(null, project_ids);
+    return Promise.all(project_ids.map(function(id) {
+      return Project.with_extras(id, true);
+    }));
+  }).then(res.json.bind(res));
 });
 
 router.get('/:project_id', validate_id, function(req, res) {

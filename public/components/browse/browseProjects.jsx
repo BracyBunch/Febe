@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var React = require('react');
 var Thumbnail = require('../thumbnail/thumbnail');
 var SearchBar = require('./searchbar');
@@ -7,26 +8,39 @@ var ajax = require('../../utils/fetch');
 var BrowseProjects = React.createClass({
   getInitialState: function() {
     return {
-      'projects': []
+      'projects': [],
+      'tags': {},
+      'value': ''
     };
   },
-  on_selection_change: function(selections) {
-    if (!Object.keys(selections).length) return this.setState({'projects': []});
-    ajax('/project/search?tags=' + JSON.stringify(Object.keys(selections).map(Number))).then(function(res) {
+  componentWillMount: function() {
+    this.update_projects();
+  },
+  update_projects: _.debounce(function() {
+    var url = '/project/search';
+    url += '?tags=' + JSON.stringify(Object.keys(this.state.tags).map(Number));
+    url += '&name=' + this.state.value;
+    ajax(url).then(function(res) {
       return res.json();
     }).then(function(projects) {
       this.setState({'projects': projects});
     }.bind(this));
+  }, 500),
+  on_tag_change: function(tags) {
+    this.setState({'tags': tags}, this.update_projects);
+  },
+  on_value_change: function(value) {
+    this.setState({'value': value}, this.update_projects);
   },
   render: function() {
     return (
       <div>
         <div>
-          <SearchBar on_change={this.on_selection_change} />
+          <SearchBar on_tag_change={this.on_tag_change} on_value_change={this.on_value_change} />
         </div>
         <div className="eachThumbnail">
           {this.state.projects.map(function(project) {
-            return <Thumbnail url={'/project/' + project.id} header={project.name} description={project.description} tags={project.skills} imageURL={project.organization.logo_url} />;
+            return <Thumbnail key={project.id} url={'/project/' + project.id} header={project.name} description={project.description} tags={project.skills} imageURL={project.organization.logo_url} />;
           })}
         </div>
       </div>

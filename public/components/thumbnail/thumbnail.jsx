@@ -2,7 +2,7 @@ var React = require('react');
 var Router = require('react-router');
 var Navigation = Router.Navigation;
 
-module.exports = React.createClass({
+var Thumbnail = React.createClass({
   mixins: [Navigation],
   getInitialState: function(){
     return{
@@ -31,8 +31,8 @@ module.exports = React.createClass({
     }
   },
   strengthsList: function() {
-    return this.props.tags.map(function(tags) {
-      return <h4 className="label-inline"> <span className="label label-color">{tags.name}</span> </h4>;
+    return this.props.tags.map(function(tag) {
+      return <h4 key={tag.id} className="label-inline"><span className="label label-color">{tag.name}</span></h4>;
     });
   },
   thumbnailInformation: function(){
@@ -58,3 +58,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Thumbnail;
