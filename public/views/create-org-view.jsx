@@ -1,6 +1,5 @@
 var React = require('react/addons');
 var Reflux = require('reflux');
-var Promise = require('bluebird');
 // material ui
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -18,8 +17,6 @@ var Methods = require('../sharedMethods');
 var ImgurUpload = require('../utils/imgur');
 var Autocomplete =require('../components/shared/autocomplete');
 var ajax = require('../utils/fetch');
-
-var Promise = require('bluebird');
 
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],

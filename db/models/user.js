@@ -28,7 +28,8 @@ User.schema = {
   'links': {'type': Array, 'default': []},
   'github_id': {'type': String},
   'linkedin_id': {'type': String},
-  'facebook_id': {'type': String}
+  'facebook_id': {'type': String},
+  'avatar': {'type': String, 'default': 'assets/img/avatar.png'}
 };
 User.setUniqueKey('email');
 User.useTimestamps();
@@ -43,7 +44,8 @@ User.public_fields = [
   'title',
   'bio',
   'location',
-  'links'
+  'links',
+  'avatar'
 ];
 
 User.on('validate', function(user, cb) {
@@ -53,6 +55,8 @@ User.on('validate', function(user, cb) {
   user.links.forEach(function(link) {
     valid = valid && validator.isURL(link.split('|', 2)[1], {'protocol': ['http', 'https']});
   });
+
+  // valid = valid && user.avatar === null || validator.isURL(user.avatar, {'protocol': ['http', 'https']});
 
   if (valid) {
     cb();
