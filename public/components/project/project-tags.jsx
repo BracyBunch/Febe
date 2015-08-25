@@ -10,17 +10,14 @@ module.exports = React.createClass({
   },
   
   render: function() {
-
+    var tagList = this.props.tags.map(function(tag) {
+      return <span className="label label-color">{tag['name']}</span>
+    });
     return (
-      <div> <span> {this.props.title}: </span>
-        <span> 
-        {
-          this.props.tags.map(function(tag){
-            return <font className='label-inline label label-color tag'> {tag['name']} </font>
-            })
-        }
-        </span>
+      <div> 
+        <span>{this.props.title}: </span>
+        {tagList}
       </div>
-    )
+    );
   }
 });

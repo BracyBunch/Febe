@@ -19,6 +19,8 @@ var ImgurUpload = require('../utils/imgur');
 var Autocomplete =require('../components/shared/autocomplete');
 var ajax = require('../utils/fetch');
 
+var Promise = require('bluebird');
+
 module.exports = React.createClass({
   mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
 
@@ -36,8 +38,7 @@ module.exports = React.createClass({
       ein: '',
       name: '',
       website_url: '',
-      logoURL: '',
-      imgUri: 'assets/img/defaultlogo.jpg',
+      logo_url: 'assets/img/defaultlogo.jpg',
       location: '',
       causes: [],
       representatives: [],
@@ -55,46 +56,12 @@ module.exports = React.createClass({
 
   handleImage: function(event) {
     var that = this;
-    // FileReader is a native browser file reader
-    var reader = new FileReader();
-    // Assign file to img
-    var img = event.target.files[0];
-
-    var imgToUpload, imgBase64;
-
-    // run function on
-    reader.onload = readSuccess;
-    function readSuccess(upload) {
-      imgBase64 = upload.target.result;
-      // slice only base64 data
-      imgToUpload = imgBase64.slice(23);
-      ajax('/imgur', {
-        method: 'POST',
-        body: JSON.stringify({
-          image: upload.target.result
-        })
-      })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        console.log(data)
-      })
-      // $.ajax({
-      //   url: '/imgur',
-      //   type: 'post',
-      //   body: {
-      //     image: 'imgtoUpload'
-      //   }
-      // })
-      // ImgurUpload.imgurUpload(imgToUpload);
+    ImgurUpload.uploadImage(event)
+    .then(function(link) {
       that.setState({
-        imgUri: imgBase64
-      });
-    }
-
-    // readAsDataURL converts file to base64
-    reader.readAsDataURL(img);
+        logo_url: link
+      })
+    });
   },
 
   on_autocomplete_change: function(selections) {
@@ -153,7 +120,7 @@ module.exports = React.createClass({
                     valueLink={this.linkState('location')} />
                 </div>
                 <span className="col-md-4">
-                    <img id="avatar" className="orgPic" src={this.state.imgUri} />
+                    <img id="avatar" className="orgPic" src={this.state.logo_url} />
                     <form onSubmit={this.handleSubmit} encType="multipart/form-data">
                       <input type="file" onChange={this.handleImage} />
                     </form>

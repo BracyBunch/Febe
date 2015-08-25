@@ -50,7 +50,6 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log('org', data.projects)
     this.setState({
       orgData: data,
       ownerData: data.owner,
@@ -65,23 +64,15 @@ module.exports = React.createClass({
     });
   },
 
-  causesList: function() {
-    console.log(this.props.params)
-    // return this.state.orgData.causes.map(function(causes) {
-    //   return <h4 key={causes.id} className="label-inline"> <span className="label label-color">{causes.name}</span> </h4>;
-    // });
-  },
-
   render: function(){
     return (
       <div>
-      {this.causesList()}
         <div className="container profileMargin containerWidth">
           <Paper zDepth={1} style={{"width": "100%"}}>
             <div className="center-form">
               <div className="row">
                 <div className="col-md-4">
-                  <img id="avatar" className="orgPic" src={this.state.logo} />
+                  <img id="avatar" className="orgPic" src={this.state.orgData.logo_url} />
                 </div>
                 <div className="col-md-8">
                   <div className="headerProj">
