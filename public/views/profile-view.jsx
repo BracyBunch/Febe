@@ -1,19 +1,22 @@
 var React = require('react');
 var Reflux = require('reflux');
+var Actions = require('../actions');
+//material ui
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
+// shared components
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
 var Projects = require('../components/profile/profile-projects');
 var ProfileStore = require('../stores/profile-store');
-var Actions = require('../actions');
 var ProfileHeaderEdit = require('../components/profile/edit-components/profile-header-edit');
 var ProfileMethods = require('../components/profile/sharedProfileMethods');
 var Autocomplete =require('../components/shared/autocomplete');
 var TimelineEntry = require('../components/dashboard/timelineEntry');
 var TimelineStore = require('../stores/timeline-store');
+var ImgurUpload = require('../utils/imgur');
 
 var ProfileView = React.createClass({
   mixins: [
@@ -43,7 +46,8 @@ var ProfileView = React.createClass({
       hasOrg: false,
       projects: [],
       organization: '',
-      'timeline': []
+      'timeline': [],
+      avatar: ''
     };
   },
   componentWillMount: function() {
@@ -65,8 +69,9 @@ var ProfileView = React.createClass({
       strengths: userData.strengths,
       interests: userData.interests,
       organization: userData.organization,
-      projects: userData.projects
-    });
+      projects: userData.projects,
+      avatar: userData.avatar
+    }); 
   },
 
   edit_toggle: function() {
@@ -79,7 +84,8 @@ var ProfileView = React.createClass({
     var updateData = {
       title: this.state.title,
       location: this.state.location,
-      bio: this.state.bio
+      bio: this.state.bio,
+      avatar: this.state.avatar
     };
     if (this.state.kind === 'dev') {
       updateData.strengths = Object.keys(this.refs.strengths.get_selections());
@@ -91,6 +97,16 @@ var ProfileView = React.createClass({
     }
     this.edit_toggle();
     ProfileMethods.updateProfile('/user', updateData);
+  },
+
+  handleImage: function(event) {
+    var that = this;
+    ImgurUpload.uploadImage(event)
+    .then(function(link) {
+      that.setState({
+        avatar: link
+      });
+    });
   },
 
   updateHeader: function(state) {
@@ -184,10 +200,11 @@ var ProfileView = React.createClass({
                   onChange={this.updateHeader}
                   first_name={this.state.first_name}
                   last_name={this.state.last_name}
-                  avatar={this.state.userData.avatar}
+                  avatar={this.state.avatar}
                   title={this.state.title}
                   location={this.state.location}
-                  links={this.state.links} />
+                  links={this.state.links}
+                  handleImage={this.handleImage} />
             </div>
           </div>
           {this.devFields()}
@@ -221,7 +238,7 @@ var ProfileView = React.createClass({
                       edit_toggle={this.edit_toggle}
                       first_name={this.state.first_name}
                       last_name={this.state.last_name}
-                      avatar={this.state.userData.avatar}
+                      avatar={this.state.avatar}
                       title={this.state.title}
                       location={this.state.location}
                       links={this.state.links} />

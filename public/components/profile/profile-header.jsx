@@ -12,11 +12,6 @@ var ProfileHeader = React.createClass({
     'location': React.PropTypes.string.isRequired,
     'links': React.PropTypes.array.isRequired
   },
-  getDefaultProps: function() {
-    return {
-      avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAR2AAAAJGVlOWJlMTFkLTc3N2YtNGVkZC05YjY2LWMxNzA4OTllN2YyMQ.jpg'
-    };
-  },
 
   renderLinks: function() {
     return this.props.links.map(function(link) {
@@ -39,7 +34,7 @@ var ProfileHeader = React.createClass({
 
           <div className="col-md-2">
             <div className="">
-              <img className="profileAvatar" src={this.props.avatar} />
+              <img className="profileAvatar profileRound" src={this.props.avatar} />
             </div>
           </div>
 

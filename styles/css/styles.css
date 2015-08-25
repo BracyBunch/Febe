@@ -408,10 +408,13 @@ body{
 }
 
 .profileAvatar {
-  border-radius: 50%;
   width: 175px;
   height: 175px;
   margin: auto;
+}
+
+.profileRound {
+  border-radius: 50%;
 }
 
 .bio {
