@@ -14,7 +14,7 @@ module.exports = React.createClass({
         <div>
           <ThumbnailList />
         </div> 
-        <div style={{"padding-bottom":"10px"}} className="browse-button">
+        <div style={{"paddingBottom":"10px"}} className="browse-button">
           <RaisedButton linkButton={true} href="#/browse" secondary={true} label="Browse More" />
         </div>
       </Paper >

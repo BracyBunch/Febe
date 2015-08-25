@@ -512,9 +512,6 @@ body{
   margin: 20px;
   width: 120px;
 }
-.two-btns {
-  text-align: center;
-}
 
 /* create org */
 .short-form, .long-form, .form-margin{
@@ -551,6 +548,32 @@ body{
 
 .containerWidth {
   width: 60%;
+  margin: 2% auto;
+}
+
+/* project */
+
+.projectBtn {
+  margin: 10px;
+}
+
+.headerProj {
+  margin: 5px;
+}
+
+.headerIndent {
+  margin-left: 10px;
+}
+
+.projectBio, .projectCauses {
+  margin: 1% 10% 1% 8%;
+}
+
+
+.projectBioBorder {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 /*other*/
@@ -566,6 +589,11 @@ body{
 .headerInline {
   display: inline;
   position: relative;
+}
+
+.smallAvatar {
+  width: 70px;
+  margin-left: 5px
 }
 
 .questionmark {

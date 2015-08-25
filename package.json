@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --recursive",
     "dev-server": "gulp",
-    "server": "node ./bin/www",
+    "server": "nodemon ./bin/www",
     "start": "npm run server & npm run dev-server",
     "postinstall": "gulp heroku:production"
   },
@@ -27,6 +27,7 @@
     "debug": "^2.2.0",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "imgur-node-api": "^0.1.0",
     "joi": "^6.6.1",
     "lodash": "^3.10.1",
     "material-ui": "^0.10.4",
