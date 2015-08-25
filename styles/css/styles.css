@@ -27,6 +27,11 @@ body{
 .profileBox{
   padding-left: 2%;
 }
+
+.dev-fields{
+  padding-left: 2%
+}
+
 .rest-of-profile{
   padding-left: 4%;
 }
@@ -608,4 +613,25 @@ body{
 .autocomplete-list-item {
   margin-right: 3px;
   cursor: pointer;
+}
+.searchbar .autocomplete-container {
+  margin-top: -8px;
+}
+.searchbar .autocomplete-input {
+  display: inline-block;
+  width: 150px;
+  height: 22px;
+  margin: 3px;
+  border: 0;
+  border-bottom: 1px rgb(224,224,224) solid;
+}
+.searchbar .autocomplete-input:focus {
+  outline: none;
+}
+.searchbar .autocomplete-list {
+  display: inline-block;
+  padding-bottom: 0;
+}
+.searchbar .autocomplete-list-item {
+  margin-top: 3px;
 }

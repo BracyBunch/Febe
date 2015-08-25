@@ -125,7 +125,7 @@ var ProfileView = React.createClass({
     if (this.state.kind !== 'dev') return '';
     return (
       <div className="row">
-        <div className="col-md-8 col-md-offset-1">
+        <div className="dev-fields">
           <div>
             <h3>Tech Strengths</h3>
             {(function() {
