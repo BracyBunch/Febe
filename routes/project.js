@@ -65,7 +65,7 @@ router.post('/', function(req, res) {
     'name', 'complete_by', 'description'
   ];
 
-  if (!_.all(required_fields, function(field) {return field in req.body;})) return res.status(400).send();
+  if (!_.all(required_fields, function(field) {return field in req.body;})) return res.status(400).send('Please fill in all required fields');
 
   var links = [];
   if ('links' in req.body && Array.isArray(req.body.links) && req.body.links.length) {
