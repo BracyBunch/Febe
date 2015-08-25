@@ -10,7 +10,6 @@ var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
 //shared components
-var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var Methods = require('../sharedMethods');
 var DatePicker = require('../components/datepicker/datepicker');
@@ -57,8 +56,7 @@ module.exports = React.createClass({
         'name': this.state.projectName,
         'description': this.state.description,
         'complete_by': this.state.completionDate,
-        'tech': this.state.tech.map(function(tech) {return tech.id;}),
-        'organization_id': this.state.organization.id
+        'tech': this.state.tech.map(function(tech) {return tech.id;})
       })}).then(function(res) {
         return res.json();
       }).then(function(data) {
@@ -94,10 +92,6 @@ module.exports = React.createClass({
                 </span>
                 <div className="form-group">
                   <input type="text" ref="projectName" className="form-control" placeholder="Project Name" valueLink={this.linkState('projectName')} />
-                </div>
-                <div>
-                  <Autocomplete url='/organization/search?fragment=' placeholder='Search for an organization'
-                   min_chars={2} multi={false} ref='organization' on_change={this.on_autocomplete_change.bind(this, 'organization')}/>
                 </div>
                 <div>
                   <h5>Preferred Completion Date</h5>

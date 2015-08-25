@@ -43,7 +43,7 @@ var ProfileHeader = React.createClass({
             </div>
           </div>
 
-          <div className="col-md-4">
+          <div className="col-md-2">
             <p>{this.props.first_name} {this.props.last_name}</p>
             <div>
               <p>{this.props.title}</p>

@@ -59,6 +59,7 @@ module.exports = React.createClass({
     var reader = new FileReader();
     // Assign file to img
     var img = event.target.files[0];
+
     var imgToUpload, imgBase64;
 
     // run function on
@@ -67,7 +68,26 @@ module.exports = React.createClass({
       imgBase64 = upload.target.result;
       // slice only base64 data
       imgToUpload = imgBase64.slice(23);
-      ImgurUpload.imgurUpload(imgToUpload);
+      ajax('/imgur', {
+        method: 'POST',
+        body: JSON.stringify({
+          image: upload.target.result
+        })
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        console.log(data)
+      })
+      // $.ajax({
+      //   url: '/imgur',
+      //   type: 'post',
+      //   body: {
+      //     image: 'imgtoUpload'
+      //   }
+      // })
+      // ImgurUpload.imgurUpload(imgToUpload);
       that.setState({
         imgUri: imgBase64
       });

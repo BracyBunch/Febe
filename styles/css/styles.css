@@ -13,6 +13,45 @@ body{
   height: 100%;
 }
 
+/* Timeline */
+
+.timeline-container{
+  width: 25%;
+  float: right;
+  padding-right: 20px
+}
+
+.projects-in-profile, .profileBox{
+  width: 100%;
+}
+.profileBox{
+  padding-left: 2%;
+}
+.rest-of-profile{
+  padding-left: 4%;
+}
+
+.project-list h3{
+  padding-left: 4%;
+}
+
+.each-card{
+  padding-top: 10px;
+}
+
+.profile-info{
+  width: 75%;
+  float: left;
+  padding-right: 10px;
+}
+
+.all-of-them{
+ display: inline-block;
+}
+
+.timeline-container h3 {
+  text-align: center;
+}
 /* signup */
 .signupBorder {
   border: 2px solid lightgrey;
@@ -231,7 +270,7 @@ body{
 
 .eachThumbnail{
   position: relative;
-  display: inline-block;
+  /*display: inline-block;*/
   padding-left: 20px;
 }
 
@@ -328,9 +367,9 @@ body{
 /*browse projects*/
 
 .searchbar{
-  padding-top: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
+  /*padding-top: 10px;*/
+  /*padding-left: 10px;*/
+  /*padding-right: 10px;*/
 }
 
 /*profile*/
@@ -339,7 +378,10 @@ body{
 }
 
 .profileMargin {
-  margin: 30px auto 10px auto;
+  margin-top: 30px; 
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 10px;
 }
 
 .paperMargin {
@@ -371,9 +413,65 @@ body{
   margin-bottom: 30px;
 }
 
+.project-prof {
+  padding: 20px;
+  margin-left: 20px;
+  font-size: 17px;
+}
+
+.project-prof1 {
+  width: 75%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.project-prof2 {
+  width: 75%;
+  margin-top: 5px;
+  font-weight: bold;
+}
+.profileMargin {
+
+}
+
+.proj-title {
+  font-weight: bold;
+  font-size: 30px;
+  margin-left: 50px;
+}
+
+.org-desc {
+  font-size: 20px;
+  width: 75%;
+  padding: 10px;
+  margin: 10px;
+}
+
+.timeline-proj {
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.proj-desc {
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.org-link-btn {
+  width: 300px;
+  margin-left: 5%;
+  margin-bottom: 20px;
+}
+
+.tag {
+  padding: 5px;
+  margin: 0px 5px 0px 5px;
+}
+
 /*organization*/
 .org-view-project {
-  border: 1px solid black;
   width: 25%;
   display: inline-block;
   padding: 20px;
@@ -387,6 +485,27 @@ body{
 .org-projects {
   text-align: center;
   font-size: 20px;
+}
+
+.org-view-desc {
+  position: inline-block;
+  text-align: left;
+  width: 75%;
+  font-family: Tahoma;
+  font-size: 20px;
+  margin-left: 20%;
+}
+.edit-follow {
+  position: inline;
+  margin-left: 40px;
+  padding-left: 20px;
+  width: 120px;
+}
+
+.create-proj {
+  position: inline;
+  margin: 20px;
+  width: 120px;
 }
 
 /* create org */
@@ -424,6 +543,32 @@ body{
 
 .containerWidth {
   width: 60%;
+  margin: 2% auto;
+}
+
+/* project */
+
+.projectBtn {
+  margin: 10px;
+}
+
+.headerProj {
+  margin: 5px;
+}
+
+.headerIndent {
+  margin-left: 10px;
+}
+
+.projectBio, .projectCauses {
+  margin: 1% 10% 1% 8%;
+}
+
+
+.projectBioBorder {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 /*other*/
@@ -441,6 +586,11 @@ body{
   position: relative;
 }
 
+.smallAvatar {
+  width: 70px;
+  margin-left: 5px
+}
+
 .questionmark {
   height: 15px;
   width: 10px;
@@ -451,6 +601,9 @@ body{
 }
 .autocomplete-dropdown-item {
   cursor: pointer;
+}
+.autocomplete-list {
+  padding-bottom: 9px;
 }
 .autocomplete-list-item {
   margin-right: 3px;

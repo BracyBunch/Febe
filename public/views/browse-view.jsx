@@ -13,7 +13,7 @@ module.exports = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
-  render:function(){
+  render: function() {
     return (
       <div>
         <div>
@@ -21,6 +21,6 @@ module.exports = React.createClass({
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 });

@@ -12,11 +12,11 @@ module.exports = React.createClass({
   render: function() {
 
     return (
-      <div> <span> Technology: </span>
+      <div> <span> {this.props.title}: </span>
         <span> 
         {
-          this.props.tags.map(function(obj){
-            return <span className='tag'> {obj['name']} </span>
+          this.props.tags.map(function(tag){
+            return <font className='label-inline label label-color tag'> {tag['name']} </font>
             })
         }
         </span>

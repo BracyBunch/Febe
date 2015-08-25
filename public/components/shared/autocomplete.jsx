@@ -58,6 +58,7 @@ var AutocompleteForm = React.createClass({
     }
   },
   fetch_options: function() {
+    if (this.state.value.length < this.props.min_chars) return;
     this.setState({'last_fetch': Date.now()});
     ajax(this.props.url + this.state.value).then(function(res) {
       return res.json();
@@ -177,7 +178,7 @@ var SelectionList = React.createClass({
     return (
       <div className='autocomplete-list'>
         {_.map(this.props.values, function(name, id) {
-          return <h4 className="label-inline"> <span key={id} onClick={this.remove_handler} data-id={id} data-name={id} className='autocomplete-list-item label label-color'>{name}</span> </h4>;
+          return <h4 key={id} className="label-inline"> <span onClick={this.remove_handler} data-id={id} data-name={id} className='autocomplete-list-item label label-color'>{name}</span> </h4>;
         }.bind(this))}
       </div>
     );
