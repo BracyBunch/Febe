@@ -84,7 +84,7 @@ var ProfileView = React.createClass({
       title: this.state.title,
       location: this.state.location,
       bio: this.state.bio,
-      links: this.state.links
+      links: this.state.links,
       avatar: this.state.avatar
     };
     if (this.state.kind === 'dev') {
