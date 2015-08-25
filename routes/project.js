@@ -128,14 +128,20 @@ router.put('/:project_id/add_member/:user_id', validate_id, function(req, res) {
 
   if (!req.isAuthenticated) return res.status(403).send();
 
-  Project.with_extras(project_id, {'owner': true}).then(function(project) {
-    if (project.owner.id !== req.user.id) throw new Error('User doesn\'t have permission to add members');
-    return Project.add_member(project_id, user_id).then(function() {
-      res.status(201).send();
-    });
+  Project.add_member(project_id, user_id).then(function() {
+    res.status(201).send();
   }, function(err) {
-    res.status(400).send(err);
+    res.status(400).json(err.message);
   });
+
+  // Project.with_extras(project_id, {'owner': true}).then(function(project) {
+  //   if (project.owner.id !== req.user.id) throw new Error('User doesn\'t have permission to add members');
+  //   return Project.add_member(project_id, user_id).then(function() {
+  //     res.status(201).send();
+  //   });
+  // }, function(err) {
+  //   res.status(400).send(err);
+  // });
 });
 
 module.exports = router;
