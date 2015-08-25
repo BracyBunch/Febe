@@ -49,13 +49,13 @@ router.get('/:id', function(req, res) {
 });
 
 router.put('/', function(req, res){
-  if (!req.isAuthenticated()) return res.status(403).send();
+  // if (!req.isAuthenticated()) return res.status(403).send();
 
   var async = {};
 
   var editable_fields = [
     'kind', 'first_name', 'last_name', 'email', 'password',
-    'can_message', 'title', 'bio', 'location', 'links'
+    'can_message', 'title', 'bio', 'location', 'links', 'avatar'
   ];
 
   var fields = _.pick(req.body, editable_fields);

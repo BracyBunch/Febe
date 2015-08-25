@@ -16,16 +16,8 @@ var ProfileHeaderEdit = React.createClass({
     'links': React.PropTypes.array.isRequired
   },
 
-  getDefaultProps: function() {
-    return {
-      avatar: '/assets/img/avatar.png'
-    };
-  },
-
   getInitialState: function() {
     return {
-      // 'first_name': this.props.first_name,
-      // 'last_name': this.props.last_name,
       'title': this.props.title,
       'location': this.props.location,
       'links': this.props.links,
@@ -61,8 +53,10 @@ var ProfileHeaderEdit = React.createClass({
 
           <div className="col-md-2">
             <div className="">
-              <img src={this.props.avatar} /> <br />
-              <a href="#" className="">upload avatar</a>
+              <img className="profileAvatar" src={this.props.avatar} /> <br />
+              <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+                <input type="file" onChange={this.props.handleImage} />
+              </form>
             </div>
           </div>
 

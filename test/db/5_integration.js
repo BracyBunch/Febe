@@ -16,6 +16,8 @@ describe('Integration tests', function() {
   before(function(done) {
     Promise.props({
       'rep': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep@gmail.com'}),
+      'rep2': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep2@gmail.com'}),
+      'rep3': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep3@gmail.com'}),
       'dev1': models.User.create({'first_name': 'test1', 'last_name': 'user', 'email': 'p_test_dev1@gmail.com'}),
       'dev2': models.User.create({'first_name': 'test2', 'last_name': 'user', 'email': 'p_test_dev2@gmail.com'}),
       'dev3': models.User.create({'first_name': 'test3', 'last_name': 'user', 'email': 'p_test_dev3@gmail.com'})
@@ -235,6 +237,37 @@ describe('Integration tests', function() {
           done();
         } else {
           done(new Error('Added Tag as a skill multiple times'));
+        }
+      }, done);
+    });
+  });
+
+  it('should be able to add Users as rep of an Organization', function(done) {
+    models.Organization.add_reps(instances.org, [instances.users.rep2, instances.users.rep3]).then(function() {
+      models.Organization.with_extras(instances.org, true).then(function(organization) {
+        expect(organization.reps).to.be.an.array;
+        expect(organization.reps).to.have.length(2);
+        done();
+      }, done);
+    }, done);
+  });
+
+  it('shouldn\'t be able to add User as a member of a Project more than once', function(done) {
+    models.Organization.add_rep(instances.org, instances.users.rep2).then(function() {
+      done(new Error('Added User as a rep multiple times'));
+    }).catch(function() {
+      var query = [
+        'MATCH (u:User) WHERE id(u)={user_id}',
+        'MATCH (o:Organization) WHERE id(o)={organization_id}',
+        'MATCH r=(u)-[:represents]->(o)',
+        'RETURN COUNT(r) AS num'
+      ].join(' ');
+
+      models.db.query(query, {'user_id': instances.users.rep2.id, 'organization_id': instances.org.id}).then(function(row) {
+        if (row.num === 1) {
+          done();
+        } else {
+          done(new Error('Added User as a rep multiple times'));
         }
       }, done);
     });

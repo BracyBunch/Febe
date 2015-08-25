@@ -87,4 +87,15 @@ router.put('/:organization_id', function(req, res) {
 
 });
 
+router.put('/:organization_id/add_rep/:user_id', function(req, res) {
+  var organization_id = Number(req.params.organization_id);
+  var user_id = Number(req.params.user_id);
+
+  Organization.add_rep(organization_id, user_id).then(function() {
+    res.status(201).send();
+  }, function(err) {
+    res.status(400).json(err.message);
+  });
+});
+
 module.exports = router;
