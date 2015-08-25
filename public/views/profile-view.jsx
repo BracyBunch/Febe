@@ -74,12 +74,12 @@ var ProfileView = React.createClass({
       editing: !this.state.editing
     });
   },
-
   save: function() {
     var updateData = {
       title: this.state.title,
       location: this.state.location,
-      bio: this.state.bio
+      bio: this.state.bio,
+      links: this.state.links
     };
     if (this.state.kind === 'dev') {
       updateData.strengths = Object.keys(this.refs.strengths.get_selections());

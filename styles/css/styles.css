@@ -159,7 +159,7 @@ body{
   position: relative;
   width: 100%;
 }
-.site-name, .iamdev, .scroll-text, .signup-buttons, .glyphicon-circle-arrow-down{
+.site-name, .scroll-text, .signup-buttons, .glyphicon-circle-arrow-down{
   color: #ffffff;
 }
 
@@ -180,6 +180,7 @@ body{
   padding-top: 15px;
   padding-bottom: 15px;
   font-size: 30px;
+  color: #4B7091;
 }
 
 .signup-buttons{

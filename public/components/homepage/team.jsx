@@ -11,7 +11,7 @@ module.exports = React.createClass({
             <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/colinmckeehan" target="_blank">
-                  <img src="/assets/img/colin.jpg"/>
+                  <img src="/assets/img/Colin.jpg"/>
                   <div className="caption">
                     <h4>Colin Mckeehan</h4>
                     <p>Software Engineer</p>
@@ -22,7 +22,7 @@ module.exports = React.createClass({
             <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/mavmeister" target="_blank">
-                  <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAKNAAAAJDNjYzIyMTNjLWEwOWMtNDc1ZC1iMDQ5LTE3NGQ2Y2FiNTE1MQ.jpg"/>
+                  <img src="/assets/img/JamesMaveety.jpg"/>
                   <div className="caption">
                     <h4>James Maveety</h4>
                     <p>Scrum Master & Software Engineer</p>
@@ -33,7 +33,7 @@ module.exports = React.createClass({
             <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/ryanjones10" target="_blank">
-                  <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAYqAAAAJDFiZDRmM2I1LTZlOTItNDUxZi1iNWZjLTM3NWI2MTI2ZjcxOA.jpg"/>
+                  <img src="/assets/img/RyanJones.jpg"/>
                   <div className="caption">
                     <h4>Ryan Jones</h4>
                     <p>Product Manager & Software Engineer</p>
@@ -44,7 +44,7 @@ module.exports = React.createClass({
             <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/yoshiv" target="_blank">
-                  <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAR2AAAAJGVlOWJlMTFkLTc3N2YtNGVkZC05YjY2LWMxNzA4OTllN2YyMQ.jpg"/>
+                  <img src="/assets/img/Yoshi .jpg"/>
                   <div className="caption">
                     <h4>Yoshi Varney</h4>
                     <p>Software Engineer</p>
