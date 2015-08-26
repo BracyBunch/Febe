@@ -61,7 +61,6 @@ var Header = React.createClass({
       if (this.state.profile.kind === 'dev'){
         menu = [
         { route: '/', text: 'Home'},
-        { route: '/dashboard', text: 'Dashboard'},
         { route: '/browse', text: 'Browse'},
         { route: '/profile', text: 'My Profile'},
         { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
@@ -72,7 +71,6 @@ var Header = React.createClass({
             if (!jimSquats.isEmpty(this.state.profile.organization)){
         menu = [
         { route: '/', text: 'Home'},
-        { route: '/dashboard', text: 'Dashboard'},
         { route: '/browse', text: 'Browse'},
         { route: '/profile', text: 'My Profile'},
         { route: '/organization/' + this.state.orgID, text: this.state.orgName},
@@ -84,7 +82,6 @@ var Header = React.createClass({
           } else {
         menu = [
         { route: '/', text: 'Home'},
-        { route: '/dashboard', text: 'Dashboard'},
         { route: '/browse', text: 'Browse'},
         { route: '/profile', text: 'My Profile'},
         { type: MenuItem.Types.SUBHEADER, text: 'Resources' },

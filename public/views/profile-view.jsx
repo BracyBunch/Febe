@@ -118,8 +118,9 @@ var ProfileView = React.createClass({
     var links = this.state.links.slice();
     links.push(link);
     this.setState({
-      links: links
+      links: link
     });
+
   },
 
   updateBio: function(event) {

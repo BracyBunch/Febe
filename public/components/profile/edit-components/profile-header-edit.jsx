@@ -33,7 +33,9 @@ var ProfileHeaderEdit = React.createClass({
   onChange: function() {
     this.props.updateHeader(this.state);
   },
-
+  checkLinks: function(){
+    return this.state.links[0] ? this.state.links[0].split('|',2)[1] : this.state.links;
+  },
   updateLink: function(event) {
     this.props.updateLinks(event.target.value);
   },
@@ -82,6 +84,7 @@ var ProfileHeaderEdit = React.createClass({
                 id="links" 
                 placeholder="LinkedIn, Github, Angel List, Website, etc." 
                 className="form-control" 
+                value={this.checkLinks()}
                 onChange={this.updateLink} />
               </div>
                 <button className="btn signupBtn" onClick={ProfileMethods.addFields.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />

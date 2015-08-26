@@ -47,7 +47,7 @@ module.exports = React.createClass({
       // Logged in
       this.props.closeModal();
       this.props.snackbar();
-      this.transitionTo('dashboard');
+      this.transitionTo('profile');
     } else if (oauth_status === 'rejected') {
       // User either denied the authorization or closed the popup
     } else if (oauth_status === 'conflict') {
