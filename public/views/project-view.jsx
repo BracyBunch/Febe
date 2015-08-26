@@ -7,6 +7,7 @@ var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
+var SnackBar = mui.SnackBar;
 
 var Router = require('react-router');
 var Navigation = require('react-router').Navigation;
@@ -150,6 +151,10 @@ module.exports = React.createClass({
       </div>
   },
 
+  interested: function() {
+
+  },
+
   render: function(){
     return (
       <div>
@@ -193,6 +198,12 @@ module.exports = React.createClass({
                 <ProjectTags 
                   title="Technologies Needed"
                   tags={this.state.tags} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-10">
+                <MemberThumbnails />
               </div>
             </div>
             
