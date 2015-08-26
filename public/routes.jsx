@@ -28,6 +28,7 @@ module.exports = (
       <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
       <Route name="dashboard" path="/dashboard" component={Dashboard} />
       <Route name="profile" path="/profile" component={Profile} />
+      <Route name="profile" path="/profile/:id" component={Profile} />
       <Route name="createproject" path="/createproject" component={CreateProject} />
       <Route name="createorg" path="/createorg" component={Createorg} />
       <Route name="joinorg" path="/joinorg" component={Joinorg} />
