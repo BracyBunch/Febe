@@ -49,7 +49,7 @@ router.get('/:id', function(req, res) {
 });
 
 router.put('/', function(req, res){
-  // if (!req.isAuthenticated()) return res.status(403).send();
+  if (!req.isAuthenticated()) return res.status(403).send();
 
   var async = {};
 

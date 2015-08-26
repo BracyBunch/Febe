@@ -143,22 +143,40 @@ var ProfileView = React.createClass({
       <div className="row">
         <div className="dev-fields">
           <div>
-            <h3>Tech Strengths</h3>
             {(function() {
               if (this.state.editing) {
-                return <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>;
+                return (
+                  <div className="col-md-8 col-md-offset-1">
+                    <h3>Tech Strengths</h3>
+                    <Autocomplete url='/tag/search?fragment=' className="col-md-8 col-md-offset-1" placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>
+                  </div>
+                )
               } else {
-                return this.strengthsList();
+                return ( 
+                  <div>
+                    <h3>Tech Strengths</h3>
+                    {this.strengthsList()}
+                  </div>
+                )
               }
             }.bind(this))()}
           </div>
           <div>
-            <h3>Interests</h3>
             {(function() {
               if (this.state.editing) {
-                return <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>;
+                return (
+                  <div className="col-md-8 col-md-offset-1">
+                    <h3>Interests</h3>
+                    <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>
+                  </div>
+                )
               } else {
-                return this.interestsList();
+                return (
+                  <div> 
+                    <h3>Interests</h3>
+                    {this.interestsList()}
+                  </div>
+                )
               }
             }.bind(this))()}
           </div>
@@ -210,15 +228,15 @@ var ProfileView = React.createClass({
           {this.devFields()}
           <div className="row">
             <div className="col-md-8 col-md-offset-1">
-              <div>
+              <div className="bio">
                 <h3>Bio</h3>
                 <textarea
                   value={this.state.bio}
                   onChange={this.updateBio}
                   placeholder="Tell us about yourself..."
-                  className="form-control bio"
+                  className="form-control"
                   rows="4"
-                  cols="200"
+                  cols="195"
                   style={{'marginBottom': '20px'}}
                   ></textarea>
               </div>

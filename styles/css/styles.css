@@ -419,7 +419,7 @@ body{
 }
 
 .bio {
-  margin-bottom: 30px;
+  margin-left: 22px;
 }
 
 .project-prof {
@@ -428,19 +428,10 @@ body{
   font-size: 17px;
 }
 
-.project-prof1 {
+.project-prof1, .project-prof2 {
   width: 75%;
   margin-bottom: 5px;
   font-weight: bold;
-}
-
-.project-prof2 {
-  width: 75%;
-  margin-top: 5px;
-  font-weight: bold;
-}
-.profileMargin {
-
 }
 
 .proj-title {
