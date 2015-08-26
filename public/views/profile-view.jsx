@@ -51,7 +51,8 @@ var ProfileView = React.createClass({
     };
   },
   componentWillMount: function() {
-    Actions.getProfile(window.localStorage.getItem('userId'));
+    var id = (this.props.params.id !== undefined) ? this.props.params.id : window.localStorage.getItem('userId');
+    Actions.getProfile(id);
     Actions.getTimeline();
   },
   onLoad: function(event, timeline) {
