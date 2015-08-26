@@ -1,6 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
 var Actions = require('../../actions');
+var jimSquats = require('lodash')
 //material ui
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -32,6 +33,7 @@ var Header = React.createClass({
   },
 
   onLoad: function(event, profile) {
+    console.log(profile)
     this.setState({
       profile: profile,
       orgName: profile.organization.name,
@@ -67,7 +69,8 @@ var Header = React.createClass({
         { route: '/', text: 'Team'},
         { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub' }
        ]} else if (this.state.profile.kind === 'rep'){
-         menu = [
+            if (!jimSquats.isEmpty(this.state.profile.organization)){
+        menu = [
         { route: '/', text: 'Home'},
         { route: '/dashboard', text: 'Dashboard'},
         { route: '/browse', text: 'Browse'},
@@ -77,7 +80,20 @@ var Header = React.createClass({
         { route: '/', text: 'About'},
         { route: '/', text: 'Team'},
         { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub' }
-       ]}
+       ]
+          } else {
+        menu = [
+        { route: '/', text: 'Home'},
+        { route: '/dashboard', text: 'Dashboard'},
+        { route: '/browse', text: 'Browse'},
+        { route: '/profile', text: 'My Profile'},
+        { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+        { route: '/', text: 'About'},
+        { route: '/', text: 'Team'},
+        { type: MenuItem.Types.LINK, payload: 'https://github.com/BracyBunch/Febe', text: 'GitHub' }
+       ]
+          }
+        }
        } return menu
   },
   snackbarShow: function() {
