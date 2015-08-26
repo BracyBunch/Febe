@@ -10,6 +10,7 @@ var validator = require('validator');
   [:follows]-(:User)
   [:follows]-(:Organization)
   {kind: 'rep'}-[:owns]-(:Project)
+  {kind: 'rep'}-[:represents]-(:Project)
   {kind: 'dev'}-[:skill]-(:Tag {kind: 'skill'})
   {kind: 'dev'}-[:interest]-(:Tag {kind: 'cause'})
  */
