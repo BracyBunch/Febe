@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var Promise = require('bluebird');
 var chai = require('chai');
 var chaiHttp = require('chai-http');
@@ -23,9 +24,12 @@ describe('Organization Route Tests', function() {
   var instances = {};
 
   before(function(done) {
-    models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep@gmail.com', 'password': '$2a$10$rRuOCaxfc4p16.cjoAYI2els/JeZvqB9kb707zNcWpFB6ZlP1yzYe'}).then(function(user) {
-      instances.user = user;
-      ids_to_be_deleted.push(instances.user.id);
+    Promise.props({
+      'rep1': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep@gmail.com', 'password': '$2a$10$rRuOCaxfc4p16.cjoAYI2els/JeZvqB9kb707zNcWpFB6ZlP1yzYe'}),
+      'rep2': models.User.create({'kind': 'rep', 'first_name': 'test', 'last_name': 'user', 'email': 'p_test_rep2@gmail.com'})
+    }).then(function(users) {
+      instances.users = users;
+      ids_to_be_deleted = ids_to_be_deleted.concat(_.pluck(instances.users, 'id'));
       return http.post('/auth/login').send({'email': 'p_test_rep@gmail.com', 'password': 'testtest'});
     }).then(function() {
       done();
@@ -65,6 +69,38 @@ describe('Organization Route Tests', function() {
     }).then(function(organization) {
       expect(organization.name).to.be.eql('updated_test_org');
       done();
+    });
+  });
+
+  it('should be able to add a User to an Organization', function(done) {
+    http.put('/organization/' + instances.organization.id + '/add_rep/' + instances.users.rep2.id).send().then(function(res) {
+      expect(res).to.have.status(201);
+      return models.Organization.with_extras(instances.organization, true);
+    }).then(function(organization) {
+      expect(organization.reps).to.be.an.array;
+      expect(organization.reps).to.have.length(1);
+      done();
+    });
+  });
+
+  it('shouldn\'t be able to add a User to an Organization more than once', function(done) {
+    http.put('/organization/' + instances.organization.id + '/add_rep/' + instances.users.rep2.id).send().then(function(res) {
+      expect(res).to.have.status(400);
+
+      var query = [
+        'MATCH (u:User) WHERE id(u)={user_id}',
+        'MATCH (o:Organization) WHERE id(o)={organization_id}',
+        'MATCH r=(u)-[:represents]->(o)',
+        'RETURN COUNT(r) AS num'
+      ].join(' ');
+
+      models.db.query(query, {'user_id': instances.users.rep2.id, 'organization_id': instances.organization.id}).then(function(row) {
+        if (row.num === 1) {
+          done();
+        } else {
+          done(new Error('Added User as a rep multiple times'));
+        }
+      }, done);
     });
   });
 

@@ -252,7 +252,7 @@ describe('Integration tests', function() {
     }, done);
   });
 
-  it('shouldn\'t be able to add User as a member of a Project more than once', function(done) {
+  it('shouldn\'t be able to add User as a rep of an Organization more than once', function(done) {
     models.Organization.add_rep(instances.org, instances.users.rep2).then(function() {
       done(new Error('Added User as a rep multiple times'));
     }).catch(function() {
