@@ -1,24 +1,39 @@
 var React = require('react');
 var Reflux = require('reflux');
-var Footer = require('../components/shared/footer');
-var Router = require('react-router');
 var Actions = require('../actions');
+var ProjectStore = require('../stores/project-store');
+// material ui
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
+var Paper = mui.Paper;
+var RaisedButton = mui.RaisedButton;
+
+var Router = require('react-router');
 var Navigation = require('react-router').Navigation;
 var Link = Router.Link;
+// shared components
+var Footer = require('../components/shared/footer');
 var Participant = require('../components/profile/participant')
 var Timeline = require('../components/project/project-timeline')
 var Description = require('../components/project/project-description')
+var MemberThumbnails = require('../components/shared/member-thumbnails');
 var Contributors = require('../components/project/project-contrib')
 var ProjectMedia = require('../components/project/project-media')
 var ProjectMethods = require('../components/project/sharedProjectMethods/')
 var ProjectEdit = require('../components/project/edit-components/project-body-edit')
-var ProjectStore = require('../stores/project-store');
-var Organization = require('../components/organization/org-description-in-project');
 var ProjectTags = require('../components/project/project-tags')
 
 
 module.exports = React.createClass({
   mixins: [Reflux.listenTo(ProjectStore, 'onChange'), Navigation],
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
 
   getInitialState: function(){
     return {
@@ -138,46 +153,65 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <div>
-          <h3 className='proj-title'> {this.state.title} </h3> 
-          <button className='btn btn-warning edit-follow' onClick={this.edit}> Edit </button>
+        <div className="container profileMargin containerWidth">
+          <Paper zDepth={1} style={{"width":"100%"}}>
+            <div className="center-form">
+              <h3>{this.state.title}</h3>
+
+              <div>
+                <Participant 
+                  firstName={this.state.repData.first_name}
+                  lastName={this.state.repData.last_name}
+                  title={this.state.orgData.name} 
+                  location={this.state.repData.location} 
+                  type={'Non-Profit Representative'}/>
+              </div>
+              <div>
+                <Participant 
+                  firstName={this.state.ownerFirst}
+                  lastName={this.state.ownerLast}
+                  title={this.state.orgName} 
+                  location={this.state.location} 
+                  type={'Project Manager'}/>
+              </div>
+              <div className="projectOrgBtn">
+                <RaisedButton
+                  label={this.state.orgData.name}
+                  onClick={this.goToOrg.bind(this, this.state.orgID)}/>
+              </div>
+            </div>
+
+            <div className='timeline-proj'>
+              <Timeline 
+                start={this.state.startDate}
+                end={this.state.endDate} />
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className='proj-desc projectBorder'>
+                  <Description desc={this.state.description} />
+                </div>    
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12 proj-desc">
+                <ProjectTags 
+                  title="Technologies Needed"
+                  tags={this.state.tags} />
+              </div>
+            </div>
+            
+            <div className="row">
+              <div className="col-md-12">
+                <ProjectMedia />
+              </div>
+            </div>
+
+          </Paper>
+          <Footer />
         </div>
-        <div className='project-prof'>
-        <div className='project-prof1'>
-          <Participant 
-            firstName={this.state.repData.first_name}
-            lastName={this.state.repData.last_name}
-            title={this.state.orgData.name} 
-            location={this.state.repData.location} 
-            type={'Non-Profit Representative'}/>
-        </div>
-        <div className='project-prof2'>
-          <Participant 
-            firstName={this.state.ownerFirst}
-            lastName={this.state.ownerLast}
-            title={this.state.orgName} 
-            location={this.state.location} 
-            type={'Project Manager'}/>
-        </div>
-        </div>
-        <div className='org-desc'>
-          <Organization 
-          name={this.state.orgData.name} 
-          location={this.state.orgData.location}
-          website={this.state.orgData.website_url} />
-        </div>
-          <button className='btn btn-primary org-link-btn' onClick={this.goToOrg.bind(this, this.state.orgID)}> {this.state.orgData.name} </button>
-        <div className='timeline-proj'>
-          <Timeline 
-            start={this.state.startDate}
-            end={this.state.endDate} />
-        </div>
-        <div className='proj-desc'>
-          <Description desc={this.state.description} />
-          <ProjectTags tags={this.state.tags} />
-          <ProjectMedia />
-        </div>
-        <Footer />
       </div>
     )
   },

@@ -565,10 +565,15 @@ body{
 }
 
 
-.projectBioBorder {
+.projectBioBorder, .projectBorder {
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
+}
+
+.projectOrgBtn {
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 /*other*/
