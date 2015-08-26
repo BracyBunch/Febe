@@ -31,7 +31,7 @@ module.exports = React.createClass({
     this.setState({
       start: projectStart,
       end: projectEnd,
-      length: lengthInDays.toFixed(1),
+      length: lengthInDays.toFixed(0),
       elapsed: days.toFixed(1)
     })
   },
@@ -43,9 +43,9 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-      <span> Start Date: {this.state.start} </span> <br/>
+      <span> Start Date: {this.state.start.slice(0, 15)} </span> <br/>
       <span> Days Since Start: {this.state.elapsed} </span> <br/>
-      <span> Desired Completion Date: {this.state.end} </span> <br/>
+      <span> Desired Completion Date: {this.state.end.slice(0, 15)} </span> <br/>
       <span> Time In Days Until Complete: {this.state.length} </span> <br/>
       </div>
     )
