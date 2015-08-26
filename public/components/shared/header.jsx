@@ -32,7 +32,6 @@ var Header = React.createClass({
   },
 
   onLoad: function(event, profile) {
-    console.log('prof', profile)
     this.setState({
       profile: profile,
       orgName: profile.organization.name,
