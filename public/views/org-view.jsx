@@ -10,10 +10,10 @@ var RaisedButton = mui.RaisedButton;
 // shared components
 var Actions = require('../actions');
 var OrgStore = require('../stores/org-store');
-var Header = require('../components/shared/header');
 var Footer = require('../components/shared/footer');
 var MemberThumbnails = require('../components/shared/member-thumbnails');
 var Tags = require('../components/project/project-tags');
+var ajax = require('../utils/fetch');
 
 var Participant = require('../components/profile/participant')
 var Description = require('../components/organization/org-description')
@@ -36,16 +36,15 @@ module.exports = React.createClass({
 
   getInitialState: function(){
     return {
-      orgData: {causes: []},
-      ownerData: [],
+      orgData: {causes: [], reps: []},
+      ownerData: {},
       projectData: [],
       verified: null,
-      editting: false,
       logo: 'assets/img/defaultlogo.jpg'
     };
   },
 
-  componentWillMount: function(){
+  componentWillMount: function() {
     Actions.getOrg(this.props.params.id);
   },
 
@@ -58,10 +57,26 @@ module.exports = React.createClass({
     });
   },
 
-  edit: function() {
-    this.setState({
-      editting: !this.state.editting
+  joinOrg: function() {
+    ajax('/organization/' + this.state.orgData.id + '/add_rep/' + window.localStorage.userId, {'method': 'PUT'}).then(function() {
+      Actions.getOrg(this.props.params.id);
+    }.bind(this));
+  },
+
+  joinOrgButton: function() {
+    var userId = Number(window.localStorage.userId);
+    var isRep = this.state.orgData.reps.some(function(rep) {
+      return rep.id === userId;
     });
+    if (!userId || (this.state.ownerData.id === userId || isRep)) {
+      return '';
+    }
+
+    return (
+      <span className="projectBtn">
+        <RaisedButton label="Join Organization" onClick={this.joinOrg} />
+      </span>
+    );
   },
 
   render: function(){
@@ -85,9 +100,7 @@ module.exports = React.createClass({
                       <MemberThumbnails />
                     </div>
                     <div className="projectBtn">
-                      <span className="projectBtn">
-                        <RaisedButton label="Edit" onClick={this.edit} />
-                      </span>
+                      {this.joinOrgButton()}
                       <span className="projectBtn">
                         <Link to="/createproject">
                           <RaisedButton label="Create Project"/>
