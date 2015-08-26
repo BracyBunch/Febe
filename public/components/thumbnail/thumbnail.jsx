@@ -47,8 +47,8 @@ var Thumbnail = React.createClass({
   },
   render: function(){
     return (
-        <div className="thumbnail-preview col-sm-4" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onClick={this.handleClick}>
-          <div className="thumbnail">
+        <div className="thumbnail-preview col-sm-4"  onClick={this.handleClick}>
+          <div onClick={this.props.goToProject.bind(this, this.props.id)} className="thumbnail" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
             {this.state.hovering ? this.inset() : this.thumbnailInformation()}
           </div>
           <div className="thumbnail-tags">
