@@ -35,15 +35,7 @@ var ProfileHeaderEdit = React.createClass({
   },
 
   updateLink: function(event) {
-    console.log("here is the event", event.target.value);
     this.props.updateLinks(event.target.value);
-    
-    // var update = {};
-    // update[field] = event.target.value;
-    
-    // this.setState(update, function() {
-    //   this.onChange(this.state);
-    // });
   },
 
   updateField: function(field, event) {
