@@ -24,3 +24,4 @@ main.js
 keys.js
 .DS_Store
 */.DS_Store
+sessions/

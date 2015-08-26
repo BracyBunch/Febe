@@ -160,18 +160,11 @@ module.exports = React.createClass({
 
               <div>
                 <Participant 
-                  firstName={this.state.repData.first_name}
-                  lastName={this.state.repData.last_name}
-                  title={this.state.orgData.name} 
-                  location={this.state.repData.location} 
-                  type={'Non-Profit Representative'}/>
-              </div>
-              <div>
-                <Participant 
                   firstName={this.state.ownerFirst}
                   lastName={this.state.ownerLast}
                   title={this.state.orgName} 
                   location={this.state.location} 
+                  avatar={this.state.repData.avatar}
                   type={'Project Manager'}/>
               </div>
               <div className="projectOrgBtn">

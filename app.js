@@ -23,6 +23,7 @@ app.use(bodyParser.json({limit: '2mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '2mb' }));
 app.use(express.static(path.join(__dirname, '/')));
 app.use(session({
+  'store': new FileStore(),
   'secret': 'starman',
   'resave': false,
   'saveUninitialized': false

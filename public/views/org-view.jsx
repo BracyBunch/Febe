@@ -121,12 +121,16 @@ module.exports = React.createClass({
               <div className="row">
                 <div className="col-md-10 projectCauses">
                   <Tags tags={this.state.orgData.causes} title="Causes" />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-12">
                   <div className='org-projects'> Projects Belonging To {this.state.orgData.name}:
                     <Projects projects={this.state.projectData}/>
                   </div>
                 </div>
               </div>
-
             </div>
           </Paper>
         </div>

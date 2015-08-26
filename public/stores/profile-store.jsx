@@ -5,6 +5,9 @@ var ajax = require('../utils/fetch');
 module.exports = Reflux.createStore({
   listenables: [Actions],
   getProfile: function(id) {
+    if (!id){
+      return;
+    }
     return ajax('/user/' + id)
       .then(function(response) {
         return response.json();
