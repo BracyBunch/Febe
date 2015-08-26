@@ -39,7 +39,7 @@ router.post('/', function(req, res) {
     'description': req.body.description,
     'website_url': req.body.website_url,
     'donation_url': req.body.donation_url,
-    'logo_url': (!req.body.logo_url.length) ? req.body.logo_url : null,
+    'logo_url': (req.body.logo_url.length) ? req.body.logo_url : null,
     'location': req.body.location
   }, req.user.id).then(function(organization) {
     TimelineEntry.create('create', req.user, 'Created organization', organization);
