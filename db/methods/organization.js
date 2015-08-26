@@ -8,6 +8,7 @@ var Organization = require('../models/organization');
 var User = require('../models/user');
 var Project = require('../models/project');
 var Tag = require('../models/tag');
+var TimelineEntry = require('../models/timelineentry');
 
 /**
  * Create and save a new Organization
@@ -69,7 +70,10 @@ var clear_causes = function(organization) {
   return db.query('MATCH (n:Organization)-[r:cause]->(:Tag) WHERE id(n)={organization_id} DELETE r', {'organization_id': organization.id || organization});
 };
 
-var add_rep = common.add_rel_generator('represents');
+var add_rep = common.add_rel_generator('represents', false, function(organization, user) {
+  TimelineEntry.create('update', organization, 'added representative', user);
+  User.follow(user, organization);
+});
 
 var add_reps = common.add_rels_generator(add_rep);
 
