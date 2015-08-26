@@ -14,12 +14,12 @@ module.exports = React.createClass({
     return (
       <div className="profile">
         <div className="row row-centered">
-          <div className="col-md-3 ">
+          <div className="col-md-4">
             <div className="">
-              <img src={this.props.avatar} /> <br />
+              <img className="profileAvatar" src={this.props.avatar} /> <br />
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-8">
             <p>{this.props.firstName} {this.props.lastName}</p>
             <div>
               <p>{this.props.title}</p>
