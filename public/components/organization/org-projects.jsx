@@ -44,7 +44,7 @@ module.exports = React.createClass({
          imageURL={'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/HSUS_logo.svg/1280px-HSUS_logo.svg.png'} 
          description={thumbnailProps.description} 
          tags={thumbnailProps.skills} /> 
-        </div>
+        </div> 
       )
     });
   },
