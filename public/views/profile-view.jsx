@@ -197,7 +197,7 @@ var ProfileView = React.createClass({
             <div className="col-md-8 col-md-offset-1 profileBox">
               <ProfileHeaderEdit
                   save={this.save}
-                  onChange={this.updateHeader}
+                  updateHeader={this.updateHeader}
                   first_name={this.state.first_name}
                   last_name={this.state.last_name}
                   avatar={this.state.avatar}

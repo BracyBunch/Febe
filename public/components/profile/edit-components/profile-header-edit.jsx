@@ -31,7 +31,7 @@ var ProfileHeaderEdit = React.createClass({
   addlFieldLimit: 4,
 
   onChange: function() {
-    this.props.onChange(this.state);
+    this.props.updateHeader(this.state);
   },
 
   updateLinks: function(field, event) {
