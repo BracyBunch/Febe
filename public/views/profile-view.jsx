@@ -118,8 +118,9 @@ var ProfileView = React.createClass({
     var links = this.state.links.slice();
     links.push(link);
     this.setState({
-      links: links
+      links: link
     });
+
   },
 
   updateBio: function(event) {
@@ -189,7 +190,6 @@ var ProfileView = React.createClass({
     return this.state.bio ? this.state.bio : 'Tell us about yourself...just hit the edit button'
   },
   createOrgURL: function(){
-    console.log(this.state.timeline)
     return '#/organization/:' + this.state.organization.id
   },
   repButtons: function(){
@@ -216,7 +216,8 @@ var ProfileView = React.createClass({
             <div className="col-md-8 col-md-offset-1 profileBox">
               <ProfileHeaderEdit
                   save={this.save}
-                  onChange={this.updateHeader}
+                  updateHeader={this.updateHeader}
+                  updateLinks={this.updateLinks}
                   first_name={this.state.first_name}
                   last_name={this.state.last_name}
                   avatar={this.state.avatar}

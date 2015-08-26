@@ -49,7 +49,7 @@ module.exports = React.createClass({
       id: newID
     });
     window.localStorage.setItem('userId', newID);
-    this.transitionTo('dashboard');
+    this.transitionTo('profile');
   },
   render: function() {
     return (
