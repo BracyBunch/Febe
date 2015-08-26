@@ -111,11 +111,13 @@ var ProfileView = React.createClass({
 
   updateHeader: function(state) {
     this.setState(state);
+    console.log('this is state', this.state);
   },
 
   updateLinks: function(link) {
     var links = this.state.links.slice();
     links.push(link);
+    console.log('updated links', links);
     this.setState({
       links: links
     });
@@ -216,6 +218,7 @@ var ProfileView = React.createClass({
               <ProfileHeaderEdit
                   save={this.save}
                   updateHeader={this.updateHeader}
+                  updateLinks={this.updateLinks}
                   first_name={this.state.first_name}
                   last_name={this.state.last_name}
                   avatar={this.state.avatar}
