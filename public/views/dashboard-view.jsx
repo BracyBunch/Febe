@@ -7,7 +7,7 @@ var Link = Router.Link;
 module.exports = React.createClass({
   render: function(){
     return (
-      <div>
+      <div className='dash'>
         <Link to="/profile"><button className="btn btn-primary">Profile</button></Link>
         <Link to="/createproject"><button className="btn btn-primary">Create Project</button></Link>
         <Link to="/createorg"><button className="btn btn-primary">Create Organization</button></Link>
