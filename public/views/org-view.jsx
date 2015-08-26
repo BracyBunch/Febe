@@ -60,7 +60,7 @@ module.exports = React.createClass({
   joinOrg: function() {
     ajax('/organization/' + this.state.orgData.id + '/add_rep/' + window.localStorage.userId, {'method': 'PUT'}).then(function() {
       Actions.getOrg(this.props.params.id);
-    }.bind(this), console.error);
+    }.bind(this));
   },
 
   joinOrgButton: function() {

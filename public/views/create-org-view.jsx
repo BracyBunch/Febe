@@ -66,7 +66,6 @@ module.exports = React.createClass({
   },
 
   createOrg: function() {
-    console.log(this.state.logo_url)
     if (this.state.terms) {
       ajax('/organization', {
         method: 'POST',
