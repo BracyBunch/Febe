@@ -16,10 +16,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <div>
           <BrowseProjects />
-        </div>
-        <Footer />
       </div>
     );
   }
