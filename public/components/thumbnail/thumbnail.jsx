@@ -49,6 +49,7 @@ var Thumbnail = React.createClass({
     return (
         <div className="thumbnail-preview col-sm-4"  onClick={this.handleClick}>
           <div className="thumbnail" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+
             {this.state.hovering ? this.inset() : this.thumbnailInformation()}
           </div>
           <div className="thumbnail-tags">
