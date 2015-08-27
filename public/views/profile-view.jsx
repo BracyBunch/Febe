@@ -190,7 +190,7 @@ var ProfileView = React.createClass({
     return this.state.bio ? this.state.bio : 'Tell us about yourself...just hit the edit button'
   },
   createOrgURL: function(){
-    return '#/organization/:' + this.state.organization.id
+    return '#/organization/' + this.state.organization.id;
   },
   repButtons: function(){
     if (this.state.kind !== 'rep') return '';
