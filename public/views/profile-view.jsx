@@ -31,6 +31,9 @@ var ProfileView = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  isOwnProfile: function() {
+    return (this.props.params.id === undefined || (window.localStorage.getItem('userId') !== undefined && this.props.params.id === window.localStorage.getItem('userId')));
+  },
   getInitialState: function() {
     return {
       first_name: '',
@@ -197,7 +200,7 @@ var ProfileView = React.createClass({
     return '#/organization/' + this.state.organization.id;
   },
   repButtons: function(){
-    if (this.state.kind !== 'rep') return '';
+    if (this.state.kind !== 'rep' || !this.isOwnProfile()) return '';
     return (
       this.state.organization.id ? 
         <RaisedButton linkButton={true} href={this.createOrgURL()} secondary={true} label={this.state.organization.name}/> :
@@ -276,6 +279,7 @@ var ProfileView = React.createClass({
                 <div className="profileBox">
                   <ProfileHeader
                       edit_toggle={this.edit_toggle}
+                      show_edit_button={this.isOwnProfile()}
                       first_name={this.state.first_name}
                       last_name={this.state.last_name}
                       avatar={this.state.avatar}
