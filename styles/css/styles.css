@@ -178,8 +178,10 @@ body{
 .iamdev{
   top: 7%;
   padding-top: 15px;
+  text-align: center;
   padding-bottom: 15px;
-  font-size: 30px;
+  font-family: Optima;
+  font-size: 40px;
   color: #4B7091;
 }
 
@@ -188,14 +190,17 @@ body{
 }
 
 .under-buttons{
-  font-size: 12px;
+  font-size: 16px;
+  font-family: Optima;
 }
 
 .slogan{
+  -webkit-text-stroke: 0.5px black;
   padding-top: 15px;
-  font-size: 20px;
+  font-family: Optima;
+  font-size: 25px;
   top: 20%;
-  color: #4B7091;
+  color: #1CB3FF;
 }
 
 .scroll-down{
@@ -373,9 +378,20 @@ body{
 /*browse projects*/
 
 .searchbar{
-  /*padding-top: 10px;*/
-  /*padding-left: 10px;*/
-  /*padding-right: 10px;*/
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.proj-search{
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+.tag-search{
+  padding-top: 10px;
+  padding-left: 5px;
+  font-size: 14px;
 }
 
 /*profile*/

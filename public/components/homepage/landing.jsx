@@ -21,21 +21,21 @@ module.exports = React.createClass({
     return (
       <div className="jumbotron landing-page">
         <div className="site-name"><img src='/assets/img/logo.png'/></div>
-        <div className="iamdev">I &nbsp; Am &nbsp; A</div>
+        <div className="iamdev">I Am </div>
         <div className="row signup-buttons">
           <div className="col-xs-6 col-sm-push-1">
             <Link to="/signupdev">
               <FlatButton
-                style={{"opacity": "0.9", "width": "120px", "margin": "8px auto"}}
-              >Engineer</FlatButton>
+                style={{"opacity": "0.7", "width": "200px", "height": "100px", "margin": "8px auto", "border-radius": "15%"}}
+              >An Engineer</FlatButton>
             </Link>
             <div className="under-buttons">Work with others to<br/>solve problems</div>
           </div>
           <div className="col-xs-6 col-sm-pull-1">
             <Link to="/signupnp">
               <FlatButton
-                style={{"opacity": "0.9", "width": "120px", "margin": "8px auto"}}
-              >Nonprofit</FlatButton>
+                style={{"opacity": "0.7", "width": "200px", "height": "100px", "margin": "8px auto", "border-radius": "15%"}}
+              >A Nonprofit</FlatButton>
             </Link>
             <div className="under-buttons">Post technical projects<br/>you need help with</div>
           </div>
