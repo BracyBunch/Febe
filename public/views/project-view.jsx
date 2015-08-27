@@ -42,7 +42,7 @@ module.exports = React.createClass({
       location: 'Project Location',
       description: 'Project info',
       tags: [],
-      contributors: ['john', 'bob', 'joe', 'sally'],
+      members: [],
       startDate: 'START DATE',
       endDate: 'END DATE',
       managerData: [],
@@ -72,7 +72,8 @@ module.exports = React.createClass({
       orgData: data.organization,
       orgName: data.organization.name,
       orgID: data.organization.id,
-      tags: data.skills
+      tags: data.skills,
+      members: data.members
     });
   },
 
@@ -112,12 +113,6 @@ module.exports = React.createClass({
   updateTechnology: function(technology) {
     this.setState({
       technology: technology
-    });
-  },
-
-  updateContributors: function(contributors) {
-    this.setState({
-      contributors: contributors
     });
   },
 
@@ -203,7 +198,7 @@ module.exports = React.createClass({
 
             <div className="row">
               <div className="col-md-10">
-                <MemberThumbnails />
+                <MemberThumbnails members={this.state.members} />
               </div>
             </div>
             
