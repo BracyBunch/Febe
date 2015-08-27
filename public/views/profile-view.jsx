@@ -1,6 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
 var Actions = require('../actions');
+var TransitionHook = require('react-router').TransitionHook;
 //material ui
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -21,8 +22,15 @@ var ImgurUpload = require('../utils/imgur');
 var ProfileView = React.createClass({
   mixins: [
     Reflux.listenTo(ProfileStore, 'onChange'),
-    Reflux.listenTo(TimelineStore, 'onLoad')
+    Reflux.listenTo(TimelineStore, 'onLoad'),
+    TransitionHook
   ],
+  routerWillLeave: function(next) {
+    if (next.location.pathname.indexOf('/profile') === -1) return;
+    this.setState({userId: (next.params.id !== undefined) ? next.params.id : window.localStorage.getItem('userId')}, function() {
+      this.componentWillMount();
+    });
+  },
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -36,6 +44,7 @@ var ProfileView = React.createClass({
   },
   getInitialState: function() {
     return {
+      userId: (this.props.params.id !== undefined) ? this.props.params.id : window.localStorage.getItem('userId'),
       first_name: '',
       last_name: '',
       title: '',
@@ -55,11 +64,12 @@ var ProfileView = React.createClass({
     };
   },
   componentWillMount: function() {
-    var id = (this.props.params.id !== undefined) ? this.props.params.id : window.localStorage.getItem('userId');
-    Actions.getProfile(id);
-    if (this.props.params.id === undefined || (this.props.params.id === window.localStorage.getItem('userId') && window.localStorage.getItem('userId') !== undefined)) {
+    Actions.getProfile(this.state.userId);
+    if (this.isOwnProfile()) {
       Actions.getTimeline();
       this.setState({showTimeline: true});
+    } else {
+      this.setState({showTimeline: false});
     }
   },
   onLoad: function(event, timeline) {
@@ -79,7 +89,7 @@ var ProfileView = React.createClass({
       organization: userData.organization,
       projects: userData.projects,
       avatar: userData.avatar
-    }); 
+    });
   },
 
   edit_toggle: function() {
