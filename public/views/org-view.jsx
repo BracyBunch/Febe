@@ -49,6 +49,7 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
+    console.log(data)
     this.setState({
       orgData: data,
       ownerData: data.owner,
@@ -127,7 +128,7 @@ module.exports = React.createClass({
               <div className="row">
                 <div className="col-md-12">
                   <div className='org-projects'> Projects Belonging To {this.state.orgData.name}:
-                    <Projects projects={this.state.projectData} />
+                    <Projects projects={this.state.projectData} orgID={this.state.orgData.logo_url} />
                   </div>
                 </div>
               </div>
