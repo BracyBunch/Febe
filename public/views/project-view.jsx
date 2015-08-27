@@ -7,7 +7,7 @@ var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
-var SnackBar = mui.SnackBar;
+var Snackbar = mui.Snackbar;
 
 var Router = require('react-router');
 var Navigation = require('react-router').Navigation;
@@ -146,8 +146,8 @@ module.exports = React.createClass({
       </div>
   },
 
-  interested: function() {
-
+  snackbarShow: function() {
+    this.refs.snackbar.show();
   },
 
   render: function(){
@@ -165,7 +165,9 @@ module.exports = React.createClass({
                   title={this.state.orgName} 
                   location={this.state.location} 
                   avatar={this.state.repData.avatar}
-                  type={'Project Manager'}/>
+                  type={'Project Manager'} 
+                  interested={this.snackbarShow}
+                  projectid={this.props.params.id} />
               </div>
               <div className="projectOrgBtn">
                 <RaisedButton
@@ -209,6 +211,12 @@ module.exports = React.createClass({
             </div>
 
           </Paper>
+
+          <Snackbar 
+            ref="snackbar"
+            message="Message Sent to Project Manager!"
+            autoHideDuration={1500}
+            style={{"backgroundColor": "#6E7FD5", "textAlign": "center", "color":"white", "opacity": "0.9"}} />
           <Footer />
         </div>
       </div>

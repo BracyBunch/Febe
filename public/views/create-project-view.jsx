@@ -60,7 +60,6 @@ module.exports = React.createClass({
       })}).then(function(res) {
         return res.json();
       }).then(function(data) {
-        // i need to pass this to /project/ view
         sessionStorage.setItem('projectId', data.id);
         this.transitionTo('/project/' + data.id);
       }.bind(this));
