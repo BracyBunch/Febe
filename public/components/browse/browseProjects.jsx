@@ -25,7 +25,7 @@ var BrowseProjects = React.createClass({
     }).then(function(projects) {
       this.setState({'projects': projects});
     }.bind(this));
-  }, 500),
+  }, 100),
   on_tag_change: function(tags) {
     this.setState({'tags': tags}, this.update_projects);
   },
