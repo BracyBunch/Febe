@@ -42,7 +42,7 @@ module.exports = React.createClass({
          url={'/project/' + thumbnailProps.id}
          goToProject={that.goToProject} 
          header={thumbnailProps.name} 
-         imageURL={thumbnailProps.logoURL} 
+         imageURL={this.props.orgID} 
          description={thumbnailProps.description} 
          tags={thumbnailProps.skills} /> 
         </div> 
