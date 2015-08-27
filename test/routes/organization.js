@@ -30,6 +30,15 @@ describe('Organization Route Tests', function() {
     }).then(function(users) {
       instances.users = users;
       ids_to_be_deleted = ids_to_be_deleted.concat(_.pluck(instances.users, 'id'));
+
+      return Promise.props({
+        'cause1': models.Tag.create({'name': 'cause1', 'kind': 'cause'}),
+        'cause2': models.Tag.create({'name': 'cause2', 'kind': 'cause'})
+      });
+    }).then(function(causes) {
+      instances.causes = causes;
+      ids_to_be_deleted = ids_to_be_deleted.concat(_.pluck(instances.causes, 'id'));
+
       return http.post('/auth/login').send({'email': 'p_test_rep@gmail.com', 'password': 'testtest'});
     }).then(function() {
       done();
@@ -47,7 +56,8 @@ describe('Organization Route Tests', function() {
       'name': 'test_org',
       'description': 'abc',
       'website_url': 'http://cats.com',
-      'location': 'cat city'
+      'location': 'cat city',
+      'causes': [instances.causes.cause1.id]
     }).then(function(res) {
       instances.organization = res.body;
       ids_to_be_deleted.push(instances.organization.id);
@@ -55,19 +65,51 @@ describe('Organization Route Tests', function() {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body.name).to.be.eql('test_org');
+
+      return models.Organization.with_extras(instances.organization.id, true);
+    }).then(function(organization) {
+      expect(organization.causes).to.be.an.array;
+      expect(organization.causes).to.have.length(1);
+      expect(organization.causes[0]).to.be.an.object;
+      expect(organization.causes[0].id).to.be.eql(instances.causes.cause1.id);
+
+      done();
+    }, done);
+  });
+
+  it('shouldn\'t be able to create an Organization with an already existing ein', function(done) {
+    http.post('/organization')
+    .send({
+      'ein': '123',
+      'name': 'test_org2',
+      'description': 'cba',
+      'website_url': 'http://kittens.com',
+      'location': 'kitten town',
+      'causes': [instances.causes.cause2.id]
+    }).then(function(res) {
+      expect(res).to.have.status(409);
       done();
     }, done);
   });
 
   it('should be able to update an Organization', function(done) {
-    http.put('/organization/' + instances.organization.id)
-    .send({
-      'name': 'updated_test_org'
-    }).then(function(res) {
+    http.put('/organization/' + instances.organization.id).send({'name': 'updated_test_org'}).then(function(res) {
       expect(res).to.have.status(200);
       return models.Organization.read(instances.organization.id);
     }).then(function(organization) {
       expect(organization.name).to.be.eql('updated_test_org');
+      done();
+    });
+  });
+
+  it('should be able to add causes to an Organization', function(done) {
+    http.put('/organization/' + instances.organization.id)
+    .send({'causes': [instances.causes.cause1.id, instances.causes.cause2.id]}).then(function(res) {
+      expect(res).to.have.status(200);
+      return models.Organization.with_extras(instances.organization.id, true);
+    }).then(function(organization) {
+      expect(organization.causes).to.be.an.array;
+      expect(organization.causes).to.be.have.length(2);
       done();
     });
   });
