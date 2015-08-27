@@ -128,7 +128,7 @@ module.exports = React.createClass({
               <div className="row">
                 <div className="col-md-12">
                   <div className='org-projects'> Projects Belonging To {this.state.orgData.name}:
-                    <Projects projects={this.state.projectData} orgID={this.state.orgData.logo_url} />
+                    <Projects projects={this.state.projectData} orgURL={this.state.orgData.logo_url} />
                   </div>
                 </div>
               </div>
