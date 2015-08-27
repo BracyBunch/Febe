@@ -21,7 +21,7 @@ module.exports = React.createClass({
     return (
       <div className="jumbotron landing-page">
         <div className="site-name"><img src='/assets/img/logo.png'/></div>
-        <div className="iamdev">I Am </div>
+        <div className="iamdev">I am </div>
         <div className="row signup-buttons">
           <div className="col-xs-6 col-sm-push-1">
             <Link to="/signupdev">
