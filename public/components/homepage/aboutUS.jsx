@@ -6,7 +6,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <Paper zdepth={2}>
-        <div className="aboutUs">What Is GoodInThisWorld.com?</div>
+        <div className="aboutUs">What Is Good In This World?</div>
         <div>
           <div className="aboutUsStatement"> 
             <p>Good In This World is a site that enables software engineers to work together with non profits on their technical challenges.
