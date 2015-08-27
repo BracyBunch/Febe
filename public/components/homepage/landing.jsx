@@ -26,7 +26,7 @@ module.exports = React.createClass({
           <div className="col-xs-6 col-sm-push-1">
             <Link to="/signupdev">
               <FlatButton
-                style={{"opacity": "0.7", "width": "200px", "height": "100px", "margin": "8px auto", "border-radius": "15%"}}
+                style={{"opacity": "0.7", "width": "140px", "height": "50px", "margin": "8px auto", "border-radius": "15%"}}
               >An Engineer</FlatButton>
             </Link>
             <div className="under-buttons">Work with others to<br/>solve problems</div>
@@ -34,7 +34,7 @@ module.exports = React.createClass({
           <div className="col-xs-6 col-sm-pull-1">
             <Link to="/signupnp">
               <FlatButton
-                style={{"opacity": "0.7", "width": "200px", "height": "100px", "margin": "8px auto", "border-radius": "15%"}}
+                style={{"opacity": "0.7", "width": "140px", "height": "50px", "margin": "8px auto", "border-radius": "15%"}}
               >A Nonprofit</FlatButton>
             </Link>
             <div className="under-buttons">Post technical projects<br/>you need help with</div>
