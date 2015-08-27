@@ -97,7 +97,7 @@ module.exports = React.createClass({
                       <p className="headerIndent">{this.state.orgData.location}</p>
                     </div>
                     <div>
-                      <MemberThumbnails />
+                      <MemberThumbnails owner={this.state.ownerData} members={this.state.orgData.reps} />
                     </div>
                     <div className="projectBtn">
                       {this.joinOrgButton()}

@@ -46,6 +46,7 @@ var ProfileView = React.createClass({
       hasOrg: false,
       projects: [],
       organization: '',
+      showTimeline: false,
       'timeline': [],
       avatar: ''
     };
@@ -53,7 +54,10 @@ var ProfileView = React.createClass({
   componentWillMount: function() {
     var id = (this.props.params.id !== undefined) ? this.props.params.id : window.localStorage.getItem('userId');
     Actions.getProfile(id);
-    Actions.getTimeline();
+    if (this.props.params.id === undefined || (this.props.params.id === window.localStorage.getItem('userId') && window.localStorage.getItem('userId') !== undefined)) {
+      Actions.getTimeline();
+      this.setState({showTimeline: true});
+    }
   },
   onLoad: function(event, timeline) {
     this.setState({'timeline': timeline});
@@ -190,7 +194,7 @@ var ProfileView = React.createClass({
     return this.state.bio ? this.state.bio : 'Tell us about yourself...just hit the edit button'
   },
   createOrgURL: function(){
-    return '#/organization/:' + this.state.organization.id
+    return '#/organization/' + this.state.organization.id;
   },
   repButtons: function(){
     if (this.state.kind !== 'rep') return '';
@@ -207,6 +211,22 @@ var ProfileView = React.createClass({
         </div>
     )
   },
+
+  showTimeline: function() {
+    if (!this.state.showTimeline) return '';
+
+    return (
+      <div className="timeline-container">
+        <h3>Timeline</h3>
+        <div className="each-card">
+          {this.state.timeline.map(function(entry) {
+            return <TimelineEntry key={entry.entry.id} entry={entry}/>;
+          }.bind(this))}
+        </div>
+      </div>
+    );
+  },
+
   profile: function() {
     if (this.state.editing) {
       return (
@@ -281,14 +301,7 @@ var ProfileView = React.createClass({
                   <Projects />
                 </div>  
               </div>  
-              <div className="timeline-container">
-                <h3>Timeline</h3>
-                <div className="each-card">
-                  {this.state.timeline.map(function(entry) {
-                    return <TimelineEntry key={entry.entry.id} entry={entry}/>;
-                  }.bind(this))}
-                </div>
-              </div>
+              {this.showTimeline()}
             </div>
           </Paper>
         </div>
