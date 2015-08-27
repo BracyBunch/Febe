@@ -10,7 +10,6 @@ var Main = require('./components/main');
 var Signup = require('./views/signupView');
 var Termsofuse = require('./components/shared/termsOfUse');
 var Privacypolicy = require('./components/shared/privacyPolicy');
-var Dashboard = require('./views/dashboard-view');
 var Profile = require('./views/profile-view');
 var CreateProject = require('./views/create-project-view');
 var Createorg = require('./views/create-org-view');
@@ -26,7 +25,6 @@ module.exports = (
       <Route name="signupnp" path="/signupnp" component={Signup} kind="rep" />
       <Route name="termsofuse" path="/termsofuse" component={Termsofuse} />
       <Route name="privacypolicy" path="/privacypolicy" component={Privacypolicy} />
-      <Route name="dashboard" path="/dashboard" component={Dashboard} />
       <Route name="profile" path="/profile" component={Profile} />
       <Route name="profile" path="/profile/:id" component={Profile} />
       <Route name="createproject" path="/createproject" component={CreateProject} />
