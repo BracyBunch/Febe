@@ -8,10 +8,7 @@ module.exports = {
       // FileReader is a native browser file reader
       // Assign file to img
       function readSuccess(upload) {
-        imgBase64 = upload.target.result;
-        // slice only base64 data
-        imgToUpload = imgBase64.slice(23);
-        ajax('/imgur', {
+        ajax('/ein', {
           method: 'POST',
           body: JSON.stringify({
             image: imgToUpload
@@ -21,12 +18,11 @@ module.exports = {
           return response.json();
         })
         .then(function(data) {
-          resolve(data.data.link);
+          resolve(data);
         })
       }
 
       // readAsDataURL converts file to base64
-      reader.readAsDataURL(img);
     })
   }
 };
