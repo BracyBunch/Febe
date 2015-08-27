@@ -1,10 +1,12 @@
 var React = require('react');
+var ajax = require('../../utils/fetch');
 // material ui
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
 var SnackBar = mui.SnackBar;
+
 
 module.exports = React.createClass({
   childContextTypes: {
@@ -23,6 +25,18 @@ module.exports = React.createClass({
       location: 'Please enter a location',
       type: "Project Manager or NP Representative"
     };
+  },
+
+  sendInterest: function() {
+    this.props.interested();
+    var route = '/project/' + this.props.projectid + '/add_member/' + localStorage.userId;
+    ajax(route, {
+      'method': 'put'
+    }).then(function(res) {
+      return res.json();
+    }).then(function(data) {
+      console.log(data);
+    });
   },
 
   render: function() {
@@ -49,7 +63,7 @@ module.exports = React.createClass({
           <div className="col-md-4">
             <RaisedButton
               label="I'm Interested"
-              onClick={this.props.interested} />
+              onClick={this.sendInterest} />
           </div>
         </div>
       </div>

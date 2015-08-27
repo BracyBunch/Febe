@@ -33,7 +33,6 @@ var Header = React.createClass({
   },
 
   onLoad: function(event, profile) {
-    console.log(profile)
     this.setState({
       profile: profile,
       orgName: profile.organization.name,
@@ -94,7 +93,7 @@ var Header = React.createClass({
        } return menu
   },
   snackbarShow: function() {
-    this.refs.snackbar.show()
+    this.refs.snackbar.show();
   },
   render: function() {
     var background = (this.props.location === '/') ? {'backgroundColor': 'rgba(0,0,255,0.2)'} : {'backgroundColor': '#6E7FD5'};
