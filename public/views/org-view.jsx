@@ -49,7 +49,6 @@ module.exports = React.createClass({
   },
 
   onChange: function(event, data){
-    console.log(data)
     this.setState({
       orgData: data,
       ownerData: data.owner,

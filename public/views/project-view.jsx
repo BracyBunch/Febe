@@ -77,7 +77,6 @@ module.exports = React.createClass({
   },
 
   edit: function() {
-    console.log('rep', this.state.repData, 'org', this.state.orgData)
     this.setState({
       swap: !this.state.swap
     });

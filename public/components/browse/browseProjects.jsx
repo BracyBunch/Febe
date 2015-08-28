@@ -23,7 +23,6 @@ var BrowseProjects = React.createClass({
     ajax(url).then(function(res) {
       return res.json();
     }).then(function(projects) {
-      console.log(projects)
       this.setState({'projects': projects});
     }.bind(this));
   }, 100),
