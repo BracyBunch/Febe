@@ -312,7 +312,7 @@ var ProfileView = React.createClass({
                   </div>
                 </div>
                 <div className="projects-in-profile">
-                  <Projects />
+                  <Projects projects={this.state.projects} />
                 </div>  
               </div>  
               {this.showTimeline()}

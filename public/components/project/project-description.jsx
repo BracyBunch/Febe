@@ -16,8 +16,8 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-      <span> Description: </span> <br/>
-        {this.props.desc}
+      <span> Description: </span> 
+        <div className='description'>{this.props.desc}</div>
       </div>
     )
   }
