@@ -122,7 +122,7 @@ var with_extras = function(project, options) {
 
   var query_options = {
     'include': include,
-    'limit': _.get(options, 'limit', 10),
+    'limit': Number(_.get(options, 'limit', 10)),
     'skip': _.get(options, 'skip',  0)
   };
 
