@@ -1,8 +1,7 @@
 module.exports = {
   addFields: function(divId, newLink) {
-    console.log("running!");
     if (this.addlFieldCount === this.addlFieldLimit) {
-      console.log("Maximum fields added");
+      console.error("Maximum fields added");
     } else {
       var newdiv = document.createElement('div');
       newdiv.innerHTML = this.newLinkHTML;

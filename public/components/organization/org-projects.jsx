@@ -34,17 +34,15 @@ module.exports = React.createClass({
   projectsList: function() {
     var that = this;
     return this.props.projects.map(function(thumbnailProps) {
-      console.log('tb', thumbnailProps)
       return (
-
         <div>
-        <Thumbnail
-         url={'/project/' + thumbnailProps.id}
-         goToProject={that.goToProject} 
-         header={thumbnailProps.name} 
-         imageURL={that.props.orgURL} 
-         description={thumbnailProps.description} 
-         tags={thumbnailProps.skills} /> 
+          <Thumbnail
+           url={'/project/' + thumbnailProps.id}
+           goToProject={that.goToProject} 
+           header={thumbnailProps.name} 
+           imageURL={that.props.orgURL} 
+           description={thumbnailProps.description} 
+           tags={thumbnailProps.skills} /> 
         </div> 
       )
     });
