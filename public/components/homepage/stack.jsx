@@ -5,7 +5,7 @@ var Paper = mui.Paper;
 module.exports = React.createClass({
   render: function(){
     return (
-      <Paper style={{"minHeight":"43%"}}zdepth={1}>
+      <Paper style={{"minHeight":"350px"}}zdepth={1}>
         <div>
           <div className="stack">Tech Stack</div>
           <div className="row entire-stack">
