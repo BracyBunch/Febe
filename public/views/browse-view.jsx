@@ -13,14 +13,11 @@ module.exports = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
-  render:function(){
+  render: function() {
     return (
       <div>
-        <div>
           <BrowseProjects />
-        </div>
-        <Footer />
       </div>
-    )
+    );
   }
 });

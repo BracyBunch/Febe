@@ -16,16 +16,8 @@ var ProfileHeaderEdit = React.createClass({
     'links': React.PropTypes.array.isRequired
   },
 
-  getDefaultProps: function() {
-    return {
-      avatar: '/assets/img/avatar.png'
-    };
-  },
-
   getInitialState: function() {
     return {
-      // 'first_name': this.props.first_name,
-      // 'last_name': this.props.last_name,
       'title': this.props.title,
       'location': this.props.location,
       'links': this.props.links,
@@ -39,12 +31,13 @@ var ProfileHeaderEdit = React.createClass({
   addlFieldLimit: 4,
 
   onChange: function() {
-    this.props.onChange(this.state);
+    this.props.updateHeader(this.state);
   },
-
-  updateLinks: function(link) {
-    this.props.links.push(link);
-    this.props.updateLinks(this.props.links);
+  checkLinks: function(){
+    return this.state.links[0] ? this.state.links[0].split('|',2)[1] : this.state.links;
+  },
+  updateLink: function(event) {
+    this.props.updateLinks(event.target.value);
   },
 
   updateField: function(field, event) {
@@ -62,8 +55,10 @@ var ProfileHeaderEdit = React.createClass({
 
           <div className="col-md-2">
             <div className="">
-              <img src={this.props.avatar} /> <br />
-              <a href="#" className="">upload avatar</a>
+              <img className="profileAvatar" src={this.props.avatar} /> <br />
+              <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+                <input type="file" onChange={this.props.handleImage} />
+              </form>
             </div>
           </div>
 
@@ -85,7 +80,12 @@ var ProfileHeaderEdit = React.createClass({
             </div>
             <div>
               <div className="form-group techstrengths" id="addlLinks">
-                <input type="text" id="links" placeholder="LinkedIn, Github, Angel List, Website, etc." className="form-control" />
+                <input type="text" 
+                id="links" 
+                placeholder="LinkedIn, Github, Angel List, Website, etc." 
+                className="form-control" 
+                value={this.checkLinks()}
+                onChange={this.updateLink} />
               </div>
                 <button className="btn signupBtn" onClick={ProfileMethods.addFields.bind(this, this.divId, this.newLinkHTML)}>Add +</button> <br />
             </div>

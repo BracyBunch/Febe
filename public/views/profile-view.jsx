@@ -1,22 +1,36 @@
 var React = require('react');
 var Reflux = require('reflux');
+var Actions = require('../actions');
+var TransitionHook = require('react-router').TransitionHook;
+//material ui
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
+// shared components
 var Footer = require('../components/shared/footer');
 var ProfileHeader = require('../components/profile/profile-header');
 var Projects = require('../components/profile/profile-projects');
 var ProfileStore = require('../stores/profile-store');
-var Actions = require('../actions');
 var ProfileHeaderEdit = require('../components/profile/edit-components/profile-header-edit');
 var ProfileMethods = require('../components/profile/sharedProfileMethods');
 var Autocomplete =require('../components/shared/autocomplete');
+var TimelineEntry = require('../components/dashboard/timelineEntry');
+var TimelineStore = require('../stores/timeline-store');
+var ImgurUpload = require('../utils/imgur');
 
 var ProfileView = React.createClass({
   mixins: [
-    Reflux.listenTo(ProfileStore, 'onChange')
+    Reflux.listenTo(ProfileStore, 'onChange'),
+    Reflux.listenTo(TimelineStore, 'onLoad'),
+    TransitionHook
   ],
+  routerWillLeave: function(next) {
+    if (next.location.pathname.indexOf('/profile') === -1) return;
+    this.setState({userId: (next.params.id !== undefined) ? next.params.id : window.localStorage.getItem('userId')}, function() {
+      this.componentWillMount();
+    });
+  },
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -25,8 +39,12 @@ var ProfileView = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  isOwnProfile: function() {
+    return (this.props.params.id === undefined || (window.localStorage.getItem('userId') !== undefined && this.props.params.id === window.localStorage.getItem('userId')));
+  },
   getInitialState: function() {
     return {
+      userId: (this.props.params.id !== undefined) ? this.props.params.id : window.localStorage.getItem('userId'),
       first_name: '',
       last_name: '',
       title: '',
@@ -37,11 +55,25 @@ var ProfileView = React.createClass({
       interests: [],
       userData: {},
       editing: false,
-      hasOrg: false
+      hasOrg: false,
+      projects: [],
+      organization: '',
+      showTimeline: false,
+      'timeline': [],
+      avatar: ''
     };
   },
   componentWillMount: function() {
-    return Actions.getProfile(window.localStorage.getItem('userId'));
+    Actions.getProfile(this.state.userId);
+    if (this.isOwnProfile()) {
+      Actions.getTimeline();
+      this.setState({showTimeline: true});
+    } else {
+      this.setState({showTimeline: false});
+    }
+  },
+  onLoad: function(event, timeline) {
+    this.setState({'timeline': timeline});
   },
   onChange: function(event, userData) {
     this.setState({
@@ -53,7 +85,10 @@ var ProfileView = React.createClass({
       bio: userData.bio,
       links: userData.links,
       strengths: userData.strengths,
-      interests: userData.interests
+      interests: userData.interests,
+      organization: userData.organization,
+      projects: userData.projects,
+      avatar: userData.avatar
     });
   },
 
@@ -62,12 +97,13 @@ var ProfileView = React.createClass({
       editing: !this.state.editing
     });
   },
-
   save: function() {
     var updateData = {
       title: this.state.title,
       location: this.state.location,
-      bio: this.state.bio
+      bio: this.state.bio,
+      links: this.state.links,
+      avatar: this.state.avatar
     };
     if (this.state.kind === 'dev') {
       updateData.strengths = Object.keys(this.refs.strengths.get_selections());
@@ -81,6 +117,16 @@ var ProfileView = React.createClass({
     ProfileMethods.updateProfile('/user', updateData);
   },
 
+  handleImage: function(event) {
+    var that = this;
+    ImgurUpload.uploadImage(event)
+    .then(function(link) {
+      that.setState({
+        avatar: link
+      });
+    });
+  },
+
   updateHeader: function(state) {
     this.setState(state);
   },
@@ -89,8 +135,9 @@ var ProfileView = React.createClass({
     var links = this.state.links.slice();
     links.push(link);
     this.setState({
-      links: links
+      links: link
     });
+
   },
 
   updateBio: function(event) {
@@ -113,24 +160,42 @@ var ProfileView = React.createClass({
     if (this.state.kind !== 'dev') return '';
     return (
       <div className="row">
-        <div className="col-md-8 col-md-offset-1">
+        <div className="dev-fields">
           <div>
-            <h3>Tech Strengths</h3>
             {(function() {
               if (this.state.editing) {
-                return <Autocomplete url='/tag/search?fragment=' placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>;
+                return (
+                  <div className="col-md-8 col-md-offset-1">
+                    <h3>Tech Strengths</h3>
+                    <Autocomplete url='/tag/search?fragment=' className="col-md-8 col-md-offset-1" placeholder='Search for strengths' values={this.state.strengths} ref='strengths'/>
+                  </div>
+                )
               } else {
-                return this.strengthsList();
+                return ( 
+                  <div>
+                    <h3>Tech Strengths</h3>
+                    {this.strengthsList()}
+                  </div>
+                )
               }
             }.bind(this))()}
           </div>
           <div>
-            <h3>Interests</h3>
             {(function() {
               if (this.state.editing) {
-                return <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>;
+                return (
+                  <div className="col-md-8 col-md-offset-1">
+                    <h3>Interests</h3>
+                    <Autocomplete url='/tag/search?kind=cause&fragment=' placeholder='Search for causes' min_chars={0} values={this.state.interests} ref='interests'/>
+                  </div>
+                )
               } else {
-                return this.interestsList();
+                return (
+                  <div> 
+                    <h3>Interests</h3>
+                    {this.interestsList()}
+                  </div>
+                )
               }
             }.bind(this))()}
           </div>
@@ -141,19 +206,40 @@ var ProfileView = React.createClass({
   setBio: function(){
     return this.state.bio ? this.state.bio : 'Tell us about yourself...just hit the edit button'
   },
+  createOrgURL: function(){
+    return '#/organization/' + this.state.organization.id;
+  },
   repButtons: function(){
-    if (this.state.kind !== 'rep') return '';
+    if (this.state.kind !== 'rep' || !this.isOwnProfile()) return '';
     return (
-      <div>
-        <span className="createorg-button">
-          <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Create Organization"/>
-        </span>
-        <span>
-          <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Join an Organization"/>
-        </span>
-      </div>
+      this.state.organization.id ? 
+        <RaisedButton linkButton={true} href={this.createOrgURL()} secondary={true} label={this.state.organization.name}/> :
+        <div>
+          <span className="createorg-button">
+            <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Create Organization"/>
+          </span>
+          <span>
+            <RaisedButton linkButton={true} href="#/createorg" secondary={true} label="Join an Organization"/>
+          </span>
+        </div>
     )
   },
+
+  showTimeline: function() {
+    if (!this.state.showTimeline) return '';
+
+    return (
+      <div className="timeline-container">
+        <h3>Timeline</h3>
+        <div className="each-card">
+          {this.state.timeline.map(function(entry) {
+            return <TimelineEntry key={entry.entry.id} entry={entry}/>;
+          }.bind(this))}
+        </div>
+      </div>
+    );
+  },
+
   profile: function() {
     if (this.state.editing) {
       return (
@@ -163,27 +249,29 @@ var ProfileView = React.createClass({
             <div className="col-md-8 col-md-offset-1 profileBox">
               <ProfileHeaderEdit
                   save={this.save}
-                  onChange={this.updateHeader}
+                  updateHeader={this.updateHeader}
+                  updateLinks={this.updateLinks}
                   first_name={this.state.first_name}
                   last_name={this.state.last_name}
-                  avatar={this.state.userData.avatar}
+                  avatar={this.state.avatar}
                   title={this.state.title}
                   location={this.state.location}
-                  links={this.state.links} />
+                  links={this.state.links}
+                  handleImage={this.handleImage} />
             </div>
           </div>
           {this.devFields()}
           <div className="row">
             <div className="col-md-8 col-md-offset-1">
-              <div>
+              <div className="bio">
                 <h3>Bio</h3>
                 <textarea
                   value={this.state.bio}
                   onChange={this.updateBio}
                   placeholder="Tell us about yourself..."
-                  className="form-control bio"
+                  className="form-control"
                   rows="4"
-                  cols="200"
+                  cols="195"
                   style={{'marginBottom': '20px'}}
                   ></textarea>
               </div>
@@ -194,34 +282,42 @@ var ProfileView = React.createClass({
       );
     } else {
       return (
-        <div className="container profileMargin">
-        <Paper zDepth={1}>
-          <div className="row">
-            <div className="col-md-8 col-md-offset-1 profileBox">
-              <ProfileHeader
-                  edit_toggle={this.edit_toggle}
-                  first_name={this.state.first_name}
-                  last_name={this.state.last_name}
-                  avatar={this.state.userData.avatar}
-                  title={this.state.title}
-                  location={this.state.location}
-                  links={this.state.links} />
-            </div>
-            {this.devFields()}
-            <div className="row">
-              <div className="col-md-8 col-md-offset-1">
-                <div>
-                  {this.repButtons()}
+        <div className="profileMargin">
+          <Paper style={{'maxWidth': '100%'}} zDepth={1}>
+            <div className="all-of-them">
+              <div className="profile-info">
+                <div className="profileBox">
+                  <ProfileHeader
+                      edit_toggle={this.edit_toggle}
+                      show_edit_button={this.isOwnProfile()}
+                      first_name={this.state.first_name}
+                      last_name={this.state.last_name}
+                      avatar={this.state.avatar}
+                      title={this.state.title}
+                      location={this.state.location}
+                      links={this.state.links} />
                 </div>
-                <div>
-                  <h3>Bio</h3>
-                  <div>{this.setBio()}</div>
+                <div className="rest-of-profile">
+                {this.devFields()}
                 </div>
-                <Projects />
-              </div>
+                <div className="rest-of-profile">
+                  <div className="">
+                    <div>
+                      {this.repButtons()}
+                    </div>
+                    <div>
+                      <h3>Bio</h3>
+                      <div>{this.setBio()}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="projects-in-profile">
+                  <Projects projects={this.state.projects} />
+                </div>  
+              </div>  
+              {this.showTimeline()}
             </div>
-          </div>
-        </Paper>
+          </Paper>
         </div>
       );
     }

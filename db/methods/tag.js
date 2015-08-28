@@ -46,7 +46,14 @@ var clean = common.clean_generator(Tag);
  */
 var find_by_fragment = function(fragment, kind, limit) {
   limit = (limit === undefined) ? 25 : limit;
-  return Tag.where({'name': new RegExp('.*' + fragment + '.*', 'i'), 'kind': kind}, {'limit': limit}).then(function(tags) {
+
+  var query = {
+    'name': new RegExp('.*' + fragment + '.*', 'i')
+  };
+
+  if (kind !== undefined) query.kind = kind;
+
+  return Tag.where(query, {'limit': limit}).then(function(tags) {
     return tags.map(clean);
   });
 };

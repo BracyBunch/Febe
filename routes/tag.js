@@ -4,31 +4,13 @@ var router = express.Router();
 
 router.get('/search', function(req, res) {
   var fragment = req.query.fragment;
-  var kind = req.query.kind || 'skill';
+  var kind = req.query.kind;
+  var limit = ('limit' in req.query) ? Number(req.query.limit) : undefined;
   // if (!fragment || fragment.length < 3) return res.status(400).send();
 
-  Tag.find_by_fragment(fragment, kind).then(function(tags) {
+  Tag.find_by_fragment(fragment, kind, limit).then(function(tags) {
     res.json(tags);
   });
 });
-
-router.post('/add', function(req, res){
-  if (req.body.Test === 'test'){
-    return res.send("Test done...");
-  }
-  // access DB to add a new tag
-  res.send();
-});
-
-router.delete('/remove', function(req, res){
-  // access DB to remove a new tag
-  res.send();
-});
-
-router.put('/update', function(req, res){
-  // access DB to update a new tag
-  res.send();
-});
-
 
 module.exports = router;

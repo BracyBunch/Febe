@@ -5,6 +5,7 @@ var LogButton = require('../shared/logInOutButton');
 var ajax = require('../../utils/fetch');
 var Navigation = require('react-router').Navigation;
 var mui = require('material-ui')
+var ThemeManager = new mui.Styles.ThemeManager();
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 
@@ -17,6 +18,14 @@ module.exports = React.createClass({
       password: '',
       signinData: '',
       id: ''
+    };
+  },
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
     };
   },
   close: function() {
@@ -40,7 +49,7 @@ module.exports = React.createClass({
       id: newID
     });
     window.localStorage.setItem('userId', newID);
-    this.transitionTo('dashboard');
+    this.transitionTo('profile');
   },
   render: function() {
     return (
@@ -54,7 +63,7 @@ module.exports = React.createClass({
             <Modal.Title className="signupCentered">Good In This World</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Oauth />
+            <Oauth snackbar={this.props.snackbar} closeModal={this.close} />
             <form className="form-group" onSubmit={this.createSigninData}>
               <div>
                 <TextField
@@ -87,6 +96,8 @@ module.exports = React.createClass({
       return response.json();
     })
     .then(function(data) {
+      that.props.snackbar()
+      that.close()
       // call method with id returned from db
       that.settingID(data.id);
     })

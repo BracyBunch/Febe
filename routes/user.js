@@ -55,7 +55,7 @@ router.put('/', function(req, res){
 
   var editable_fields = [
     'kind', 'first_name', 'last_name', 'email', 'password',
-    'can_message', 'title', 'bio', 'location', 'links'
+    'can_message', 'title', 'bio', 'location', 'links', 'avatar'
   ];
 
   var fields = _.pick(req.body, editable_fields);

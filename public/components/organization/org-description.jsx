@@ -23,7 +23,7 @@ module.exports = React.createClass({
     return (
       <div>
         <p> 
-          Organization: {this.props.name}
+          Organization: {this.props.name} (<a href={this.props.website}> {this.props.website}) </a>
         </p>
         <p> 
           EIN: {this.props.ein}
@@ -33,9 +33,6 @@ module.exports = React.createClass({
         </p>
         <p>
           Description: {this.props.description || this.state.description}
-        </p>
-        <p>
-          Website: <a href={this.props.website}> {this.props.website} </a>
         </p>
         <p>
           Causes: {this.props.causes}

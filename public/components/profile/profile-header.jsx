@@ -5,6 +5,7 @@ var RaisedButton = mui.RaisedButton;
 var ProfileHeader = React.createClass({
   propTypes: {
     'edit_toggle': React.PropTypes.func.isRequired,
+    'show_edit_button': React.PropTypes.bool,
     'avatar': React.PropTypes.string,
     'first_name': React.PropTypes.string.isRequired,
     'last_name': React.PropTypes.string.isRequired,
@@ -12,9 +13,10 @@ var ProfileHeader = React.createClass({
     'location': React.PropTypes.string.isRequired,
     'links': React.PropTypes.array.isRequired
   },
+
   getDefaultProps: function() {
     return {
-      avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAR2AAAAJGVlOWJlMTFkLTc3N2YtNGVkZC05YjY2LWMxNzA4OTllN2YyMQ.jpg'
+      'show_edit_button': false
     };
   },
 
@@ -32,6 +34,18 @@ var ProfileHeader = React.createClass({
     });
   },
 
+  showEditButton: function() {
+    if (!this.props.show_edit_button) return '';
+
+    return (
+      <div className="col-md-2">
+        <RaisedButton
+          label="Edit"
+          onClick={this.props.edit_toggle} />
+      </div>
+    );
+  },
+
   render: function() {
     return (
       <div className="container profileMargin">
@@ -39,11 +53,11 @@ var ProfileHeader = React.createClass({
 
           <div className="col-md-2">
             <div className="">
-              <img className="profileAvatar" src={this.props.avatar} />
+              <img className="profileAvatar profileRound" src={this.props.avatar} />
             </div>
           </div>
 
-          <div className="col-md-4">
+          <div className="col-md-2">
             <p>{this.props.first_name} {this.props.last_name}</p>
             <div>
               <p>{this.props.title}</p>
@@ -56,11 +70,7 @@ var ProfileHeader = React.createClass({
             </div>
           </div>
 
-          <div className="col-md-2">
-            <RaisedButton
-              label="Edit"
-              onClick={this.props.edit_toggle} />
-          </div>
+          {this.showEditButton()}
 
         </div>
       </div>

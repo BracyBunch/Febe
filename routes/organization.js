@@ -33,24 +33,30 @@ router.post('/', function(req, res) {
 
   if (!_.all(required_fields, function(field) {return field in req.body;})) return res.status(400).send();
 
-  Organization.create({
+  var fields = {
     'ein': req.body.ein,
     'name': req.body.name,
     'description': req.body.description,
     'website_url': req.body.website_url,
     'donation_url': req.body.donation_url,
-    'logo_url': req.body.logo_url,
+    'logo_url': (req.body.logo_url && req.body.logo_url.length) ? req.body.logo_url : null,
     'location': req.body.location
-  }, req.user.id).then(function(organization) {
-    TimelineEntry.create('create', req.user, 'created organization', organization);
+  };
+
+  Organization.create(fields, req.user.id).then(function(organization) {
+    var async = [];
+
+    async.push(TimelineEntry.create('create', req.user, 'Created organization', organization));
 
     if ('causes' in req.body && Array.isArray(req.body.causes) && req.body.causes.length) {
-      Organization.add_causes(organization, req.body.causes.map(Number));
+      async.push(Organization.add_causes(organization, req.body.causes.map(Number)));
     }
 
-    res.json(organization);
+
+    Promise.all(async).then(function() {
+      res.json(organization);
+    });
   }, function(err) {
-    console.error(err);
     if (err.code === 'Neo.ClientError.Schema.ConstraintViolation') {
       res.status(409).send('Organization with EIN ' + req.body.ein + ' already exists');
     } else {
@@ -60,7 +66,6 @@ router.post('/', function(req, res) {
 });
 
 router.put('/:organization_id', function(req, res) {
-  // Check permissions here
   var organization_id = Number(req.params.organization_id);
 
   var async = {};
@@ -79,12 +84,23 @@ router.put('/:organization_id', function(req, res) {
     });
   }
 
+  async.update = Organization.update(organization_id, fields);
+
   Promise.props(async).then(function() {
-    Organization.update(organization_id, fields).then(function() {
-      res.send();
-    });
+    res.send();
   });
 
+});
+
+router.put('/:organization_id/add_rep/:user_id', function(req, res) {
+  var organization_id = Number(req.params.organization_id);
+  var user_id = Number(req.params.user_id);
+
+  Organization.add_rep(organization_id, user_id).then(function() {
+    res.status(201).send();
+  }, function(err) {
+    res.status(400).json(err.message);
+  });
 });
 
 module.exports = router;

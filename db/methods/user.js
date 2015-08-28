@@ -110,6 +110,12 @@ var with_extras = function(user, options) {
   if (options === undefined) options = true;
 
   if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'member_of', 'many': true};
+  Project.addComputedField('organization', function(project, cb) {
+    db.query('MATCH (project:Project)<-[:owns]-(organization:Organization) WHERE id(project)={project_id} RETURN organization', {'project_id': project.id}).then(function(organization) {
+      cb(null, Organization.clean(organization[0]));
+    });
+  });
+
   if (options === true || options.strengths) include.strengths = {'model': Tag, 'rel': 'strength', 'many': true};
   if (options === true || options.interests) include.interests = {'model': Tag, 'rel': 'interest', 'many': true};
   if (options === true || options.organization) include.organization = {'model': Organization, 'rel': 'owns', 'many': false};
@@ -118,7 +124,6 @@ var with_extras = function(user, options) {
     user = user[0];
 
     var cleaned_user = clean(user);
-
     if (user.projects) cleaned_user.projects = user.projects.map(Project.clean);
     if (user.strengths) cleaned_user.strengths = user.strengths.map(Tag.clean);
     if (user.interests) cleaned_user.interests = user.interests.map(Tag.clean);

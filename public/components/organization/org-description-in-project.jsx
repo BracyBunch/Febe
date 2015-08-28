@@ -17,9 +17,6 @@ module.exports = React.createClass({
         <p> 
           Organization: {this.props.name}
         </p>
-        <p> 
-          EIN: {this.props.ein}
-        </p>
         <p>
           Location: {this.props.location}
         </p>

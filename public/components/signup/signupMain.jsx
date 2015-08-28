@@ -81,8 +81,7 @@ module.exports = React.createClass({
     return false;
   },
   handleSubmit: function(comment) {
-    console.log(this.state.terms)
-    if( this.passwordVerification() && this.state.terms ){
+    if(  this.passwordVerification() && this.state.terms ){
       var that = this;
       ajax(this.props.url, {method: 'POST', body: JSON.stringify(this.state)}).then(function(response) {
         return response.json();

@@ -1,6 +1,23 @@
 var React = require('react');
+var ajax = require('../../utils/fetch');
+// material ui
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
+var Paper = mui.Paper;
+var RaisedButton = mui.RaisedButton;
+var SnackBar = mui.SnackBar;
+
 
 module.exports = React.createClass({
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
+
   getDefaultProps: function() {
     return {
       avatar: '/assets/img/avatar.png',
@@ -10,13 +27,25 @@ module.exports = React.createClass({
     };
   },
 
+  sendInterest: function() {
+    this.props.interested();
+    var route = '/project/' + this.props.projectid + '/add_member/' + localStorage.userId;
+    ajax(route, {
+      'method': 'put'
+    }).then(function(res) {
+      return res.json();
+    }).then(function(data) {
+      console.log(data);
+    });
+  },
+
   render: function() {
     return (
       <div className="profile">
         <div className="row row-centered">
-          <div className="col-md-3 ">
+          <div className="col-md-4">
             <div className="">
-              <img src={this.props.avatar} /> <br />
+              <img className="profileAvatar" src={this.props.avatar} /> <br />
             </div>
           </div>
           <div className="col-md-4">
@@ -30,6 +59,11 @@ module.exports = React.createClass({
             <div>
               <p>{this.props.type}</p>
             </div>
+          </div>
+          <div className="col-md-4">
+            <RaisedButton
+              label="I'm Interested"
+              onClick={this.sendInterest} />
           </div>
         </div>
       </div>

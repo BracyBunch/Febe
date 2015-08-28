@@ -1,7 +1,5 @@
 var _ = require('lodash');
 var Promise = require('bluebird');
-var url_parse = require('url').parse;
-var validator = require('validator');
 var models = require('../db');
 var Project = models.Project;
 var express = require('express');
@@ -16,15 +14,31 @@ var validate_id = function(req, res, next) {
 };
 
 router.get('/search', function(req, res) {
+  var async = [];
+
+  var tags = [];
+
   if ('tags' in req.query) {
-    Project.find_by_tags(JSON.parse(req.query.tags), {'only_published': false, 'order_by': 'project.created DESC'}).then(function(projects) {
-      res.json(projects);
-    });
-  } else {
-    Project.with_extras(null, true).then(function(projects) {
-      res.json(projects);
-    });
+    tags = JSON.parse(req.query.tags).map(Number);
   }
+
+  if (!tags.length && !('name' in req.query)) {
+    return Project.with_extras(null, {'include': true, 'limit': _.get(req.query, 'limit', undefined)}).then(res.json.bind(res));
+  } else {
+    if (tags.length) {
+      async.push(Project.find_by_tags(tags, {'only_published': false, 'order_by': 'project.created DESC'}));
+    }
+    if ('name' in req.query) {
+      async.push(Project.find_by_name(req.query.name));
+    }
+  }
+
+  Promise.all(async).then(function(project_ids) {
+    project_ids = _.intersection.apply(null, project_ids);
+    return Promise.all(project_ids.map(function(id) {
+      return Project.with_extras(id, true);
+    }));
+  }).then(res.json.bind(res));
 });
 
 router.get('/:project_id', validate_id, function(req, res) {
@@ -48,29 +62,31 @@ router.post('/', function(req, res) {
   if (!req.isAuthenticated() || req.user.kind !== 'rep') return res.status(403).send();
 
   var required_fields = [
-    'organization_id', 'name', 'complete_by', 'description'
+    'name', 'complete_by', 'description'
   ];
 
-  if (!_.all(required_fields, function(field) {return field in req.body;})) return res.status(400).send();
-
-  var organization_id = Number(req.body.organization_id);
+  if (!_.all(required_fields, function(field) {return field in req.body;})) return res.status(400).send('Please fill in all required fields');
 
   var links = [];
   if ('links' in req.body && Array.isArray(req.body.links) && req.body.links.length) {
     links = transform_links(req.body.links);
   }
 
-  Project.create({
-    'name': req.body.name,
-    'complete_by': req.body.complete_by,
-    'description': req.body.description,
-    'links': links
-  }, organization_id, req.user.id).then(function(project) {
-    if ('tech' in req.body && Array.isArray(req.body.tech) && req.body.tech.length) {
-      Project.add_skills(project, req.body.tech.map(Number));
-    }
+  models.db.query('MATCH (user:User) WHERE id(user)={user_id} MATCH (user)-[:owns]-(org:Organization) RETURN id(org) AS id', {'user_id': req.user.id}).then(function(row) {
+    if (row.id === undefined) return res.status(400).send('User doesn\'t own an Organization');
 
-    res.json(project);
+    Project.create({
+      'name': req.body.name,
+      'complete_by': req.body.complete_by,
+      'description': req.body.description,
+      'links': links
+    }, row.id, req.user.id).then(function(project) {
+      if ('tech' in req.body && Array.isArray(req.body.tech) && req.body.tech.length) {
+        Project.add_skills(project, req.body.tech.map(Number));
+      }
+
+      res.json(project);
+    });
   });
 });
 
@@ -112,14 +128,20 @@ router.put('/:project_id/add_member/:user_id', validate_id, function(req, res) {
 
   if (!req.isAuthenticated) return res.status(403).send();
 
-  Project.with_extras(project_id, {'owner': true}).then(function(project) {
-    if (project.owner.id !== req.user.id) throw new Error('User doesn\'t have permission to add members');
-    return Project.add_member(project_id, user_id).then(function() {
-      res.status(201).send();
-    });
+  Project.add_member(project_id, user_id).then(function() {
+    res.status(201).send();
   }, function(err) {
-    res.status(400).send(err);
+    res.status(400).json(err.message);
   });
+
+  // Project.with_extras(project_id, {'owner': true}).then(function(project) {
+  //   if (project.owner.id !== req.user.id) throw new Error('User doesn\'t have permission to add members');
+  //   return Project.add_member(project_id, user_id).then(function() {
+  //     res.status(201).send();
+  //   });
+  // }, function(err) {
+  //   res.status(400).send(err);
+  // });
 });
 
 module.exports = router;

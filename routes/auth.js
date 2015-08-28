@@ -95,8 +95,7 @@ var create_local_user = function(req, res, next) {
       return models.User.save(user);
     }).then(function(user) {
       req.login(user, function() {
-        req.session.user_kind = undefined;
-        req.session.save();
+        clear_options(req);
         next();
       });
     }, function(err) {

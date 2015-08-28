@@ -20,7 +20,6 @@ module.exports = React.createClass({
   },
 
   goToProject: function(projectID){
-    console.log(projectID)
     sessionStorage.setItem('projectId', projectID)
     this.transitionTo('/project/' + projectID);
     {this.renderThumbnail()}
@@ -32,27 +31,30 @@ module.exports = React.createClass({
     });
   },
 
-  nothing: function(){
-    var header = '';
-    var imageURL = '';
-    var description = '';
-    var tags = '';
+  projectsList: function() {
+    var that = this;
+    return this.props.projects.map(function(thumbnailProps) {
+      console.log('tb', thumbnailProps)
+      return (
+
+        <div>
+        <Thumbnail
+         url={'/project/' + thumbnailProps.id}
+         goToProject={that.goToProject} 
+         header={thumbnailProps.name} 
+         imageURL={that.props.orgURL} 
+         description={thumbnailProps.description} 
+         tags={thumbnailProps.skills} /> 
+        </div> 
+      )
+    });
   },
 
   render: function() {
-    var that = this;
     return (
-    <div>
-    {this.props.projects.map(function(thumbnailProps){
-      return (
-      <div onClick={that.goToProject.bind(that, thumbnailProps['id'])}>
-      <Thumbnail 
-       header={thumbnailProps.name} 
-       imageURL={'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/HSUS_logo.svg/1280px-HSUS_logo.svg.png'} 
-       description={thumbnailProps.description} 
-       tags={thumbnailProps.skills} /> 
-       </div>) 
-    })}
-    </div> )
+      <div>
+         {this.projectsList()}
+      </div>
+    )
   }
 });

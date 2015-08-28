@@ -1,12 +1,10 @@
 var React = require('react/addons');
 var Reflux = require('reflux');
-var Promise = require('bluebird');
 // material ui
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var LeftNav = mui.LeftNav;
-var MenuItem = mui.MenuItem;
 var Paper = mui.Paper;
+var RaisedButton = mui.RaisedButton;
 // router / navigation
 var Navigation = require('react-router').Navigation;
 var ValidationMixin = require('react-validation-mixin');
@@ -37,8 +35,7 @@ module.exports = React.createClass({
       ein: '',
       name: '',
       website_url: '',
-      logoURL: '',
-      imgUri: 'assets/img/defaultlogo.jpg',
+      logo_url: 'assets/img/defaultlogo.jpg',
       location: '',
       causes: [],
       representatives: [],
@@ -56,26 +53,12 @@ module.exports = React.createClass({
 
   handleImage: function(event) {
     var that = this;
-    // FileReader is a native browser file reader
-    var reader = new FileReader();
-    // Assign file to img
-    var img = event.target.files[0];
-    var imgToUpload, imgBase64;
-
-    // run function on
-    reader.onload = readSuccess;
-    function readSuccess(upload) {
-      imgBase64 = upload.target.result;
-      // slice only base64 data
-      imgToUpload = imgBase64.slice(23);
-      ImgurUpload.imgurUpload(imgToUpload);
+    ImgurUpload.uploadImage(event)
+    .then(function(link) {
       that.setState({
-        imgUri: imgBase64
-      });
-    }
-
-    // readAsDataURL converts file to base64
-    reader.readAsDataURL(img);
+        logo_url: link
+      })
+    });
   },
 
   on_autocomplete_change: function(selections) {
@@ -102,8 +85,8 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <div className="container profileMargin" style={{"width": "60%"}}>
-            <Paper zDepth={1} style={{"width": "100%"}}>
+        <div className="container profileMargin containerWidth">
+          <Paper zDepth={1} style={{"width": "100%"}}>
             <div className="center-form">
               <div className="row">
                 <div className="col-md-8">
@@ -134,7 +117,7 @@ module.exports = React.createClass({
                     valueLink={this.linkState('location')} />
                 </div>
                 <span className="col-md-4">
-                    <img id="avatar" className="orgPic" src={this.state.imgUri} />
+                    <img id="avatar" className="orgPic" src={this.state.logo_url} />
                     <form onSubmit={this.handleSubmit} encType="multipart/form-data">
                       <input type="file" onChange={this.handleImage} />
                     </form>
@@ -157,10 +140,10 @@ module.exports = React.createClass({
                     </OverlayTrigger>
                     <input type="url" className="form-control" placeholder="Representative's Email" />
                   </div>
-                  <div className="orgButton">
-                    <button
-                      className="btn signupBtn"
-                      onClick={Methods.addFields.bind(this, 'addlReps', this.newRepField)}>Add +</button> <br />
+                  <div className="orgButton signupBtn">
+                    <RaisedButton
+                      label="Add +"
+                      onClick={Methods.addFields.bind(this, 'addlReps', this.newRepField)} />
                   </div>
                   <h3>Mission / About</h3>
                   <textarea
@@ -183,8 +166,10 @@ module.exports = React.createClass({
                         onChange={this.setTerms}
                         className="checkbox-inline"> I agree to the terms</input>
                     </div>
-                    <div>
-                      <button type="submit" className="btn signupBtn" onClick={this.createOrg}>Create</button>
+                    <div className="signupBtn">
+                      <RaisedButton 
+                        label="Create"
+                        onClick={this.createOrg} />
                     </div>
                   </div>
                 </div>
@@ -192,7 +177,6 @@ module.exports = React.createClass({
             </div>
           </Paper>
         </div>
-
         <Footer />
       </div>
     );

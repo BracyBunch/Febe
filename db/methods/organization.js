@@ -8,6 +8,7 @@ var Organization = require('../models/organization');
 var User = require('../models/user');
 var Project = require('../models/project');
 var Tag = require('../models/tag');
+var TimelineEntry = require('../models/timelineentry');
 
 /**
  * Create and save a new Organization
@@ -69,6 +70,13 @@ var clear_causes = function(organization) {
   return db.query('MATCH (n:Organization)-[r:cause]->(:Tag) WHERE id(n)={organization_id} DELETE r', {'organization_id': organization.id || organization});
 };
 
+var add_rep = common.add_rel_generator('represents', false, function(organization, user) {
+  TimelineEntry.create('update', organization, 'added representative', user);
+  User.follow(user, organization);
+});
+
+var add_reps = common.add_rels_generator(add_rep);
+
 /**
  * Fetches one Organization including specifed extras
  * @param  {Integer|Organization}  organization   Organization or id
@@ -81,6 +89,7 @@ var with_extras = function(organization, options) {
   if (options === undefined) options = true;
 
   if (options === true || options.owner) include.owner = {'model': User, 'rel': 'owns', 'direction': 'in', 'many': false};
+  if (options === true || options.reps) include.reps = {'model': User, 'rel': 'represents', 'direction': 'in', 'many': true};
   if (options === true || options.projects) include.projects = {'model': Project, 'rel': 'owns', 'direction': 'out', 'many': true};
   if (options === true || options.causes) include.causes = {'model': Tag, 'rel': 'cause', 'direction': 'out', 'many': true};
 
@@ -98,6 +107,7 @@ var with_extras = function(organization, options) {
     }
 
     if (organization.owner) cleaned_organization.owner = User.clean(organization.owner);
+    if (organization.reps) cleaned_organization.reps = organization.reps.map(User.clean);
     if (organization.causes) cleaned_organization.causes = organization.causes.map(Tag.clean);
 
     return cleaned_organization;
@@ -132,6 +142,8 @@ module.exports = {
   'add_cause': add_cause,
   'add_causes': add_causes,
   'clear_causes': clear_causes,
+  'add_rep': add_rep,
+  'add_reps': add_reps,
   'with_extras': with_extras,
   'find_by_cause': find_by_cause,
   'find_by_fragment': find_by_fragment
