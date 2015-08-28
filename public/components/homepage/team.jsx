@@ -11,7 +11,7 @@ module.exports = React.createClass({
             <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/colinmckeehan" target="_blank">
-                  <img src="/assets/img/Colin.jpg"/>
+                  <img src="/assets/img/colin.jpg"/>
                   <div className="caption">
                     <h4>Colin Mckeehan</h4>
                     <p>Software Engineer</p>
@@ -44,7 +44,7 @@ module.exports = React.createClass({
             <div className="col-xs-4 nametags">
               <div className="thumbnail">
                 <a href="https://www.linkedin.com/in/yoshiv" target="_blank">
-                  <img src="/assets/img/Yoshi .jpg"/>
+                  <img src="/assets/img/Yoshi.jpg"/>
                   <div className="caption">
                     <h4>Yoshi Varney</h4>
                     <p>Software Engineer</p>
