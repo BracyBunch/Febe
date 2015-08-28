@@ -123,7 +123,11 @@ var with_extras = function(project, options) {
   var query_options = {
     'include': include,
     'limit': Number(_.get(options, 'limit', 10)),
+<<<<<<< HEAD
+    'skip': _.get(options, 'skip',  0)
+=======
     'skip': Number(_.get(options, 'skip',  0))
+>>>>>>> 1ae0911f6a3fa05483f2571fc5d5f4624ba79fb4
   };
 
   return Project.query(query, {'id': project_id}, query_options).then(function(projects) {

@@ -342,7 +342,9 @@ body{
 }
 
 .browse-button{
+  position: relative;
   text-align: center;
+  bottom: 5%;
 }
 
 .stack-tags{
