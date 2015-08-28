@@ -14,7 +14,7 @@ module.exports = React.createClass({
       'value': '',
       'zdepth': 1,
       paperStyle: {
-        minHeight: '300px',
+        minHeight: '400px',
       }
     };
   },
