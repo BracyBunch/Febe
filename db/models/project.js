@@ -27,7 +27,8 @@ Project.public_fields = [
   'published',
   'active',
   'created',
-  'skills'
+  'skills',
+  'organization'
 ];
 
 Project.addComputedField('skills', function(project, cb) {
