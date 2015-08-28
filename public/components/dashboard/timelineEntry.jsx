@@ -1,14 +1,10 @@
-var _ = require('lodash');
 var React = require('react');
 var Link = require('react-router').Link;
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
 var Card = mui.Card;
 var CardText = mui.CardText;
 var CardHeader = mui.CardHeader;
-var CardActions = mui.CardActions;
 var Avatar = mui.Avatar;
-var FlatButton = mui.FlatButton;
 
 
 module.exports = React.createClass({
@@ -33,6 +29,15 @@ module.exports = React.createClass({
       return model.name;
     } else if (model.model === 'User') {
       return model.first_name + ' ' + model.last_name;
+    }
+  },
+  get_avatar: function(model) {
+    if (model.model === 'Organization') {
+      return <Avatar src={model.logo_url || '/assets/img/defaultlogo.jpg'}/>;
+    } else if (model.model === 'Project') {
+      return <Avatar style={{color: 'red'}}>P</Avatar>;
+    } else if (model.model === 'User') {
+      return <Avatar src={model.avatar}/>;
     }
   },
 
@@ -61,7 +66,7 @@ module.exports = React.createClass({
         <CardHeader
           title={this.get_text(this.props.entry.from)}
           subtitle={new Date(this.props.entry.entry.created).toDateString()}
-          avatar={<Avatar style={{color: 'red'}}>A</Avatar>}>
+          avatar={this.get_avatar(this.props.entry.from)}>
         </CardHeader>
         <CardText>
           {this['render_' + this.props.entry.entry.event]()}

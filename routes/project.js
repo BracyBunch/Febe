@@ -23,7 +23,7 @@ router.get('/search', function(req, res) {
   }
 
   if (!tags.length && !('name' in req.query)) {
-    return Project.with_extras(null, true).then(res.json.bind(res));
+    return Project.with_extras(null, {'include': true, 'limit': _.get(req.query, 'limit', undefined)}).then(res.json.bind(res));
   } else {
     if (tags.length) {
       async.push(Project.find_by_tags(tags, {'only_published': false, 'order_by': 'project.created DESC'}));

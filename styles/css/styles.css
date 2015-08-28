@@ -300,6 +300,7 @@ body{
 }
 
 .thumbnail {
+  cursor: pointer;
   text-align: center;
 }
 
