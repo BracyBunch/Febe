@@ -1,8 +1,15 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
-var path = require('path');
-var keys = require('../keys');
+
+var keys;
+if (process.env.NODE_ENV === 'production') {
+  keys = {
+    'IMGUR_API_ID': process.env.IMGUR_API_ID
+  };
+} else {
+  keys = require('../keys');
+}
 
 router.post('/', function(req, res) {
   var options = {
@@ -12,20 +19,21 @@ router.post('/', function(req, res) {
       Authorization: 'Client-ID ' + keys.IMGUR_API_ID
     },
     body: req.body.image
-  }
+  };
+
   var callback = function(error, response, body){
     if (!error && response.statusCode === 200){
-      var body = JSON.parse(body);
-      res.send(body)
+      body = JSON.parse(body);
+      res.send(body);
     } else if (!error && response.statusCode === 404){
-      res.send(body)
+      res.send(body);
     } else {
-      console.log("error", error)
-      res.send(body)
+      console.log('error', error);
+      res.send(body);
     }
   };
 
   request(options, callback);
-})
+});
 
 module.exports = router;
