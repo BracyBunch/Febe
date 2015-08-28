@@ -19,3 +19,9 @@ dist/
 # Dependency directories
 node_modules/
 bower_components/
+
+main.js
+keys.js
+.DS_Store
+*/.DS_Store
+sessions/

@@ -2,29 +2,21 @@
 
 ## General Workflow
 
-1. Fork the repo
-1. Cut a namespaced feature branch from master
-  - bug/...
-  - feat/...
-  - test/...
-  - doc/...
-  - refactor/...
-1. Make commits to your feature branch. Prefix each commit like so:
-  - (feat) Added a new feature
-  - (fix) Fixed inconsistent tests [Fixes #0]
-  - (refactor) ...
-  - (cleanup) ...
-  - (test) ...
-  - (doc) ...
-1. When you've finished with your fix or feature, Rebase upstream changes into your branch. submit a [pull request][]
-   directly to master. Include a description of your changes.
-1. Your pull request will be reviewed by another maintainer. The point of code
-   reviews is to help keep the codebase clean and of high quality and, equally
-   as important, to help you grow as a programmer. If your code reviewer
-   requests you make a change you don't understand, ask them why.
-1. Fix any issues raised by your code reviwer, and push your fixes as a single
-   new commit.
-1. Once the pull request has been reviewed, it will be merged by another member of the team. Do not merge your own commits.
+1. Fork Febe to your own Github
+1. Clone your fork to your local machine
+1. "git remote add upstream https://github.com/BracyBunch/Febe.git" to add main repo as upstream.
+  - [feat] Added a new feature
+  - [fix] Fixed inconsistent tests [Fixes #0]
+  - [refactor] ...
+  - [cleanup] ...
+  - [test] ...
+  - [doc] ...
+1. git pull --rebase upstream dev to update your local to the most recent official commit
+1. git push origin FEATURE_BRANCH or dev 
+1. make pull request to official dev branch through Github 
+BracyBunch::Dev >> YourFork:: FEATURE_BRANCH or dev
+1. Scrum master then pulls code into local and manually merges. Tests.
+1. After a merge, all devs must "git pull upstream dev".  I will attempt to send out reminders after merging.
 
 ## Detailed Workflow
 
@@ -33,7 +25,7 @@
 Use github’s interface to make a fork of the repo, then add that repo as an upstream remote:
 
 ```
-git remote add upstream https://github.com/makersquare-labs/<NAME_OF_REPO>.git
+git remote add upstream https://github.com/BracyBunch/Febe.git
 ```
 
 ### Cut a namespaced feature branch from master
@@ -56,12 +48,12 @@ git checkout -b `your-branch-name`
 ### Make commits to your feature branch. 
 
 Prefix each commit like so
-  - (feat) Added a new feature
-  - (fix) Fixed inconsistent tests [Fixes #0]
-  - (refactor) ...
-  - (cleanup) ...
-  - (test) ...
-  - (doc) ...
+  - [feat] Added a new feature
+  - [fix] Fixed inconsistent tests [Fixes #0]
+  - [refactor] ...
+  - [cleanup] ...
+  - [test] ...
+  - [doc] ...
 
 Make changes and commits on your branch, and make sure that you
 only make changes that are relevant to this branch. If you find
