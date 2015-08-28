@@ -9,7 +9,7 @@ module.exports = React.createClass({
           <h3>Current Projects</h3>
             <div className="eachThumbnail">
               {this.props.projects.map(function(project) {
-                return <Thumbnail key={project.id} url={'/project/' + project.id} header={project.name} description={project.description} tags={project.skills}  />;
+                return <Thumbnail key={project.id} url={'/project/' + project.id} header={project.name} description={project.description} tags={project.skills} imageURL={project.organization.logo_url} />;
               })}
             </div>
         </div>
