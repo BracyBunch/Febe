@@ -36,8 +36,15 @@ body{
   padding-left: 4%;
 }
 
-.project-list h3{
+.project-list{
   padding-left: 4%;
+  padding-bottom: 10px;
+  clear: left;
+
+}
+
+.completed-projs{
+  padding-top: 10px;
 }
 
 .each-card{
