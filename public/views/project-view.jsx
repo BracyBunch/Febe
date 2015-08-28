@@ -19,7 +19,6 @@ var Timeline = require('../components/project/project-timeline')
 var Description = require('../components/project/project-description')
 var MemberThumbnails = require('../components/shared/member-thumbnails');
 var Contributors = require('../components/project/project-contrib')
-var ProjectMedia = require('../components/project/project-media')
 var ProjectMethods = require('../components/project/sharedProjectMethods/')
 var ProjectEdit = require('../components/project/edit-components/project-body-edit')
 var ProjectTags = require('../components/project/project-tags')
@@ -184,13 +183,13 @@ module.exports = React.createClass({
 
             <div className="row">
               <div className="col-md-12">
-                <div className='proj-desc projectBorder'>
+                <div className='proj-desc'>
                   <Description desc={this.state.description} />
                 </div>    
               </div>
             </div>
 
-            <div className="row">
+            <div className="row technologies">
               <div className="col-md-12 proj-desc">
                 <ProjectTags 
                   title="Technologies Needed"
@@ -198,18 +197,12 @@ module.exports = React.createClass({
               </div>
             </div>
 
-            <div className="row">
+            <div className="row contributors">
               <div className="col-md-10">
+                <h4>Contributors</h4>
                 <MemberThumbnails members={this.state.members} />
               </div>
             </div>
-            
-            <div className="row">
-              <div className="col-md-12">
-                <ProjectMedia />
-              </div>
-            </div>
-
           </Paper>
 
           <Snackbar 
