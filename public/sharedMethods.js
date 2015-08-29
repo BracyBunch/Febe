@@ -3,7 +3,7 @@ module.exports = {
     count = count || 1;
     max = max || 4;
     if (count === max) {
-      console.log('Maximum fields added');
+      console.error('Maximum fields added');
     } else {
       var newdiv = document.createElement('div');
       newdiv.innerHTML = newLink;

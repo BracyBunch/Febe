@@ -91,10 +91,10 @@ module.exports = React.createClass({
         that.settingID(data.id);
       })
       .catch(function(error) {
-        console.log('request failed: ', error);
+        console.error('request failed: ', error);
       });
     } else {
-      console.log('Please verify that your passwords match and contain 8 or more characters');
+      console.error('Please verify that your passwords match and contain 8 or more characters');
     }
   },
   render: function() {

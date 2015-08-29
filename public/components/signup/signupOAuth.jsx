@@ -18,7 +18,7 @@ module.exports = React.createClass({
           <h3>{this.props.name}</h3>
           <div className="btn-group">
               <OverlayTrigger placement="top" overlay={liTooltip}>
-                <img className="oauthPic img-rounded" src="assets/img/linkedinAuth.png" onClick={this.open_popup.bind(this, 'linkedin')} />
+                <img className="oauthPic img-rounded" src="assets/img/linkedInAuth.png" onClick={this.open_popup.bind(this, 'linkedin')} />
               </OverlayTrigger>
               <OverlayTrigger placement="top" overlay={ghTooltip}>
                 <img className="oauthPic img-rounded" src="assets/img/githubAuth.png" onClick={this.open_popup.bind(this, 'github')} />

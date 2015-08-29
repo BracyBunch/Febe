@@ -91,18 +91,17 @@ module.exports = React.createClass({
   },
   handleSubmit: function(comment) {
     var that = this;
-    console.log('this is the state', that.state);
     ajax('auth/login', {method: 'POST', body: JSON.stringify(this.state)}).then(function(response) {
       return response.json();
     })
     .then(function(data) {
-      that.props.snackbar()
-      that.close()
+      that.props.snackbar();
+      that.close();
       // call method with id returned from db
       that.settingID(data.id);
     })
     .catch(function(error) {
-      console.log('request failed: ', error);
+      console.error('request failed: ', error);
     });
-  },
+  }
 });
