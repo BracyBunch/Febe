@@ -1,4 +1,4 @@
-# Project Name #
+# Good In This World #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -17,7 +17,7 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  GoodInThisWorld.com
+  Good In This World
 
 ## Sub-Heading ##
   > A network for non-profits and software developers to come together and help solve technical issues/needs
@@ -31,14 +31,14 @@ Once the project moves into development, the press release can be used as a touc
 ## Solution ##
   > GoodInThisWorld.com brings together all the tools needed for nonprofits to talk about their organization, post their problems/products and interact with software developers. For Software developers GoodInThisWorld.com makes it easy to sign up, browse organizations/projects and find others to work with. GoodInThisWorld.com was built by engineers for engineers, keeping simplicity and information flow as the focal point.
 
-## Quote from You ##
-  > A quote from a spokesperson in your company.
+## Quote from Good In This Wrold ##
+  > "We are excited to release Good In This World as a way for non profits to come together with talented engineers on meaninful projects" - GITW PR Team
 
 ## How to Get Started ##
   > simply go to our site GoodInThisWorld.com and sign up as a software developer (dev) or a nonprofit.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "It has been an amazing experience working with other engineers on a project that has helped change lives" - John (Engineer)
 
 ## Closing and Call to Action ##
   > Start making a different at GoodInThisWorld.com
