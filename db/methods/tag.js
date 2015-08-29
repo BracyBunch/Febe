@@ -53,7 +53,7 @@ var find_by_fragment = function(fragment, kind, limit) {
 
   if (kind !== undefined) query.kind = kind;
 
-  return Tag.where(query, {'limit': limit}).then(function(tags) {
+  return Tag.where(query, {'limit': limit, 'orderBy': 'node.name'}).then(function(tags) {
     return tags.map(clean);
   });
 };
