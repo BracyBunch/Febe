@@ -294,7 +294,7 @@ body{
 
 .thumbnail-image{
   height: 60%;
-  width: 100%;
+  max-width: 100%;
 }
 
 .team-image{
