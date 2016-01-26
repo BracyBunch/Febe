@@ -20,6 +20,10 @@
     "url": "https://github.com/BracyBunch/Febe/issues"
   },
   "homepage": "https://github.com/BracyBunch/Febe#readme",
+  "engines": {
+    "node": "0.12.*",
+    "npm": "2.14.15"
+  },
   "dependencies": {
     "bcrypt": "^0.8.4",
     "bluebird": "^2.9.34",
