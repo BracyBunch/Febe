@@ -1,17 +1,22 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
+var classNames = require( 'classnames' );
 var ajax = require('../../utils/fetch');
 var Navigation = require('react-router').Navigation;
+var history = require('../../utils/history');
 var ValidationMixin = require('react-validation-mixin');
 var Joi = require('joi');
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+// var ThemeManager = new mui.Styles.ThemeManager();
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Checkbox = mui.Checkbox;
 
 module.exports = React.createClass({
   // see http://facebook.github.io/react/docs/two-way-binding-helpers.html
-  mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
+  mixins: [ValidationMixin, LinkedStateMixin, Navigation],
   validatorTypes: {
     firstName: Joi.string().required().label('First Name'),
     lastName: Joi.string().required().label('Last Name'),
@@ -24,7 +29,7 @@ module.exports = React.createClass({
   },
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     };
   },
   getInitialState: function() {
@@ -49,7 +54,7 @@ module.exports = React.createClass({
     );
   },
   getClasses: function(field) {
-    return React.addons.classSet({
+    return classNames(this.props.className, {
       'form-group': true,
       'has-error': !this.isValid(field)
     });
@@ -72,7 +77,8 @@ module.exports = React.createClass({
   },
   settingID: function(newID){
     {this.props.newID(newID)}
-    this.transitionTo('profile');
+    history.pushState({}, 'profile');
+    // this.transitionTo('profile');
   },
   passwordVerification: function(){
     if(this.state.password === this.state.confirmedPassword && this.state.password.length >= 8){

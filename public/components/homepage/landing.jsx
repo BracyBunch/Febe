@@ -1,7 +1,9 @@
 var React = require('react');
 var Router = require('react-router');
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
+// var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 //renderable component
 var Link = Router.Link;
 var FlatButton = mui.FlatButton;
@@ -13,7 +15,7 @@ module.exports = React.createClass({
 
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     }
   },
 

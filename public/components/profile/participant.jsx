@@ -2,7 +2,9 @@ var React = require('react');
 var ajax = require('../../utils/fetch');
 // material ui
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+// var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
 var SnackBar = mui.SnackBar;
@@ -14,7 +16,7 @@ module.exports = React.createClass({
   },
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     };
   },
 

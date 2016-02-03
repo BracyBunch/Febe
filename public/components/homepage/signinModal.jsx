@@ -1,16 +1,20 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Modal = require('react-bootstrap').Modal;
 var Oauth = require('../signup/signupOAuth');
 var LogButton = require('../shared/logInOutButton');
 var ajax = require('../../utils/fetch');
 var Navigation = require('react-router').Navigation;
-var mui = require('material-ui')
-var ThemeManager = new mui.Styles.ThemeManager();
+var history = require('../../utils/history');
+var mui = require('material-ui');
+// var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin, Navigation],
+  mixins: [LinkedStateMixin, Navigation],
   getInitialState: function() {
     return { 
       showModal: false,
@@ -25,7 +29,7 @@ module.exports = React.createClass({
   },
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     };
   },
   close: function() {
@@ -49,7 +53,8 @@ module.exports = React.createClass({
       id: newID
     });
     window.localStorage.setItem('userId', newID);
-    this.transitionTo('profile');
+    history.pushState({}, 'profile');
+    // this.transitionTo('profile');
   },
   render: function() {
     return (

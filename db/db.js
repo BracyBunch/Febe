@@ -6,9 +6,12 @@ if (process.env.GRAPHSTORY_URL) {
   var url = require('url').parse(process.env.GRAPHSTORY_URL);
 
   options = {
-    server: url.protocol + '//' + url.host,
-    user: url.auth.split(':')[0],
-    pass: url.auth.split(':')[1]
+    server: process.env.GRAPHSTORY_URL,
+    user: process.env.GRAPHSTORY_USER,
+    pass: process.env.GRAPHSTORY_PW
+    // server: url.protocol + '//' + url.host,
+    // user: url.auth.split(':')[0],
+    // pass: url.auth.split(':')[1]
   };
 } else {
   options = {

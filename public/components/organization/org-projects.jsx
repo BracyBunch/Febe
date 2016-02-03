@@ -1,7 +1,8 @@
 var React = require('react');
-var Link = require('react-router').Link
+var Link = require('react-router').Link;
 var Navigation = require('react-router').Navigation;
-var Thumbnail = require('../thumbnail/thumbnail')
+var history = require('../../utils/history');
+var Thumbnail = require('../thumbnail/thumbnail');
 
 module.exports = React.createClass({
   mixins: [Navigation],
@@ -20,8 +21,9 @@ module.exports = React.createClass({
   },
 
   goToProject: function(projectID){
-    sessionStorage.setItem('projectId', projectID)
-    this.transitionTo('/project/' + projectID);
+    sessionStorage.setItem('projectId', projectID);
+    history.pushState({}, 'project' + projectID)
+    // this.transitionTo('/project/' + projectID);
     {this.renderThumbnail()}
   },
 

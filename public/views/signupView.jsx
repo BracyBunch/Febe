@@ -1,7 +1,9 @@
 var React = require('react');
 var Reflux = require('reflux');
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+// var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var Oauth = require('../components/signup/signupOAuth');
 var Main = require('../components/signup/signupMain');
@@ -18,7 +20,7 @@ module.exports = React.createClass({
   },
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     };
   },
   getInitialState: function() {

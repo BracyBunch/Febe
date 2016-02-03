@@ -1,12 +1,16 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Navigation = require('react-router').Navigation;
+var history = require('../utils/history');
 var ValidationMixin = require('react-validation-mixin');
 var ajax = require('../utils/fetch');
 //react bootstrap
 var DropdownButton = require('../components/project/dropdown');
 // material ui
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+// var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
 //shared components
@@ -17,14 +21,14 @@ var Autocomplete =require('../components/shared/autocomplete');
 var ProjectView = require('./project-view');
 
 module.exports = React.createClass({
-  mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
+  mixins: [ValidationMixin, LinkedStateMixin, Navigation],
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     };
   },
 
@@ -61,7 +65,8 @@ module.exports = React.createClass({
         return res.json();
       }).then(function(data) {
         sessionStorage.setItem('projectId', data.id);
-        this.transitionTo('/project/' + data.id);
+        history.pushState('/project' + data.id);
+        // this.transitionTo('/project/' + data.id);
       }.bind(this));
     }
   },

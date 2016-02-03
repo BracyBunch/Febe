@@ -1,6 +1,7 @@
 var React = require('react');
 var Router = require('react-router');
 var Navigation = Router.Navigation;
+var history = require('../../utils/history');
 
 var Thumbnail = React.createClass({
   mixins: [Navigation],
@@ -27,7 +28,8 @@ var Thumbnail = React.createClass({
   },
   handleClick: function() {
     if (this.props.url) {
-      this.transitionTo(this.props.url);
+      history.pushState({}, this.props.url);
+      // this.transitionTo(this.props.url);
     }
   },
   strengthsList: function() {

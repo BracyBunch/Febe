@@ -4,13 +4,16 @@ var Actions = require('../actions');
 var ProjectStore = require('../stores/project-store');
 // material ui
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+// var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
 var Snackbar = mui.Snackbar;
 
 var Router = require('react-router');
 var Navigation = require('react-router').Navigation;
+var history = require('../utils/history');
 var Link = Router.Link;
 // shared components
 var Footer = require('../components/shared/footer');
@@ -31,7 +34,7 @@ module.exports = React.createClass({
   },
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     };
   },
 
@@ -121,6 +124,7 @@ module.exports = React.createClass({
   },
 
   goToOrg: function(orgID){
+    // history.pushState('/organization/' + orgID)
     this.transitionTo('/organization/' + orgID);
   },
 

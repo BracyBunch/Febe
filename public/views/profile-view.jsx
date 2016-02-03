@@ -4,7 +4,9 @@ var Actions = require('../actions');
 var TransitionHook = require('react-router').TransitionHook;
 //material ui
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+// var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
 // shared components
@@ -36,7 +38,7 @@ var ProfileView = React.createClass({
   },
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     };
   },
   isOwnProfile: function() {

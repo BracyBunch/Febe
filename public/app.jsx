@@ -1,4 +1,4 @@
-var React = require('react');
+var ReactDOM = require('react-dom');
 var Routes = require('./routes');
 
-React.render(Routes, document.querySelector('.main'));
+ReactDOM.render(Routes, document.querySelector('.main'));

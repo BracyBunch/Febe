@@ -4,7 +4,6 @@ var Actions = require('../../actions');
 var jimSquats = require('lodash')
 //material ui
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
 var AppBar = mui.AppBar;
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
@@ -13,6 +12,7 @@ var Snackbar = mui.Snackbar;
 var ProfileStore = require('../../stores/profile-store');
 var injectTapEventPlugin = require('react-tap-event-plugin');
 var Router = require('react-router');
+var history = require('../../utils/history')
 var Link = Router.Link;
 var State = Router.State;
 var SigninModal = require('../homepage/signinModal');
@@ -45,7 +45,7 @@ var Header = React.createClass({
   },
 
   onChange: function(event, index, item) {
-    this.context.router.transitionTo(item.route);
+    history.pushState({}, item.route)
   },
   generateMenu: function(){
     var menu = [

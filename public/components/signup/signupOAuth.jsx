@@ -2,9 +2,8 @@ var React = require('react');
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var Tooltip = require('react-bootstrap').Tooltip;
 var Navigation = require('react-router').Navigation;
+var history = require('../../utils/history');
 
-
-// need form validation
 module.exports = React.createClass({
   mixins: [Navigation],
   render: function() {
@@ -47,7 +46,8 @@ module.exports = React.createClass({
       // Logged in
       this.props.closeModal();
       this.props.snackbar();
-      this.transitionTo('profile');
+      history.pushState({}, 'profile');
+      // this.transitionTo('profile');
     } else if (oauth_status === 'rejected') {
       // User either denied the authorization or closed the popup
     } else if (oauth_status === 'conflict') {

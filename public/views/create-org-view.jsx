@@ -1,8 +1,12 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Reflux = require('reflux');
+var history = require('../utils/history');
 // material ui
 var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
+var ThemeManager = require('material-ui/lib/styles/theme-manager');
+var muiLightTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+// var ThemeManager = new mui.Styles.ThemeManager();
 var Paper = mui.Paper;
 var RaisedButton = mui.RaisedButton;
 // router / navigation
@@ -19,14 +23,14 @@ var Autocomplete =require('../components/shared/autocomplete');
 var ajax = require('../utils/fetch');
 
 module.exports = React.createClass({
-  mixins: [ValidationMixin, React.addons.LinkedStateMixin, Navigation],
+  mixins: [ValidationMixin, LinkedStateMixin, Navigation],
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(muiLightTheme)
     };
   },
 
@@ -75,7 +79,8 @@ module.exports = React.createClass({
       })
       .then(function(data) {
         sessionStorage.setItem('orgId', data.id);
-        this.transitionTo('/organization/' + data.id);
+        history.pushState({}, '/organization' + data.id);
+        // this.transitionTo('/organization/' + data.id);
       }.bind(this));
     }
   },

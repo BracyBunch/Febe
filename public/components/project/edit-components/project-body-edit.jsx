@@ -1,8 +1,9 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var ProfileMethods = require('../../../sharedMethods');
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getInitialState: function() {
     return {
       description: '',

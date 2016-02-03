@@ -1,10 +1,11 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var ProfileMethods = require('../../../sharedMethods');
 var mui = require('material-ui');
 var RaisedButton = mui.RaisedButton;
 
 var ProfileHeaderEdit = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   propTypes: {
     'save': React.PropTypes.func.isRequired,
     'onChange': React.PropTypes.func.isRequired,
