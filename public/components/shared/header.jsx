@@ -1,7 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
 var Actions = require('../../actions');
-var jimSquats = require('lodash')
+var jimSquats = require('lodash');
 //material ui
 var mui = require('material-ui');
 var AppBar = mui.AppBar;
